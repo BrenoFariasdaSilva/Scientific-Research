@@ -163,11 +163,13 @@ cython_debug/
 commons-lang/*
 jabref/*
 
-# Ignore every file inside commons-lang or jabref, except class.csv, field.csv, method.csv and variable.csv
+# Ignore every file inside commons-lang  except class.csv, field.csv, method.csv and variable.csv
 !commons-lang/class.csv
 !commons-lang/field.csv
 !commons-lang/method.csv
 !commons-lang/variable.csv
+
+# Ignore every file inside jabref, except class.csv, field.csv, method.csv and variable.csv
 !jabref/class.csv
 !jabref/field.csv
 !jabref/method.csv
