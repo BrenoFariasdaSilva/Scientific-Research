@@ -173,14 +173,16 @@ Jabref/.gitignore
 Jabref/.gitattributes
 Jabref/.github/*
 
-# Ignore every file inside Commons-Lang  except class.csv, field.csv, method.csv and variable.csv
+# Ignore every file inside Commons-Lang  except class.csv, field.csv, method.csv and variable.csv and Makefile
 !Commons-Lang/class.csv
 !Commons-Lang/field.csv
 !Commons-Lang/method.csv
 !Commons-Lang/variable.csv
+!Commons-Lang/Makefile
 
-# Ignore every file inside Jabref, except class.csv, field.csv, method.csv and variable.csv
+# Ignore every file inside Jabref, except class.csv, field.csv, method.csv and variable.csv and Makefile
 !Jabref/class.csv
 !Jabref/field.csv
 !Jabref/method.csv
 !Jabref/variable.csv
+!Jabref/Makefile
