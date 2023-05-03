@@ -159,28 +159,28 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Ignore any subfolder named commons-lang or jabref
-commons-lang/*
-jabref/*
+# Ignore any subfolder named Commons-Lang or Jabref
+Commons-Lang/*
+Jabref/*
 
-# Make sure to ignore .gitignore, .gitattributes and .github files inside commons-lang
-commons-lang/.gitignore
-commons-lang/.gitattributes
-commons-lang/.github/*
+# Make sure to ignore .gitignore, .gitattributes and .github files inside Commons-Lang
+Commons-Lang/.gitignore
+Commons-Lang/.gitattributes
+Commons-Lang/.github/*
 
-# Make sure to ignore .gitignore, .gitattributes and .github files inside jabref
-jabref/.gitignore
-jabref/.gitattributes
-jabref/.github/*
+# Make sure to ignore .gitignore, .gitattributes and .github files inside Jabref
+Jabref/.gitignore
+Jabref/.gitattributes
+Jabref/.github/*
 
-# Ignore every file inside commons-lang  except class.csv, field.csv, method.csv and variable.csv
-!commons-lang/class.csv
-!commons-lang/field.csv
-!commons-lang/method.csv
-!commons-lang/variable.csv
+# Ignore every file inside Commons-Lang  except class.csv, field.csv, method.csv and variable.csv
+!Commons-Lang/class.csv
+!Commons-Lang/field.csv
+!Commons-Lang/method.csv
+!Commons-Lang/variable.csv
 
-# Ignore every file inside jabref, except class.csv, field.csv, method.csv and variable.csv
-!jabref/class.csv
-!jabref/field.csv
-!jabref/method.csv
-!jabref/variable.csv
+# Ignore every file inside Jabref, except class.csv, field.csv, method.csv and variable.csv
+!Jabref/class.csv
+!Jabref/field.csv
+!Jabref/method.csv
+!Jabref/variable.csv
