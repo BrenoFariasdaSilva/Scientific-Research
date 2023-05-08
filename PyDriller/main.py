@@ -1,5 +1,9 @@
-import subprocess
-from pydriller import Repository
+import os # OS module in Python provides functions for interacting with the operating system
+import subprocess # The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes
+from pydriller import Repository # PyDriller is a Python framework that helps developers in analyzing Git repositories. 
+
+DEFAULT_OUTPUT_DIRECTORY = "output"
+DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
 
 # TODO: Criar o diretório antes
 # TODO: Informar o último parâmetro o diretório de saída
