@@ -7,6 +7,17 @@ DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
 
 # TODO: Informar o último parâmetro o diretório de saída
 
+# @brief: If inputs are empty, use the default values
+# @param: repository_url: URL of the repository to be analyzed
+# @param: output_directory: Directory to save the output files
+# @return: The repository URL and the output directory
+def check_inputs(repository_url, output_directory):
+    if not repository_url:
+        repository_url = DEFAULT_REPOSITORY_URL
+    if not output_directory:
+        output_directory = DEFAULT_OUTPUT_DIRECTORY
+    return repository_url, output_directory
+
 # @brief: Create a subdirectory to save the output files
 # @param: directory_name: Name of the directory to be created
 # @return: None
@@ -28,7 +39,7 @@ def main():
     repository_url = input("Enter the github repository URL: ")
 
     # Check if the inputs are empty
-    # repository_url, output_directory = check_inputs(repository_url, output_directory)
+    repository_url, output_directory = check_inputs(repository_url, output_directory)
 
     # Create the output directory
     create_output_directory(output_directory)
