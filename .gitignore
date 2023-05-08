@@ -186,3 +186,5 @@ Jabref/.github/*
 !Jabref/method.csv
 !Jabref/variable.csv
 !Jabref/Makefile
+
+PyDriller/repositories
