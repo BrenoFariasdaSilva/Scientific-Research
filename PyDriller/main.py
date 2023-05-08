@@ -45,7 +45,7 @@ def main():
     create_output_directory(output_directory)
 
     for commit in Repository(repository_url).traverse_commits():
-        cmd = f"java -jar ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar {commit.project_path}" # TODO: Trocar o projectpath pelo SHA
+        cmd = f"java -jar ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar {commit.hash}"
         # TODO: Olhar como ele percorre a ´arvore dos commits
         # TODO: Variables and Metrics tentar desabilitar isso
         # TODO: Caminho do projet FALSE 0 FALSE directory
