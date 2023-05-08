@@ -5,14 +5,35 @@ from pydriller import Repository # PyDriller is a Python framework that helps de
 DEFAULT_OUTPUT_DIRECTORY = "output"
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
 
-# TODO: Criar o diretório antes
 # TODO: Informar o último parâmetro o diretório de saída
+
+# @brief: Create a subdirectory to save the output files
+# @param: directory_name: Name of the directory to be created
+# @return: None
+def create_output_directory(directory_name):
+    try:
+        os.mkdir(directory_name)
+    except OSError:
+        print ("Creation of the directory %s failed" % directory_name)
+    else:
+        print ("Successfully created the directory %s " % directory_name)
 
 # @brief: Main function
 # @param: None
 # @return: None
 def main():
-    for commit in Repository('commons-lang').traverse_commits():
+    # Ask for use input of the output directory
+    output_directory = input("Enter the output directory: ")
+    # Ask for use input of the repository URL
+    repository_url = input("Enter the github repository URL: ")
+
+    # Check if the inputs are empty
+    # repository_url, output_directory = check_inputs(repository_url, output_directory)
+
+    # Create the output directory
+    create_output_directory(output_directory)
+
+    for commit in Repository(repository_url).traverse_commits():
         cmd = f"java -jar ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar {commit.project_path}" # TODO: Trocar o projectpath pelo SHA
         # TODO: Olhar como ele percorre a ´arvore dos commits
         # TODO: Variables and Metrics tentar desabilitar isso
@@ -20,7 +41,6 @@ def main():
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
         print(stdout.decode())
-    
-# @brief: This function is responsible for calling the main function at the start of the program
+
 if __name__ == '__main__':
     main() 
