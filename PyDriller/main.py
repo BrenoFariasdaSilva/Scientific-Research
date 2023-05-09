@@ -9,9 +9,9 @@ import subprocess # The subprocess module allows you to spawn new processes, con
 from pydriller import Repository # PyDriller is a Python framework that helps developers in analyzing Git repositories. 
 
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
-DEFAULT_OUTPUT_DIRECTORY = "/home/magsilva/Projects/others/Scientific-Research/PyDriller/data" # Modify to get the PWD + /data
-DEFAULT_REPOSITORY_DIRECTORY = "/home/magsilva/Projects/others/Scientific-Research/PyDriller/repositories" # Modify to get the PWD + /repositories
-CK_JAR = "/home/magsilva/Projects/others/Scientific-Research/PyDriller/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar" # Modify to get the PWD + /ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar
+DEFAULT_OUTPUT_DIRECTORY = os.getcwd() + "/data"
+DEFAULT_REPOSITORY_DIRECTORY = os.getcwd() + "/repositories"
+CK_JAR = os.getcwd() + "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
 # @brief: Get the user input and check if they are empty
 # @param: None
