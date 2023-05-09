@@ -1,8 +1,5 @@
 # TODO: Olhar como ele percorre a árvore dos commits
-# TODO: Color the output messages
 # TODO: Informar o último parâmetro o diretório de saída
-# TODO: Pegar o número total de commits
-# TODO: Criar progress bar para o for dos commits
 
 import os # OS module in Python provides functions for interacting with the operating system
 import subprocess # The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes
@@ -15,11 +12,18 @@ class backgroundColors: # Colors for the terminal
 	OKGREEN = "\033[92m" # Green
 	WARNING = "\033[93m" # Yellow
 	FAIL = "\033[91m" # Red
+ 
+# Relative paths:
+RELATIVE_OUTPUT_DIRECTORY = "/data"
+RELATIVE_REPOSITORY_DIRECTORY = "/repositories"
+RELATIVE_CK_JAR = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
+# Default values:
+DEFAULT_FOLDER = os.getcwd() # Get the current working directory
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
-DEFAULT_OUTPUT_DIRECTORY = os.getcwd() + "/data"
-DEFAULT_REPOSITORY_DIRECTORY = os.getcwd() + "/repositories"
-CK_JAR = os.getcwd() + "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
+FULL_OUTPUT_DIRECTORY = os.getcwd() + RELATIVE_OUTPUT_DIRECTORY
+FULL_REPOSITORY_DIRECTORY = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY
+FULL_CK_JAR = os.getcwd() + RELATIVE_CK_JAR
 
 # @brief: Get the user input and check if they are empty
 # @param: None
@@ -46,44 +50,58 @@ def check_url_input(repository_url):
 def get_repository_name(url):
     return url.split("/")[-1]
 
+# @brief: Update the repository using "git pull"
+# @param: repository_name: Name of the repository to be analyzed
+# @return: None
+def update_repository(repository_name):
+    print(f"Updating the {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository using {backgroundColors.OKGREEN}git pull{Style.RESET_ALL}.")
+    os.chdir(FULL_REPOSITORY_DIRECTORY + '/' + repository_name)
+    # Create a thread to update the repository located in RELATIVE_REPOSITORY_DIRECTORY + '/' + repository_name
+    update_thread = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # Wait for the thread to finish
+    update_thread.wait()
+    os.chdir(DEFAULT_FOLDER)
+
 # @brief: Clone the repository to the repository directory
 # @param: repository_url: URL of the repository to be analyzed
 # @param: repository_name: Name of the repository to be analyzed
 # @return: None
 def clone_repository(repository_url, repository_name):
     # Check if the repository directory already exists and if it is not empty
-    if os.path.isdir(DEFAULT_REPOSITORY_DIRECTORY + '/' + repository_name) and os.listdir(DEFAULT_REPOSITORY_DIRECTORY + '/' + repository_name):
-        print(f"The {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL} repository is already cloned!")
+    if os.path.isdir(FULL_REPOSITORY_DIRECTORY + '/' + repository_name) and os.listdir(FULL_REPOSITORY_DIRECTORY + '/' + repository_name):
+        print(f"The {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository is already cloned!")
+        update_repository(repository_name)
         return
     else:
-        print(f"Cloning the {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL} repository...")
+        print(f"Cloning the {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository...")
         # Create a thread to clone the repository
-        thread = subprocess.Popen(["git", "clone", repository_url, DEFAULT_REPOSITORY_DIRECTORY + '/' + repository_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        thread = subprocess.Popen(["git", "clone", repository_url, FULL_REPOSITORY_DIRECTORY + '/' + repository_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         # Wait for the thread to finish
         thread.wait()
-        print(f"Successfully cloned the {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL} repository")
+        print(f"Successfully cloned the {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository")
 
 # @brief: Create a subdirectory
-# @param: directory_name: Name of the directory to be created
+# @param: full_directory_name: Name of the directory to be created
+# @param: relative_directory_name: Relative name of the directory to be created that will be shown in the terminal
 # @return: None
-def create_directory(directory_name):
-    if os.path.isdir(directory_name): # Check if the directory already exists
-        print(f"The {backgroundColors.OKCYAN}{directory_name}{Style.RESET_ALL} directory already exists")
+def create_directory(full_directory_name, relative_directory_name):
+    if os.path.isdir(full_directory_name): # Check if the directory already exists
+        print(f"The {backgroundColors.OKCYAN}{relative_directory_name}{Style.RESET_ALL} directory already exists")
         return
     try: # Try to create the directory
-        os.makedirs(directory_name)
-        print (f"Successfully created the {backgroundColors.OKCYAN}{directory_name}{Style.RESET_ALL} directory")
+        os.makedirs(full_directory_name)
+        print (f"Successfully created the {backgroundColors.OKCYAN}{relative_directory_name}{Style.RESET_ALL} directory")
     except OSError: # If the directory cannot be created
-        print (f"The creation of the {backgroundColors.OKCYAN}{directory_name}{Style.RESET_ALL} directory failed")
+        print (f"The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{Style.RESET_ALL} directory failed")
 
 # @brief: This function is used to checkout a specific branch
 # @param: branch_name: Name of the branch to be checked out
 # @return: None
 def checkout_branch(branch_name):
     # Create a thread to checkout the branch
-    thread = subprocess.Popen(["git", "checkout", branch_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    checkout_thread = subprocess.Popen(["git", "checkout", branch_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     # Wait for the thread to finish
-    thread.wait()
+    checkout_thread.wait()
 
 # @brief: Main function
 # @param: None
@@ -96,31 +114,37 @@ def main():
     repository_name = get_repository_name(repository_url)
 
     # Create the repositories directory
-    create_directory(DEFAULT_REPOSITORY_DIRECTORY)
+    create_directory(FULL_REPOSITORY_DIRECTORY, RELATIVE_REPOSITORY_DIRECTORY)
 
     # Clone the repository
     clone_repository(repository_url, repository_name)
     
     i = 1
     file_data = ""
+    
+    number_of_commits = len(list(Repository(repository_url).traverse_commits()))
+    print(f"Total number of commits: {backgroundColors.OKGREEN}{number_of_commits}{Style.RESET_ALL}")
+    
     for commit in Repository(repository_url).traverse_commits():
         file_data += f"{commit.hash}\n"
 
-        workdir_directory = DEFAULT_REPOSITORY_DIRECTORY + '/' + repository_name
+        workdir_directory = FULL_REPOSITORY_DIRECTORY + '/' + repository_name
         os.chdir(workdir_directory)        
         checkout_branch(commit.hash)
 
         # Create the output directory
-        output_directory = DEFAULT_OUTPUT_DIRECTORY + '/' + repository_name + '/' + commit.hash + '/'
-        create_directory(output_directory)
+        output_directory = FULL_OUTPUT_DIRECTORY + '/' + repository_name + '/' + commit.hash + '/'
+        relative_output_directory = RELATIVE_OUTPUT_DIRECTORY + '/' + repository_name + '/' + commit.hash + '/'
+        create_directory(output_directory, relative_output_directory)
 
         # change working directory to the repository directory
         os.chdir(output_directory)
 
         # Run ck metrics for every commit hash
-        cmd = f"java -jar {CK_JAR} {workdir_directory} false 0 false {output_directory}"
+        cmd = f"java -jar {FULL_CK_JAR} {workdir_directory} false 0 false {output_directory}"
+        relative_cmd = f"{backgroundColors.OKGREEN}java -jar {backgroundColors.OKCYAN}{RELATIVE_CK_JAR} {RELATIVE_REPOSITORY_DIRECTORY}/{repository_name}{backgroundColors.OKGREEN} false 0 false {backgroundColors.OKCYAN}{RELATIVE_OUTPUT_DIRECTORY}/{repository_name}/{commit.hash}/"
         
-        print(f"{backgroundColors.OKCYAN}{i}ª{Style.RESET_ALL} - Running CK: {backgroundColors.OKCYAN}{cmd}{Style.RESET_ALL}")
+        print(f"{backgroundColors.OKCYAN}{i} of {number_of_commits}{Style.RESET_ALL} - Running CK: {relative_cmd}{Style.RESET_ALL}")
         
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
@@ -128,7 +152,7 @@ def main():
         
         i += 1
 
-    with open(DEFAULT_OUTPUT_DIRECTORY + '/' + repository_name + '.txt', 'w') as file:
+    with open(FULL_OUTPUT_DIRECTORY + '/' + 'commit_hashes-' + repository_name + '.txt', 'w') as file:
         file.write(file_data)
 
     checkout_branch("main")
