@@ -120,13 +120,13 @@ def main():
     clone_repository(repository_url, repository_name)
     
     i = 1
-    file_data = ""
+    commit_hashes = ""
     
     number_of_commits = len(list(Repository(repository_url).traverse_commits()))
     print(f"Total number of commits: {backgroundColors.OKGREEN}{number_of_commits}{Style.RESET_ALL}")
     
     for commit in Repository(repository_url).traverse_commits():
-        file_data += f"{commit.hash}\n"
+        commit_hashes += f"{commit.hash}\n"
 
         workdir_directory = FULL_REPOSITORY_DIRECTORY + '/' + repository_name
         os.chdir(workdir_directory)        
@@ -153,7 +153,7 @@ def main():
         i += 1
 
     with open(FULL_OUTPUT_DIRECTORY + '/' + 'commit_hashes-' + repository_name + '.txt', 'w') as file:
-        file.write(file_data)
+        file.write(commit_hashes)
 
     checkout_branch("main")
 
