@@ -1,16 +1,17 @@
-# TODO: Olhar como ele percorre a ´arvore dos commits
-# TODO: Variables and Metrics tentar desabilitar isso
-# TODO: Caminho do projet FALSE 0 FALSE directory:
-# java -jar ck-x.x.x-SNAPSHOT-jar-with-dependencies.jar <project dir> <use jars:true|false> <max files per partition, 0=automatic selection> <variables and fields metrics? True|False> <output dir> [ignored directories...]
+# TODO: Olhar como ele percorre a árvore dos commits
+# TODO: Color the output messages
 # TODO: Informar o último parâmetro o diretório de saída
+# TODO: Pegar o número total de commits
+# TODO: Criar progress bar para o for dos commits
 
 import os # OS module in Python provides functions for interacting with the operating system
 import subprocess # The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes
 from pydriller import Repository # PyDriller is a Python framework that helps developers in analyzing Git repositories. 
 
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
-DEFAULT_OUTPUT_DIRECTORY = "data"
-DEFAULT_REPOSITORY_DIRECTORY = "repositories"
+DEFAULT_OUTPUT_DIRECTORY = "/home/magsilva/Projects/others/Scientific-Research/PyDriller/data" # Modify to get the PWD + /data
+DEFAULT_REPOSITORY_DIRECTORY = "/home/magsilva/Projects/others/Scientific-Research/PyDriller/repositories" # Modify to get the PWD + /repositories
+CK_JAR = "/home/magsilva/Projects/others/Scientific-Research/PyDriller/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar" # Modify to get the PWD + /ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar
 
 # @brief: Get the user input and check if they are empty
 # @param: None
@@ -62,7 +63,7 @@ def create_directory(directory_name):
         print(f"The {directory_name.upper()} directory already exists")
         return
     try: # Try to create the directory
-        os.mkdir(directory_name)
+        os.makedirs(directory_name)
         print (f"Successfully created the {directory_name.upper()} directory")
     except OSError: # If the directory cannot be created
         print (f"The creation of the {directory_name.upper()} directory failed")
@@ -91,32 +92,32 @@ def main():
 
     # Clone the repository
     clone_repository(repository_url, repository_name)
-
-    # Create the output directory
-    create_directory(DEFAULT_OUTPUT_DIRECTORY)
-
-    # change working directory to the repository directory
-    os.chdir(DEFAULT_REPOSITORY_DIRECTORY + '/' + repository_name)
-
+    
+    i = 1
     file_data = ""
     for commit in Repository(repository_url).traverse_commits():
         file_data += f"{commit.hash}\n"
 
+        workdir_directory = DEFAULT_REPOSITORY_DIRECTORY + '/' + repository_name
+        os.chdir(workdir_directory)        
         checkout_branch(commit.hash)
 
-        # copy the ck file in /ck to the repository directory
-        cmd = f"cp ../ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar ."
-        process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        stdout, stderr = process.communicate()
-        print(stdout.decode())
-        process.wait()
+        # Create the output directory
+        output_directory = DEFAULT_OUTPUT_DIRECTORY + '/' + repository_name + '/' + commit.hash + '/'
+        create_directory(output_directory)
 
+        # change working directory to the repository directory
+        os.chdir(output_directory)
+
+        print("{i}ª - Running CK:", cmd)
+         
         # Run ck metrics for every commit hash
-        cmd = f"java -jar ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar {commit.hash}"
-        
+        cmd = f"java -jar {CK_JAR} {workdir_directory} false 0 false {output_directory}"
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
         print(stdout.decode())
+        
+        i += 1
 
     with open(DEFAULT_OUTPUT_DIRECTORY + '/' + repository_name + '.txt', 'w') as file:
         file.write(file_data)
