@@ -7,6 +7,14 @@
 import os # OS module in Python provides functions for interacting with the operating system
 import subprocess # The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes
 from pydriller import Repository # PyDriller is a Python framework that helps developers in analyzing Git repositories. 
+from colorama import Style # For coloring the terminal
+
+# Macros:
+class backgroundColors: # Colors for the terminal
+	OKCYAN = "\033[96m" # Cyan
+	OKGREEN = "\033[92m" # Green
+	WARNING = "\033[93m" # Yellow
+	FAIL = "\033[91m" # Red
 
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
 DEFAULT_OUTPUT_DIRECTORY = os.getcwd() + "/data"
@@ -45,28 +53,28 @@ def get_repository_name(url):
 def clone_repository(repository_url, repository_name):
     # Check if the repository directory already exists and if it is not empty
     if os.path.isdir(DEFAULT_REPOSITORY_DIRECTORY + '/' + repository_name) and os.listdir(DEFAULT_REPOSITORY_DIRECTORY + '/' + repository_name):
-        print(f"The {repository_name.upper()} repository is already cloned!")
+        print(f"The {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL} repository is already cloned!")
         return
     else:
-        print(f"Cloning the {repository_name.upper()} repository...")
+        print(f"Cloning the {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL} repository...")
         # Create a thread to clone the repository
         thread = subprocess.Popen(["git", "clone", repository_url, DEFAULT_REPOSITORY_DIRECTORY + '/' + repository_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         # Wait for the thread to finish
         thread.wait()
-        print(f"Successfully cloned the {repository_name.upper()} repository")
+        print(f"Successfully cloned the {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL} repository")
 
 # @brief: Create a subdirectory
 # @param: directory_name: Name of the directory to be created
 # @return: None
 def create_directory(directory_name):
     if os.path.isdir(directory_name): # Check if the directory already exists
-        print(f"The {directory_name.upper()} directory already exists")
+        print(f"The {backgroundColors.OKCYAN}{directory_name}{Style.RESET_ALL} directory already exists")
         return
     try: # Try to create the directory
         os.makedirs(directory_name)
-        print (f"Successfully created the {directory_name.upper()} directory")
+        print (f"Successfully created the {backgroundColors.OKCYAN}{directory_name}{Style.RESET_ALL} directory")
     except OSError: # If the directory cannot be created
-        print (f"The creation of the {directory_name.upper()} directory failed")
+        print (f"The creation of the {backgroundColors.OKCYAN}{directory_name}{Style.RESET_ALL} directory failed")
 
 # @brief: This function is used to checkout a specific branch
 # @param: branch_name: Name of the branch to be checked out
@@ -109,10 +117,11 @@ def main():
         # change working directory to the repository directory
         os.chdir(output_directory)
 
-        print("{i}ª - Running CK:", cmd)
-         
         # Run ck metrics for every commit hash
         cmd = f"java -jar {CK_JAR} {workdir_directory} false 0 false {output_directory}"
+        
+        print(f"{backgroundColors.OKCYAN}{i}ª{Style.RESET_ALL} - Running CK: {backgroundColors.OKCYAN}{cmd}{Style.RESET_ALL}")
+        
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
         print(stdout.decode())
