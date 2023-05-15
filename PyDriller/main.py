@@ -14,16 +14,16 @@ class backgroundColors: # Colors for the terminal
 	FAIL = "\033[91m" # Red
  
 # Relative paths:
-RELATIVE_OUTPUT_DIRECTORY = "/data"
-RELATIVE_REPOSITORY_DIRECTORY = "/repositories"
-RELATIVE_CK_JAR = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
+RELATIVE_OUTPUT_DIRECTORY_PATH = "/data"
+RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories"
+RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
 # Default values:
 DEFAULT_FOLDER = os.getcwd() # Get the current working directory
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
-FULL_OUTPUT_DIRECTORY = os.getcwd() + RELATIVE_OUTPUT_DIRECTORY
-FULL_REPOSITORY_DIRECTORY = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY
-FULL_CK_JAR = os.getcwd() + RELATIVE_CK_JAR
+FULL_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_OUTPUT_DIRECTORY_PATH
+FULL_REPOSITORY_DIRECTORY_PATH = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY_PATH
+FULL_CK_JAR_PATH = os.getcwd() + RELATIVE_CK_JAR_PATH
 
 # @brief: Get the user input and check if they are empty
 # @param: None
@@ -55,7 +55,7 @@ def get_repository_name(url):
 # @return: None
 def update_repository(repository_name):
     print(f"Updating the {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository using {backgroundColors.OKGREEN}git pull{Style.RESET_ALL}.")
-    os.chdir(FULL_REPOSITORY_DIRECTORY + '/' + repository_name)
+    os.chdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name)
     # Create a thread to update the repository located in RELATIVE_REPOSITORY_DIRECTORY + '/' + repository_name
     update_thread = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     # Wait for the thread to finish
@@ -68,14 +68,14 @@ def update_repository(repository_name):
 # @return: None
 def clone_repository(repository_url, repository_name):
     # Check if the repository directory already exists and if it is not empty
-    if os.path.isdir(FULL_REPOSITORY_DIRECTORY + '/' + repository_name) and os.listdir(FULL_REPOSITORY_DIRECTORY + '/' + repository_name):
+    if os.path.isdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name) and os.listdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name):
         print(f"The {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository is already cloned!")
         update_repository(repository_name)
         return
     else:
         print(f"Cloning the {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository...")
         # Create a thread to clone the repository
-        thread = subprocess.Popen(["git", "clone", repository_url, FULL_REPOSITORY_DIRECTORY + '/' + repository_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        thread = subprocess.Popen(["git", "clone", repository_url, FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         # Wait for the thread to finish
         thread.wait()
         print(f"Successfully cloned the {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository")
@@ -114,7 +114,7 @@ def main():
     repository_name = get_repository_name(repository_url)
 
     # Create the repositories directory
-    create_directory(FULL_REPOSITORY_DIRECTORY, RELATIVE_REPOSITORY_DIRECTORY)
+    create_directory(FULL_REPOSITORY_DIRECTORY_PATH, RELATIVE_REPOSITORY_DIRECTORY_PATH)
 
     # Clone the repository
     clone_repository(repository_url, repository_name)
@@ -128,21 +128,21 @@ def main():
     for commit in Repository(repository_url).traverse_commits():
         commit_hashes += f"{commit.hash}\n"
 
-        workdir_directory = FULL_REPOSITORY_DIRECTORY + '/' + repository_name
+        workdir_directory = FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name
         os.chdir(workdir_directory)        
         checkout_branch(commit.hash)
 
         # Create the output directory
-        output_directory = FULL_OUTPUT_DIRECTORY + '/' + repository_name + '/' + commit.hash + '/'
-        relative_output_directory = RELATIVE_OUTPUT_DIRECTORY + '/' + repository_name + '/' + commit.hash + '/'
+        output_directory = FULL_OUTPUT_DIRECTORY_PATH + '/' + repository_name + '/' + commit.hash + '/'
+        relative_output_directory = RELATIVE_OUTPUT_DIRECTORY_PATH + '/' + repository_name + '/' + commit.hash + '/'
         create_directory(output_directory, relative_output_directory)
 
         # change working directory to the repository directory
         os.chdir(output_directory)
 
         # Run ck metrics for every commit hash
-        cmd = f"java -jar {FULL_CK_JAR} {workdir_directory} false 0 false {output_directory}"
-        relative_cmd = f"{backgroundColors.OKGREEN}java -jar {backgroundColors.OKCYAN}{RELATIVE_CK_JAR} {RELATIVE_REPOSITORY_DIRECTORY}/{repository_name}{backgroundColors.OKGREEN} false 0 false {backgroundColors.OKCYAN}{RELATIVE_OUTPUT_DIRECTORY}/{repository_name}/{commit.hash}/"
+        cmd = f"java -jar {FULL_CK_JAR_PATH} {workdir_directory} false 0 false {output_directory}"
+        relative_cmd = f"{backgroundColors.OKGREEN}java -jar {backgroundColors.OKCYAN}{RELATIVE_CK_JAR_PATH} {RELATIVE_REPOSITORY_DIRECTORY_PATH}/{repository_name}{backgroundColors.OKGREEN} false 0 false {backgroundColors.OKCYAN}{RELATIVE_OUTPUT_DIRECTORY_PATH}/{repository_name}/{commit.hash}/"
         
         print(f"{backgroundColors.OKCYAN}{i} of {number_of_commits}{Style.RESET_ALL} - Running CK: {relative_cmd}{Style.RESET_ALL}")
         
@@ -152,7 +152,7 @@ def main():
         
         i += 1
 
-    with open(FULL_OUTPUT_DIRECTORY + '/' + 'commit_hashes-' + repository_name + '.txt', 'w') as file:
+    with open(FULL_OUTPUT_DIRECTORY_PATH + '/' + 'commit_hashes-' + repository_name + '.txt', 'w') as file:
         file.write(commit_hashes)
 
     checkout_branch("main")
