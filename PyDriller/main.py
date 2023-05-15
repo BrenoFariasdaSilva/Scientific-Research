@@ -25,6 +25,15 @@ FULL_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_OUTPUT_DIRECTORY_PATH
 FULL_REPOSITORY_DIRECTORY_PATH = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY_PATH
 FULL_CK_JAR_PATH = os.getcwd() + RELATIVE_CK_JAR_PATH
 
+# @brief: This function checks if there is any whitespace current working directory
+# @param: None
+# @return: None
+def check_whitespace():
+    if ' ' in os.getcwd():
+        print(f"{backgroundColors.FAIL}The current working directory contains whitespace{Style.RESET_ALL}")
+        print(f"{backgroundColors.FAIL}Please remove the whitespace and try again{Style.RESET_ALL}")
+        exit()
+
 # @brief: Get the user input and check if they are empty
 # @param: None
 # @return: repository_url: URL of the repository to be analyzed
@@ -107,6 +116,9 @@ def checkout_branch(branch_name):
 # @param: None
 # @return: None
 def main():
+    # Check if the current working directory contains whitespace
+    check_whitespace()
+
     # Get the user input
     repository_url = get_user_input()
 
