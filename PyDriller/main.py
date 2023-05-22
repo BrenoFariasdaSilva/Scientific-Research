@@ -2,8 +2,10 @@
 # TODO: Informar o último parâmetro o diretório de saída
 
 import os # OS module in Python provides functions for interacting with the operating system
+import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
 import subprocess # The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes
 from pydriller import Repository # PyDriller is a Python framework that helps developers in analyzing Git repositories. 
+from tqdm import tqdm # TQDM is a progress bar library with good support for nested loops and Jupyter/IPython notebooks.
 from colorama import Style # For coloring the terminal
 
 # Macros:
@@ -25,6 +27,36 @@ FULL_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_OUTPUT_DIRECTORY_PATH
 FULL_REPOSITORY_DIRECTORY_PATH = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY_PATH
 FULL_CK_JAR_PATH = os.getcwd() + RELATIVE_CK_JAR_PATH
 
+# Default Method Names:
+METHODS_NAME = ["isNullOrZero", "isNumericSpace"]
+
+# @brief: This verifies if all the metrics are already calculated
+# @param: repository_name: Name of the repository to be analyzed
+# @return: True if all the metrics are already calculated, False otherwise
+def check_metrics_folders(repository_name):
+    print(f"{backgroundColors.OKGREEN}Checking if all the metrics are already calculated{Style.RESET_ALL}")
+    current_path = os.getcwd()
+    data_path = os.path.join(current_path, 'data')
+    repo_path = os.path.join(data_path, repository_name)
+    commit_file = f'commit_hashes-{repository_name}.txt'
+    commit_file_path = os.path.join(data_path, commit_file)
+
+    if not os.path.exists(commit_file_path):
+        print(f"{backgroundColors.FAIL}File '{commit_file}' does not exist inside '{data_path}'.{Style.RESET_ALL}")
+        return
+
+    with open(commit_file_path, 'r') as file:
+        lines = file.readlines()
+
+    for line in lines:
+        folder_name = line.strip()
+        folder_path = os.path.join(repo_path, folder_name)
+
+        if not os.path.exists(folder_path):
+            print(f"{backgroundColors.FAIL}Folder '{folder_name}' does not exist inside '{repo_path}'.{Style.RESET_ALL}")
+            return False
+    return True
+
 # @brief: This function checks if there is any whitespace current working directory
 # @param: None
 # @return: None
@@ -39,10 +71,25 @@ def check_whitespace():
 # @return: repository_url: URL of the repository to be analyzed
 def get_user_input():
     # Ask for user input of the repository URL
-    repository_url = input("Enter the repository URL: ")
+    repository_url = input(f"Enter the repository URL: ")
 
     # Return the repository URL
     return check_url_input(repository_url)
+
+# brief: Get user method name input
+# param: None
+# return: method_name: Name of the method to be analyzed
+def get_user_method_input():
+    # Ask for user input of the method name
+    method_name = input(f"Enter the method name: ")
+
+    # If empty, get from the method_names list
+    if not method_name:
+        method_name = METHODS_NAME[0]
+        print(f"{backgroundColors.OKGREEN}Using the default method name: {backgroundColors.OKCYAN}{method_name}{Style.RESET_ALL}")
+
+    # Return the method name
+    return method_name
 
 # @brief: If inputs are empty, use the default values
 # @param: repository_url: URL of the repository to be analyzed
@@ -112,6 +159,49 @@ def checkout_branch(branch_name):
     # Wait for the thread to finish
     checkout_thread.wait()
 
+# @brief: This function is analyze the repository metrics evolution over time
+def analyze_method_evolution(repository_name, method_name):
+    last_metrics = None
+    method_data = []
+
+    # Get the list of commit hashes
+    commit_hashes = os.listdir(f'data/{repository_name}/')
+    
+    for commit_hash in tqdm(commit_hashes):
+        method_path = f'data/{repository_name}/{commit_hash}/method.csv'
+
+        # Check if the method file exists for the current commit hash
+        if os.path.isfile(method_path):
+            with open(method_path, 'r') as file:
+                reader = csv.DictReader(file) # Read the method.csv file
+                
+                # Search for the method in the current commit's method.csv file
+                for row in reader:
+                    if row['method'].split('/')[0] == method_name:
+                        # print(f"{backgroundColors.OKGREEN} Found the method named {backgroundColors.OKCYAN}{method_name}{Style.RESET_ALL}")
+                        cbo = int(row['cbo'])
+                        wmc = int(row['wmc'])
+                        metrics = (cbo, wmc)
+                        data = (commit_hash, cbo, wmc)
+                        
+                        # Store the CBO and WMC metrics if they are different from the last recorded CBO and WMC metrics
+                        if metrics != last_metrics:
+                            method_data.append(data)
+                            last_metrics = metrics
+                        break
+
+    # If the method_data is empty, then the method was not found
+    if not method_data:
+        print(f'{backgroundColors.FAIL} Method {method_name} not found{Style.RESET_ALL}')
+        return
+    # Write the method_data to a file
+    output_file = f'{method_name}_evolution.csv'
+    with open(output_file, 'w') as file:
+        writer = csv.writer(file)
+        writer.writerow(['commit_hash', 'cbo', 'wmc'])
+        writer.writerows(method_data)
+    print(f"{backgroundColors.OKGREEN} Successfully wrote the method evolution to {output_file}{Style.RESET_ALL}")
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -125,8 +215,16 @@ def main():
     # Get the name of the repository
     repository_name = get_repository_name(repository_url)
 
+    # Check if the metrics were already calculated
+    if check_metrics_folders(repository_name):
+        analyze_method_evolution(repository_name, get_user_method_input())
+        return
+        
     # Create the repositories directory
     create_directory(FULL_REPOSITORY_DIRECTORY_PATH, RELATIVE_REPOSITORY_DIRECTORY_PATH)
+
+    # Create the metrics_evolutions directory
+    # create_directory(FULL_METRICS_EVOLUTIONS_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTIONS_DIRECTORY_PATH)
 
     # Clone the repository
     clone_repository(repository_url, repository_name)
@@ -168,6 +266,13 @@ def main():
         file.write(commit_hashes)
 
     checkout_branch("main")
+
+    # --------------------- #
+    class_name = input("Enter the class name: ")
+    method_name = input("Enter the method name: ")
+
+    # Calculate the CBO and WMC metrics evolution for the given method
+    analyze_method_evolution(repository_name, get_user_method_input())
 
 if __name__ == '__main__':
     main() 
