@@ -189,5 +189,5 @@ Jabref/.github/*
 
 PyDriller/repositories
 
-# Ignore every file inside PyDriller/data files
-/PyDriller/data/*
+# Ignore every file inside PyDriller/ck_metrics files
+/PyDriller/ck_metrics
