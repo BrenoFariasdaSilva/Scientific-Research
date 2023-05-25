@@ -2,17 +2,19 @@
 ## ToDo: Create complete README.md
 
 ## Installation
-You need to install python3.
-```bash
-	sudo apt install python3 -y
+You need to install python3.  
 ```
+sudo apt install python3 -y
+```
+	
 ### Requirements
-Run the following command to install the requirements:
-```bash
-	make setup
+Run the following command to install the requirements:  
 ```
-## How to use
-### Run
-```bash
-	make
+make setup
+```
+	
+## How to use  
+Run the following command to execute the project:
+```
+make
 ```
