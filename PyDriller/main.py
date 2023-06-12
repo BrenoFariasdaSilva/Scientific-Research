@@ -179,13 +179,17 @@ def analyze_method_evolution(repository_name, method_name):
                 # Search for the method in the current commit's method.csv file
                 for row in reader:
                     if row['method'].split('/')[0] == method_name:
-                        # print(f"{backgroundColors.OKGREEN} Found the method named {backgroundColors.OKCYAN}{method_name}{Style.RESET_ALL}")
                         cbo = int(row['cbo'])
                         wmc = int(row['wmc'])
-                        metrics = (cbo, wmc)
-                        data = (commit_hash, cbo, wmc)
+                        modified_cbo = int(row['modified_cbo'])
+                        rfc = int(row['rfc'])
+                        dit = int(row['dit'])
+                        lcom = int(row['lcom'])
+                        noc = int(row['noc'])
+                        metrics = (cbo, wmc, modified_cbo, rfc, dit, lcom, noc)
+                        data = (commit_hash, cbo, wmc, modified_cbo, rfc, dit, lcom, noc)
                         
-                        # Store the CBO and WMC metrics if they are different from the last recorded CBO and WMC metrics
+                        # Store the metrics if they are different from the last recorded metrics
                         if metrics != last_metrics:
                             method_data.append(data)
                             last_metrics = metrics
@@ -199,7 +203,7 @@ def analyze_method_evolution(repository_name, method_name):
     output_file = f'metrics_evolution/{method_name}.csv'
     with open(output_file, 'w') as file:
         writer = csv.writer(file)
-        writer.writerow([f'commit hash for {method_name}', 'cbo', 'wmc'])
+        writer.writerow([f'commit hash for {method_name}', 'cbo', 'wmc', 'modified_cbo', 'rfc', 'dit', 'lcom', 'noc'])
         writer.writerows(method_data)
     print(f"{backgroundColors.OKGREEN} Successfully wrote the method evolution to {output_file}{Style.RESET_ALL}")
 
