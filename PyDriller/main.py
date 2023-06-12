@@ -1,6 +1,7 @@
 import os # OS module in Python provides functions for interacting with the operating system
 import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
 import subprocess # The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes
+import statistics # The statistics module provides functions for calculating mathematical statistics of numeric (Real-valued) data
 from pydriller import Repository # PyDriller is a Python framework that helps developers in analyzing Git repositories. 
 from tqdm import tqdm # TQDM is a progress bar library with good support for nested loops and Jupyter/IPython notebooks.
 from colorama import Style # For coloring the terminal
@@ -15,6 +16,7 @@ class backgroundColors: # Colors for the terminal
 # Relative paths:
 RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics"
 RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = "/metrics_evolution"
+RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = "/metrics_statistics"
 RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories"
 RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
@@ -23,6 +25,7 @@ DEFAULT_FOLDER = os.getcwd() # Get the current working directory
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
 FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
 FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
+FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
 FULL_REPOSITORY_DIRECTORY_PATH = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY_PATH
 FULL_CK_JAR_PATH = os.getcwd() + RELATIVE_CK_JAR_PATH
 
@@ -207,6 +210,50 @@ def analyze_method_evolution(repository_name, method_name):
         writer.writerows(method_data)
     print(f"{backgroundColors.OKGREEN} Successfully wrote the method evolution to {output_file}{Style.RESET_ALL}")
 
+# @brief: This function is used to analyze the repository metrics evolution over time for the CSV files in the given directory
+# @param: directory: Directory containing the CSV files to be analyzed
+# @return: None
+def calculate_statistics(directory, output_file):
+    print(f"{backgroundColors.OKGREEN}Calculating statistics for CSV files in {directory}{Style.RESET_ALL}")
+
+    # Create the output file
+    with open(output_file, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        # Write the header row
+        writer.writerow(['File', 'Min', 'Max', 'Average', 'Median', 'Third Quartile'])
+
+        # Iterate through the CSV files in the directory
+        for root, dirs, files in os.walk(directory):
+            # Iterate through the files in the current directory
+            for file in files:
+                # Check if the file is a CSV file
+                if file.endswith(".csv"):
+                    file_path = os.path.join(root, file)
+                    print(f"Calculating statistics for {file_path}")
+                    # Read the CSV file
+                    with open(file_path, 'r') as csvfile:
+                        reader = csv.reader(csvfile)
+                        header = next(reader)  # Skip the header row
+                        values = []
+                        for row in reader:
+                            values.append(float(row[1]))  # @TODO: Must have. It assumes the values are in the second column
+
+                        # Calculate statistical measures
+                        min_value = min(values)
+                        max_value = max(values)
+                        average = sum(values) / len(values)
+                        median = statistics.median(values)
+                        third_quartile = statistics.quantiles(values, n=4)[2]
+
+                        # Write the statistical measures to the output file
+                        writer.writerow([file_path, min_value, max_value, average, median, third_quartile])
+
+                    print(f"Min: {min_value}")
+                    print(f"Max: {max_value}")
+                    print(f"Average: {average}")
+                    print(f"Median: {median}")
+                    print(f"Third Quartile: {third_quartile}")
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -222,6 +269,9 @@ def main():
 
     # create the metrics_evolution directory
     create_directory(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH)
+
+    # create the metrics_statistics directory
+    create_directory(FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH)
 
     # Check if the metrics were already calculated
     if check_metrics_folders(repository_name):
@@ -272,12 +322,11 @@ def main():
 
     checkout_branch("main")
 
-    # --------------------- #
-    class_name = input("Enter the class name: ")
-    method_name = input("Enter the method name: ")
-
     # Calculate the CBO and WMC metrics evolution for the given method
     analyze_method_evolution(repository_name, get_user_method_input())
+
+    # Calculate the statistics for the CSV files in the metrics_evolution directory
+    calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, 'metrics_statistics' + '/' + repository_name + '.csv')
 
 if __name__ == '__main__':
     main() 
