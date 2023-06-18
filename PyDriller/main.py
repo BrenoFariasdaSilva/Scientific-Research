@@ -187,13 +187,10 @@ def analyze_method_evolution(repository_name, method_name):
                     if row['method'].split('/')[0] == method_name:
                         cbo = int(row['cbo'])
                         wmc = int(row['wmc'])
-                        modified_cbo = int(row['modified_cbo'])
+                        cboModified = int(row['cboModified'])
                         rfc = int(row['rfc'])
-                        dit = int(row['dit'])
-                        lcom = int(row['lcom'])
-                        noc = int(row['noc'])
-                        metrics = (cbo, wmc, modified_cbo, rfc, dit, lcom, noc)
-                        data = (commit_hash, cbo, wmc, modified_cbo, rfc, dit, lcom, noc)
+                        metrics = (cbo, wmc, cboModified, rfc)
+                        data = (commit_hash, cbo, wmc, cboModified, rfc)
                         
                         # Store the metrics if they are different from the last recorded metrics
                         if metrics != last_metrics:
@@ -209,7 +206,7 @@ def analyze_method_evolution(repository_name, method_name):
     output_file = f'metrics_evolution/{method_name}.csv'
     with open(output_file, 'w') as file:
         writer = csv.writer(file)
-        writer.writerow([f'commit hash for {method_name}', 'cbo', 'wmc', 'modified_cbo', 'rfc', 'dit', 'lcom', 'noc'])
+        writer.writerow([f'commit hash for {method_name}', 'cbo', 'wmc', 'cboModified', 'rfc'])
         writer.writerows(method_data)
     print(f"{backgroundColors.OKGREEN} Successfully wrote the method evolution to {output_file}{Style.RESET_ALL}")
 
@@ -231,7 +228,7 @@ def calculate_statistics(directory, output_file):
             for file in files:
                 # Check if the file is a CSV file
                 if file.endswith(".csv"):
-                    file_path = os.path.join(root, file)
+                    file_path = os.path.join(root, file) # Get the full path of the file
                     print(f"Calculating statistics for {file_path}")
                     # Read the CSV file
                     with open(file_path, 'r') as csvfile:
@@ -239,7 +236,9 @@ def calculate_statistics(directory, output_file):
                         header = next(reader)  # Skip the header row
                         values = []
                         for row in reader:
-                            values.append(float(row[1]))  # @TODO: Must have. It assumes the values are in the second column
+                            print(f"Row: {row}")
+                            values.append(float(row[1:]))
+                            # Appends the second to the last value of the second row to the values list
 
                         # Calculate statistical measures
                         min_value = min(values)
