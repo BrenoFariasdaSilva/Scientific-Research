@@ -33,7 +33,7 @@ FULL_REPOSITORY_DIRECTORY_PATH = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY_PAT
 FULL_CK_JAR_PATH = os.getcwd() + RELATIVE_CK_JAR_PATH
 
 # Default Method Names:
-METHODS_NAME = ["isNullOrZero", "isNumericSpace"]
+METHODS_NAME = ["isNumericSpace", "isNullOrZero"]
 
 # @brief: This verifies if all the metrics are already calculated
 # @param: repository_name: Name of the repository to be analyzed
@@ -168,8 +168,11 @@ def checkout_branch(branch_name):
 # @param: repository_name: Name of the repository to be analyzed
 # @return: None
 def analyze_method_evolution(repository_name, method_name):
+    print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} method...{Style.RESET_ALL}")
+
     last_metrics = None
     method_data = []
+    method_variables_changes = 0
 
     # Get the list of commit hashes
     commit_hashes = os.listdir(f'ck_metrics/{repository_name}/')
@@ -185,6 +188,7 @@ def analyze_method_evolution(repository_name, method_name):
                 # Search for the method in the current commit's method.csv file
                 for row in reader:
                     if row['method'].split('/')[0] == method_name:
+                        # print the row metrics and method name
                         cbo = int(row['cbo'])
                         wmc = int(row['wmc'])
                         cboModified = int(row['cboModified'])
@@ -196,19 +200,24 @@ def analyze_method_evolution(repository_name, method_name):
                         if metrics != last_metrics:
                             method_data.append(data)
                             last_metrics = metrics
+                            method_variables_changes += 1
                         break
 
     # If the method_data is empty, then the method was not found
     if not method_data:
-        print(f'{backgroundColors.FAIL} Method {method_name} not found{Style.RESET_ALL}')
+        print(f'{backgroundColors.FAIL}Method {method_name} not found{Style.RESET_ALL}')
         return
+    
+    print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_changes}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
+
     # Write the method_data to a file in the /metrics_evolution folder
     output_file = f'metrics_evolution/{method_name}.csv'
     with open(output_file, 'w') as file:
         writer = csv.writer(file)
         writer.writerow([f'commit hash for {method_name}', 'cbo', 'wmc', 'cboModified', 'rfc'])
         writer.writerows(method_data)
-    print(f"{backgroundColors.OKGREEN} Successfully wrote the method evolution to {output_file}{Style.RESET_ALL}")
+    print(f"{backgroundColors.OKGREEN}Successfully wrote the method evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
+    print()
 
 # @brief: This function is used to analyze the repository metrics evolution over time for the CSV files in the given directory
 # @param: directory: Directory containing the CSV files to be analyzed
@@ -328,7 +337,7 @@ def main():
     analyze_method_evolution(repository_name, get_user_method_input())
 
     # Calculate the statistics for the CSV files in the metrics_evolution directory
-    calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, 'metrics_statistics' + '/' + repository_name + '.csv')
+    # calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, 'metrics_statistics' + '/' + repository_name + '.csv')
 
 if __name__ == '__main__':
     main() 
