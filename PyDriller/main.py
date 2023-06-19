@@ -33,7 +33,7 @@ FULL_REPOSITORY_DIRECTORY_PATH = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY_PAT
 FULL_CK_JAR_PATH = os.getcwd() + RELATIVE_CK_JAR_PATH
 
 # Default Method Names:
-METHODS_NAME = ["isNumericSpace", "isNullOrZero"]
+METHODS_NAME = ["isNullOrZero", "isNumericSpace", "CharSequenceUtils"]
 
 # @brief: This verifies if all the metrics are already calculated
 # @param: repository_name: Name of the repository to be analyzed
@@ -172,7 +172,7 @@ def analyze_method_evolution(repository_name, method_name):
 
     last_metrics = None
     method_data = []
-    method_variables_changes = 0
+    method_variables_counter = [0, 0]
 
     # Get the list of commit hashes
     commit_hashes = os.listdir(f'ck_metrics/{repository_name}/')
@@ -188,7 +188,7 @@ def analyze_method_evolution(repository_name, method_name):
                 # Search for the method in the current commit's method.csv file
                 for row in reader:
                     if row['method'].split('/')[0] == method_name:
-                        # print the row metrics and method name
+                        method_variables_counter[0] += 1
                         cbo = int(row['cbo'])
                         wmc = int(row['wmc'])
                         cboModified = int(row['cboModified'])
@@ -200,7 +200,7 @@ def analyze_method_evolution(repository_name, method_name):
                         if metrics != last_metrics:
                             method_data.append(data)
                             last_metrics = metrics
-                            method_variables_changes += 1
+                            method_variables_counter[1] += 1
                         break
 
     # If the method_data is empty, then the method was not found
@@ -208,13 +208,13 @@ def analyze_method_evolution(repository_name, method_name):
         print(f'{backgroundColors.FAIL}Method {method_name} not found{Style.RESET_ALL}')
         return
     
-    print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_changes}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
+    print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter[1]} of {method_variables_counter[0]}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
 
     # Write the method_data to a file in the /metrics_evolution folder
     output_file = f'metrics_evolution/{method_name}.csv'
     with open(output_file, 'w') as file:
         writer = csv.writer(file)
-        writer.writerow([f'commit hash for {method_name}', 'cbo', 'wmc', 'cboModified', 'rfc'])
+        writer.writerow([f'{method_name}', 'cbo', 'wmc', 'cboModified', 'rfc'])
         writer.writerows(method_data)
     print(f"{backgroundColors.OKGREEN}Successfully wrote the method evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
     print()
