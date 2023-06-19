@@ -33,7 +33,7 @@ FULL_REPOSITORY_DIRECTORY_PATH = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY_PAT
 FULL_CK_JAR_PATH = os.getcwd() + RELATIVE_CK_JAR_PATH
 
 # Default Method Names:
-METHODS_NAME = ["isNullOrZero", "isNumericSpace", "CharSequenceUtils"]
+METHODS_NAME = ["isNumericSpace", "isNullOrZero", "CharSequenceUtils"]
 
 # @brief: This verifies if all the metrics are already calculated
 # @param: repository_name: Name of the repository to be analyzed
@@ -287,6 +287,7 @@ def main():
     # Check if the metrics were already calculated
     if check_metrics_folders(repository_name):
         analyze_method_evolution(repository_name, get_user_method_input())
+        calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + '/' + repository_name + '.csv')
         return
         
     # Create the repositories directory
