@@ -223,24 +223,24 @@ def analyze_method_evolution(repository_name, method_name):
 # @param: directory: Directory containing the CSV files to be analyzed
 # @return: None
 def calculate_statistics(directory, output_file):
-    print(f"{backgroundColors.OKGREEN}Calculating statistics for CSV files in {directory}{Style.RESET_ALL}")
+    print(f"{backgroundColors.OKGREEN}Calculating statistics for CSV files in {backgroundColors.OKCYAN}{directory}{Style.RESET_ALL}")
 
     # Create the output file
-    with open(output_file, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
+    with open(output_file, "w", newline='') as csvfile:
+        writer = csv.writer(csvfile) # Create a CSV writer
         # Write the header row
-        writer.writerow(['File', 'Metric', 'Min', 'Max', 'Average', 'Median', 'Third Quartile'])
+        writer.writerow(["File", "Metric", "Min", "Max", "Average", "Median", "Third Quartile"])
 
-        # Iterate through the CSV files in the directory
+        # Iterate through the CSV files in the directory RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
         for root, dirs, files in os.walk(directory):
-            # Iterate through the files in the current directory
+            # Iterate through the files in the current directory 
             for file in files:
                 # Check if the file is a CSV file
                 if file.endswith(".csv"):
                     file_path = os.path.join(root, file) # Get the full path of the file
-                    print(f"Calculating statistics for {file_path}")
+                    print(f"{backgroundColors.OKGREEN}Calculating statistics for {backgroundColors.OKCYAN}{file_path}{Style.RESET_ALL}")
                     # Read the CSV file
-                    with open(file_path, 'r') as csvfile:
+                    with open(file_path, "r") as csvfile:
                         reader = csv.reader(csvfile)
                         header = next(reader)  # Skip the header row
 
@@ -249,19 +249,14 @@ def calculate_statistics(directory, output_file):
                             values.append(row[1:]) # Append the second to the last value of the row to the values list
 
                         # For loop that runs trough the columns of the reader
-                        for i in range(1, len(values[0])):
+                        for i in range(0, len(values[0])):
                             column_values = [float(row[i]) for row in values]
-                            min_value = min(column_values)
-                            max_value = max(column_values)
-                            average = statistics.mean(column_values)
-                            median = statistics.median(column_values)
-                            third_quartile = statistics.median_high(column_values)
-                            print(f"{backgroundColors.OKGREEN}Min: {min_value}{Style.RESET_ALL}")
-                            print(f"{backgroundColors.OKGREEN}Max: {max_value}{Style.RESET_ALL}")
-                            print(f"{backgroundColors.OKGREEN}Average: {average}{Style.RESET_ALL}")
-                            print(f"{backgroundColors.OKGREEN}Median: {median}{Style.RESET_ALL}")
-                            print(f"{backgroundColors.OKGREEN}Third Quartile: {third_quartile}{Style.RESET_ALL}")
-                            writer.writerow([file_path, header[i], min_value, max_value, average, median, third_quartile])
+                            min_value = round(min(column_values), 3)
+                            max_value = round(max(column_values), 3)
+                            average = round(statistics.mean(column_values), 3)
+                            median = round(statistics.median(column_values), 3)
+                            third_quartile = round(statistics.median_high(column_values), 3)
+                            writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile])
 
 # @brief: Main function
 # @param: None
@@ -329,7 +324,7 @@ def main():
         checkout_branch("main")
 
     # Calculate the CBO and WMC metrics evolution for the given method
-    # analyze_method_evolution(repository_name, get_user_method_input())
+    analyze_method_evolution(repository_name, get_user_method_input())
 
     # Calculate the statistics for the CSV files in the metrics_evolution directory
     calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, 'metrics_statistics' + '/' + repository_name + '.csv')
