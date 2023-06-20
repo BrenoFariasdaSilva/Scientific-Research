@@ -127,16 +127,16 @@ def update_repository(repository_name):
 def clone_repository(repository_url, repository_name):
     # Check if the repository directory already exists and if it is not empty
     if os.path.isdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name) and os.listdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name):
-        print(f"The {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository is already cloned!")
+        print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository is already cloned!{Style.RESET_ALL}")
         update_repository(repository_name)
         return
     else:
-        print(f"Cloning the {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository...")
+        print(f"{backgroundColors.OKGREEN}Cloning the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
         # Create a thread to clone the repository
         thread = subprocess.Popen(["git", "clone", repository_url, FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         # Wait for the thread to finish
         thread.wait()
-        print(f"Successfully cloned the {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository")
+        print(f"{backgroundColors.OKGREEN}Successfully cloned the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository{Style.RESET_ALL}")
 
 # @brief: Create a subdirectory
 # @param: full_directory_name: Name of the directory to be created
@@ -144,13 +144,13 @@ def clone_repository(repository_url, repository_name):
 # @return: None
 def create_directory(full_directory_name, relative_directory_name):
     if os.path.isdir(full_directory_name): # Check if the directory already exists
-        # print(f"The {backgroundColors.OKCYAN}{relative_directory_name}{Style.RESET_ALL} directory already exists")
+        print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory already exists{Style.RESET_ALL}")
         return
     try: # Try to create the directory
         os.makedirs(full_directory_name)
-        print (f"Successfully created the {backgroundColors.OKCYAN}{relative_directory_name}{Style.RESET_ALL} directory")
+        print (f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory{Style.RESET_ALL}")
     except OSError: # If the directory cannot be created
-        print (f"The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{Style.RESET_ALL} directory failed")
+        print (f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
 
 # @brief: This function is used to checkout a specific branch
 # @param: branch_name: Name of the branch to be checked out
@@ -286,7 +286,7 @@ def main():
         commit_hashes = ""
         
         number_of_commits = len(list(Repository(repository_url).traverse_commits()))
-        print(f"Total number of commits: {backgroundColors.OKGREEN}{number_of_commits}{Style.RESET_ALL}")
+        print(f"{backgroundColors.OKGREEN}Total number of commits: {backgroundColors.OKCYAN}{number_of_commits}{Style.RESET_ALL}")
         
         for commit in Repository(repository_url).traverse_commits():
             commit_hashes += f"{commit.hash}\n"
