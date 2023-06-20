@@ -82,6 +82,7 @@ def get_user_input():
 # param: None
 # return: method_name: Name of the method to be analyzed
 def get_user_method_input():
+    print()
     # Ask for user input of the method name
     method_name = input(f"Enter the method name: ")
 
@@ -90,6 +91,7 @@ def get_user_method_input():
         method_name = METHODS_NAME[0]
         print(f"{backgroundColors.OKGREEN}Using the default method name: {backgroundColors.OKCYAN}{method_name}{Style.RESET_ALL}")
 
+    print()
     # Return the method name
     return method_name
 
@@ -235,7 +237,7 @@ def calculate_statistics(directory, output_file):
                 # Check if the file is a CSV file
                 if file.endswith(".csv"):
                     file_path = os.path.join(root, file) # Get the full path of the file
-                    print(f"{backgroundColors.OKGREEN}Calculating statistics for {backgroundColors.OKCYAN}{file_path}{Style.RESET_ALL}")
+                    print(f"{backgroundColors.OKGREEN}Calculating statistics for {backgroundColors.OKCYAN}{file_path.split('/')[-1]}{Style.RESET_ALL}")
                     # Read the CSV file
                     with open(file_path, "r") as csvfile:
                         reader = csv.reader(csvfile)
@@ -254,6 +256,7 @@ def calculate_statistics(directory, output_file):
                             median = round(statistics.median(column_values), 3)
                             third_quartile = round(statistics.median_high(column_values), 3)
                             writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile])
+    print(f"{backgroundColors.OKGREEN}Successfully wrote the statistics to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
 
 # @brief: Main function
 # @param: None
@@ -270,12 +273,15 @@ def main():
 
     # create the metrics_evolution directory
     create_directory(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH)
+    print()
 
     # create the metrics_statistics directory
     create_directory(FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH)
+    print()
 
     # Check if the metrics were already calculated
     if not check_metrics_folders(repository_name):
+        print()
         # Create the repositories directory
         create_directory(FULL_REPOSITORY_DIRECTORY_PATH, RELATIVE_REPOSITORY_DIRECTORY_PATH)
 
