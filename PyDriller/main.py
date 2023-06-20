@@ -248,25 +248,27 @@ def calculate_statistics(directory, output_file):
                             print(f"{backgroundColors.OKGREEN}Row: {row[1:]}{Style.RESET_ALL}")
                             values.append(row[1:]) # Append the second to the last value of the row to the values list
 
-                        # Make a for loop to calculate the statistical measures for each column
-                        for i in range(len(values[0])):
-                            # Calculate statistical measures
-                            min_value = min([float(row[i + 1]) for row in values])
-                            max_value = max([float(row[i + 1]) for row in values])
-                            average = statistics.mean([float(row[i + 1]) for row in values])
-                            median = statistics.median([float(row[i + 1]) for row in values])
-                            third_quartile = statistics.median_high([float(row[i + 1]) for row in values])
+                        for i in range(1, len(values[0])):
+                            column_values = [float(row[i]) for row in values]  # Exclude header row
+                            print(f"{backgroundColors.OKGREEN}Column {i}: {column_values}{Style.RESET_ALL}")
+                            min_value = min(column_values)
+                            max_value = max(column_values)
+                            average = statistics.mean(column_values)
+                            median = statistics.median(column_values)
+                            third_quartile = statistics.median_high(column_values)
+
+                            print(f"Column {i}:")
+                            print(f"Min: {min_value}")
+                            print(f"Max: {max_value}")
+                            print(f"Average: {average}")
+                            print(f"Median: {median}")
+                            print(f"Third Quartile: {third_quartile}")
+                            print()
 
                             # Write the statistical measures to the output file
                             writer.writerow([file_path, min_value, max_value, average, median, third_quartile])
                         # Write the statistical measures to the output file
                         writer.writerow([file_path, min_value, max_value, average, median, third_quartile])
-
-                    print(f"Min: {min_value}")
-                    print(f"Max: {max_value}")
-                    print(f"Average: {average}")
-                    print(f"Median: {median}")
-                    print(f"Third Quartile: {third_quartile}")
 
 # @brief: Main function
 # @param: None
@@ -334,7 +336,7 @@ def main():
         checkout_branch("main")
 
     # Calculate the CBO and WMC metrics evolution for the given method
-    analyze_method_evolution(repository_name, get_user_method_input())
+    # analyze_method_evolution(repository_name, get_user_method_input())
 
     # Calculate the statistics for the CSV files in the metrics_evolution directory
     calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, 'metrics_statistics' + '/' + repository_name + '.csv')
