@@ -1,5 +1,7 @@
 # [PyDriller](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)
-### TODO: Make the code run for lots of methods names, and not just one, by changing the methods input (get_user_method_input) and calling the search_method_metrics and calculate_statistics functions for each method name.
+***@TODO***: Make the code run for lots of methods names, and not just one. Do this by changing the methods input (get_user_method_input) and calling the search_method_metrics and calculate_statistics functions for each method name.
+***@TODO***: Update the README.md file with the new changes and add use cases.
+
 ### Important Note: Make sure you doesn't have whitespaces in the path of the project, otherwise it will not work.
 
 ## Installation
