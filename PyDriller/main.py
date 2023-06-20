@@ -23,14 +23,12 @@ RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 # Default values:
 DEFAULT_FOLDER = os.getcwd() # Get the current working directory
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
+DEFAULT_METHODS_NAME = ["isNumericSpace", "isNullOrZero", "CharSequenceUtils"]
 FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
 FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
 FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
 FULL_REPOSITORY_DIRECTORY_PATH = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY_PATH
 FULL_CK_JAR_PATH = os.getcwd() + RELATIVE_CK_JAR_PATH
-
-# Default Method Names:
-METHODS_NAME = ["isNumericSpace", "isNullOrZero", "CharSequenceUtils"]
 
 # @brief: This function checks if there is any whitespace current working directory
 # @param: None
@@ -61,7 +59,7 @@ def get_user_method_input():
 
     # If empty, get from the method_names list
     if not method_name:
-        method_name = METHODS_NAME[0]
+        method_name = DEFAULT_METHODS_NAME[0]
         print(f"{backgroundColors.OKGREEN}Using the default method name: {backgroundColors.OKCYAN}{method_name}{Style.RESET_ALL}")
 
     print()
@@ -189,11 +187,11 @@ def search_method_metrics(repository_name, method_name):
                     if row["method"].split('/')[0] == method_name:
                         method_variables_counter[0] += 1
                         cbo = int(row["cbo"])
-                        wmc = int(row["wmc"])
                         cboModified = int(row["cboModified"])
+                        wmc = int(row["wmc"])
                         rfc = int(row["rfc"])
-                        metrics = (cbo, wmc, cboModified, rfc)
-                        data = (commit_hash, cbo, wmc, cboModified, rfc)
+                        metrics = (cbo, cboModified, wmc, rfc)
+                        data = (commit_hash, cbo, cboModified, wmc, rfc)
                         
                         # Store the metrics if they are different from the last recorded metrics
                         if metrics != last_metrics:
@@ -213,7 +211,7 @@ def search_method_metrics(repository_name, method_name):
     output_file = f"metrics_evolution/{method_name}.csv"
     with open(output_file, 'w') as file:
         writer = csv.writer(file)
-        writer.writerow([f"{method_name}", "cbo", "wmc", "cboModified", "rfc"])
+        writer.writerow([f"{method_name}", "cbo", "cboModified", "wmc", "rfc"])
         writer.writerows(method_data)
     print(f"{backgroundColors.OKGREEN}Successfully wrote the method evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
     print()
