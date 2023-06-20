@@ -166,7 +166,7 @@ def checkout_branch(branch_name):
 # @brief: This function is analyze the repository metrics evolution over time
 # @param: repository_name: Name of the repository to be analyzed
 # @return: None
-def analyze_method_evolution(repository_name, method_name):
+def search_method_metrics(repository_name, method_name):
     print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} method...{Style.RESET_ALL}")
 
     last_metrics = None
@@ -327,7 +327,7 @@ def main():
         checkout_branch("main")
 
     # Calculate the CBO and WMC metrics evolution for the given method
-    analyze_method_evolution(repository_name, get_user_method_input())
+    search_method_metrics(repository_name, get_user_method_input())
 
     # Calculate the statistics for the CSV files in the metrics_evolution directory
     calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + ".csv")
