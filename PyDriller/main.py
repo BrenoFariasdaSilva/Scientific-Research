@@ -229,7 +229,7 @@ def calculate_statistics(directory, output_file):
     with open(output_file, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         # Write the header row
-        writer.writerow(['File', 'Min', 'Max', 'Average', 'Median', 'Third Quartile'])
+        writer.writerow(['File', 'Metric', 'Min', 'Max', 'Average', 'Median', 'Third Quartile'])
 
         # Iterate through the CSV files in the directory
         for root, dirs, files in os.walk(directory):
@@ -243,32 +243,25 @@ def calculate_statistics(directory, output_file):
                     with open(file_path, 'r') as csvfile:
                         reader = csv.reader(csvfile)
                         header = next(reader)  # Skip the header row
+
                         values = []
                         for row in reader:
-                            print(f"{backgroundColors.OKGREEN}Row: {row[1:]}{Style.RESET_ALL}")
                             values.append(row[1:]) # Append the second to the last value of the row to the values list
 
+                        # For loop that runs trough the columns of the reader
                         for i in range(1, len(values[0])):
-                            column_values = [float(row[i]) for row in values]  # Exclude header row
-                            print(f"{backgroundColors.OKGREEN}Column {i}: {column_values}{Style.RESET_ALL}")
+                            column_values = [float(row[i]) for row in values]
                             min_value = min(column_values)
                             max_value = max(column_values)
                             average = statistics.mean(column_values)
                             median = statistics.median(column_values)
                             third_quartile = statistics.median_high(column_values)
-
-                            print(f"Column {i}:")
-                            print(f"Min: {min_value}")
-                            print(f"Max: {max_value}")
-                            print(f"Average: {average}")
-                            print(f"Median: {median}")
-                            print(f"Third Quartile: {third_quartile}")
-                            print()
-
-                            # Write the statistical measures to the output file
-                            writer.writerow([file_path, min_value, max_value, average, median, third_quartile])
-                        # Write the statistical measures to the output file
-                        writer.writerow([file_path, min_value, max_value, average, median, third_quartile])
+                            print(f"{backgroundColors.OKGREEN}Min: {min_value}{Style.RESET_ALL}")
+                            print(f"{backgroundColors.OKGREEN}Max: {max_value}{Style.RESET_ALL}")
+                            print(f"{backgroundColors.OKGREEN}Average: {average}{Style.RESET_ALL}")
+                            print(f"{backgroundColors.OKGREEN}Median: {median}{Style.RESET_ALL}")
+                            print(f"{backgroundColors.OKGREEN}Third Quartile: {third_quartile}{Style.RESET_ALL}")
+                            writer.writerow([file_path, header[i], min_value, max_value, average, median, third_quartile])
 
 # @brief: Main function
 # @param: None
