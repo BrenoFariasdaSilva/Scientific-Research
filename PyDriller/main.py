@@ -1,6 +1,3 @@
-# @TODO: Para cada arquivo CSV, calcule os valores mínimo, máximo, média, mediana e terceiro quartil dos valores.
-# @TODO: Depois filtre o CSV para ver os valores acima do terceiro quartil.
-
 import os # OS module in Python provides functions for interacting with the operating system
 import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
 import subprocess # The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes
