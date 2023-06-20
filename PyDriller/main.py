@@ -291,13 +291,13 @@ def main():
         for commit in Repository(repository_url).traverse_commits():
             commit_hashes += f"{commit.hash}\n"
 
-            workdir_directory = FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name
+            workdir_directory = FULL_REPOSITORY_DIRECTORY_PATH + "/" + repository_name
             os.chdir(workdir_directory)        
             checkout_branch(commit.hash)
 
             # Create the output directory
-            output_directory = FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH + '/' + repository_name + '/' + commit.hash + '/'
-            relative_output_directory = RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH + '/' + repository_name + '/' + commit.hash + '/'
+            output_directory = FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH + "/" + repository_name + "/" + commit.hash + "/"
+            relative_output_directory = RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH + "/" + repository_name + "/" + commit.hash + "/"
             create_directory(output_directory, relative_output_directory)
 
             # change working directory to the repository directory
@@ -315,7 +315,7 @@ def main():
             
             i += 1
 
-        with open(FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH + '/' + 'commit_hashes-' + repository_name + '.txt', 'w') as file:
+        with open(FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH + "/" + "commit_hashes-" + repository_name + ".txt", "w") as file:
             file.write(commit_hashes)
 
         checkout_branch("main")
@@ -324,7 +324,7 @@ def main():
     analyze_method_evolution(repository_name, get_user_method_input())
 
     # Calculate the statistics for the CSV files in the metrics_evolution directory
-    calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, 'metrics_statistics' + '/' + repository_name + '.csv')
+    calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + ".csv")
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
