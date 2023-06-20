@@ -32,33 +32,6 @@ FULL_CK_JAR_PATH = os.getcwd() + RELATIVE_CK_JAR_PATH
 # Default Method Names:
 METHODS_NAME = ["isNumericSpace", "isNullOrZero", "CharSequenceUtils"]
 
-# @brief: This verifies if all the metrics are already calculated
-# @param: repository_name: Name of the repository to be analyzed
-# @return: True if all the metrics are already calculated, False otherwise
-def check_metrics_folders(repository_name):
-    print(f"{backgroundColors.OKGREEN}Checking if all the metrics are already calculated{Style.RESET_ALL}")
-    current_path = os.getcwd()
-    data_path = os.path.join(current_path, "ck_metrics")
-    repo_path = os.path.join(data_path, repository_name)
-    commit_file = f"commit_hashes-{repository_name}.txt"
-    commit_file_path = os.path.join(data_path, commit_file)
-
-    if not os.path.exists(commit_file_path):
-        print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
-        return
-
-    with open(commit_file_path, "r") as file:
-        lines = file.readlines()
-
-    for line in lines:
-        folder_name = line.strip()
-        folder_path = os.path.join(repo_path, folder_name)
-
-        if not os.path.exists(folder_path):
-            print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
-            return False
-    return True
-
 # @brief: This function checks if there is any whitespace current working directory
 # @param: None
 # @return: None
@@ -153,6 +126,33 @@ def create_directory(full_directory_name, relative_directory_name):
         print (f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory{Style.RESET_ALL}")
     except OSError: # If the directory cannot be created
         print (f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
+
+# @brief: This verifies if all the metrics are already calculated
+# @param: repository_name: Name of the repository to be analyzed
+# @return: True if all the metrics are already calculated, False otherwise
+def check_metrics_folders(repository_name):
+    print(f"{backgroundColors.OKGREEN}Checking if all the metrics are already calculated{Style.RESET_ALL}")
+    current_path = os.getcwd()
+    data_path = os.path.join(current_path, "ck_metrics")
+    repo_path = os.path.join(data_path, repository_name)
+    commit_file = f"commit_hashes-{repository_name}.txt"
+    commit_file_path = os.path.join(data_path, commit_file)
+
+    if not os.path.exists(commit_file_path):
+        print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+        return
+
+    with open(commit_file_path, "r") as file:
+        lines = file.readlines()
+
+    for line in lines:
+        folder_name = line.strip()
+        folder_path = os.path.join(repo_path, folder_name)
+
+        if not os.path.exists(folder_path):
+            print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+            return False
+    return True
 
 # @brief: This function is used to checkout a specific branch
 # @param: branch_name: Name of the branch to be checked out
