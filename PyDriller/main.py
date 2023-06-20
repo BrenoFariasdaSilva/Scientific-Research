@@ -38,16 +38,16 @@ METHODS_NAME = ["isNumericSpace", "isNullOrZero", "CharSequenceUtils"]
 def check_metrics_folders(repository_name):
     print(f"{backgroundColors.OKGREEN}Checking if all the metrics are already calculated{Style.RESET_ALL}")
     current_path = os.getcwd()
-    data_path = os.path.join(current_path, 'ck_metrics')
+    data_path = os.path.join(current_path, "ck_metrics")
     repo_path = os.path.join(data_path, repository_name)
-    commit_file = f'commit_hashes-{repository_name}.txt'
+    commit_file = f"commit_hashes-{repository_name}.txt"
     commit_file_path = os.path.join(data_path, commit_file)
 
     if not os.path.exists(commit_file_path):
-        print(f"{backgroundColors.FAIL}File '{commit_file}' does not exist inside '{data_path}'.{Style.RESET_ALL}")
+        print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
         return
 
-    with open(commit_file_path, 'r') as file:
+    with open(commit_file_path, "r") as file:
         lines = file.readlines()
 
     for line in lines:
@@ -55,7 +55,7 @@ def check_metrics_folders(repository_name):
         folder_path = os.path.join(repo_path, folder_name)
 
         if not os.path.exists(folder_path):
-            print(f"{backgroundColors.FAIL}Folder '{folder_name}' does not exist inside '{repo_path}'.{Style.RESET_ALL}")
+            print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
             return False
     return True
 
