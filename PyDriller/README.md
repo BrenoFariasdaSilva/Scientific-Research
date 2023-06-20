@@ -22,4 +22,7 @@ make
 1. The first thing it will do is check if you don't have whitespaces in the path of the project, if you have, it will not work.  
 2. Then it will ask you to enter the url of the repository you want to analyze, for example: ```https://github.com/apache/commons-lang```.
    If you just press enter, it will use the default repository url, which is stored in the ```DEFAULT_REPOSITORY_URL``` constant defined in the top of the ```main.py``` file. In that case, the default repository is commons-lang.
-3. Then it will get the repository name, create a folder with that name and clone the repository in that folder.
+3. Then it will get the repository name, and create the following folders: ```ck_metrics```, ```metrics_evolution/```, ```metrics_statistics/``` and, lastly, a subfolder inside the ```ck_metrics/``` folder with the name of the repository, in order to store the ck metrics of the repository that ck will generate. 
+4. Now, if the `check_metrics_folders` function notes that the ck output are not where it should, it will assume that ck never ran inside the repository you specified, it will run it. In order to to run the ck, it will clone the repository, check the number of commits in the repository in order for PyDriller to traverse commits tree, storing the commit hashes in a .txt file, so we can do a git branch checkout to run ck for every commit hash in the repository. Keep in mind that the execution of the ck tool will take a while, depending on the number of commits of the repository. Commons-lang, for example, has like 8000 commits, so it will take like more than an hour to finish.
+5. Explain the metrics evolution.
+6. Explain the metrics statistics.
