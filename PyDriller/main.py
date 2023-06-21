@@ -23,7 +23,7 @@ RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 # Default values:
 DEFAULT_FOLDER = os.getcwd() # Get the current working directory
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
-DEFAULT_METHODS_NAME = ["isNumericSpace", "isNullOrZero", "CharSequenceUtils"]
+DEFAULT_METHODS_NAME = ["testBothArgsNull", "isNumericSpace", "isNullOrZero", "CharSequenceUtils"]
 FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
 FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
 FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
