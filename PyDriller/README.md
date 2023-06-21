@@ -2,6 +2,7 @@
 @TODO: Make the code run for lots of methods names, and not just one, by changing the methods input (get_user_method_input) and calling the search_method_metrics and calculate_statistics functions for each method name.  
 @TODO: Make the combination of the class and method, and not just the method name, in order to avoid picking up methods with the same name but in different classes.  
 @TODO: Make it work with the class.csv, instead of the method.csv, in order to get the metrics of the class.  
+@TODO: Update README to explain the new features (top_changes.py)
 ### Important Note: Make sure you doesn't have whitespaces in the path of the project, otherwise it will not work.
 
 ## Installation
