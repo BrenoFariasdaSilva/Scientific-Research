@@ -1,7 +1,7 @@
 all:
 	clear; python3 main.py
 
-methods:
+top_changes:
 	clear; python3 top_changes.py
 
 setup:
