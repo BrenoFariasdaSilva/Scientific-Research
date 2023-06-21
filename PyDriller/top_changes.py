@@ -82,6 +82,8 @@ def write_top_changed_methods_to_csv(top_changed_methods):
 		writer.writerow(["Method", "Changes", "CBO", "CBO Modified", "WMC", "RFC"])
 		# Write the rows
 		for method, metrics in top_changed_methods:
+			if metrics["changes"] == 1: # if the number of changes is 1, then
+				return 
 			writer.writerow([method, metrics["changes"], *metrics["metrics"]])
 
 # @brief: The main function
@@ -98,10 +100,8 @@ def main():
 
 	# Traverse the directory and get the method metrics
 	method_metrics = traverse_directory(directory_path)
-	print(f"Number of methods: {len(method_metrics)}")
 	# Get the top changed methods
 	top_changed_methods = sort_top_changed_methods(method_metrics)
-	print(f"Number of methods with the most significant metric changes: {len(top_changed_methods)}")
 	# Output the top changed methods
 	write_top_changed_methods_to_csv(top_changed_methods)
 
