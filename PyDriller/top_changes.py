@@ -7,11 +7,12 @@ from tqdm import tqdm # for progress bar
 # @param method_metrics: A dictionary containing the metrics of each method
 # @return: None
 def process_csv_file(file_path, method_metrics):
+	metrics_changes = []
 	# Open the csv file
 	with open(file_path, "r") as csvfile:
 		# Read the csv file
 		reader = csv.DictReader(csvfile)
-		# Iterate through each row
+		# Iterate through each row, that is, for each method in the csv file
 		for row in reader:
 			class_name = row["class"]
 			method_name = row["method"]
@@ -25,11 +26,12 @@ def process_csv_file(file_path, method_metrics):
 			method = f"{class_name} {method_name}"
 			
 			if method not in method_metrics: # if the method is not in the dictionary
-					method_metrics[method] = {"metrics": metrics, "changes": 1}
+					metrics_changes.append(metrics) # add the metrics to the list
+					method_metrics[method] = {"metrics": metrics_changes, "changes": 1}
 			else: # if the method is in the dictionary
-					if method_metrics[method]["metrics"] != metrics: # if the metrics are different
+					if metrics not in metrics_changes: # if the metrics are not in the list
+						metrics_changes.append(metrics) # add the metrics values to the list
 						method_metrics[method]["changes"] += 1 # increment the number of changes
-						method_metrics[method]["metrics"] = metrics # update the metrics
 
 # @brief: Traverses a directory and processes all the csv files
 # @param directory_path: The path to the directory
@@ -41,7 +43,7 @@ def traverse_directory(directory_path):
 	
 	# Traverse the directory
 	for root, dirs, files in os.walk(directory_path):
-		# Iterate through each file
+		# Iterate through each file in the directory and call the process_csv_file function to get the methods metrics of each file in each file
 		for file in files:
 			# If the file is a csv file
 			if file == "method.csv":
@@ -101,9 +103,25 @@ def main():
 	# Traverse the directory and get the method metrics
 	method_metrics = traverse_directory(directory_path)
 	# Get the top changed methods
-	top_changed_methods = sort_top_changed_methods(method_metrics)
-	# Output the top changed methods
-	write_top_changed_methods_to_csv(top_changed_methods)
+	# print the first method, its changes, and its metrics
+	for method, metrics in method_metrics.items():
+		with open("metrics_statistics/top_changed_methods.csv", "w") as csvfile:
+			writer = csv.writer(csvfile)
+			writer.writerow(["Method", "Changes", "CBO", "CBO Modified", "WMC", "RFC"])
+			writer.writerow([method, metrics["changes"], *metrics["metrics"]])
+			# now make a loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cbo_modified, wmc, rfc)
+			# then print the results in the csv file
+			for metric in metrics["metrics"]:	
+				cbo = float(min(metric[0]))
+				cbo_modified = float(max(metric[1]))
+				wmc = metric[2]
+				rfc = metric[3]
+				writer.writerow([method, metrics["changes"], cbo, cbo_modified, wmc, rfc])
+
+		break
+	# top_changed_methods = sort_top_changed_methods(method_metrics)
+	# # Output the top changed methods
+	# write_top_changed_methods_to_csv(top_changed_methods)
 
 # Directive to run the main function
 if __name__ == "__main__":

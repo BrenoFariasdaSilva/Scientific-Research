@@ -23,7 +23,7 @@ RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 # Default values:
 DEFAULT_FOLDER = os.getcwd() # Get the current working directory
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
-DEFAULT_METHODS_NAME = ["testBothArgsNull", "isNumericSpace", "isNullOrZero", "CharSequenceUtils"]
+DEFAULT_METHODS_NAME = ["testBothArgsNull", "isNumericSpace", "CharSequenceUtils"]
 FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
 FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
 FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
@@ -59,7 +59,7 @@ def get_user_method_input():
 
     # If empty, get from the method_names list
     if not method_name:
-        method_name = DEFAULT_METHODS_NAME[0]
+        method_name = DEFAULT_METHODS_NAME
         print(f"{backgroundColors.OKGREEN}Using the default method name: {backgroundColors.OKCYAN}{method_name}{Style.RESET_ALL}")
 
     print()
@@ -186,10 +186,10 @@ def search_method_metrics(repository_name, method_name):
                 for row in reader:
                     if row["method"].split('/')[0] == method_name:
                         method_variables_counter[0] += 1
-                        cbo = int(row["cbo"])
-                        cboModified = int(row["cboModified"])
-                        wmc = int(row["wmc"])
-                        rfc = int(row["rfc"])
+                        cbo = float(row["cbo"])
+                        cboModified = float(row["cboModified"])
+                        wmc = float(row["wmc"])
+                        rfc = float(row["rfc"])
                         metrics = (cbo, cboModified, wmc, rfc)
                         data = (commit_hash, cbo, cboModified, wmc, rfc)
                         
@@ -208,7 +208,7 @@ def search_method_metrics(repository_name, method_name):
     print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter[1]} of {method_variables_counter[0]}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
 
     # Write the method_data to a file in the /metrics_evolution folder
-    output_file = f"metrics_evolution/{method_name}.csv"
+    output_file = f"metrics_evolution/{repository_name}-{method_name}.csv"
     with open(output_file, 'w') as file:
         writer = csv.writer(file)
         writer.writerow([f"{method_name}", "cbo", "cboModified", "wmc", "rfc"])
@@ -324,11 +324,17 @@ def main():
 
         checkout_branch("main")
 
-    # Calculate the CBO and WMC metrics evolution for the given method
-    search_method_metrics(repository_name, get_user_method_input())
+    # Make a for loop to run the search_method_metrics and calculate_statistics function for every method in the user input
+    for method in get_user_method_input():
+        print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{method}{Style.RESET_ALL}")
+        # Calculate the CBO and WMC metrics evolution for the given method
+        search_method_metrics(repository_name, method)
 
-    # Calculate the statistics for the CSV files in the metrics_evolution directory
-    calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + ".csv")
+        # Calculate the statistics for the CSV files in the metrics_evolution directory
+        calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + "-" + method + ".csv")
+        print()
+
+    print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics for {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL}")
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
