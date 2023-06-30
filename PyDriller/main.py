@@ -12,6 +12,10 @@ class backgroundColors: # Colors for the terminal
 	OKGREEN = "\033[92m" # Green
 	WARNING = "\033[93m" # Yellow
 	FAIL = "\033[91m" # Red
+        
+# Default paths:
+path = os.getcwd() # Get the current working directory
+escaped_path = path.replace(" ", "\ ") # Replace the whitespace with "\ "
  
 # Relative paths:
 RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics"
@@ -21,23 +25,14 @@ RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories"
 RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
 # Default values:
-DEFAULT_FOLDER = os.getcwd() # Get the current working directory
+DEFAULT_FOLDER = escaped_path # Get the current working directory
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
 DEFAULT_METHODS_NAME = ["testBothArgsNull", "isNumericSpace", "CharSequenceUtils"]
-FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
-FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
-FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = os.getcwd() + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
-FULL_REPOSITORY_DIRECTORY_PATH = os.getcwd() + RELATIVE_REPOSITORY_DIRECTORY_PATH
-FULL_CK_JAR_PATH = os.getcwd() + RELATIVE_CK_JAR_PATH
-
-# @brief: This function checks if there is any whitespace current working directory
-# @param: None
-# @return: None
-def check_whitespace():
-    if ' ' in os.getcwd():
-        print(f"{backgroundColors.FAIL}The current working directory contains whitespace{Style.RESET_ALL}")
-        print(f"{backgroundColors.FAIL}Please remove the whitespace and try again{Style.RESET_ALL}")
-        exit()
+FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = escaped_path + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
+FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = escaped_path + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
+FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = escaped_path + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
+FULL_REPOSITORY_DIRECTORY_PATH = escaped_path + RELATIVE_REPOSITORY_DIRECTORY_PATH
+FULL_CK_JAR_PATH = escaped_path + RELATIVE_CK_JAR_PATH
 
 # @brief: Get the user input and check if they are empty
 # @param: None
@@ -130,7 +125,7 @@ def create_directory(full_directory_name, relative_directory_name):
 # @return: True if all the metrics are already calculated, False otherwise
 def check_metrics_folders(repository_name):
     print(f"{backgroundColors.OKGREEN}Checking if all the metrics are already calculated{Style.RESET_ALL}")
-    current_path = os.getcwd()
+    current_path = escaped_path
     data_path = os.path.join(current_path, "ck_metrics")
     repo_path = os.path.join(data_path, repository_name)
     commit_file = f"commit_hashes-{repository_name}.txt"
@@ -260,9 +255,6 @@ def calculate_statistics(directory, output_file):
 # @param: None
 # @return: None
 def main():
-    # Check if the current working directory contains whitespace
-    check_whitespace()
-
     # Get the user input
     repository_url = get_user_input()
 
