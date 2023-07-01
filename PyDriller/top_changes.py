@@ -14,6 +14,20 @@ SORTED_TOP_CHANGED_METHODS_CSV_FILENAME = "sorted_top_changed_methods.csv" # The
 RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics"
 RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = "/metrics_statistics"
 
+# @brief: Gets the user input for the repository name and returns the path to the directory
+# @param: None
+# @return: The path to the directory
+def get_directory_path():
+	repository_name = input("Enter the repository name (String): ")
+	directory_path = f"{RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH}/{repository_name}"
+
+	while not os.path.isdir(directory_path):
+		print("The directory does not exist.")
+		repository_name = input("Enter the repository name (String): ")
+		directory_path = f"{RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH}/{repository_name}"
+
+	return directory_path
+
 # @brief: Processes a csv file containing the metrics of a method
 # @param file_path: The path to the csv file
 # @param method_metrics: A dictionary containing the metrics of each method
@@ -106,13 +120,8 @@ def write_top_changed_methods_to_csv(top_changed_methods):
 # @param: None
 # @return: None
 def main():
-	repository_name = input("Enter the repository name (String): ")
-	directory_path = f"ck_metrics/{repository_name}"
-
-	while not os.path.isdir(directory_path):
-		print("The directory does not exist.")
-		repository_name = input("Enter the repository name (String): ")
-		directory_path = f"ck_metrics/{repository_name}"
+	# Get the directory path from user input of the repository name
+	directory_path = get_directory_path()
 
 	# Traverse the directory and get the method metrics
 	# method_metrics = traverse_directory(directory_path)
