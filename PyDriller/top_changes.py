@@ -124,11 +124,7 @@ def main():
 	directory_path = get_directory_path()
 
 	# Traverse the directory and get the method metrics
-	# method_metrics = traverse_directory(directory_path)
 	method_metrics = traverse_directory(directory_path)
-
-	with open("junk/method_metrics.txt", "w") as file:
-		file.write(str(method_metrics))
 
 	# Get the top changed methods
 	for method, metrics in method_metrics.items():
