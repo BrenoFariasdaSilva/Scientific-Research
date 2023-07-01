@@ -126,45 +126,33 @@ def main():
 	# Traverse the directory and get the method metrics
 	method_metrics = traverse_directory(directory_path)
 
-	# Get the top changed methods
-	for method, metrics in method_metrics.items():
-		with open("metrics_statistics/top_changed_methods.csv", "w") as csvfile:
-			writer = csv.writer(csvfile)
-			writer.writerow(["Method", "Changes", "CBOMin", "CBOMax", "CBOAvg", "CBOThirdQuartile", "CBO ModifiedMin", "CBO ModifiedMax", "CBO ModifiedAvg", "CBO ModifiedThirdQuartile", "WMCMin", "WMCMax", "WMCAvg", "WMCThirdQuartile", "RFCMin", "RFCMax", "RFCAvg", "RFCThirdQuartile"])
-			# writer.writerow([method, metrics["changes"], *metrics["metrics"]])
-			# now make a loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cbo_modified, wmc, rfc)
-			# then print the results in the csv file
-			for metric in metrics["metrics"]:
-				# check if the metrics changes is 1, then return
-				if metrics["changed"] == 1:
-					continue
-				print(f"metrics of {method}: {metric}")	
-				cboMin = float(min(metric[0]))
-				cboMax = float(max(metric[0]))
-				cboAvg = float(sum(metric[0])) / len(metric[0])
-				cboThirdQuartile = float(np.percentile(metric[0], 75))
-				cbo_modifiedMin = float(min(metric[1]))
-				cbo_modifiedMax = float(max(metric[1]))
-				cbo_modifiedAvg = float(sum(metric[1])) / len(metric[1])
-				cbo_modifiedThirdQuartile = float(np.percentile(metric[1], 75))
-				wmcMin = float(min(metric[2]))
-				wmcMax = float(max(metric[2]))
-				wmcAvg = float(sum(metric[2])) / len(metric[2])
-				wmcThirdQuartile = float(np.percentile(metric[2], 75))
-				rfcMin = float(min(metric[3]))
-				rfcMax = float(max(metric[3]))
-				rfcAvg = float(sum(metric[3])) / len(metric[3])
-				rfcThirdQuartile = float(np.percentile(metric[3], 75))
-				writer.writerow([method, metrics["changed"], cboMin, cboMax, cboAvg, cboThirdQuartile, cbo_modifiedMin, cbo_modifiedMax, cbo_modifiedAvg, cbo_modifiedThirdQuartile, wmcMin, wmcMax, wmcAvg, wmcThirdQuartile, rfcMin, rfcMax, rfcAvg, rfcThirdQuartile])
-				# cbo_modified = float(max(metric[1]))
-				# wmc = metric[2]
-				# rfc = metric[3]
-				# writer.writerow([method, metrics["changes"], cbo, cbo_modified, wmc, rfc])
+	# Get the method metrics statistics
+	with open(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + TOP_CHANGED_METHODS_CSV_FILENAME, "w") as csvfile:
+		writer = csv.writer(csvfile)	
+		writer.writerow(["Method", "Changed", "CBOMin", "CBOMax", "CBOAvg", "CBOThirdQuartile", "CBO ModifiedMin", "CBO ModifiedMax", "CBO ModifiedAvg", "CBO ModifiedThirdQuartile", "WMCMin", "WMCMax", "WMCAvg", "WMCThirdQuartile", "RFCMin", "RFCMax", "RFCAvg", "RFCThirdQuartile"])
 
-		# break
-	# top_changed_methods = sort_top_changed_methods(method_metrics)
-	# # Output the top changed methods
-	# write_top_changed_methods_to_csv(top_changed_methods)
+		# Loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cbo_modified, wmc, rfc)
+		for method, metrics in method_metrics.items():
+			# check if the metrics changes is 1, then return
+			if metrics["changed"] == 1:
+				continue
+			cboMin = float(min(metrics[0]))
+			cboMax = float(max(metrics[0]))
+			cboAvg = float(sum(metrics[0])) / len(metrics[0])
+			cboThirdQuartile = float(np.percentile(metrics[0], 75))
+			cbo_modifiedMin = float(min(metrics[1]))
+			cbo_modifiedMax = float(max(metrics[1]))
+			cbo_modifiedAvg = float(sum(metrics[1])) / len(metrics[1])
+			cbo_modifiedThirdQuartile = float(np.percentile(metrics[1], 75))
+			wmcMin = float(min(metrics[2]))
+			wmcMax = float(max(metrics[2]))
+			wmcAvg = float(sum(metrics[2])) / len(metrics[2])
+			wmcThirdQuartile = float(np.percentile(metrics[2], 75))
+			rfcMin = float(min(metrics[3]))
+			rfcMax = float(max(metrics[3]))
+			rfcAvg = float(sum(metrics[3])) / len(metrics[3])
+			rfcThirdQuartile = float(np.percentile(metrics[3], 75))
+			writer.writerow([method, metrics["changed"], cboMin, cboMax, cboAvg, cboThirdQuartile, cbo_modifiedMin, cbo_modifiedMax, cbo_modifiedAvg, cbo_modifiedThirdQuartile, wmcMin, wmcMax, wmcAvg, wmcThirdQuartile, rfcMin, rfcMax, rfcAvg, rfcThirdQuartile])
 
 # Directive to run the main function
 if __name__ == "__main__":
