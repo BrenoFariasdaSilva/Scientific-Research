@@ -5,7 +5,13 @@ from tqdm import tqdm # for progress bar
 
 # CONSTANTS:
 DEFAULT_CSV_FILE = "method.csv" # The default csv file name
-# method_metrics = {} # A dictionary containing the metrics of each method
+MINIMUM_CHANGES = 2 # The minimum number of changes a method should have to be considered
+TOP_CHANGED_METHODS_CSV_FILENAME = "top_changed_methods.csv" # The name of the csv file containing the top changed methods
+SORTED_TOP_CHANGED_METHODS_CSV_FILENAME = "sorted_top_changed_methods.csv" # The name of the csv file containing the sorted top changed methods
+
+# Relative paths
+RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics"
+RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = "/metrics_statistics"
 
 # @brief: Processes a csv file containing the metrics of a method
 # @param file_path: The path to the csv file
