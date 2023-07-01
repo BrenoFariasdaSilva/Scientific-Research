@@ -1,6 +1,7 @@
 import os # for walking through directories
 import csv # for reading csv files
 import numpy as np # for calculating the min, max, avg, and third quartile of each metric
+import pandas as pd # for the csv file operations
 from tqdm import tqdm # for progress bar
 
 # CONSTANTS:
