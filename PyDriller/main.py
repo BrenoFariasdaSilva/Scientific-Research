@@ -39,7 +39,7 @@ FULL_CK_JAR_PATH = escaped_path + RELATIVE_CK_JAR_PATH
 # @return: repository_url: URL of the repository to be analyzed
 def get_user_input():
     # Ask for user input of the repository URL
-    repository_url = input(f"Enter the repository URL: ")
+    repository_url = input(f"Enter the repository URL(String): ")
 
     # Return the repository URL
     return check_url_input(repository_url)
@@ -50,7 +50,7 @@ def get_user_input():
 def get_user_method_input():
     print()
     # Ask for user input of the method name
-    method_name = input(f"Enter the method name: ")
+    method_name = input(f"Enter the method name(String): ")
 
     # If empty, get from the method_names list
     if not method_name:
