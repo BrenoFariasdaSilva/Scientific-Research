@@ -91,32 +91,6 @@ def traverse_directory(directory_path):
 	# Return the method metrics, which is a dictionary containing the metrics of each method  
 	return method_metrics
 
-# @brief: Gets the top changed methods
-# @param method_metrics: A dictionary containing the metrics of each method
-# @param num_methods: The number of methods to return
-# @return: A list of tuples containing the method name and the metrics
-def sort_top_changed_methods(method_metrics):
-	# Sort the methods by the number of changes
-	sorted_methods = sorted(method_metrics.items(), key=lambda x: x[1]["changed"], reverse=True)
-	# Return the top num_methods methods
-	return sorted_methods
-
-# @brief: This function writes the top changed methods to a csv file
-# @param top_changed_methods: A list of tuples containing the method name and the metrics
-# @return: None
-def write_top_changed_methods_to_csv(top_changed_methods):
-	# Create the csv file
-	with open("metrics_statistics/top_changed_methods.csv", "w") as csvfile:
-		# Create the csv writer
-		writer = csv.writer(csvfile)
-		# Write the header
-		writer.writerow(["Method", "Changed", "CBO", "CBO Modified", "WMC", "RFC"])
-		# Write the rows
-		for method, metrics in top_changed_methods:
-			if metrics["changed"] == 1: # if the number of changes is 1, then go to the next method
-				continue
-			writer.writerow([method, metrics["changed"], *metrics["metrics"]])
-
 # @brief: Calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
 # @param csv_writer: The csv writer object
 # @param method: The method name
