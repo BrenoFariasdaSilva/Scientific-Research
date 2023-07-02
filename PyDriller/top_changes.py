@@ -7,6 +7,7 @@ from tqdm import tqdm # for progress bar
 # CONSTANTS:
 DEFAULT_CSV_FILE = "method.csv" # The default csv file name
 MINIMUM_CHANGES = 2 # The minimum number of changes a method should have to be considered
+NUMBER_OF_METRICS = 4 # The number of metrics
 TOP_CHANGED_METHODS_CSV_FILENAME = "top_changed_methods.csv" # The name of the csv file containing the top changed methods
 SORTED_TOP_CHANGED_METHODS_CSV_FILENAME = "sorted_top_changed_methods.csv" # The name of the csv file containing the sorted top changed methods
 
@@ -133,9 +134,16 @@ def main():
 
 		# Loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cbo_modified, wmc, rfc)
 		for method, metrics in method_metrics.items():
-			# check if the metrics changes is 1, then return
-			if metrics["changed"] == 1:
+			# check if the metrics changes is m
+			if metrics["changed"] < MINIMUM_CHANGES:
 				continue
+
+			# This stores the metrics values in a list of lists of each metric
+			metrics_values = []
+			for i in range(0, NUMBER_OF_METRICS):
+				# This get the metrics values of each metric occurence in the method in order to, later on, be able to get the min, max, avg, and third quartile of each metric
+				metrics_values.append([sublist[i] for sublist in metrics["metrics"]])
+
 			cboMin = float(min(metrics[0]))
 			cboMax = float(max(metrics[0]))
 			cboAvg = float(sum(metrics[0])) / len(metrics[0])
