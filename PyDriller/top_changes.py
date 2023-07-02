@@ -143,6 +143,14 @@ def get_method_metrics_statistics(csv_writer, method_name, metrics, metrics_valu
 
 	csv_writer.writerow([method_name, metrics["changed"], cboMin, cboMax, cboAvg, cboThirdQuartile, cbo_modifiedMin, cbo_modifiedMax, cbo_modifiedAvg, cbo_modifiedThirdQuartile, wmcMin, wmcMax, wmcAvg, wmcThirdQuartile, rfcMin, rfcMax, rfcAvg, rfcThirdQuartile])
 
+# @brief: This function sorts the csv file according to the number of changes
+# @param: None
+# @return: None
+def sort_csv_by_changes():
+	data = pd.read_csv(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + TOP_CHANGED_METHODS_CSV_FILENAME)
+	data = data.sort_values(by=["Changes"], ascending=False)
+	data.to_csv(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + SORTED_TOP_CHANGED_METHODS_CSV_FILENAME, index=False)
+
 # @brief: The main function
 # @param: None
 # @return: None
@@ -173,10 +181,8 @@ def main():
 			# Create a function to get the min, max, avg, and third quartile of each metric and then write it to the csv file so the code is not repeated
 			get_method_metrics_statistics(writer, method, metrics, metrics_values)
 
-	# Sort the top changed methods
-	data = pd.read_csv(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + TOP_CHANGED_METHODS_CSV_FILENAME)
-	data = data.sort_values(by=["Changes"], ascending=False)
-	data.to_csv(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + SORTED_TOP_CHANGED_METHODS_CSV_FILENAME, index=False)
+	# Sort the csv file by the number of changes
+	sort_csv_by_changes(method_metrics)
 
 # Directive to run the main function
 if __name__ == "__main__":
