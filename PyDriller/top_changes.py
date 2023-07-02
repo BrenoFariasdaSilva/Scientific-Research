@@ -173,6 +173,11 @@ def main():
 			# Create a function to get the min, max, avg, and third quartile of each metric and then write it to the csv file so the code is not repeated
 			get_method_metrics_statistics(writer, method, metrics, metrics_values)
 
+	# Sort the top changed methods
+	data = pd.read_csv(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + TOP_CHANGED_METHODS_CSV_FILENAME)
+	data = data.sort_values(by=["Changes"], ascending=False)
+	data.to_csv(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + SORTED_TOP_CHANGED_METHODS_CSV_FILENAME, index=False)
+
 # Directive to run the main function
 if __name__ == "__main__":
 	main() # Call the main function
