@@ -117,6 +117,32 @@ def write_top_changed_methods_to_csv(top_changed_methods):
 				continue
 			writer.writerow([method, metrics["changed"], *metrics["metrics"]])
 
+# @brief: Calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
+# @param csv_writer: The csv writer object
+# @param method: The method name
+# @param metrics: The list of metrics
+# @param metrics_values: The list of metrics values
+# @return: None
+def get_method_metrics_statistics(csv_writer, method_name, metrics, metrics_values):
+	cboMin = float(min(metrics_values[0]))
+	cboMax = float(max(metrics_values[0]))
+	cboAvg = float(sum(metrics_values[0])) / len(metrics_values[0])
+	cboThirdQuartile = float(np.percentile(metrics_values[0], 75))
+	cbo_modifiedMin = float(min(metrics_values[1]))
+	cbo_modifiedMax = float(max(metrics_values[1]))
+	cbo_modifiedAvg = float(sum(metrics_values[1])) / len(metrics_values[1])
+	cbo_modifiedThirdQuartile = float(np.percentile(metrics_values[1], 75))
+	wmcMin = float(min(metrics_values[2]))
+	wmcMax = float(max(metrics_values[2]))
+	wmcAvg = float(sum(metrics_values[2])) / len(metrics_values[2])
+	wmcThirdQuartile = float(np.percentile(metrics_values[2], 75))
+	rfcMin = float(min(metrics_values[3]))
+	rfcMax = float(max(metrics_values[3]))
+	rfcAvg = float(sum(metrics_values[3])) / len(metrics_values[3])
+	rfcThirdQuartile = float(np.percentile(metrics_values[3], 75))
+
+	csv_writer.writerow([method_name, metrics["changed"], cboMin, cboMax, cboAvg, cboThirdQuartile, cbo_modifiedMin, cbo_modifiedMax, cbo_modifiedAvg, cbo_modifiedThirdQuartile, wmcMin, wmcMax, wmcAvg, wmcThirdQuartile, rfcMin, rfcMax, rfcAvg, rfcThirdQuartile])
+
 # @brief: The main function
 # @param: None
 # @return: None
@@ -144,24 +170,8 @@ def main():
 				# This get the metrics values of each metric occurence in the method in order to, later on, be able to get the min, max, avg, and third quartile of each metric
 				metrics_values.append([sublist[i] for sublist in metrics["metrics"]])
 
-			cboMin = float(min(metrics_values[0]))
-			cboMax = float(max(metrics_values[0]))
-			cboAvg = float(sum(metrics_values[0])) / len(metrics_values[0])
-			cboThirdQuartile = float(np.percentile(metrics_values[0], 75))
-			cbo_modifiedMin = float(min(metrics_values[1]))
-			cbo_modifiedMax = float(max(metrics_values[1]))
-			cbo_modifiedAvg = float(sum(metrics_values[1])) / len(metrics_values[1])
-			cbo_modifiedThirdQuartile = float(np.percentile(metrics_values[1], 75))
-			wmcMin = float(min(metrics_values[2]))
-			wmcMax = float(max(metrics_values[2]))
-			wmcAvg = float(sum(metrics_values[2])) / len(metrics_values[2])
-			wmcThirdQuartile = float(np.percentile(metrics_values[2], 75))
-			rfcMin = float(min(metrics_values[3]))
-			rfcMax = float(max(metrics_values[3]))
-			rfcAvg = float(sum(metrics_values[3])) / len(metrics_values[3])
-			rfcThirdQuartile = float(np.percentile(metrics_values[3], 75))
-
-			writer.writerow([method, metrics["changed"], cboMin, cboMax, cboAvg, cboThirdQuartile, cbo_modifiedMin, cbo_modifiedMax, cbo_modifiedAvg, cbo_modifiedThirdQuartile, wmcMin, wmcMax, wmcAvg, wmcThirdQuartile, rfcMin, rfcMax, rfcAvg, rfcThirdQuartile])
+			# Create a function to get the min, max, avg, and third quartile of each metric and then write it to the csv file so the code is not repeated
+			get_method_metrics_statistics(writer, method, metrics, metrics_values)
 
 # Directive to run the main function
 if __name__ == "__main__":
