@@ -1,6 +1,5 @@
 # [PyDriller](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)
 @TODO: Export the data of every commit in order to visualize it in a graph evolution of each metric.  
-@TODO: Explain how to choose between the class.csv or method.csv in the top_changes.py.  
 @TODO: Update README to explain the new features (top_changes.py).   
 @TODO: Create a new file (metrics.py) that will store the metrics evolution of the given method or class.
 

@@ -48,7 +48,7 @@ def path_contains_whitespaces():
 # @return: repository_url: URL of the repository to be analyzed
 def get_user_input():
    # Ask for user input of the repository URL
-   repository_url = input(f"Enter the repository URL(String): ")
+   repository_url = input(f"{backgroundColors.OKGREEN}Enter the repository URL{backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
    # Return the repository URL
    return check_url_input(repository_url)
@@ -59,7 +59,7 @@ def get_user_input():
 def get_user_method_input():
    print()
    # Ask for user input of the method name
-   method_name = input(f"Enter the method name(String): ")
+   method_name = input(f"{backgroundColors.OKGREEN}Enter the method name{backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
    # If empty, get from the method_names list
    if not method_name:
