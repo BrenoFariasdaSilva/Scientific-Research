@@ -179,7 +179,8 @@ def sort_csv_by_changes():
 # @param: None
 # @return: None
 def main():
-	print(f"{backgroundColors.OKGREEN}This script calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file. The source of the metrics values is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} file.{Style.RESET_ALL}")
+	print(f"{backgroundColors.OKGREEN}This script calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file.{Style.RESET_ALL}")
+	print(f"{backgroundColors.OKGREEN}The source of the metrics values is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} file.{Style.RESET_ALL}")
 
 	# Get the directory path from user input of the repository name
 	directory_path = get_directory_path()
