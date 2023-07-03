@@ -9,12 +9,12 @@ from colorama import Style # For coloring the terminal
 from main import backgroundColors
 
 # CONSTANTS:
-PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "False" # If True, then process the method.csv file. If False, then process the class.csv file
+PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 MINIMUM_CHANGES = 2 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
 
 # Filenames:
-CK_CSV_FILE = "method.csv" if PROCESS_CLASSES else "class.csv" # The name of the csv generated file from ck.
+CK_CSV_FILE = "class.csv" if PROCESS_CLASSES else "method.csv" # The name of the csv generated file from ck.
 TOP_CHANGED_METHODS_CSV_FILENAME = f"top_changed_{CK_CSV_FILE}" # The name of the csv file containing the top changed methods
 SORTED_TOP_CHANGED_METHODS_CSV_FILENAME = f"sorted_top_changed_{CK_CSV_FILE}" # The name of the csv file containing the sorted top changed methods
 CK_METRICS_DIRECTORY_NAME = "ck_metrics" # The relative path to the directory containing the ck metrics
@@ -63,7 +63,10 @@ def process_csv_file(file_path, metrics_track_record):
 		# Iterate through each row, that is, for each method in the csv file
 		for row in reader:
 			class_name = row["class"]
-			method_name = row["method"]
+			if PROCESS_CLASSES:
+				variable_attribute = row["type"]
+			else:
+				variable_attribute = row["method"]
 			cbo = float(row["cbo"])
 			cboModified = float(row["cboModified"])
 			wmc = float(row["wmc"])
@@ -71,18 +74,18 @@ def process_csv_file(file_path, metrics_track_record):
 
 			# Create a tuple containing the metrics
 			metrics = (cbo, cboModified, wmc, rfc)
-			method = f"{class_name} {method_name}"
+			identifier = f"{class_name} {variable_attribute}"
 
-			if method not in metrics_track_record: # if the method is not in the dictionary
-				metrics_track_record[method] = {"metrics": [], "changed": 0}
+			if identifier not in metrics_track_record: # if the identifier (of the method or class) is not in the dictionary
+				metrics_track_record[identifier] = {"metrics": [], "changed": 0}
 
 			# Get the metrics_changes list for the method
-			metrics_changes = metrics_track_record[method]["metrics"]
+			metrics_changes = metrics_track_record[identifier]["metrics"]
 
 			# Try to find the same metrics in the list for the same method. If it does not exist, then add it to the list
 			if metrics not in metrics_changes: # if the metrics are not in the list
 				metrics_changes.append(metrics) # add the metrics values to the list
-				metrics_track_record[method]["changed"] += 1 # increment the number of changes
+				metrics_track_record[identifier]["changed"] += 1 # increment the number of changes
 
 # @brief: Traverses a directory and processes all the csv files
 # @param directory_path: The path to the directory
@@ -120,7 +123,7 @@ def traverse_directory(directory_path):
 # @param metrics: The list of metrics
 # @param metrics_values: The list of metrics values
 # @return: None
-def write_method_metrics_statistics(csv_writer, method_name, metrics, metrics_values):
+def write_method_metrics_statistics(csv_writer, identifier, metrics, metrics_values):
 	cboMin = round(float(min(metrics_values[0])), 3)
 	cboMax = round(float(max(metrics_values[0])), 3)
 	cboAvg = round(float(sum(metrics_values[0])) / len(metrics_values[0]), 3)
@@ -138,19 +141,22 @@ def write_method_metrics_statistics(csv_writer, method_name, metrics, metrics_va
 	rfcAvg = round(float(sum(metrics_values[3])) / len(metrics_values[3]), 3)
 	rfcQ3 = round(float(np.percentile(metrics_values[3], 75)), 3)
 
-	csv_writer.writerow([method_name, metrics["changed"], cboMin, cboMax, cboAvg, cboQ3, cboModifiedMin, cboModifiedMax, cboModifiedAvg, cboModifiedQ3, wmcMin, wmcMax, wmcAvg, wmcQ3, rfcMin, rfcMax, rfcAvg, rfcQ3])
+	csv_writer.writerow([identifier, metrics["changed"], cboMin, cboMax, cboAvg, cboQ3, cboModifiedMin, cboModifiedMax, cboModifiedAvg, cboModifiedQ3, wmcMin, wmcMax, wmcAvg, wmcQ3, rfcMin, rfcMax, rfcAvg, rfcQ3])
 
 # @brief: Process the metrics in metrics_track_record to calculate the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
-# @param metrics_track_record: A dictionary containing the metrics of each method
+# @param metrics_track_record: A dictionary containing the metrics of each method or class
 # @return: None
 def process_metrics_track_record(metrics_track_record):
 	# Open the csv file and process the metrics of each method
 	with open(TOP_CHANGED_FILES_CSV_FILE_PATH, "w") as csvfile:
 		writer = csv.writer(csvfile)	
-		writer.writerow(["Method", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
+		if PROCESS_CLASSES:
+			writer.writerow(["Class", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
+		else:
+			writer.writerow(["Method", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
 
 		# Loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cboModified, wmc, rfc)
-		for method, metrics in metrics_track_record.items():
+		for identifier, metrics in metrics_track_record.items():
 			# check if the metrics changes is greater than the minimum changes
 			if metrics["changed"] < MINIMUM_CHANGES:
 				continue
@@ -162,7 +168,7 @@ def process_metrics_track_record(metrics_track_record):
 				metrics_values.append([sublist[i] for sublist in metrics["metrics"]])
 
 			# Create a function to get the min, max, avg, and third quartile of each metric and then write it to the csv file
-			write_method_metrics_statistics(writer, method, metrics, metrics_values)
+			write_method_metrics_statistics(writer, identifier, metrics, metrics_values)
 
 # @brief: This function sorts the csv file according to the number of changes
 # @param: None
