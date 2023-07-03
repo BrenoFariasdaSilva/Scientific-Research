@@ -2,7 +2,7 @@
 @TODO: Export the data of every commit in order to visualize it in a graph evolution of each metric.  
 @TODO: Update README to explain the new features (top_changes.py).   
 @TODO: Create a new file (metrics.py) that will store the metrics evolution of the given method or class.  
-@TODO: Add the commit hash for the top_changes.py code.
+@TODO: Add the commit hash for the main.py code, where it generates the metrics evolution of the given method or class, so we can have the commit hash for every metric change.
 
 ### Important Note: Make sure you doesn't have whitespaces in the path of the project, otherwise it will not work.
 
