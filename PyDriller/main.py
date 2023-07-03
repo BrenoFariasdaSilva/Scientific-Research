@@ -14,7 +14,7 @@ class backgroundColors: # Colors for the terminal
 	FAIL = "\033[91m" # Red
         
 # Default paths:
-path = os.getcwd() # Get the current working directory
+PATH = os.getcwd() # Get the current working directory
  
 # Relative paths:
 RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics"
@@ -24,14 +24,14 @@ RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories"
 RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
 # Default values:
-DEFAULT_FOLDER = path # Get the current working directory
+DEFAULT_FOLDER = PATH # Get the current working directory
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
 DEFAULT_METHODS_NAME = ["testBothArgsNull", "isNumericSpace", "CharSequenceUtils"]
-FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = path + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
-FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = path + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
-FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = path + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
-FULL_REPOSITORY_DIRECTORY_PATH = path + RELATIVE_REPOSITORY_DIRECTORY_PATH
-FULL_CK_JAR_PATH = path + RELATIVE_CK_JAR_PATH
+FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
+FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
+FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
+FULL_REPOSITORY_DIRECTORY_PATH = PATH + RELATIVE_REPOSITORY_DIRECTORY_PATH
+FULL_CK_JAR_PATH = PATH + RELATIVE_CK_JAR_PATH
 
 # @brief: Get the user input and check if they are empty
 # @param: None
@@ -124,7 +124,7 @@ def create_directory(full_directory_name, relative_directory_name):
 # @return: True if all the metrics are already calculated, False otherwise
 def check_metrics_folders(repository_name):
    print(f"{backgroundColors.OKGREEN}Checking if all the metrics are already calculated{Style.RESET_ALL}")
-   current_path = path
+   current_path = PATH
    data_path = os.path.join(current_path, "ck_metrics")
    repo_path = os.path.join(data_path, repository_name)
    commit_file = f"commit_hashes-{repository_name}.txt"
@@ -250,10 +250,24 @@ def calculate_statistics(directory, output_file):
                      writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile])
    print(f"{backgroundColors.OKGREEN}Successfully wrote the statistics to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
 
+# @brief: This function is used to check if the PATH constant contain whitespaces
+# @param: None
+# @return: True if the PATH constant contain whitespaces, False otherwise
+def path_contains_whitespaces():
+   # Check if the PATH constant contains whitespaces
+   if " " in PATH:
+      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces{Style.RESET_ALL}")
+      return True
+   return False
+
 # @brief: Main function
 # @param: None
 # @return: None
 def main():
+   # check if the path constants contains whitespaces
+   if path_contains_whitespaces():
+      return
+   
    # Get the user input
    repository_url = get_user_input()
 
