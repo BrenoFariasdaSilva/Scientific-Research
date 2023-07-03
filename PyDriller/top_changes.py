@@ -51,11 +51,11 @@ def get_directory_path():
 
 	return directory_path
 
-# @brief: Processes a csv file containing the metrics of a method
+# @brief: Processes a csv file containing the metrics of a method nor class
 # @param file_path: The path to the csv file
-# @param method_metrics: A dictionary containing the metrics of each method
+# @param metrics_track_record: A dictionary containing the track record of the metrics of each method nor class
 # @return: None
-def process_csv_file(file_path, method_metrics):
+def process_csv_file(file_path, metrics_track_record):
 	# Open the csv file
 	with open(file_path, "r") as csvfile:
 		# Read the csv file
@@ -65,30 +65,30 @@ def process_csv_file(file_path, method_metrics):
 			class_name = row["class"]
 			method_name = row["method"]
 			cbo = float(row["cbo"])
-			cbo_modified = float(row["cboModified"])
+			cboModified = float(row["cboModified"])
 			wmc = float(row["wmc"])
 			rfc = float(row["rfc"])
 
 			# Create a tuple containing the metrics
-			metrics = (cbo, cbo_modified, wmc, rfc)
+			metrics = (cbo, cboModified, wmc, rfc)
 			method = f"{class_name} {method_name}"
 
-			if method not in method_metrics: # if the method is not in the dictionary
-				method_metrics[method] = {"metrics": [], "changed": 0}
+			if method not in metrics_track_record: # if the method is not in the dictionary
+				metrics_track_record[method] = {"metrics": [], "changed": 0}
 
 			# Get the metrics_changes list for the method
-			metrics_changes = method_metrics[method]["metrics"]
+			metrics_changes = metrics_track_record[method]["metrics"]
 
 			# Try to find the same metrics in the list for the same method. If it does not exist, then add it to the list
 			if metrics not in metrics_changes: # if the metrics are not in the list
 				metrics_changes.append(metrics) # add the metrics values to the list
-				method_metrics[method]["changed"] += 1 # increment the number of changes
+				metrics_track_record[method]["changed"] += 1 # increment the number of changes
 
 # @brief: Traverses a directory and processes all the csv files
 # @param directory_path: The path to the directory
 # @return: A dictionary containing the metrics of each class and method combination
 def traverse_directory(directory_path):
-	method_metrics = {}
+	metrics_track_record = {}
 	file_count = 0
 	progress_bar = None
 
@@ -99,7 +99,7 @@ def traverse_directory(directory_path):
 			# If the file is a csv file
 			if file == CK_CSV_FILE:
 				file_path = os.path.join(root, file) # Get the path to the csv file
-				process_csv_file(file_path, method_metrics) # Process the csv file
+				process_csv_file(file_path, metrics_track_record) # Process the csv file
 				file_count += 1 # Increment the file count
 
 				if progress_bar is None: # If the progress bar is not initialized
@@ -112,7 +112,7 @@ def traverse_directory(directory_path):
 		progress_bar.close()
 
 	# Return the method metrics, which is a dictionary containing the metrics of each method  
-	return method_metrics
+	return metrics_track_record
 
 # @brief: Calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
 # @param csv_writer: The csv writer object
@@ -124,33 +124,33 @@ def write_method_metrics_statistics(csv_writer, method_name, metrics, metrics_va
 	cboMin = round(float(min(metrics_values[0])), 3)
 	cboMax = round(float(max(metrics_values[0])), 3)
 	cboAvg = round(float(sum(metrics_values[0])) / len(metrics_values[0]), 3)
-	cboThirdQuartile = round(float(np.percentile(metrics_values[0], 75)), 3)
-	cbo_modifiedMin = round(float(min(metrics_values[1])), 3)
-	cbo_modifiedMax = round(float(max(metrics_values[1])), 3)
-	cbo_modifiedAvg = round(float(sum(metrics_values[1])) / len(metrics_values[1]), 3)
-	cbo_modifiedThirdQuartile = round(float(np.percentile(metrics_values[1], 75)), 3)
+	cboQ3 = round(float(np.percentile(metrics_values[0], 75)), 3)
+	cboModifiedMin = round(float(min(metrics_values[1])), 3)
+	cboModifiedMax = round(float(max(metrics_values[1])), 3)
+	cboModifiedAvg = round(float(sum(metrics_values[1])) / len(metrics_values[1]), 3)
+	cboModifiedQ3 = round(float(np.percentile(metrics_values[1], 75)), 3)
 	wmcMin = round(float(min(metrics_values[2])), 3)
 	wmcMax = round(float(max(metrics_values[2])), 3)
 	wmcAvg = round(float(sum(metrics_values[2])) / len(metrics_values[2]), 3)
-	wmcThirdQuartile = round(float(np.percentile(metrics_values[2], 75)), 3)
+	wmcQ3 = round(float(np.percentile(metrics_values[2], 75)), 3)
 	rfcMin = round(float(min(metrics_values[3])), 3)
 	rfcMax = round(float(max(metrics_values[3])), 3)
 	rfcAvg = round(float(sum(metrics_values[3])) / len(metrics_values[3]), 3)
-	rfcThirdQuartile = round(float(np.percentile(metrics_values[3], 75)), 3)
+	rfcQ3 = round(float(np.percentile(metrics_values[3], 75)), 3)
 
-	csv_writer.writerow([method_name, metrics["changed"], cboMin, cboMax, cboAvg, cboThirdQuartile, cbo_modifiedMin, cbo_modifiedMax, cbo_modifiedAvg, cbo_modifiedThirdQuartile, wmcMin, wmcMax, wmcAvg, wmcThirdQuartile, rfcMin, rfcMax, rfcAvg, rfcThirdQuartile])
+	csv_writer.writerow([method_name, metrics["changed"], cboMin, cboMax, cboAvg, cboQ3, cboModifiedMin, cboModifiedMax, cboModifiedAvg, cboModifiedQ3, wmcMin, wmcMax, wmcAvg, wmcQ3, rfcMin, rfcMax, rfcAvg, rfcQ3])
 
-# @brief: Process the metrics in method_metrics to calculate the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
-# @param method_metrics: A dictionary containing the metrics of each method
+# @brief: Process the metrics in metrics_track_record to calculate the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
+# @param metrics_track_record: A dictionary containing the metrics of each method
 # @return: None
-def process_method_metrics(method_metrics):
+def process_metrics_track_record(metrics_track_record):
 	# Open the csv file and process the metrics of each method
 	with open(TOP_CHANGED_FILES_CSV_FILE_PATH, "w") as csvfile:
 		writer = csv.writer(csvfile)	
-		writer.writerow(["Method", "Changed", "CBOMin", "CBOMax", "CBOAvg", "CBOThirdQuartile", "CBO ModifiedMin", "CBO ModifiedMax", "CBO ModifiedAvg", "CBO ModifiedThirdQuartile", "WMCMin", "WMCMax", "WMCAvg", "WMCThirdQuartile", "RFCMin", "RFCMax", "RFCAvg", "RFCThirdQuartile"])
+		writer.writerow(["Method", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
 
-		# Loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cbo_modified, wmc, rfc)
-		for method, metrics in method_metrics.items():
+		# Loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cboModified, wmc, rfc)
+		for method, metrics in metrics_track_record.items():
 			# check if the metrics changes is greater than the minimum changes
 			if metrics["changed"] < MINIMUM_CHANGES:
 				continue
@@ -189,10 +189,10 @@ def main():
 	create_output_directories()
 
 	# Traverse the directory and get the method metrics
-	method_metrics = traverse_directory(directory_path)
+	metrics_track_record = traverse_directory(directory_path)
 
 	# Process the method metrics to calculate the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
-	process_method_metrics(method_metrics)
+	process_metrics_track_record(metrics_track_record)
 
 	# Sort the csv file by the number of changes
 	sort_csv_by_changes()
