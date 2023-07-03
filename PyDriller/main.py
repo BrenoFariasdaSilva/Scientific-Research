@@ -142,7 +142,7 @@ def check_metrics_folders(repository_name):
 
    if not os.path.exists(commit_file_path):
       print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
-      return
+      return False
 
    with open(commit_file_path, "r") as file:
       lines = file.readlines()
