@@ -130,6 +130,30 @@ def write_method_metrics_statistics(csv_writer, method_name, metrics, metrics_va
 
 	csv_writer.writerow([method_name, metrics["changed"], cboMin, cboMax, cboAvg, cboThirdQuartile, cbo_modifiedMin, cbo_modifiedMax, cbo_modifiedAvg, cbo_modifiedThirdQuartile, wmcMin, wmcMax, wmcAvg, wmcThirdQuartile, rfcMin, rfcMax, rfcAvg, rfcThirdQuartile])
 
+# @brief: Process the metrics in method_metrics to calculate the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
+# @param method_metrics: A dictionary containing the metrics of each method
+# @return: None
+def process_method_metrics(method_metrics):
+	# Open the csv file and process the metrics of each method
+	with open(FULL_TOP_CHANGED_METHODS_CSV_FILE_PATH, "w") as csvfile:
+		writer = csv.writer(csvfile)	
+		writer.writerow(["Method", "Changed", "CBOMin", "CBOMax", "CBOAvg", "CBOThirdQuartile", "CBO ModifiedMin", "CBO ModifiedMax", "CBO ModifiedAvg", "CBO ModifiedThirdQuartile", "WMCMin", "WMCMax", "WMCAvg", "WMCThirdQuartile", "RFCMin", "RFCMax", "RFCAvg", "RFCThirdQuartile"])
+
+		# Loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cbo_modified, wmc, rfc)
+		for method, metrics in method_metrics.items():
+			# check if the metrics changes is m
+			if metrics["changed"] < MINIMUM_CHANGES:
+				continue
+
+			# This stores the metrics values in a list of lists of each metric
+			metrics_values = []
+			for i in range(0, NUMBER_OF_METRICS):
+				# This get the metrics values of each metric occurence in the method in order to, later on, be able to get the min, max, avg, and third quartile of each metric
+				metrics_values.append([sublist[i] for sublist in metrics["metrics"]])
+
+			# Create a function to get the min, max, avg, and third quartile of each metric and then write it to the csv file
+			write_method_metrics_statistics(writer, method, metrics, metrics_values)
+
 # @brief: This function sorts the csv file according to the number of changes
 # @param: None
 # @return: None
@@ -154,31 +178,14 @@ def main():
 	# Traverse the directory and get the method metrics
 	method_metrics = traverse_directory(directory_path)
 
-	# Get the method metrics statistics
-	with open(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + TOP_CHANGED_METHODS_CSV_FILENAME, "w") as csvfile:
-		writer = csv.writer(csvfile)	
-		writer.writerow(["Method", "Changed", "CBOMin", "CBOMax", "CBOAvg", "CBOThirdQuartile", "CBO ModifiedMin", "CBO ModifiedMax", "CBO ModifiedAvg", "CBO ModifiedThirdQuartile", "WMCMin", "WMCMax", "WMCAvg", "WMCThirdQuartile", "RFCMin", "RFCMax", "RFCAvg", "RFCThirdQuartile"])
-
-		# Loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cbo_modified, wmc, rfc)
-		for method, metrics in method_metrics.items():
-			# check if the metrics changes is m
-			if metrics["changed"] < MINIMUM_CHANGES:
-				continue
-
-			# This stores the metrics values in a list of lists of each metric
-			metrics_values = []
-			for i in range(0, NUMBER_OF_METRICS):
-				# This get the metrics values of each metric occurence in the method in order to, later on, be able to get the min, max, avg, and third quartile of each metric
-				metrics_values.append([sublist[i] for sublist in metrics["metrics"]])
-
-			# Create a function to get the min, max, avg, and third quartile of each metric and then write it to the csv file
-			write_method_metrics_statistics(writer, method, metrics, metrics_values)
+	# Process the method metrics to calculate the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
+	process_method_metrics(method_metrics)
 
 	# Sort the csv file by the number of changes
-	sort_csv_by_changes(method_metrics)
+	sort_csv_by_changes()
 
 	# Remove the old csv file
-	os.remove(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + TOP_CHANGED_METHODS_CSV_FILENAME)
+	os.remove(FULL_TOP_CHANGED_METHODS_CSV_FILE_PATH)
 
 # Directive to run the main function
 if __name__ == "__main__":
