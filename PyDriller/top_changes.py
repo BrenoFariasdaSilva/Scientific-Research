@@ -20,12 +20,13 @@ RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = "/metrics_statistics"
 # @return: The path to the directory
 def get_directory_path():
 	repository_name = input("Enter the repository name (String): ")
-	directory_path = f"{RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH}/{repository_name}"
+	directory_path = f"{os.getcwd()}{RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH}/{repository_name}"
+	print(f"Directory path: {directory_path}")
 
 	while not os.path.isdir(directory_path):
 		print("The directory does not exist.")
 		repository_name = input("Enter the repository name (String): ")
-		directory_path = f"{RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH}/{repository_name}"
+		directory_path = f"{os.getcwd()}{RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH}/{repository_name}"
 
 	return directory_path
 
