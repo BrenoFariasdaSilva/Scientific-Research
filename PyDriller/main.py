@@ -15,7 +15,6 @@ class backgroundColors: # Colors for the terminal
         
 # Default paths:
 path = os.getcwd() # Get the current working directory
-escaped_path = path.replace(" ", "\ ") # Replace the whitespace with "\ "
  
 # Relative paths:
 RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics"
@@ -25,14 +24,14 @@ RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories"
 RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
 # Default values:
-DEFAULT_FOLDER = escaped_path # Get the current working directory
+DEFAULT_FOLDER = path # Get the current working directory
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
 DEFAULT_METHODS_NAME = ["testBothArgsNull", "isNumericSpace", "CharSequenceUtils"]
-FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = escaped_path + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
-FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = escaped_path + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
-FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = escaped_path + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
-FULL_REPOSITORY_DIRECTORY_PATH = escaped_path + RELATIVE_REPOSITORY_DIRECTORY_PATH
-FULL_CK_JAR_PATH = escaped_path + RELATIVE_CK_JAR_PATH
+FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = path + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
+FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = path + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
+FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = path + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
+FULL_REPOSITORY_DIRECTORY_PATH = path + RELATIVE_REPOSITORY_DIRECTORY_PATH
+FULL_CK_JAR_PATH = path + RELATIVE_CK_JAR_PATH
 
 # @brief: Get the user input and check if they are empty
 # @param: None
@@ -93,7 +92,7 @@ def update_repository(repository_name):
 # @param: repository_name: Name of the repository to be analyzed
 # @return: None
 def clone_repository(repository_url, repository_name):
-    # Check if the repository directory already exists and if it is not empty
+   # Check if the repository directory already exists and if it is not empty
    if os.path.isdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name) and os.listdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name):
       print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository is already cloned!{Style.RESET_ALL}")
       update_repository(repository_name)
@@ -125,7 +124,7 @@ def create_directory(full_directory_name, relative_directory_name):
 # @return: True if all the metrics are already calculated, False otherwise
 def check_metrics_folders(repository_name):
    print(f"{backgroundColors.OKGREEN}Checking if all the metrics are already calculated{Style.RESET_ALL}")
-   current_path = escaped_path
+   current_path = path
    data_path = os.path.join(current_path, "ck_metrics")
    repo_path = os.path.join(data_path, repository_name)
    commit_file = f"commit_hashes-{repository_name}.txt"
@@ -175,25 +174,25 @@ def search_method_metrics(repository_name, method_name):
       # Check if the method file exists for the current commit hash
       if os.path.isfile(method_path):
          with open(method_path, "r") as file:
-               reader = csv.DictReader(file) # Read the method.csv file
-               
-               # Search for the method in the current commit's method.csv file
-               for row in reader:
-                  if row["method"].split('/')[0] == method_name:
-                     method_variables_counter[0] += 1
-                     cbo = float(row["cbo"])
-                     cboModified = float(row["cboModified"])
-                     wmc = float(row["wmc"])
-                     rfc = float(row["rfc"])
-                     metrics = (cbo, cboModified, wmc, rfc)
-                     data = (commit_hash, cbo, cboModified, wmc, rfc)
-                     
-                     # Store the metrics if they are different from the last recorded metrics
-                     if metrics != last_metrics:
-                        method_data.append(data)
-                        last_metrics = metrics
-                        method_variables_counter[1] += 1
-                     break
+            reader = csv.DictReader(file) # Read the method.csv file
+            
+            # Search for the method in the current commit's method.csv file
+            for row in reader:
+               if row["method"].split('/')[0] == method_name:
+                  method_variables_counter[0] += 1
+                  cbo = float(row["cbo"])
+                  cboModified = float(row["cboModified"])
+                  wmc = float(row["wmc"])
+                  rfc = float(row["rfc"])
+                  metrics = (cbo, cboModified, wmc, rfc)
+                  data = (commit_hash, cbo, cboModified, wmc, rfc)
+                  
+                  # Store the metrics if they are different from the last recorded metrics
+                  if metrics != last_metrics:
+                     method_data.append(data)
+                     last_metrics = metrics
+                     method_variables_counter[1] += 1
+                  break
 
    # If the method_data is empty, then the method was not found
    if not method_data:
