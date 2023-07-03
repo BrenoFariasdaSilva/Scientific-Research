@@ -97,7 +97,7 @@ def traverse_directory(directory_path):
 # @param metrics: The list of metrics
 # @param metrics_values: The list of metrics values
 # @return: None
-def get_method_metrics_statistics(csv_writer, method_name, metrics, metrics_values):
+def write_method_metrics_statistics(csv_writer, method_name, metrics, metrics_values):
 	cboMin = float(min(metrics_values[0]))
 	cboMax = float(max(metrics_values[0]))
 	cboAvg = float(sum(metrics_values[0])) / len(metrics_values[0])
@@ -121,8 +121,11 @@ def get_method_metrics_statistics(csv_writer, method_name, metrics, metrics_valu
 # @param: None
 # @return: None
 def sort_csv_by_changes():
+	# Read the csv file
 	data = pd.read_csv(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + TOP_CHANGED_METHODS_CSV_FILENAME)
+	# Sort the csv file by the number of changes
 	data = data.sort_values(by=["Changes"], ascending=False)
+	# Write the sorted csv file to a new csv file
 	data.to_csv(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + SORTED_TOP_CHANGED_METHODS_CSV_FILENAME, index=False)
 
 # @brief: The main function
@@ -152,11 +155,14 @@ def main():
 				# This get the metrics values of each metric occurence in the method in order to, later on, be able to get the min, max, avg, and third quartile of each metric
 				metrics_values.append([sublist[i] for sublist in metrics["metrics"]])
 
-			# Create a function to get the min, max, avg, and third quartile of each metric and then write it to the csv file so the code is not repeated
-			get_method_metrics_statistics(writer, method, metrics, metrics_values)
+			# Create a function to get the min, max, avg, and third quartile of each metric and then write it to the csv file
+			write_method_metrics_statistics(writer, method, metrics, metrics_values)
 
 	# Sort the csv file by the number of changes
 	sort_csv_by_changes(method_metrics)
+
+	# Remove the old csv file
+	os.remove(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + TOP_CHANGED_METHODS_CSV_FILENAME)
 
 # Directive to run the main function
 if __name__ == "__main__":
