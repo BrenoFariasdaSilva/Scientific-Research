@@ -52,7 +52,7 @@ def process_csv_file(file_path, method_metrics):
 			method = f"{class_name} {method_name}"
 
 			if method not in method_metrics: # if the method is not in the dictionary
-					method_metrics[method] = {"metrics": [], "changed": 0}
+				method_metrics[method] = {"metrics": [], "changed": 0}
 
 			# Get the metrics_changes list for the method
 			metrics_changes = method_metrics[method]["metrics"]
