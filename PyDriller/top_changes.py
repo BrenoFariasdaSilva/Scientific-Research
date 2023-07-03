@@ -5,19 +5,19 @@ import pandas as pd # for the csv file operations
 from tqdm import tqdm # for progress bar
 
 # CONSTANTS:
-DEFAULT_CSV_FILE = "method.csv" # The default csv file name. It could be "met"
+DEFAULT_CSV_FILE = "method.csv" # The default csv file name. It could be "method.csv" or "class.csv"
 MINIMUM_CHANGES = 2 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
 TOP_CHANGED_METHODS_CSV_FILENAME = "top_changed_methods.csv" # The name of the csv file containing the top changed methods
 SORTED_TOP_CHANGED_METHODS_CSV_FILENAME = "sorted_top_changed_methods.csv" # The name of the csv file containing the sorted top changed methods
 
 # Relative Paths:
-RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics"
-RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = "/metrics_statistics"
+RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics" # The relative path to the directory containing the ck metrics
+RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = "/metrics_statistics" # The relative path to the directory containing the metrics statistics
 
 # Full Paths:
-FULL_TOP_CHANGED_METHODS_CSV_FILE_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}/{TOP_CHANGED_METHODS_CSV_FILENAME}"
-FULL_SORTED_TOP_CHANGED_METHODS_CSV_FILE_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}/{SORTED_TOP_CHANGED_METHODS_CSV_FILENAME}"
+FULL_TOP_CHANGED_METHODS_CSV_FILE_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}/{TOP_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the top changed methods
+FULL_SORTED_TOP_CHANGED_METHODS_CSV_FILE_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}/{SORTED_TOP_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the sorted top changed methods
 
 # @brief: This function create the output directories if they do not exist
 # @param: None
@@ -33,8 +33,8 @@ def create_output_directories():
 def get_directory_path():
 	repository_name = input("Enter the repository name (String): ")
 	directory_path = f"{os.getcwd()}{RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH}/{repository_name}"
-	print(f"Directory path: {directory_path}")
 
+	# Check if the directory exists
 	while not os.path.isdir(directory_path):
 		print("The directory does not exist.")
 		repository_name = input("Enter the repository name (String): ")
@@ -72,8 +72,8 @@ def process_csv_file(file_path, method_metrics):
 
 			# Try to find the same metrics in the list for the same method. If it does not exist, then add it to the list
 			if metrics not in metrics_changes: # if the metrics are not in the list
-					metrics_changes.append(metrics) # add the metrics values to the list
-					method_metrics[method]["changed"] += 1 # increment the number of changes
+				metrics_changes.append(metrics) # add the metrics values to the list
+				method_metrics[method]["changed"] += 1 # increment the number of changes
 
 # @brief: Traverses a directory and processes all the csv files
 # @param directory_path: The path to the directory
@@ -89,13 +89,14 @@ def traverse_directory(directory_path):
 		for file in files:
 			# If the file is a csv file
 			if file == DEFAULT_CSV_FILE:
-					file_path = os.path.join(root, file) # Get the path to the csv file
-					process_csv_file(file_path, method_metrics) # Process the csv file
-					file_count += 1 # Increment the file count
-					if progress_bar is None: # If the progress bar is not initialized
-						progress_bar = tqdm(total=file_count) # Initialize the progress bar
-					else:
-						progress_bar.update(1) # Update the progress bar
+				file_path = os.path.join(root, file) # Get the path to the csv file
+				process_csv_file(file_path, method_metrics) # Process the csv file
+				file_count += 1 # Increment the file count
+				
+				if progress_bar is None: # If the progress bar is not initialized
+					progress_bar = tqdm(total=file_count) # Initialize the progress bar
+				else:
+					progress_bar.update(1) # Update the progress bar
 
 	# Close the progress bar
 	if progress_bar is not None:
@@ -141,7 +142,7 @@ def process_method_metrics(method_metrics):
 
 		# Loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cbo_modified, wmc, rfc)
 		for method, metrics in method_metrics.items():
-			# check if the metrics changes is m
+			# check if the metrics changes is greater than the minimum changes
 			if metrics["changed"] < MINIMUM_CHANGES:
 				continue
 
@@ -159,11 +160,11 @@ def process_method_metrics(method_metrics):
 # @return: None
 def sort_csv_by_changes():
 	# Read the csv file
-	data = pd.read_csv(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + TOP_CHANGED_METHODS_CSV_FILENAME)
+	data = pd.read_csv(FULL_TOP_CHANGED_METHODS_CSV_FILE_PATH)
 	# Sort the csv file by the number of changes
 	data = data.sort_values(by=["Changes"], ascending=False)
 	# Write the sorted csv file to a new csv file
-	data.to_csv(RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH + "/" + SORTED_TOP_CHANGED_METHODS_CSV_FILENAME, index=False)
+	data.to_csv(FULL_SORTED_TOP_CHANGED_METHODS_CSV_FILE_PATH, index=False)
 
 # @brief: The main function
 # @param: None
