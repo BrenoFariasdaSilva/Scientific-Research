@@ -3,13 +3,18 @@ import csv # for reading csv files
 import numpy as np # for calculating the min, max, avg, and third quartile of each metric
 import pandas as pd # for the csv file operations
 from tqdm import tqdm # for progress bar
+from colorama import Style # For coloring the terminal
+
+# Import from the main.py file
+from main import backgroundColors
 
 # CONSTANTS:
+PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "False" # If True, then process the method.csv file. If False, then process the class.csv file
 MINIMUM_CHANGES = 2 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
 
 # Filenames:
-CK_CSV_FILE = "method.csv" # The default csv file name. It could be "method.csv" or "class.csv"
+CK_CSV_FILE = "method.csv" if PROCESS_CLASSES else "class.csv" # The name of the csv generated file from ck.
 TOP_CHANGED_METHODS_CSV_FILENAME = f"top_changed_{CK_CSV_FILE}" # The name of the csv file containing the top changed methods
 SORTED_TOP_CHANGED_METHODS_CSV_FILENAME = f"sorted_top_changed_{CK_CSV_FILE}" # The name of the csv file containing the sorted top changed methods
 CK_METRICS_DIRECTORY_NAME = "ck_metrics" # The relative path to the directory containing the ck metrics
@@ -35,13 +40,13 @@ def create_output_directories():
 # @param: None
 # @return: The path to the directory
 def get_directory_path():
-	repository_name = input("Enter the repository name (String): ")
+	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 	directory_path = f"{CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
 	# Check if the directory exists
 	while not os.path.isdir(directory_path):
 		print("The directory does not exist.")
-		repository_name = input("Enter the repository name (String): ")
+		repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 		directory_path = f"{CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
 	return directory_path
@@ -174,6 +179,8 @@ def sort_csv_by_changes():
 # @param: None
 # @return: None
 def main():
+	print(f"{backgroundColors.OKGREEN}This script calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file. The source of the metrics values is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} file.{Style.RESET_ALL}")
+
 	# Get the directory path from user input of the repository name
 	directory_path = get_directory_path()
 
