@@ -5,15 +5,27 @@ import pandas as pd # for the csv file operations
 from tqdm import tqdm # for progress bar
 
 # CONSTANTS:
-DEFAULT_CSV_FILE = "method.csv" # The default csv file name
+DEFAULT_CSV_FILE = "method.csv" # The default csv file name. It could be "met"
 MINIMUM_CHANGES = 2 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
 TOP_CHANGED_METHODS_CSV_FILENAME = "top_changed_methods.csv" # The name of the csv file containing the top changed methods
 SORTED_TOP_CHANGED_METHODS_CSV_FILENAME = "sorted_top_changed_methods.csv" # The name of the csv file containing the sorted top changed methods
 
-# Relative paths
+# Relative Paths:
 RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics"
 RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = "/metrics_statistics"
+
+# Full Paths:
+FULL_TOP_CHANGED_METHODS_CSV_FILE_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}/{TOP_CHANGED_METHODS_CSV_FILENAME}"
+FULL_SORTED_TOP_CHANGED_METHODS_CSV_FILE_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}/{SORTED_TOP_CHANGED_METHODS_CSV_FILENAME}"
+
+# @brief: This function create the output directories if they do not exist
+# @param: None
+# @return: None
+def create_output_directories():
+	# Create the output directories if they do not exist
+	if not os.path.isdir(f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}"):
+		os.mkdir(f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}")
 
 # @brief: Gets the user input for the repository name and returns the path to the directory
 # @param: None
@@ -135,6 +147,9 @@ def sort_csv_by_changes():
 def main():
 	# Get the directory path from user input of the repository name
 	directory_path = get_directory_path()
+
+	# Create the output directories if they do not exist
+	create_output_directories()
 
 	# Traverse the directory and get the method metrics
 	method_metrics = traverse_directory(directory_path)
