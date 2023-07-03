@@ -4,6 +4,7 @@
 @TODO: Make it work with the class.csv, instead of the method.csv, in order to get the metrics of the class.  
 @TODO: Update README to explain the new features (top_changes.py).  
 @TODO: Export the data of every commit in order to visualize it in a graph evolution of each metric.
+@TODO: Make top_changes.py also work with the class.csv.
 
 ### Important Note: Make sure you doesn't have whitespaces in the path of the project, otherwise it will not work.
 
