@@ -1,11 +1,9 @@
 # [PyDriller](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)
 @TODO: Make the code run for lots of methods names, and not just one, by changing the methods input (get_user_method_input) and calling the search_method_metrics and calculate_statistics functions for each method name.  
-@TODO: Make the combination of the class and method, and not just the method name, in order to avoid picking up methods with the same name but in different classes.  
-@TODO: Make it work with the class.csv, instead of the method.csv, in order to get the metrics of the class.  
-@TODO: Update README to explain the new features (top_changes.py).  
 @TODO: Export the data of every commit in order to visualize it in a graph evolution of each metric.
-@TODO: Make top_changes.py also work with the class.csv.
 @TODO: Explain how to choose between the class.csv or method.csv in the top_changes.py.
+@TODO: Update README to explain the new features (top_changes.py).  
+@TODO: Create a new file (metrics.py) that will store the metrics evolution of the given method or class.
 
 ### Important Note: Make sure you doesn't have whitespaces in the path of the project, otherwise it will not work.
 
