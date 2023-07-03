@@ -33,6 +33,16 @@ FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTI
 FULL_REPOSITORY_DIRECTORY_PATH = PATH + RELATIVE_REPOSITORY_DIRECTORY_PATH
 FULL_CK_JAR_PATH = PATH + RELATIVE_CK_JAR_PATH
 
+# @brief: This function is used to check if the PATH constant contain whitespaces
+# @param: None
+# @return: True if the PATH constant contain whitespaces, False otherwise
+def path_contains_whitespaces():
+   # Check if the PATH constant contains whitespaces
+   if " " in PATH:
+      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
+      return True
+   return False
+
 # @brief: Get the user input and check if they are empty
 # @param: None
 # @return: repository_url: URL of the repository to be analyzed
@@ -249,16 +259,6 @@ def calculate_statistics(directory, output_file):
                      third_quartile = round(statistics.median_high(column_values), 3)
                      writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile])
    print(f"{backgroundColors.OKGREEN}Successfully wrote the statistics to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
-
-# @brief: This function is used to check if the PATH constant contain whitespaces
-# @param: None
-# @return: True if the PATH constant contain whitespaces, False otherwise
-def path_contains_whitespaces():
-   # Check if the PATH constant contains whitespaces
-   if " " in PATH:
-      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
-      return True
-   return False
 
 # @brief: Main function
 # @param: None
