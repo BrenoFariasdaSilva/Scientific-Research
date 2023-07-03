@@ -1,7 +1,8 @@
 # [PyDriller](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)
 @TODO: Export the data of every commit in order to visualize it in a graph evolution of each metric.  
 @TODO: Update README to explain the new features (top_changes.py).   
-@TODO: Create a new file (metrics.py) that will store the metrics evolution of the given method or class.
+@TODO: Create a new file (metrics.py) that will store the metrics evolution of the given method or class.  
+@TODO: Add the commit hash for the top_changes.py code.
 
 ### Important Note: Make sure you doesn't have whitespaces in the path of the project, otherwise it will not work.
 
