@@ -5,40 +5,44 @@ import pandas as pd # for the csv file operations
 from tqdm import tqdm # for progress bar
 
 # CONSTANTS:
-DEFAULT_CSV_FILE = "method.csv" # The default csv file name. It could be "method.csv" or "class.csv"
 MINIMUM_CHANGES = 2 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
-TOP_CHANGED_METHODS_CSV_FILENAME = "top_changed_methods.csv" # The name of the csv file containing the top changed methods
-SORTED_TOP_CHANGED_METHODS_CSV_FILENAME = "sorted_top_changed_methods.csv" # The name of the csv file containing the sorted top changed methods
 
-# Relative Paths:
-RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics" # The relative path to the directory containing the ck metrics
-RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = "/metrics_statistics" # The relative path to the directory containing the metrics statistics
+# Filenames:
+CK_CSV_FILE = "method.csv" # The default csv file name. It could be "method.csv" or "class.csv"
+TOP_CHANGED_METHODS_CSV_FILENAME = f"top_changed_{CK_CSV_FILE}" # The name of the csv file containing the top changed methods
+SORTED_TOP_CHANGED_METHODS_CSV_FILENAME = f"sorted_top_changed_{CK_CSV_FILE}" # The name of the csv file containing the sorted top changed methods
+CK_METRICS_DIRECTORY_NAME = "ck_metrics" # The relative path to the directory containing the ck metrics
+METRICS_STATISTICS_DIRECTORY_NAME = "metrics_statistics" # The relative path to the directory containing the metrics statistics
 
-# Full Paths:
-FULL_TOP_CHANGED_METHODS_CSV_FILE_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}/{TOP_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the top changed methods
-FULL_SORTED_TOP_CHANGED_METHODS_CSV_FILE_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}/{SORTED_TOP_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the sorted top changed methods
+# Directories Paths:
+CK_METRICS_DIRECTORY_PATH = f"{os.getcwd()}/{CK_METRICS_DIRECTORY_NAME}" # The full path to the directory containing the ck metrics
+METRICS_STATISTICS_DIRECTORY_PATH = f"{os.getcwd()}/{METRICS_STATISTICS_DIRECTORY_NAME}" # The full path to the directory containing the metrics statistics
+
+# Full Files Paths:
+TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{TOP_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the top changed methods
+SORTED_TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{SORTED_TOP_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the sorted top changed methods
 
 # @brief: This function create the output directories if they do not exist
 # @param: None
 # @return: None
 def create_output_directories():
 	# Create the output directories if they do not exist
-	if not os.path.isdir(f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}"):
-		os.mkdir(f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH}")
+	if not os.path.isdir(METRICS_STATISTICS_DIRECTORY_PATH):
+		os.mkdir(METRICS_STATISTICS_DIRECTORY_PATH)
 
 # @brief: Gets the user input for the repository name and returns the path to the directory
 # @param: None
 # @return: The path to the directory
 def get_directory_path():
 	repository_name = input("Enter the repository name (String): ")
-	directory_path = f"{os.getcwd()}{RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH}/{repository_name}"
+	directory_path = f"{CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
 	# Check if the directory exists
 	while not os.path.isdir(directory_path):
 		print("The directory does not exist.")
 		repository_name = input("Enter the repository name (String): ")
-		directory_path = f"{os.getcwd()}{RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH}/{repository_name}"
+		directory_path = f"{CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
 	return directory_path
 
@@ -88,11 +92,11 @@ def traverse_directory(directory_path):
 		# Iterate through each file in the directory and call the process_csv_file function to get the methods metrics of each file
 		for file in files:
 			# If the file is a csv file
-			if file == DEFAULT_CSV_FILE:
+			if file == CK_CSV_FILE:
 				file_path = os.path.join(root, file) # Get the path to the csv file
 				process_csv_file(file_path, method_metrics) # Process the csv file
 				file_count += 1 # Increment the file count
-				
+
 				if progress_bar is None: # If the progress bar is not initialized
 					progress_bar = tqdm(total=file_count) # Initialize the progress bar
 				else:
@@ -112,6 +116,7 @@ def traverse_directory(directory_path):
 # @param metrics_values: The list of metrics values
 # @return: None
 def write_method_metrics_statistics(csv_writer, method_name, metrics, metrics_values):
+	# limit each metric to 3 decimal places
 	cboMin = float(min(metrics_values[0]))
 	cboMax = float(max(metrics_values[0]))
 	cboAvg = float(sum(metrics_values[0])) / len(metrics_values[0])
@@ -136,7 +141,7 @@ def write_method_metrics_statistics(csv_writer, method_name, metrics, metrics_va
 # @return: None
 def process_method_metrics(method_metrics):
 	# Open the csv file and process the metrics of each method
-	with open(FULL_TOP_CHANGED_METHODS_CSV_FILE_PATH, "w") as csvfile:
+	with open(TOP_CHANGED_FILES_CSV_FILE_PATH, "w") as csvfile:
 		writer = csv.writer(csvfile)	
 		writer.writerow(["Method", "Changed", "CBOMin", "CBOMax", "CBOAvg", "CBOThirdQuartile", "CBO ModifiedMin", "CBO ModifiedMax", "CBO ModifiedAvg", "CBO ModifiedThirdQuartile", "WMCMin", "WMCMax", "WMCAvg", "WMCThirdQuartile", "RFCMin", "RFCMax", "RFCAvg", "RFCThirdQuartile"])
 
@@ -160,11 +165,11 @@ def process_method_metrics(method_metrics):
 # @return: None
 def sort_csv_by_changes():
 	# Read the csv file
-	data = pd.read_csv(FULL_TOP_CHANGED_METHODS_CSV_FILE_PATH)
+	data = pd.read_csv(TOP_CHANGED_FILES_CSV_FILE_PATH)
 	# Sort the csv file by the number of changes
-	data = data.sort_values(by=["Changes"], ascending=False)
+	data = data.sort_values(by=["Changed"], ascending=False)
 	# Write the sorted csv file to a new csv file
-	data.to_csv(FULL_SORTED_TOP_CHANGED_METHODS_CSV_FILE_PATH, index=False)
+	data.to_csv(SORTED_TOP_CHANGED_FILES_CSV_FILE_PATH, index=False)
 
 # @brief: The main function
 # @param: None
@@ -186,7 +191,7 @@ def main():
 	sort_csv_by_changes()
 
 	# Remove the old csv file
-	os.remove(FULL_TOP_CHANGED_METHODS_CSV_FILE_PATH)
+	os.remove(TOP_CHANGED_FILES_CSV_FILE_PATH)
 
 # Directive to run the main function
 if __name__ == "__main__":
