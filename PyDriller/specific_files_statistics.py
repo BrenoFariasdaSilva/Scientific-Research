@@ -206,6 +206,42 @@ def calculate_statistics(directory, output_file):
                      writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile])
    print(f"{backgroundColors.OKGREEN}Successfully wrote the statistics to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
 
+# @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH folder
+# @param: repository_name: Name of the repository to be analyzed
+# @param: method_processed: Name of the method to be analyzed
+# @return: None
+def create_metrics_evolution_graphs(repository_name, method_processed):
+   # Load the generated CSV files into a dataframe and save a plot of the evolution of the cbo, cboModified, wmc and rfc metrics
+   df = pd.read_csv("metrics_evolution" + "/" + repository_name + "-" + method_processed + ".csv")
+   # Extract the metrics and commit hashes from the DataFrame
+   commit_hashes = df["commit_hash"]
+   metrics = ["cbo", "cboModified", "wmc", "rfc"]
+
+   # Set color palette for the lines
+   colors = ["blue", "orange", "green", "red"]
+
+   # Plotting the graph
+   plt.figure(figsize=(10, 6))
+
+   # Iterate over each metric and plot its evolution with a different color
+   for i, metric in enumerate(metrics):
+      plt.plot(commit_hashes, df[metric], marker="o", label=metric, color=colors[i])
+
+   # Set the graph title and labels
+   plt.title("Metrics Evolution")
+   plt.xlabel("Commit Hash")
+   plt.ylabel("Metric Value")
+
+   # Rotate the x-axis labels for better readability
+   plt.xticks(rotation=45)
+
+   # Add a legend
+   plt.legend()
+
+   # Show the graph
+   plt.tight_layout()
+   plt.show()
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -242,6 +278,9 @@ def main():
 
       # Calculate the statistics for the CSV files in the metrics_evolution directory
       calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + "-" + method_processed + ".csv")
+
+      # Create the metrics evolution graphs
+      create_metrics_evolution_graphs(repository_name, method_processed)
 
    print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics evolution for {backgroundColors.OKCYAN}{repository_name}->[methods]{Style.RESET_ALL}")
 
