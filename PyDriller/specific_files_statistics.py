@@ -5,7 +5,6 @@
 import os # OS module in Python provides functions for interacting with the operating system
 import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
 import statistics # The statistics module provides functions for calculating mathematical statistics of numeric (Real-valued) data
-from pydriller import Repository # PyDriller is a Python framework that helps developers in analyzing Git repositories. 
 from tqdm import tqdm # TQDM is a progress bar library with good support for nested loops and Jupyter/IPython notebooks.
 import pandas as pd # Pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,
 import matplotlib.pyplot as plt # Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python.
@@ -283,7 +282,7 @@ def main():
    # Make a for loop to run the search_id_metrics and calculate_statistics function for every method in the user input
    for id in ids: # Loop trough the ids items in the dictionary
       if "/" in id:
-         clean_id = str(id.split('/')[0:-1])[2:-2]
+         clean_id = str(id.split("/")[0:-1])[2:-2]
       print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id}{Style.RESET_ALL}")
 
       # Calculate the CBO and WMC metrics evolution for the given method
