@@ -100,6 +100,22 @@ def create_directory(full_directory_name, relative_directory_name):
    except OSError: # If the directory cannot be created
       print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
 
+# brief: Get user method name input
+# param: None
+# return: method_name: Name of the method to be analyzed
+def get_user_method_input():
+   # Ask for user input of the method name
+   method_name = input(f"{backgroundColors.OKGREEN}Enter the method name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+
+   # If empty, get from the method_names list
+   if not method_name:
+      method_name = DEFAULT_METHODS_NAME
+      print(f"{backgroundColors.OKGREEN}Using the default stored names: {backgroundColors.OKCYAN}{method_name}{Style.RESET_ALL}")
+
+   print()
+   # Return the method name
+   return method_name
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -121,6 +137,9 @@ def main():
 
    # create the metrics_statistics directory
    create_directory(FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH)
+
+   # Get the methods from the user
+   methods = get_user_method_input()
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
