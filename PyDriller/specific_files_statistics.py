@@ -116,6 +116,55 @@ def get_user_method_input():
    # Return the method name
    return method_name
 
+# @brief: This function is analyze the repository metrics evolution over time
+# @param: repository_name: Name of the repository to be analyzed
+# @return: None
+def search_method_metrics(repository_name, method_name):
+   print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} method...{Style.RESET_ALL}")
+
+   metrics_track_record = [] # Dictionary to store the metrics track records
+   metrics_changes = [] # List to store the metrics of the method or class
+   method_variables_counter = 0 # Counter to store the number of variables of the method
+
+   # Get the list of commit hashes
+   commit_hashes = os.listdir(f"ck_metrics/{repository_name}/")
+   
+   for commit_hash in tqdm(commit_hashes):
+      method_path = f"ck_metrics/{repository_name}/{commit_hash}/{CK_CSV_FILE}"
+
+      # Check if the method file exists for the current commit hash
+      if os.path.isfile(method_path):
+         with open(method_path, "r") as file:
+            reader = csv.DictReader(file) # Read the CK_CSV_FILE file
+            
+            # Search for the method in the current commit's method.csv file
+            for row in reader:
+               if row["method"] == method_name:
+                  current_metrics = (float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
+                  current_attributes = (commit_hash, float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
+
+                  # Store the metrics if they aren't in the metrics_track_records dictionary
+                  if current_metrics not in metrics_changes:
+                     metrics_changes.append(current_metrics)
+                     metrics_track_record.append(current_attributes)
+                     method_variables_counter += 1
+
+   # If the data is empty, then the method was not found
+   if not metrics_track_record:
+      print(f"{backgroundColors.FAIL}Method {backgroundColors.OKCYAN}{method_name}{backgroundColors.FAIL} not found{Style.RESET_ALL}")
+      return
+   
+   print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter} of {method_variables_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
+
+   # Write the method_data to a file in the /metrics_evolution folder
+   # remove everything that comes before the / in the method_name
+   output_file = f"metrics_evolution/{repository_name}-{str(method_name.split('/')[0:-1])[2:-2]}.csv"
+   with open(output_file, 'w') as file:
+      writer = csv.writer(file)
+      writer.writerow([f"commit_hash", "cbo", "cboModified", "wmc", "rfc"])
+      writer.writerows(metrics_track_record)
+   print(f"{backgroundColors.OKGREEN}Successfully wrote the method evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -140,6 +189,14 @@ def main():
 
    # Get the methods from the user
    methods = get_user_method_input()
+
+   # Make a for loop to run the search_method_metrics and calculate_statistics function for every method in the user input
+   for method in methods:
+      if "/" in method:
+         method_processed = str(method.split('/')[0:-1])[2:-2]
+      print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{method_processed}{Style.RESET_ALL}")
+      # Calculate the CBO and WMC metrics evolution for the given method
+      search_method_metrics(repository_name, method)
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
