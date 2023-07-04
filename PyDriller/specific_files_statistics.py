@@ -1,3 +1,5 @@
+# @TODO: Change the variables names and refactor to be more readable and generic (could be method or class)
+
 import os # OS module in Python provides functions for interacting with the operating system
 import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
 import statistics # The statistics module provides functions for calculating mathematical statistics of numeric (Real-valued) data
