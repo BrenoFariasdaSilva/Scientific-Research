@@ -165,6 +165,47 @@ def search_method_metrics(repository_name, method_name):
       writer.writerows(metrics_track_record)
    print(f"{backgroundColors.OKGREEN}Successfully wrote the method evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
 
+# @brief: This function is used to analyze the repository metrics evolution over time for the CSV files in the given directory
+# @param: directory: Directory containing the CSV files to be analyzed
+# @return: None
+# This file is wrong. Simply calculate the statistics for the desired CSV file, like: metrics_evolution/commons-lang-testBothArgsNull.csv
+def calculate_statistics(directory, output_file):
+   print(f"{backgroundColors.OKGREEN}Calculating statistics for CSV files in {backgroundColors.OKCYAN}{directory}/{output_file}{Style.RESET_ALL}")
+
+   # Create the output file
+   with open(output_file, "w", newline='') as csvfile:
+      writer = csv.writer(csvfile) # Create a CSV writer
+      # Write the header row
+      writer.writerow(["File", "Metric", "Min", "Max", "Average", "Median", "Third Quartile"])
+
+      # Iterate through the CSV files in the directory 
+      for root, dirs, files in os.walk(directory):
+         # Iterate through the files in the current directory 
+         for file in files:
+            # Check if the file is a CSV file. Change this to search for the specific file: metrics_evolution/
+            if file.endswith(".csv"):
+               file_path = os.path.join(root, file) # Get the full path of the file
+               print(f"{backgroundColors.OKGREEN}Calculating statistics for {backgroundColors.OKCYAN}{file_path.split('/')[-1]}{Style.RESET_ALL}")
+               # Read the CSV file
+               with open(file_path, "r") as csvfile:
+                  reader = csv.reader(csvfile)
+                  header = next(reader)  # Skip the header row
+
+                  values = []
+                  for row in reader:
+                     values.append(row[1:]) # Append the second to the last value of the row to the values list
+
+                  # For loop that runs trough the columns of the reader
+                  for i in range(0, len(values[0])):
+                     column_values = [float(row[i]) for row in values]
+                     min_value = round(min(column_values), 3)
+                     max_value = round(max(column_values), 3)
+                     average = round(statistics.mean(column_values), 3)
+                     median = round(statistics.median(column_values), 3)
+                     third_quartile = round(statistics.median_high(column_values), 3)
+                     writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile])
+   print(f"{backgroundColors.OKGREEN}Successfully wrote the statistics to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -195,8 +236,12 @@ def main():
       if "/" in method:
          method_processed = str(method.split('/')[0:-1])[2:-2]
       print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{method_processed}{Style.RESET_ALL}")
+
       # Calculate the CBO and WMC metrics evolution for the given method
       search_method_metrics(repository_name, method)
+
+      # Calculate the statistics for the CSV files in the metrics_evolution directory
+      calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + "-" + method_processed + ".csv")
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
