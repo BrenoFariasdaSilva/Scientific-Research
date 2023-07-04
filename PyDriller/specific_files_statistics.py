@@ -213,6 +213,7 @@ def calculate_statistics(directory, output_file):
 def create_metrics_evolution_graphs(repository_name, method_processed):
    # Load the generated CSV files into a dataframe and save a plot of the evolution of the cbo, cboModified, wmc and rfc metrics
    df = pd.read_csv("metrics_evolution" + "/" + repository_name + "-" + method_processed + ".csv")
+
    # Extract the metrics and commit hashes from the DataFrame
    commit_hashes = df["commit_hash"]
    metrics = ["cbo", "cboModified", "wmc", "rfc"]
@@ -240,7 +241,9 @@ def create_metrics_evolution_graphs(repository_name, method_processed):
 
    # Show the graph
    plt.tight_layout()
-   plt.show()
+
+   # Save the graph
+   plt.savefig(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH + "/" + repository_name + "-" + method_processed + ".png")
 
 # @brief: Main function
 # @param: None
