@@ -243,6 +243,8 @@ def main():
       # Calculate the statistics for the CSV files in the metrics_evolution directory
       calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + "-" + method_processed + ".csv")
 
+   print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics evolution for {backgroundColors.OKCYAN}{repository_name}->[methods]{Style.RESET_ALL}")
+
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
    main() # Run the main function
