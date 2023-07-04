@@ -208,18 +208,19 @@ def calculate_statistics(directory, output_file):
 
 # @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH folder
 # @param: repository_name: Name of the repository to be analyzed
-# @param: method_processed: Name of the method to be analyzed
+# @param: id: ID of the method to be analyzed
+# @param: clean_id: ID of the method to be analyzed without the / and the method name
 # @return: None
-def create_metrics_evolution_graphs(repository_name, method_processed):
+def create_metrics_evolution_graphs(repository_name, id, clean_id):
    # Load the generated CSV files into a dataframe and save a plot of the evolution of the cbo, cboModified, wmc and rfc metrics
-   df = pd.read_csv("metrics_evolution" + "/" + repository_name + "-" + method_processed + ".csv")
+   df = pd.read_csv("metrics_evolution" + "/" + repository_name + "-" + clean_id + ".csv")
 
    # Extract the metrics and commit hashes from the DataFrame
    commit_hashes = df["commit_hash"]
    metrics = ["cbo", "cboModified", "wmc", "rfc"]
 
    # Set color palette for the lines
-   colors = ["blue", "orange", "green", "red"]
+   colors = ["blue", "red", "gray", "black"]
 
    # Plotting the graph
    plt.figure(figsize=(10, 6))
@@ -229,7 +230,7 @@ def create_metrics_evolution_graphs(repository_name, method_processed):
       plt.plot(commit_hashes, df[metric], marker="o", label=metric, color=colors[i])
 
    # Set the graph title and labels
-   plt.title("Metrics Evolution")
+   plt.title(f"Metrics Evolution of {id}")
    plt.xlabel("Commit Hash")
    plt.ylabel("Metric Value")
 
@@ -243,7 +244,7 @@ def create_metrics_evolution_graphs(repository_name, method_processed):
    plt.tight_layout()
 
    # Save the graph
-   plt.savefig(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH + "/" + repository_name + "-" + method_processed + ".png")
+   plt.savefig(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH + "/" + repository_name + "-" + clean_id + ".png")
 
 # @brief: Main function
 # @param: None
@@ -271,19 +272,19 @@ def main():
    methods = get_user_method_input()
 
    # Make a for loop to run the search_method_metrics and calculate_statistics function for every method in the user input
-   for method in methods:
-      if "/" in method:
-         method_processed = str(method.split('/')[0:-1])[2:-2]
-      print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{method_processed}{Style.RESET_ALL}")
+   for id in methods:
+      if "/" in id:
+         clean_id = str(id.split('/')[0:-1])[2:-2]
+      print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{clean_id}{Style.RESET_ALL}")
 
       # Calculate the CBO and WMC metrics evolution for the given method
-      search_method_metrics(repository_name, method)
+      search_method_metrics(repository_name, id)
 
       # Calculate the statistics for the CSV files in the metrics_evolution directory
-      calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + "-" + method_processed + ".csv")
+      calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + "-" + clean_id + ".csv")
 
       # Create the metrics evolution graphs
-      create_metrics_evolution_graphs(repository_name, method_processed)
+      create_metrics_evolution_graphs(repository_name, id, clean_id)
 
    print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics evolution for {backgroundColors.OKCYAN}{repository_name}->[methods]{Style.RESET_ALL}")
 
