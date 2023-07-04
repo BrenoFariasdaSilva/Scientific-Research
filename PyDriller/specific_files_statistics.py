@@ -275,13 +275,14 @@ def main():
    for id in methods:
       if "/" in id:
          clean_id = str(id.split('/')[0:-1])[2:-2]
-      print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{clean_id}{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id}{Style.RESET_ALL}")
 
       # Calculate the CBO and WMC metrics evolution for the given method
       search_method_metrics(repository_name, id)
 
       # Calculate the statistics for the CSV files in the metrics_evolution directory
-      calculate_statistics(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + "-" + clean_id + ".csv")
+      output_statistics_csv_file = "metrics_statistics" + "/" + repository_name + "-" + clean_id + ".csv"
+      calculate_statistics(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, output_statistics_csv_file)
 
       # Create the metrics evolution graphs
       create_metrics_evolution_graphs(repository_name, id, clean_id)
