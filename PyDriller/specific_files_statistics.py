@@ -20,9 +20,9 @@ PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {
 CK_CSV_FILE = "class.csv" if PROCESS_CLASSES else "method.csv" # The name of the csv generated file from ck.
  
 # Relative paths:
-RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics"
-RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = "/metrics_evolution"
-RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = "/metrics_statistics"
+RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics"
+RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH = "/metrics_evolution"
+RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics"
 RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories"
 RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
@@ -30,11 +30,8 @@ RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 DEFAULT_FOLDER = PATH # Get the current working directory
 DEFAULT_REPOSITORY_NAME = "commons-lang"
 DEFAULT_METHODS_NAME = ["testBothArgsNull/0"]
-FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
-FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
-FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
-FULL_REPOSITORY_DIRECTORY_PATH = PATH + RELATIVE_REPOSITORY_DIRECTORY_PATH
-FULL_CK_JAR_PATH = PATH + RELATIVE_CK_JAR_PATH
+FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
+FULL_METRICS_STATISTICS_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH
 
 # @brief: This function is used to check if the PATH constant contain whitespaces
 # @param: None
@@ -208,7 +205,7 @@ def calculate_statistics(directory, output_file):
                      writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile])
    print(f"{backgroundColors.OKGREEN}Successfully wrote the statistics to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
 
-# @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH folder
+# @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH folder
 # @param: repository_name: Name of the repository to be analyzed
 # @param: id: ID of the method to be analyzed
 # @param: clean_id: ID of the method to be analyzed without the / and the method name
@@ -246,7 +243,7 @@ def create_metrics_evolution_graphs(repository_name, id, clean_id):
    plt.tight_layout()
 
    # Save the graph
-   plt.savefig(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH + "/" + repository_name + "-" + clean_id + ".png")
+   plt.savefig(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "-" + clean_id + ".png")
 
 # @brief: Main function
 # @param: None
@@ -265,10 +262,10 @@ def main():
       return
    
    # create the metrics_evolution directory
-   create_directory(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH)
+   create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
 
    # create the metrics_statistics directory
-   create_directory(FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH)
+   create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
 
    # Get the methods from the user
    methods = get_user_method_input()
@@ -283,7 +280,7 @@ def main():
       search_method_metrics(repository_name, id)
 
       # Calculate the statistics for the CSV files in the metrics_evolution directory
-      calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + "-" + clean_id + ".csv")
+      calculate_statistics(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + "-" + clean_id + ".csv")
 
       # Create the metrics evolution graphs
       create_metrics_evolution_graphs(repository_name, id, clean_id)
