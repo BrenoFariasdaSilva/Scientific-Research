@@ -14,15 +14,17 @@ from colorama import Style # For coloring the terminal
 # Import from the main.py file
 from main import backgroundColors
         
-# Changable constants:
-PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
-CK_CSV_FILE = "class.csv" if PROCESS_CLASSES else "method.csv" # The name of the csv generated file from ck.
-DEFAULT_REPOSITORY_NAME = "commons-lang"
-DEFAULT_IDS = ["testBothArgsNull/0"]
-
 # Constants:
 PATH = os.getcwd() # Get the current working directory
 DEFAULT_FOLDER = PATH # Get the current working directory
+
+# Changable constants:
+CLASS_CSV_FILE = "class.csv" # The name of the csv generated file from ck.
+METHOD_CSV_FILE = "method.csv" # The name of the csv generated file from ck.
+PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
+CK_CSV_FILE = CLASS_CSV_FILE if PROCESS_CLASSES else METHOD_CSV_FILE # The name of the csv generated file from ck.
+DEFAULT_REPOSITORY_NAME = "commons-lang"
+DEFAULT_IDS = {"testBothArgsNull/0": "org.apache.commons.lang3.AnnotationUtilsTest", "suite/0": "org.apache.commons.lang.LangTestSuite"} # The default ids to be analyzed. It stores the class:type or method:class
  
 # Relative paths:
 RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics"
