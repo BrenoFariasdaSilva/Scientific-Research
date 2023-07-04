@@ -220,7 +220,7 @@ def calculate_statistics(directory, output_file):
 # @param: id: ID of the method to be analyzed
 # @param: clean_id: ID of the method to be analyzed without the / and the method name
 # @return: None
-def create_metrics_evolution_graphs(repository_name, id, clean_id):
+def create_metrics_evolution_graphics(repository_name, id, clean_id):
    # Load the generated CSV files into a dataframe and save a plot of the evolution of the cbo, cboModified, wmc and rfc metrics
    df = pd.read_csv("metrics_evolution" + "/" + repository_name + "-" + clean_id + ".csv")
 
@@ -277,11 +277,11 @@ def main():
    # create the metrics_statistics directory
    create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
 
-   # Get the methods from the user
-   methods = get_user_ids_input()
+   # Get the ids from the user
+   ids = get_user_ids_input()
 
-   # Make a for loop to run the search_method_metrics and calculate_statistics function for every method in the user input
-   for id in methods:
+   # Make a for loop to run the search_id_metrics and calculate_statistics function for every method in the user input
+   for id in ids: # Loop trough the ids items in the dictionary
       if "/" in id:
          clean_id = str(id.split('/')[0:-1])[2:-2]
       print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id}{Style.RESET_ALL}")
@@ -294,9 +294,10 @@ def main():
       calculate_statistics(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, output_statistics_csv_file)
 
       # Create the metrics evolution graphs
-      create_metrics_evolution_graphs(repository_name, id, clean_id)
+      create_metrics_evolution_graphics(repository_name, id, clean_id)
+      print()
 
-   print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics evolution for {backgroundColors.OKCYAN}{repository_name}->[methods]{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics evolution for {backgroundColors.OKCYAN}{repository_name}->{list(ids.keys())}{Style.RESET_ALL}")
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
