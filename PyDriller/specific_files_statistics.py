@@ -30,7 +30,7 @@ RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 # Default values:
 DEFAULT_FOLDER = PATH # Get the current working directory
 DEFAULT_REPOSITORY_NAME = "commons-lang"
-DEFAULT_METHODS_NAME = ["testBothArgsNull/0"]
+DEFAULT_IDS = ["testBothArgsNull/0"]
 FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
 FULL_METRICS_STATISTICS_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH
 
@@ -86,41 +86,40 @@ def check_metrics_folders(repository_name):
          return False
    return True
 
-# @brief: Create a subdirectory
-# @param: full_directory_name: Name of the directory to be created
-# @param: relative_directory_name: Relative name of the directory to be created that will be shown in the terminal
+# @brief: Create a directory if it does not exist
+# @param: full_directory_path: Name of the directory to be created
+# @param: relative_directory_path: Relative name of the directory to be created that will be shown in the terminal
 # @return: None
-def create_directory(full_directory_name, relative_directory_name):
-   if os.path.isdir(full_directory_name): # Check if the directory already exists
-      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory already exists{Style.RESET_ALL}")
+def create_directory(full_directory_path, relative_directory_path):
+   if os.path.isdir(full_directory_path): # Check if the directory already exists
+      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory already exists{Style.RESET_ALL}")
       return
    try: # Try to create the directory
-      os.makedirs(full_directory_name)
-      print (f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory{Style.RESET_ALL}")
+      os.makedirs(full_directory_path)
+      print (f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory{Style.RESET_ALL}")
    except OSError: # If the directory cannot be created
-      print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
 
 # brief: Get user method name input
 # param: None
-# return: method_name: Name of the method to be analyzed
+# return: id: Name of the method to be analyzed
 def get_user_method_input():
    # Ask for user input of the method name
-   method_name = input(f"{backgroundColors.OKGREEN}Enter the method name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+   id = input(f"{backgroundColors.OKGREEN}Enter the method name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
    # If empty, get from the method_names list
-   if not method_name:
-      method_name = DEFAULT_METHODS_NAME
-      print(f"{backgroundColors.OKGREEN}Using the default stored names: {backgroundColors.OKCYAN}{method_name}{Style.RESET_ALL}")
+   if not id:
+      id = DEFAULT_IDS
+      print(f"{backgroundColors.OKGREEN}Using the default stored names: {backgroundColors.OKCYAN}{id}{Style.RESET_ALL}")
 
-   print()
    # Return the method name
-   return method_name
+   return id
 
 # @brief: This function is analyze the repository metrics evolution over time
 # @param: repository_name: Name of the repository to be analyzed
 # @return: None
-def search_method_metrics(repository_name, method_name):
-   print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} method...{Style.RESET_ALL}")
+def search_method_metrics(repository_name, id):
+   print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} method...{Style.RESET_ALL}")
 
    metrics_track_record = [] # Dictionary to store the metrics track records
    metrics_changes = [] # List to store the metrics of the method or class
@@ -139,7 +138,7 @@ def search_method_metrics(repository_name, method_name):
             
             # Search for the method in the current commit's method.csv file
             for row in reader:
-               if row["method"] == method_name:
+               if row["method"] == id:
                   current_metrics = (float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
                   current_attributes = (commit_hash, float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
 
@@ -151,14 +150,14 @@ def search_method_metrics(repository_name, method_name):
 
    # If the data is empty, then the method was not found
    if not metrics_track_record:
-      print(f"{backgroundColors.FAIL}Method {backgroundColors.OKCYAN}{method_name}{backgroundColors.FAIL} not found{Style.RESET_ALL}")
+      print(f"{backgroundColors.FAIL}Method {backgroundColors.OKCYAN}{id}{backgroundColors.FAIL} not found{Style.RESET_ALL}")
       return
    
-   print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter} of {method_variables_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter} of {method_variables_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
 
    # Write the method_data to a file in the /metrics_evolution folder
-   # remove everything that comes before the / in the method_name
-   output_file = f"metrics_evolution/{repository_name}-{str(method_name.split('/')[0:-1])[2:-2]}.csv"
+   # remove everything that comes before the / in the id
+   output_file = f"metrics_evolution/{repository_name}-{str(id.split('/')[0:-1])[2:-2]}.csv"
    with open(output_file, 'w') as file:
       writer = csv.writer(file)
       writer.writerow([f"commit_hash", "cbo", "cboModified", "wmc", "rfc"])
@@ -240,7 +239,7 @@ def create_metrics_evolution_graphs(repository_name, id, clean_id):
    # Add a legend
    plt.legend()
 
-   # Show the graph
+   # Add a grid
    plt.tight_layout()
 
    # Save the graph
