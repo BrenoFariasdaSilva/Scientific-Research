@@ -115,6 +115,12 @@ def main():
    if not check_metrics_folders(repository_name):
       print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not calculated. Please run the main.py file first{Style.RESET_ALL}")
       return
+   
+   # create the metrics_evolution directory
+   create_directory(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH)
+
+   # create the metrics_statistics directory
+   create_directory(FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH)
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
