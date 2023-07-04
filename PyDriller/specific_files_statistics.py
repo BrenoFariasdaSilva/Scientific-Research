@@ -1,5 +1,6 @@
 # @TODO: Change the variables names and refactor to be more readable and generic (could be method or class)
 # @TODO: Comment every line of code
+# @TODO: Test it with multiple DEFAULT_IDS
 
 import os # OS module in Python provides functions for interacting with the operating system
 import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
@@ -13,12 +14,15 @@ from colorama import Style # For coloring the terminal
 # Import from the main.py file
 from main import backgroundColors
         
-# Default paths:
-PATH = os.getcwd() # Get the current working directory
+# Changable constants:
 PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
-
-# Filenames:
 CK_CSV_FILE = "class.csv" if PROCESS_CLASSES else "method.csv" # The name of the csv generated file from ck.
+DEFAULT_REPOSITORY_NAME = "commons-lang"
+DEFAULT_IDS = ["testBothArgsNull/0"]
+
+# Constants:
+PATH = os.getcwd() # Get the current working directory
+DEFAULT_FOLDER = PATH # Get the current working directory
  
 # Relative paths:
 RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics"
@@ -28,9 +32,6 @@ RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories"
 RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
 # Default values:
-DEFAULT_FOLDER = PATH # Get the current working directory
-DEFAULT_REPOSITORY_NAME = "commons-lang"
-DEFAULT_IDS = ["testBothArgsNull/0"]
 FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
 FULL_METRICS_STATISTICS_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH
 
