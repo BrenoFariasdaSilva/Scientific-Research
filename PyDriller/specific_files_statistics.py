@@ -120,9 +120,10 @@ def get_user_ids_input():
 
 # @brief: This function is analyze the repository metrics evolution over time
 # @param: repository_name: Name of the repository to be analyzed
+# @param: id_key: Name of the method to be analyzed
 # @return: None
-def search_method_metrics(repository_name, id):
-   print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} method...{Style.RESET_ALL}")
+def search_id_metrics(repository_name, id_key):
+   print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} method...{Style.RESET_ALL}")
 
    metrics_track_record = [] # Dictionary to store the metrics track records
    metrics_changes = [] # List to store the metrics of the method or class
@@ -138,10 +139,15 @@ def search_method_metrics(repository_name, id):
       if os.path.isfile(method_path):
          with open(method_path, "r") as file:
             reader = csv.DictReader(file) # Read the CK_CSV_FILE file
-            
-            # Search for the method in the current commit's method.csv file
+            get_metrics = False # Flag to get the metrics of the method or class
+            # Search for the id_key in the CK_CSV_FILE file
             for row in reader:
-               if row["method"] == id:
+               if (CK_CSV_FILE == CLASS_CSV_FILE) and (row["class"] == id_key and row["type"] == DEFAULT_IDS[id_key]):
+                     get_metrics = True
+               elif (CK_CSV_FILE == METHOD_CSV_FILE) and (row["method"] == id_key and row["class"] == DEFAULT_IDS[id_key]):
+                     get_metrics = True
+
+               if get_metrics:
                   current_metrics = (float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
                   current_attributes = (commit_hash, float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
 
@@ -150,17 +156,18 @@ def search_method_metrics(repository_name, id):
                      metrics_changes.append(current_metrics)
                      metrics_track_record.append(current_attributes)
                      method_variables_counter += 1
+                  get_metrics = False
 
    # If the data is empty, then the method was not found
    if not metrics_track_record:
-      print(f"{backgroundColors.FAIL}Method {backgroundColors.OKCYAN}{id}{backgroundColors.FAIL} not found{Style.RESET_ALL}")
+      print(f"{backgroundColors.FAIL}Method {backgroundColors.OKCYAN}{id_key}{backgroundColors.FAIL} not found{Style.RESET_ALL}")
       return
    
-   print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter} of {method_variables_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter} of {method_variables_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
 
    # Write the method_data to a file in the /metrics_evolution folder
    # remove everything that comes before the / in the id
-   output_file = f"metrics_evolution/{repository_name}-{str(id.split('/')[0:-1])[2:-2]}.csv"
+   output_file = f"metrics_evolution/{repository_name}-{str(id_key.split('/')[0:-1])[2:-2]}.csv"
    with open(output_file, 'w') as file:
       writer = csv.writer(file)
       writer.writerow([f"commit_hash", "cbo", "cboModified", "wmc", "rfc"])
@@ -280,7 +287,7 @@ def main():
       print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id}{Style.RESET_ALL}")
 
       # Calculate the CBO and WMC metrics evolution for the given method
-      search_method_metrics(repository_name, id)
+      search_id_metrics(repository_name, id)
 
       # Calculate the statistics for the CSV files in the metrics_evolution directory
       output_statistics_csv_file = "metrics_statistics" + "/" + repository_name + "-" + clean_id + ".csv"
