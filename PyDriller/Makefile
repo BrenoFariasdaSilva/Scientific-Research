@@ -7,7 +7,8 @@ specific_files_statistics:
 top_changes:
 	clear; python3 top_changes.py
 
-setup:
+dependencies:
+	pip install matplotlib
 	pip install numpy
 	pip install pandas
 	pip install pydriller
