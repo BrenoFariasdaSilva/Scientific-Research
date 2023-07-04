@@ -22,8 +22,8 @@ METHOD_CSV_FILE = "method.csv" # The name of the csv generated file from ck.
 PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 CK_CSV_FILE = CLASS_CSV_FILE if PROCESS_CLASSES else METHOD_CSV_FILE # The name of the csv generated file from ck.
 DEFAULT_REPOSITORY_NAME = "commons-lang"
-DEFAULT_IDS = {"org.apache.commons.lang.StringUtils": "class"} # The default ids to be analyzed. It stores the class:type or method:class
-# DEFAULT_IDS = {"testBothArgsNull/0": "org.apache.commons.lang3.AnnotationUtilsTest", "suite/0": "org.apache.commons.lang.LangTestSuite"} # The default ids to be analyzed. It stores the class:type or method:class
+# DEFAULT_IDS = {"org.apache.commons.lang.StringUtils": "class"} # The default ids to be analyzed. It stores the class:type or method:class
+DEFAULT_IDS = {"testBothArgsNull/0": "org.apache.commons.lang3.AnnotationUtilsTest", "suite/0": "org.apache.commons.lang.LangTestSuite"} # The default ids to be analyzed. It stores the class:type or method:class
  
 # Relative paths:
 RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics"
@@ -65,7 +65,7 @@ def get_repository_name_user():
 # @param: repository_name: Name of the repository to be analyzed
 # @return: True if all the metrics are already calculated, False otherwise
 def check_metrics_folders(repository_name):
-   print(f"{backgroundColors.OKGREEN}Checking if all the metrics are already calculated{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
    current_path = PATH
    data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:])
    repo_path = os.path.join(data_path, repository_name)
@@ -107,12 +107,12 @@ def create_directory(full_directory_path, relative_directory_path):
 # return: id: Name of the method to be analyzed
 def get_user_ids_input():
    # Ask for user input of the method name
-   id = input(f"{backgroundColors.OKGREEN}Enter the method name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+   id = input(f"{backgroundColors.OKGREEN}Enter the id of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
    # If empty, get from the method_names list
    if not id:
       id = DEFAULT_IDS
-      print(f"{backgroundColors.OKGREEN}Using the default stored names: {backgroundColors.OKCYAN}{id}{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.OKCYAN}{list(id.keys())}{Style.RESET_ALL}")
 
    # Return the method name
    return id
@@ -122,7 +122,7 @@ def get_user_ids_input():
 # @param: id_key: Name of the method to be analyzed
 # @return: None
 def search_id_metrics(repository_name, id_key):
-   print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} class/method...{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} {CK_CSV_FILE.replace('.csv', '')}...{Style.RESET_ALL}")
 
    metrics_track_record = [] # Dictionary to store the metrics track records
    metrics_changes = [] # List to store the metrics of the method or class
@@ -162,7 +162,7 @@ def search_id_metrics(repository_name, id_key):
       print(f"{backgroundColors.FAIL}Method {backgroundColors.OKCYAN}{id_key}{backgroundColors.FAIL} not found{Style.RESET_ALL}")
       return
    
-   print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter} of {method_variables_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}The {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter} of {method_variables_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
 
    # Write the method_data to a file in the /metrics_evolution folder
    output_file = f"{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}/{repository_name}-{id_key}.csv" if PROCESS_CLASSES else f"{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}/{repository_name}-{str(id_key.split('/')[0:-1])[2:-2]}.csv"
@@ -170,14 +170,14 @@ def search_id_metrics(repository_name, id_key):
       writer = csv.writer(file)
       writer.writerow([f"commit_hash", "cbo", "cboModified", "wmc", "rfc"])
       writer.writerows(metrics_track_record)
-   print(f"{backgroundColors.OKGREEN}Successfully wrote the method evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}Successfully wrote the {CK_CSV_FILE.replace('.csv', '')} evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
 
 # @brief: This function is used to analyze the repository metrics evolution over time for the CSV files in the given directory
 # @param: data_directory: Directory containing the CSV files to be analyzed
 # @param: output_file: Name of the output file
 # @return: None
 def calculate_statistics(data_directory, output_file):
-   print(f"{backgroundColors.OKGREEN}Calculating statistics for CSV file in {backgroundColors.OKCYAN}{data_directory}{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}Calculating statistics from the CSV file in {backgroundColors.OKCYAN}{data_directory.split('/')[-1]}/{output_file.split('/')[-1]}{Style.RESET_ALL}")
 
    # Create the output file
    with open(output_file, "w", newline='') as csvfile:
@@ -192,7 +192,6 @@ def calculate_statistics(data_directory, output_file):
             # Check if the file is the desired CSV file
             if file == output_file.split('/')[-1]:
                file_path = os.path.join(root, file) # Get the full path of the file
-               print(f"{backgroundColors.OKGREEN}Calculating statistics for {backgroundColors.OKCYAN}{file_path.split('/')[-1]}{Style.RESET_ALL}")
                # Read the CSV file
                with open(file_path, "r") as csvfile:
                   reader = csv.reader(csvfile)
@@ -237,7 +236,7 @@ def create_metrics_evolution_graphics(repository_name, id, clean_id):
       plt.plot(commit_hashes, df[metric], marker="o", label=metric, color=colors[i])
 
    # Set the graph title and labels
-   plt.title(f"Metrics Evolution of {id}")
+   plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id} in {repository_name} repository")
    plt.xlabel("Commit Hash")
    plt.ylabel("Metric Value")
 
@@ -283,14 +282,13 @@ def main():
       clean_id = id
       if "/" in id:
          clean_id = str(id.split("/")[0:-1])[2:-2]
-      print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id}{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id} {backgroundColors.OKGREEN}{CK_CSV_FILE.replace('.csv', '')}{Style.RESET_ALL}")
 
       # Calculate the CBO and WMC metrics evolution for the given method
       search_id_metrics(repository_name, id)
 
       # Calculate the statistics for the CSV files in the metrics_evolution directory
       output_statistics_csv_file = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "-" + clean_id + ".csv"
-      print(f"{backgroundColors.OKGREEN}OUTPUT_STATISTICS_CSV_FILE: {backgroundColors.OKCYAN}{output_statistics_csv_file}{Style.RESET_ALL}")
       calculate_statistics(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, output_statistics_csv_file)
 
       # Create the metrics evolution graphs
