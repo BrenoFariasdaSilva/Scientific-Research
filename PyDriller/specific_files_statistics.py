@@ -44,6 +44,21 @@ def path_contains_whitespaces():
       return True
    return False
 
+# @brief: This function asks for the user input of the repository name
+# @param: None
+# @return: repository_name: Name of the repository to be analyzed
+def get_repository_name_user():
+   # Ask for user input of the repository name
+   repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+
+   # If empty, get from the default repository url
+   if not repository_name:
+      repository_name = DEFAULT_REPOSITORY_NAME
+      print(f"{backgroundColors.OKGREEN}Using the default repository name: {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL}")
+
+   # Return the repository name
+   return repository_name
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -51,6 +66,9 @@ def main():
    # check if the path constants contains whitespaces
    if path_contains_whitespaces():
       return
+   
+   # Get the name of the repository from the user
+   repository_name = get_repository_name_user()
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
