@@ -34,10 +34,23 @@ FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTI
 FULL_REPOSITORY_DIRECTORY_PATH = PATH + RELATIVE_REPOSITORY_DIRECTORY_PATH
 FULL_CK_JAR_PATH = PATH + RELATIVE_CK_JAR_PATH
 
+# @brief: This function is used to check if the PATH constant contain whitespaces
+# @param: None
+# @return: True if the PATH constant contain whitespaces, False otherwise
+def path_contains_whitespaces():
+   # Check if the PATH constant contains whitespaces
+   if " " in PATH:
+      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
+      return True
+   return False
+
 # @brief: Main function
 # @param: None
 # @return: None
 def main(): 
+   # check if the path constants contains whitespaces
+   if path_contains_whitespaces():
+      return
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
