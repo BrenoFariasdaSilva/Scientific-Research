@@ -86,6 +86,20 @@ def check_metrics_folders(repository_name):
          return False
    return True
 
+# @brief: Create a subdirectory
+# @param: full_directory_name: Name of the directory to be created
+# @param: relative_directory_name: Relative name of the directory to be created that will be shown in the terminal
+# @return: None
+def create_directory(full_directory_name, relative_directory_name):
+   if os.path.isdir(full_directory_name): # Check if the directory already exists
+      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory already exists{Style.RESET_ALL}")
+      return
+   try: # Try to create the directory
+      os.makedirs(full_directory_name)
+      print (f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory{Style.RESET_ALL}")
+   except OSError: # If the directory cannot be created
+      print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
+
 # @brief: Main function
 # @param: None
 # @return: None
