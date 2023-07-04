@@ -220,7 +220,7 @@ def create_metrics_evolution_graphs(repository_name, id, clean_id):
    metrics = ["cbo", "cboModified", "wmc", "rfc"]
 
    # Set color palette for the lines
-   colors = ["blue", "red", "gray", "black"]
+   colors = ["blue", "red", "green", "black"]
 
    # Plotting the graph
    plt.figure(figsize=(10, 6))
