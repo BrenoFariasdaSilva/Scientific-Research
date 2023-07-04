@@ -106,7 +106,7 @@ def create_directory(full_directory_path, relative_directory_path):
 # brief: Get user method name input
 # param: None
 # return: id: Name of the method to be analyzed
-def get_user_method_input():
+def get_user_ids_input():
    # Ask for user input of the method name
    id = input(f"{backgroundColors.OKGREEN}Enter the method name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
@@ -271,7 +271,7 @@ def main():
    create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
 
    # Get the methods from the user
-   methods = get_user_method_input()
+   methods = get_user_ids_input()
 
    # Make a for loop to run the search_method_metrics and calculate_statistics function for every method in the user input
    for id in methods:
