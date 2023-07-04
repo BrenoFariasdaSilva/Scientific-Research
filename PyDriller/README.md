@@ -4,7 +4,7 @@
 @TODO: Create a new file (metrics.py) that will store the metrics evolution of the given method or class.  
 @TODO: Add the commit hash for the main.py code, where it generates the metrics evolution of the given method or class, so we can have the commit hash for every metric change.
 
-### Important Note: Make sure you doesn't have whitespaces in the path of the project, otherwise it will not work.
+### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
 ## Installation
 You need to install python3.  
