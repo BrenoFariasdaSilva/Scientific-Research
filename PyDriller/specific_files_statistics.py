@@ -234,7 +234,7 @@ def create_metrics_evolution_graphs(repository_name, method_processed):
    plt.ylabel("Metric Value")
 
    # Rotate the x-axis labels for better readability
-   plt.xticks(rotation=45)
+   plt.xticks(rotation=0)
 
    # Add a legend
    plt.legend()
