@@ -59,6 +59,33 @@ def get_repository_name_user():
    # Return the repository name
    return repository_name
 
+# @brief: This verifies if all the metrics are already calculated
+# @param: repository_name: Name of the repository to be analyzed
+# @return: True if all the metrics are already calculated, False otherwise
+def check_metrics_folders(repository_name):
+   print(f"{backgroundColors.OKGREEN}Checking if all the metrics are already calculated{Style.RESET_ALL}")
+   current_path = PATH
+   data_path = os.path.join(current_path, "ck_metrics")
+   repo_path = os.path.join(data_path, repository_name)
+   commit_file = f"commit_hashes-{repository_name}.txt"
+   commit_file_path = os.path.join(data_path, commit_file)
+
+   if not os.path.exists(commit_file_path):
+      print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+      return False
+
+   with open(commit_file_path, "r") as file:
+      lines = file.readlines()
+
+   for line in lines:
+      folder_name = line.strip()
+      folder_path = os.path.join(repo_path, folder_name)
+
+      if not os.path.exists(folder_path):
+         print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+         return False
+   return True
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -69,6 +96,11 @@ def main():
    
    # Get the name of the repository from the user
    repository_name = get_repository_name_user()
+
+   # Check if the metrics were already calculated
+   if not check_metrics_folders(repository_name):
+      print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not calculated. Please run the main.py file first{Style.RESET_ALL}")
+      return
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
