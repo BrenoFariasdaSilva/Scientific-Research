@@ -155,12 +155,12 @@ def write_method_metrics_statistics(csv_writer, id, key, metrics, metrics_values
 # @return: None
 def process_metrics_track_record(repository_name, metrics_track_record):
 	# Open the csv file and process the metrics of each method
-	with open(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_TOP_CHANGED_METHODS_CSV_FILENAME, "w") as csvfile:
+	with open(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME, "w") as csvfile:
 		writer = csv.writer(csvfile)	
 		if PROCESS_CLASSES:
-			writer.writerow(["Class", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
+			writer.writerow(["Class", "Type", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
 		else:
-			writer.writerow(["Method", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
+			writer.writerow(["Class", "Method", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
 
 		# Loop inside the *metrics["metrics"] in order to get the min, max, avg, and third quartile of each metric (cbo, cboModified, wmc, rfc)
 		for identifier, metrics in metrics_track_record.items():
@@ -174,8 +174,12 @@ def process_metrics_track_record(repository_name, metrics_track_record):
 				# This get the metrics values of each metric occurence in the method in order to, later on, be able to get the min, max, avg, and third quartile of each metric
 				metrics_values.append([sublist[i] for sublist in metrics["metrics"]])
 
+			# split the identifier to get the id and key which is separated by a space
+			id = identifier.split(" ")[0]
+			key = identifier.split(" ")[1]
+
 			# Create a function to get the min, max, avg, and third quartile of each metric and then write it to the csv file
-			write_method_metrics_statistics(writer, identifier, metrics, metrics_values)
+			write_method_metrics_statistics(writer, id, key, metrics, metrics_values)
 
 # @brief: This function sorts the csv file according to the number of changes
 # @param: None
