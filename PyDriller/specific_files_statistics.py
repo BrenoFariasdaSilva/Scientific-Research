@@ -112,7 +112,7 @@ def get_user_ids_input():
       first_run = False
       # Ask for user input of the class or method name
       name = input(f"{backgroundColors.OKGREEN}Enter the name of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
-      # if the CK_CSV_FILE is a class csv file, ask for the type of the class (interface, abstract class or class)
+      # if the CK_CSV_FILE is a class csv file, ask for the type of the class (class, innerclass, interface e anonymous)
       if CK_CSV_FILE == CLASS_CSV_FILE:
          value = input(f"{backgroundColors.OKGREEN}Enter the type of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
       # if the CK_CSV_FILE is a method csv file, ask for the name of the class of the method
