@@ -182,15 +182,15 @@ def process_metrics_track_record(repository_name, metrics_track_record):
 			write_method_metrics_statistics(writer, id, key, metrics, metrics_values)
 
 # @brief: This function sorts the csv file according to the number of changes
-# @param: None
+# @param: repository_name: The name of the repository
 # @return: None
-def sort_csv_by_changes():
+def sort_csv_by_changes(repository_name):
 	# Read the csv file
-	data = pd.read_csv(TOP_CHANGED_FILES_CSV_FILE_PATH)
+	data = pd.read_csv(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
 	# Sort the csv file by the number of changes
 	data = data.sort_values(by=["Changed"], ascending=False)
 	# Write the sorted csv file to a new csv file
-	data.to_csv(SORTED_TOP_CHANGED_FILES_CSV_FILE_PATH, index=False)
+	data.to_csv(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME, index=False)
 
 # @brief: The main function
 # @param: None
