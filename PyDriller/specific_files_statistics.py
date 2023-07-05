@@ -102,19 +102,19 @@ def create_directory(full_directory_path, relative_directory_path):
    except OSError: # If the directory cannot be created
       print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
 
-# brief: Get user method name input
+# brief: Get user input of the name of the class or method to be analyzed
 # param: None
-# return: id: Name of the method to be analyzed
+# return: id: Name of the class or method to be analyzed
 def get_user_ids_input():
-   # Ask for user input of the method name
+   # Ask for user input of the class or method name
    id = input(f"{backgroundColors.OKGREEN}Enter the id of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
-   # If empty, get from the method_names list
+   # If empty, get from the DEFAULT_IDS constant
    if not id:
       id = DEFAULT_IDS
       print(f"{backgroundColors.OKGREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.OKCYAN}{list(id.keys())}{Style.RESET_ALL}")
 
-   # Return the method name
+   # Return the class or method name
    return id
 
 # @brief: This function is analyze the repository metrics evolution over time
