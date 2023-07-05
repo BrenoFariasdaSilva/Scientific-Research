@@ -176,9 +176,9 @@ def search_id_metrics(repository_name, id_key):
             # Search for the id_key in the CK_CSV_FILE file
             for row in reader:
                if (CK_CSV_FILE == CLASS_CSV_FILE) and (row["class"] == id_key and row["type"] == DEFAULT_IDS[id_key]):
-                     get_metrics = True
+                  get_metrics = True   
                elif (CK_CSV_FILE == METHOD_CSV_FILE) and (row["method"] == id_key and row["class"] == DEFAULT_IDS[id_key]):
-                     get_metrics = True
+                  get_metrics = True
 
                if get_metrics: # If the desired class or method was found
                   current_metrics = (float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
