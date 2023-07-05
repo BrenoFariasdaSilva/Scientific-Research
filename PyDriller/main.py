@@ -13,20 +13,20 @@ class backgroundColors: # Colors for the terminal
         
 # Default paths:
 PATH = os.getcwd() # Get the current working directory
+DEFAULT_FOLDER = PATH # Get the current working directory
  
 # Relative paths:
-RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH = "/ck_metrics"
-RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = "/metrics_evolution"
-RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = "/metrics_statistics"
+RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics"
+RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH = "/metrics_evolution"
+RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics"
 RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories"
 RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
 # Default values:
-DEFAULT_FOLDER = PATH # Get the current working directory
 DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
-FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH
-FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH
-FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH
+FULL_CK_METRICS_DIRECTORY_PATH = PATH + RELATIVE_CK_METRICS_DIRECTORY_PATH
+FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
+FULL_METRICS_STATISTICS_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH
 FULL_REPOSITORY_DIRECTORY_PATH = PATH + RELATIVE_REPOSITORY_DIRECTORY_PATH
 FULL_CK_JAR_PATH = PATH + RELATIVE_CK_JAR_PATH
 
@@ -115,7 +115,7 @@ def create_directory(full_directory_name, relative_directory_name):
 def check_metrics_folders(repository_name):
    print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
    current_path = PATH
-   data_path = os.path.join(current_path, RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
+   data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
    repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
    commit_file = f"commit_hashes-{repository_name}.txt" # The name of the commit hashes file
    commit_file_path = os.path.join(data_path, commit_file) # Join the data path with the commit hashes file
@@ -165,9 +165,9 @@ def main():
    repository_name = get_repository_name(repository_url)
 
    # create the metrics_evolution directory
-   create_directory(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH)
+   create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
    # create the metrics_statistics directory
-   create_directory(FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH)
+   create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
 
    # Check if the metrics were already calculated
    if check_metrics_folders(repository_name):
@@ -194,8 +194,8 @@ def main():
       checkout_branch(commit.hash)
 
       # Create the output directory
-      output_directory = FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH + "/" + repository_name + "/" + commit.hash + "/"
-      relative_output_directory = RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH + "/" + repository_name + "/" + commit.hash + "/"
+      output_directory = FULL_CK_METRICS_DIRECTORY_PATH + "/" + repository_name + "/" + commit.hash + "/"
+      relative_output_directory = RELATIVE_CK_METRICS_DIRECTORY_PATH + "/" + repository_name + "/" + commit.hash + "/"
       create_directory(output_directory, relative_output_directory)
 
       # change working directory to the repository directory
@@ -203,7 +203,7 @@ def main():
 
       # Run ck metrics for every commit hash
       cmd = f"java -jar {FULL_CK_JAR_PATH} {workdir_directory} false 0 false {output_directory}"
-      relative_cmd = f"{backgroundColors.OKGREEN}java -jar {backgroundColors.OKCYAN}{RELATIVE_CK_JAR_PATH} {RELATIVE_REPOSITORY_DIRECTORY_PATH}/{repository_name}{backgroundColors.OKGREEN} false 0 false {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH}/{repository_name}/{commit.hash}/"
+      relative_cmd = f"{backgroundColors.OKGREEN}java -jar {backgroundColors.OKCYAN}{RELATIVE_CK_JAR_PATH} {RELATIVE_REPOSITORY_DIRECTORY_PATH}/{repository_name}{backgroundColors.OKGREEN} false 0 false {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{commit.hash}/"
       
       print(f"{backgroundColors.OKCYAN}{i} of {number_of_commits}{Style.RESET_ALL} - Running CK: {relative_cmd}{Style.RESET_ALL}")
       
@@ -213,7 +213,7 @@ def main():
       
       i += 1
 
-   with open(FULL_CK_METRICS_OUTPUT_DIRECTORY_PATH + "/" + "commit_hashes-" + repository_name + ".txt", "w") as file:
+   with open(FULL_CK_METRICS_DIRECTORY_PATH + "/" + "commit_hashes-" + repository_name + ".txt", "w") as file:
       file.write(commit_hashes)
 
    checkout_branch("main")
