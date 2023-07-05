@@ -277,14 +277,14 @@ def main():
    # Get the ids from the user
    ids = get_user_ids_input()
 
-   # Make a for loop to run the search_id_metrics and calculate_statistics function for every method in the user input
+   # Make a for loop to run the search_id_metrics and calculate_statistics function for every class or method in the user input
    for id in ids: # Loop trough the ids items in the dictionary
       clean_id = id
       if "/" in id:
          clean_id = str(id.split("/")[0:-1])[2:-2]
       print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id} {backgroundColors.OKGREEN}{CK_CSV_FILE.replace('.csv', '')}{Style.RESET_ALL}")
 
-      # Calculate the CBO and WMC metrics evolution for the given method
+      # Calculate the CBO and WMC metrics evolution for the given class or method
       search_id_metrics(repository_name, id)
 
       # Calculate the statistics for the CSV files in the metrics_evolution directory
