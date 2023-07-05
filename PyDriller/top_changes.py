@@ -197,7 +197,7 @@ def sort_csv_by_changes(repository_name):
 # @return: None
 def main():
 	print(f"{backgroundColors.OKGREEN}This script calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file.{Style.RESET_ALL}")
-	print(f"{backgroundColors.OKGREEN}The source of the metrics values is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} file.{Style.RESET_ALL}")
+	print(f"{backgroundColors.OKGREEN}The source of the metrics values is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} files.{Style.RESET_ALL}")
 
 	# Get the directory path from user input of the repository name
 	repository_name, directory_path = get_directory_path()
@@ -212,10 +212,10 @@ def main():
 	process_metrics_track_record(repository_name, metrics_track_record)
 
 	# Sort the csv file by the number of changes
-	sort_csv_by_changes()
+	sort_csv_by_changes(repository_name)
 
 	# Remove the old csv file
-	os.remove(TOP_CHANGED_FILES_CSV_FILE_PATH)
+	os.remove(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
 
 # Directive to run the main function
 if __name__ == "__main__":
