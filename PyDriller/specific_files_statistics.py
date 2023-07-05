@@ -106,10 +106,23 @@ def create_directory(full_directory_path, relative_directory_path):
 # param: None
 # return: id: Name of the class or method to be analyzed
 def get_user_ids_input():
-   # Ask for user input of the class or method name
-   id = input(f"{backgroundColors.OKGREEN}Enter the id of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+   id = {}
+   first_run = True
+   while id == {} and first_run:
+      first_run = False
+      # Ask for user input of the class or method name
+      name = input(f"{backgroundColors.OKGREEN}Enter the name of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+      # if the CK_CSV_FILE is a class csv file, ask for the type of the class (interface, abstract class or class)
+      if CK_CSV_FILE == CLASS_CSV_FILE:
+         value = input(f"{backgroundColors.OKGREEN}Enter the type of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+      # if the CK_CSV_FILE is a method csv file, ask for the name of the class of the method
+      elif CK_CSV_FILE == METHOD_CSV_FILE:
+         value = input(f"{backgroundColors.OKGREEN}Enter the {CK_CSV_FILE.replace('.csv', '')} name of the {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
-   # If empty, get from the DEFAULT_IDS constant
+      # add the name and value to the id dictionary
+      id[name] = value
+
+   # If the id dictionary is empty, get from the DEFAULT_IDS constant
    if not id:
       id = DEFAULT_IDS
       print(f"{backgroundColors.OKGREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.OKCYAN}{list(id.keys())}{Style.RESET_ALL}")
