@@ -107,8 +107,9 @@ def create_directory(full_directory_path, relative_directory_path):
 # return: id: Name of the class or method to be analyzed
 def get_user_ids_input():
    id = {}
+   name = ""
    first_run = True
-   while id == {} and first_run:
+   while name == "" and first_run:
       first_run = False
       # Ask for user input of the class or method name
       name = input(f"{backgroundColors.OKGREEN}Enter the name of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
@@ -123,7 +124,7 @@ def get_user_ids_input():
       id[name] = value
 
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
-   if not id:
+   if name == "" and not first_run:
       id = DEFAULT_IDS
       print(f"{backgroundColors.OKGREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.OKCYAN}{list(id.keys())}{Style.RESET_ALL}")
 
