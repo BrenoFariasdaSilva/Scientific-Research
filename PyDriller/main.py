@@ -1,7 +1,5 @@
 import os # OS module in Python provides functions for interacting with the operating system
-import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
 import subprocess # The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes
-import statistics # The statistics module provides functions for calculating mathematical statistics of numeric (Real-valued) data
 from pydriller import Repository # PyDriller is a Python framework that helps developers in analyzing Git repositories. 
 from tqdm import tqdm # TQDM is a progress bar library with good support for nested loops and Jupyter/IPython notebooks.
 from colorama import Style # For coloring the terminal
