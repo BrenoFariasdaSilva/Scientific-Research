@@ -53,23 +53,6 @@ def get_user_input():
    # Return the repository URL
    return check_url_input(repository_url)
 
-# brief: Get user method name input
-# param: None
-# return: method_name: Name of the method to be analyzed
-def get_user_method_input():
-   print()
-   # Ask for user input of the method name
-   method_name = input(f"{backgroundColors.OKGREEN}Enter the method name{backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
-
-   # If empty, get from the method_names list
-   if not method_name:
-      method_name = DEFAULT_METHODS_NAME
-      print(f"{backgroundColors.OKGREEN}Using the default method name: {backgroundColors.OKCYAN}{method_name}{Style.RESET_ALL}")
-
-   print()
-   # Return the method name
-   return method_name
-
 # @brief: If inputs are empty, use the default values
 # @param: repository_url: URL of the repository to be analyzed
 # @param: output_directory: Directory to save the output files
