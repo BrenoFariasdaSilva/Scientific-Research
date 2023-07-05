@@ -38,18 +38,18 @@ def create_output_directories():
 
 # @brief: Gets the user input for the repository name and returns the path to the directory
 # @param: None
-# @return: The path to the directory
+# @return: A tuple containing the repository name and the path to the directory
 def get_directory_path():
 	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 	directory_path = f"{CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
-	# Check if the directory exists
+	# Check if the directory does not exist
 	while not os.path.isdir(directory_path):
-		print("The directory does not exist.")
+		print(f"{backgroundColors.FAIL}The directory does not exist. Please try again.{Style.RESET_ALL}")
 		repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 		directory_path = f"{CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
-	return directory_path
+	return repository_name, directory_path
 
 # @brief: Processes a csv file containing the metrics of a method nor class
 # @param file_path: The path to the csv file
@@ -144,11 +144,12 @@ def write_method_metrics_statistics(csv_writer, identifier, metrics, metrics_val
 	csv_writer.writerow([identifier, metrics["changed"], cboMin, cboMax, cboAvg, cboQ3, cboModifiedMin, cboModifiedMax, cboModifiedAvg, cboModifiedQ3, wmcMin, wmcMax, wmcAvg, wmcQ3, rfcMin, rfcMax, rfcAvg, rfcQ3])
 
 # @brief: Process the metrics in metrics_track_record to calculate the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
+# @param repository_name: The name of the repository
 # @param metrics_track_record: A dictionary containing the metrics of each method or class
 # @return: None
-def process_metrics_track_record(metrics_track_record):
+def process_metrics_track_record(repository_name, metrics_track_record):
 	# Open the csv file and process the metrics of each method
-	with open(TOP_CHANGED_FILES_CSV_FILE_PATH, "w") as csvfile:
+	with open(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_TOP_CHANGED_METHODS_CSV_FILENAME, "w") as csvfile:
 		writer = csv.writer(csvfile)	
 		if PROCESS_CLASSES:
 			writer.writerow(["Class", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
@@ -189,7 +190,7 @@ def main():
 	print(f"{backgroundColors.OKGREEN}The source of the metrics values is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} file.{Style.RESET_ALL}")
 
 	# Get the directory path from user input of the repository name
-	directory_path = get_directory_path()
+	repository_name, directory_path = get_directory_path()
 
 	# Create the output directories if they do not exist
 	create_output_directories()
@@ -198,7 +199,7 @@ def main():
 	metrics_track_record = traverse_directory(directory_path)
 
 	# Process the method metrics to calculate the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
-	process_metrics_track_record(metrics_track_record)
+	process_metrics_track_record(repository_name, metrics_track_record)
 
 	# Sort the csv file by the number of changes
 	sort_csv_by_changes()
