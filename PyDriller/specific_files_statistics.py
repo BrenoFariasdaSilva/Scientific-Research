@@ -40,7 +40,6 @@ FULL_METRICS_STATISTICS_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTICS_DIRE
 def path_contains_whitespaces():
    # Check if the PATH constant contains whitespaces
    if " " in PATH:
-      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return True
    return False
 
