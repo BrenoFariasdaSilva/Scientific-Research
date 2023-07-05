@@ -18,12 +18,12 @@ DEFAULT_REPOSITORY_NAME = "commons-lang" # The default repository name
 CK_CSV_FILE = "class.csv" if PROCESS_CLASSES else "method.csv" # The name of the csv generated file from ck.
 CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '').upper()}-changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the top changed methods
 SORTED_CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '').upper()}-sorted_changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the sorted top changed methods
-CK_METRICS_DIRECTORY_NAME = "ck_metrics" # The relative path to the directory containing the ck metrics
-METRICS_STATISTICS_DIRECTORY_NAME = "metrics_statistics" # The relative path to the directory containing the metrics statistics
+RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics" # The relative path to the directory containing the ck metrics
+RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics" # The relative path to the directory containing the metrics statistics
 
 # Directories Paths:
-CK_METRICS_DIRECTORY_PATH = f"{os.getcwd()}/{CK_METRICS_DIRECTORY_NAME}" # The full path to the directory containing the ck metrics
-METRICS_STATISTICS_DIRECTORY_PATH = f"{os.getcwd()}/{METRICS_STATISTICS_DIRECTORY_NAME}" # The full path to the directory containing the metrics statistics
+CK_METRICS_DIRECTORY_PATH = f"{os.getcwd()}{RELATIVE_CK_METRICS_DIRECTORY_PATH}" # The full path to the directory containing the ck metrics
+METRICS_STATISTICS_DIRECTORY_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}" # The full path to the directory containing the metrics statistics
 
 # Full Files Paths:
 TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the top changed methods
