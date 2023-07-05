@@ -54,7 +54,7 @@ def validate_attribute(attribute, default_attribute_value):
 # @return: repository_url: URL of the repository to be analyzed
 def get_user_repository_url():
    # Ask for user input of the repository URL
-   repository_url = input(f"{backgroundColors.OKGREEN}Enter the repository URL{backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+   repository_url = input(f"{backgroundColors.OKGREEN}Enter the repository URL {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
    # Return the repository URL
    return validate_attribute(repository_url, DEFAULT_REPOSITORY_URL)
@@ -221,7 +221,6 @@ def main():
    
    # Get the user input
    repository_url = get_user_repository_url()
-
    # Get the name of the repository
    repository_name = get_repository_name(repository_url)
 
