@@ -42,6 +42,8 @@ def create_output_directories():
 # @return: A tuple containing the repository name and the path to the directory
 def get_directory_path():
 	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+	if repository_name == "":
+		repository_name = DEFAULT_REPOSITORY_NAME
 	directory_path = f"{CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
 	# Check if the directory does not exist
