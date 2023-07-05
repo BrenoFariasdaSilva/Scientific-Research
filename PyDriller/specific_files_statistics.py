@@ -149,7 +149,7 @@ def validate_ids(ids, repository_name):
 # @brief: This function is analyze the repository metrics evolution over time
 # @param: repository_name: Name of the repository to be analyzed
 # @param: id_key: Name of the class or method to be analyzed
-# @return: None
+# @return: True if the repository was analyzed successfully, False if the id_key was not found
 def search_id_metrics(repository_name, id_key):
    print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} {CK_CSV_FILE.replace('.csv', '')}...{Style.RESET_ALL}")
 
@@ -188,8 +188,7 @@ def search_id_metrics(repository_name, id_key):
 
    # If the data is empty, then the class or method was not found
    if not metrics_track_record:
-      print(f"{backgroundColors.FAIL}{CK_CSV_FILE.replace('.csv', '').capitalize()} {backgroundColors.OKCYAN}{id_key}{backgroundColors.FAIL} not found{Style.RESET_ALL}")
-      return
+      return False
    
    print(f"{backgroundColors.OKGREEN}The {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{metrics_change_counter} of {metrics_change_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
 
@@ -200,6 +199,8 @@ def search_id_metrics(repository_name, id_key):
       writer.writerow([f"commit_hash", "cbo", "cboModified", "wmc", "rfc"]) # Write the header
       writer.writerows(metrics_track_record) # Write the metrics track record
    print(f"{backgroundColors.OKGREEN}Successfully wrote the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} {CK_CSV_FILE.replace('.csv', '')} evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
+
+   return True
 
 # @brief: This function is used to analyze the repository metrics evolution over time for the CSV files in the given directory
 # @param: data_directory: Directory containing the CSV files to be analyzed
