@@ -121,13 +121,15 @@ def traverse_directory(directory_path):
 	# Return the method metrics, which is a dictionary containing the metrics of each method  
 	return metrics_track_record
 
+
 # @brief: Calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
 # @param csv_writer: The csv writer object
-# @param method: The method name
+# @param id: The id of the method
+# @param key: The key of the method
 # @param metrics: The list of metrics
 # @param metrics_values: The list of metrics values
 # @return: None
-def write_method_metrics_statistics(csv_writer, identifier, metrics, metrics_values):
+def write_method_metrics_statistics(csv_writer, id, key, metrics, metrics_values):
 	cboMin = round(float(min(metrics_values[0])), 3)
 	cboMax = round(float(max(metrics_values[0])), 3)
 	cboAvg = round(float(sum(metrics_values[0])) / len(metrics_values[0]), 3)
@@ -145,7 +147,7 @@ def write_method_metrics_statistics(csv_writer, identifier, metrics, metrics_val
 	rfcAvg = round(float(sum(metrics_values[3])) / len(metrics_values[3]), 3)
 	rfcQ3 = round(float(np.percentile(metrics_values[3], 75)), 3)
 
-	csv_writer.writerow([identifier, metrics["changed"], cboMin, cboMax, cboAvg, cboQ3, cboModifiedMin, cboModifiedMax, cboModifiedAvg, cboModifiedQ3, wmcMin, wmcMax, wmcAvg, wmcQ3, rfcMin, rfcMax, rfcAvg, rfcQ3])
+	csv_writer.writerow([id, key, metrics["changed"], cboMin, cboMax, cboAvg, cboQ3, cboModifiedMin, cboModifiedMax, cboModifiedAvg, cboModifiedQ3, wmcMin, wmcMax, wmcAvg, wmcQ3, rfcMin, rfcMax, rfcAvg, rfcQ3])
 
 # @brief: Process the metrics in metrics_track_record to calculate the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
 # @param repository_name: The name of the repository
