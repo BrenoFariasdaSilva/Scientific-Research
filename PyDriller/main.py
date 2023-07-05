@@ -78,10 +78,10 @@ def update_repository(repository_name):
    os.chdir(DEFAULT_FOLDER)
 
 # @brief: Clone the repository to the repository directory
-# @param: repository_url: URL of the repository to be analyzed
 # @param: repository_name: Name of the repository to be analyzed
+# @param: repository_url: URL of the repository to be analyzed
 # @return: None
-def clone_repository(repository_url, repository_name):
+def clone_repository(repository_name, repository_url):
    # Check if the repository directory already exists and if it is not empty
    if os.path.isdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name) and os.listdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name):
       print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository is already cloned!{Style.RESET_ALL}")
@@ -239,7 +239,7 @@ def main():
    create_directory(FULL_REPOSITORY_DIRECTORY_PATH, RELATIVE_REPOSITORY_DIRECTORY_PATH)
 
    # Clone the repository
-   clone_repository(repository_url, repository_name)
+   clone_repository(repository_name, repository_url)
    
    number_of_commits = len(list(Repository(repository_url).traverse_commits()))
 
