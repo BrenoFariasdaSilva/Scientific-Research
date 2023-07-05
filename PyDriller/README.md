@@ -6,6 +6,7 @@
 @TODO: Remove the main.py stuff related to the things that the specific_files_statistics.py does.  
 @TODO: Generate the graphics metrics evolution comparison for specified commit hashes.  
 @TODO: Create classes for the constants, functions and variables that are used in multiple files. be careful that some constants might include '/' or not. So, make sure you use the correct one.
+@TODO: Update the main.py main function. It is very big and kinda messy.
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
