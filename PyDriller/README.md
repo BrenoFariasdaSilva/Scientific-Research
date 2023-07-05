@@ -5,7 +5,7 @@
 @TODO: Add the commit hash for the main.py code, where it generates the metrics evolution of the given method or class, so we can have the commit hash for every metric change.  
 @TODO: Remove the main.py stuff related to the things that the specific_files_statistics.py does.  
 @TODO: Generate the graphics metrics evolution comparison for specified commit hashes.  
-@TODO: Create classes for the constants, functions and variables that are used in multiple files.
+@TODO: Create classes for the constants, functions and variables that are used in multiple files. be careful that some constants might include '/' or not. So, make sure you use the correct one.
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
