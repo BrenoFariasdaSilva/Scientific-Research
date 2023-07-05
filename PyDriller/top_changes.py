@@ -94,6 +94,7 @@ def process_csv_file(file_path, metrics_track_record):
 # @param directory_path: The path to the directory
 # @return: A dictionary containing the metrics of each class and method combination
 def traverse_directory(directory_path):
+	print(f"{backgroundColors.OKGREEN}Traversing the {backgroundColors.OKCYAN}{'/'.join(directory_path.rsplit('/', 2)[-2:])}{backgroundColors.OKGREEN} directory...{Style.RESET_ALL}")
 	metrics_track_record = {}
 	file_count = 0
 	progress_bar = None
