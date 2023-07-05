@@ -119,26 +119,26 @@ def get_user_ids_input():
 
 # @brief: This function is analyze the repository metrics evolution over time
 # @param: repository_name: Name of the repository to be analyzed
-# @param: id_key: Name of the method to be analyzed
+# @param: id_key: Name of the class or method to be analyzed
 # @return: None
 def search_id_metrics(repository_name, id_key):
    print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} {CK_CSV_FILE.replace('.csv', '')}...{Style.RESET_ALL}")
 
    metrics_track_record = [] # Dictionary to store the metrics track records
-   metrics_changes = [] # List to store the metrics of the method or class
-   method_variables_counter = 0 # Counter to store the number of variables of the method
+   metrics_changes = [] # List to store the metrics of the class or method
+   metrics_change_counter = 0 # Counter to store the number of times the metrics changed
 
    # Get the list of commit hashes
    commit_hashes = os.listdir(f"{RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]}/{repository_name}/")
    
    for commit_hash in tqdm(commit_hashes):
-      method_path = f"{RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]}/{repository_name}/{commit_hash}/{CK_CSV_FILE}"
+      file_path = f"{RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]}/{repository_name}/{commit_hash}/{CK_CSV_FILE}"
 
-      # Check if the method file exists for the current commit hash
-      if os.path.isfile(method_path):
-         with open(method_path, "r") as file:
-            reader = csv.DictReader(file) # Read the CK_CSV_FILE file
-            get_metrics = False # Flag to get the metrics of the method or class
+      # Check if the class or method file exists for the current commit hash
+      if os.path.isfile(file_path):
+         with open(file_path, "r") as file:
+            reader = csv.DictReader(file) # Read the file
+            get_metrics = False # Flag to get the metrics of the class or method
             # Search for the id_key in the CK_CSV_FILE file
             for row in reader:
                if (CK_CSV_FILE == CLASS_CSV_FILE) and (row["class"] == id_key and row["type"] == DEFAULT_IDS[id_key]):
@@ -150,27 +150,27 @@ def search_id_metrics(repository_name, id_key):
                   current_metrics = (float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
                   current_attributes = (commit_hash, float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
 
-                  # Store the metrics if they aren't in the metrics_track_records dictionary
+                  # Store the metrics if they aren't in the metrics_changes list
                   if current_metrics not in metrics_changes:
                      metrics_changes.append(current_metrics)
                      metrics_track_record.append(current_attributes)
-                     method_variables_counter += 1
+                     metrics_change_counter += 1
                   get_metrics = False
 
-   # If the data is empty, then the method was not found
+   # If the data is empty, then the class or method was not found
    if not metrics_track_record:
-      print(f"{backgroundColors.FAIL}Method {backgroundColors.OKCYAN}{id_key}{backgroundColors.FAIL} not found{Style.RESET_ALL}")
+      print(f"{backgroundColors.FAIL}{CK_CSV_FILE.replace('.csv', '').capitalize()} {backgroundColors.OKCYAN}{id_key}{backgroundColors.FAIL} not found{Style.RESET_ALL}")
       return
    
-   print(f"{backgroundColors.OKGREEN}The {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter} of {method_variables_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}The {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{metrics_change_counter} of {metrics_change_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
 
-   # Write the method_data to a file in the /metrics_evolution folder
+   # Write the class or method_data to a file in the RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH folder
    output_file = f"{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}/{repository_name}-{id_key}.csv" if PROCESS_CLASSES else f"{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}/{repository_name}-{str(id_key.split('/')[0:-1])[2:-2]}.csv"
    with open(output_file, "w") as file:
-      writer = csv.writer(file)
-      writer.writerow([f"commit_hash", "cbo", "cboModified", "wmc", "rfc"])
-      writer.writerows(metrics_track_record)
-   print(f"{backgroundColors.OKGREEN}Successfully wrote the {CK_CSV_FILE.replace('.csv', '')} evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
+      writer = csv.writer(file) # Create the writer
+      writer.writerow([f"commit_hash", "cbo", "cboModified", "wmc", "rfc"]) # Write the header
+      writer.writerows(metrics_track_record) # Write the metrics track record
+   print(f"{backgroundColors.OKGREEN}Successfully wrote the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} {CK_CSV_FILE.replace('.csv', '')} evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
 
 # @brief: This function is used to analyze the repository metrics evolution over time for the CSV files in the given directory
 # @param: data_directory: Directory containing the CSV files to be analyzed
