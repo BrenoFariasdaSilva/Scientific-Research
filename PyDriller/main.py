@@ -162,11 +162,8 @@ def main():
 
    # create the metrics_evolution directory
    create_directory(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH)
-   print()
-
    # create the metrics_statistics directory
    create_directory(FULL_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_OUTPUT_DIRECTORY_PATH)
-   print()
 
    # Check if the metrics were already calculated
    if not check_metrics_folders(repository_name):
