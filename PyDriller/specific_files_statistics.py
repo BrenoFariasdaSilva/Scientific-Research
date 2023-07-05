@@ -282,6 +282,8 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id):
    # Save the graph
    plt.savefig(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "-" + clean_id + ".png")
 
+   print(f"{backgroundColors.OKGREEN}Successfully created the metrics evolution graphic for {backgroundColors.OKCYAN}{id}{Style.RESET_ALL}")
+
 # @brief: Main function
 # @param: None
 # @return: None
