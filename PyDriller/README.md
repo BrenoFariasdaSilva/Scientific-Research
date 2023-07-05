@@ -32,13 +32,13 @@ make
 5. Now, the `search_method_metrics` function will be executed. This function will open the csv files in the ck_metrics and extract the `cbo`, `wmc`, `cboModified`, `rfc` of each occurrence of the specified method to be evaluated. Then, it will store the results inside the `metrics_evolution/methodName.csv` file.
 6. Now that every occurrence of the specified method metrics have been compiled into the `metrics_evolution/methodName.csv` file, the function `calculate_statistics` is executed, in whicih will extract the `minimum`, `maximum`, `average` and `third quartile` of each metric (`cbo, wmc, cboModified and rfc`). It will also create a csv file with the metrics statistics of the repository inside the `metrics_statistics/repositoryName.csv` file.
 
-Run the following command to execute the project:
+Run the following command to execute the `top_changes.py` file:
 ```
 make top_changes
 ```
 1. The first thing it will do is check if you don't have whitespaces in the path of the project, if you have, it will not work.
 
-Run the following command to execute the project:
+Run the following command to execute the `specific_files_statistics.py` file:
 ```
 make specific_files_statistics
 ```
