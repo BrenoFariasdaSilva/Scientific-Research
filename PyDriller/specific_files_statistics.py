@@ -1,5 +1,3 @@
-# @TODO: Comment every line of code
-
 import os # OS module in Python provides functions for interacting with the operating system
 import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
 import statistics # The statistics module provides functions for calculating mathematical statistics of numeric (Real-valued) data
@@ -52,37 +50,40 @@ def get_repository_name_user():
    # Ask for user input of the repository name
    repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
-   # If empty, get from the default repository url
+   # If empty, get from the default repository name
    if not repository_name:
-      repository_name = DEFAULT_REPOSITORY_NAME
+      repository_name = DEFAULT_REPOSITORY_NAME 
       print(f"{backgroundColors.OKGREEN}Using the default repository name: {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL}")
 
-   # Return the repository name
-   return repository_name
+   return repository_name # Return the repository name
 
-# @brief: This verifies if all the metrics are already calculated
+# @brief: This verifies if all the metrics are already calculated by opening the commit hashes file and checking if every commit hash in the file is a folder in the repository folder
 # @param: repository_name: Name of the repository to be analyzed
 # @return: True if all the metrics are already calculated, False otherwise
 def check_metrics_folders(repository_name):
    print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
    current_path = PATH
-   data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:])
-   repo_path = os.path.join(data_path, repository_name)
-   commit_file = f"commit_hashes-{repository_name}.txt"
-   commit_file_path = os.path.join(data_path, commit_file)
+   data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
+   repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
+   commit_file = f"commit_hashes-{repository_name}.txt" # The name of the commit hashes file
+   commit_file_path = os.path.join(data_path, commit_file) # Join the data path with the commit hashes file
 
+   # Check if the repository exists
    if not os.path.exists(commit_file_path):
       print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
       return False
 
+   # Read the commit hashes file
    with open(commit_file_path, "r") as file:
-      lines = file.readlines()
+      lines = file.readlines() # Read all the lines of the file and store them in a list
 
+   # Check if the repository exists
    for line in lines:
-      folder_name = line.strip()
-      folder_path = os.path.join(repo_path, folder_name)
+      # Get the commit hash
+      folder_name = line.strip() # Remove the \n from the line
+      folder_path = os.path.join(repo_path, folder_name) # Join the repo path with the folder name
 
-      if not os.path.exists(folder_path):
+      if not os.path.exists(folder_path): # Check if the folder exists
          print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
          return False
    return True
@@ -113,8 +114,7 @@ def get_user_ids_input():
       id = DEFAULT_IDS
       print(f"{backgroundColors.OKGREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.OKCYAN}{list(id.keys())}{Style.RESET_ALL}")
 
-   # Return the class or method name
-   return id
+   return id # Return the class or method name
 
 # @brief: This function is analyze the repository metrics evolution over time
 # @param: repository_name: Name of the repository to be analyzed
@@ -145,15 +145,15 @@ def search_id_metrics(repository_name, id_key):
                elif (CK_CSV_FILE == METHOD_CSV_FILE) and (row["method"] == id_key and row["class"] == DEFAULT_IDS[id_key]):
                      get_metrics = True
 
-               if get_metrics:
+               if get_metrics: # If the desired class or method was found
                   current_metrics = (float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
                   current_attributes = (commit_hash, float(row["cbo"]), float(row["cboModified"]), float(row["wmc"]), float(row["rfc"]))
 
                   # Store the metrics if they aren't in the metrics_changes list
                   if current_metrics not in metrics_changes:
-                     metrics_changes.append(current_metrics)
-                     metrics_track_record.append(current_attributes)
-                     metrics_change_counter += 1
+                     metrics_changes.append(current_metrics) # Store the metrics in the metrics_changes list
+                     metrics_track_record.append(current_attributes) # Store the metrics in the metrics_track_record list
+                     metrics_change_counter += 1 # Increment the metrics_change_counter
                   get_metrics = False
 
    # If the data is empty, then the class or method was not found
@@ -193,22 +193,22 @@ def calculate_statistics(data_directory, output_file):
                file_path = os.path.join(root, file) # Get the full path of the file
                # Read the CSV file
                with open(file_path, "r") as csvfile:
-                  reader = csv.reader(csvfile)
+                  reader = csv.reader(csvfile) # Create a CSV reader
                   header = next(reader)  # Skip the header row
 
-                  values = []
+                  values = [] # List to store the values of the CSV file
                   for row in reader:
                      values.append(row[1:]) # Append the second to the last value of the row to the values list
 
-                  # For loop that runs trough the columns of the reader
+                  # For loop that runs trough the columns of the reader. Each column represents a metric (cbo, cboModified, wmc, rfc)
                   for i in range(0, len(values[0])):
-                     column_values = [float(row[i]) for row in values]
-                     min_value = round(min(column_values), 3)
-                     max_value = round(max(column_values), 3)
-                     average = round(statistics.mean(column_values), 3)
-                     median = round(statistics.median(column_values), 3)
-                     third_quartile = round(statistics.median_high(column_values), 3)
-                     writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile])
+                     column_values = [float(row[i]) for row in values] # Get the values of the current column
+                     min_value = round(min(column_values), 3) # Calculate the min value of the current column
+                     max_value = round(max(column_values), 3) # Calculate the max value of the current column
+                     average = round(statistics.mean(column_values), 3) # Calculate the average value of the current column
+                     median = round(statistics.median(column_values), 3) # Calculate the median value of the current column
+                     third_quartile = round(statistics.median_high(column_values), 3) # Calculate the third quartile value of the current column
+                     writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile]) # Write the statistics to the output file
    print(f"{backgroundColors.OKGREEN}Successfully wrote the statistics to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
 
 # @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH folder
@@ -278,8 +278,8 @@ def main():
 
    # Make a for loop to run the search_id_metrics and calculate_statistics function for every class or method in the user input
    for id in ids: # Loop trough the ids items in the dictionary
-      clean_id = id
-      if "/" in id:
+      clean_id = id 
+      if "/" in id: # Check if there is a / in the id, if so, remove the class or method name from the id, due to the fact that use it to name the CSV file would cause problems
          clean_id = str(id.split("/")[0:-1])[2:-2]
       print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id} {backgroundColors.OKGREEN}{CK_CSV_FILE.replace('.csv', '')}{Style.RESET_ALL}")
 
