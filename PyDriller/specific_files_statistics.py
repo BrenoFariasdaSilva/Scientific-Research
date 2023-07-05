@@ -130,6 +130,22 @@ def get_user_ids_input():
 
    return id # Return the class or method name
 
+# @brief: This function validates if the ids are as the same type as the files to be analyzed defined in CK_CSV_FILE according to PROCESS_CLASSES
+# @param: ids: Dictionary containing the ids to be analyzed
+# @param: repository_name: Name of the repository to be analyzed
+# @return: True if the ids are valid, False otherwise
+def validate_ids(ids, repository_name):
+   # Get the path of the file containing the top changes of the classes
+   repo_class_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "-" + CK_CSV_FILE.replace('.csv', '').upper() + "-" + "sorted_changes.csv"
+   class_types = pd.read_csv(repo_class_top_changes_file_path)["Type"].unique()
+   # Check if the ids to be processed are classes
+   if PROCESS_CLASSES:
+      # Check if the ids are classes
+      for id in ids.values():
+         if id not in class_types:
+            return False
+   return True
+
 # @brief: This function is analyze the repository metrics evolution over time
 # @param: repository_name: Name of the repository to be analyzed
 # @param: id_key: Name of the class or method to be analyzed
@@ -290,6 +306,11 @@ def main():
 
    # Get the ids from the user
    ids = get_user_ids_input()
+
+   # Validate the ids, if is related to a class or method
+   if not validate_ids(ids, repository_name):
+      print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{repository_name.keys()}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
+      return
 
    # Make a for loop to run the search_id_metrics and calculate_statistics function for every class or method in the user input
    for id in ids: # Loop trough the ids items in the dictionary
