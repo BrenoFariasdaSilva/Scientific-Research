@@ -230,7 +230,7 @@ def calculate_statistics(data_directory, output_file):
 # @param: id: ID of the class or method to be analyzed
 # @param: clean_id: ID of the class or method to be analyzed without the / and the class or method name
 # @return: None
-def create_metrics_evolution_graphics(repository_name, id, clean_id):
+def create_metrics_evolution_graphic(repository_name, id, clean_id):
    # Load the generated CSV files into a dataframe and save a plot of the evolution of the cbo, cboModified, wmc and rfc metrics
    df = pd.read_csv(RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:] + "/" + repository_name + "-" + clean_id + ".csv")
 
@@ -271,6 +271,7 @@ def create_metrics_evolution_graphics(repository_name, id, clean_id):
 def main(): 
    # check if the path constants contains whitespaces
    if path_contains_whitespaces():
+      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return
    
    # Get the name of the repository from the user
@@ -298,14 +299,17 @@ def main():
       print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id} {backgroundColors.OKGREEN}{CK_CSV_FILE.replace('.csv', '')}{Style.RESET_ALL}")
 
       # Calculate the CBO and WMC metrics evolution for the given class or method
-      search_id_metrics(repository_name, id)
+      if not search_id_metrics(repository_name, id):
+         print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{id} {backgroundColors.FAIL}were not found{Style.RESET_ALL}")
+         print(f"{backgroundColors.FAIL}Skipping {backgroundColors.OKCYAN}{id} {backgroundColors.FAIL}metrics evolution{Style.RESET_ALL}")
+         continue
 
       # Calculate the statistics for the CSV files in the metrics_evolution directory
       output_statistics_csv_file = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "-" + clean_id + ".csv"
       calculate_statistics(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, output_statistics_csv_file)
 
       # Create the metrics evolution graphs
-      create_metrics_evolution_graphics(repository_name, id, clean_id)
+      create_metrics_evolution_graphic(repository_name, id, clean_id)
 
    print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics evolution for {backgroundColors.OKCYAN}{repository_name}->{list(ids.keys())}{Style.RESET_ALL}")
 
