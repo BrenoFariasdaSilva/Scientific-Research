@@ -155,7 +155,7 @@ def main():
       return
    
    # Get the user input
-   repository_url = get_user_input()
+   repository_url = get_user_repository_url()
 
    # Get the name of the repository
    repository_name = get_repository_name(repository_url)
