@@ -214,8 +214,8 @@ def calculate_statistics(data_directory, output_file):
 
 # @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH folder
 # @param: repository_name: Name of the repository to be analyzed
-# @param: id: ID of the method to be analyzed
-# @param: clean_id: ID of the method to be analyzed without the / and the method name
+# @param: id: ID of the class or method to be analyzed
+# @param: clean_id: ID of the class or method to be analyzed without the / and the class or method name
 # @return: None
 def create_metrics_evolution_graphics(repository_name, id, clean_id):
    # Load the generated CSV files into a dataframe and save a plot of the evolution of the cbo, cboModified, wmc and rfc metrics
