@@ -60,12 +60,7 @@ def get_repository_name_user():
    # Ask for user input of the repository name
    repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
-   # If empty, get from the default repository name
-   if not repository_name:
-      repository_name = DEFAULT_REPOSITORY_NAME 
-      print(f"{backgroundColors.OKGREEN}Using the default repository name: {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL}")
-
-   return repository_name # Return the repository name
+   return validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME) # Validate the repository name
 
 # @brief: This verifies if all the metrics are already calculated by opening the commit hashes file and checking if every commit hash in the file is a folder in the repository folder
 # @param: repository_name: Name of the repository to be analyzed
