@@ -149,6 +149,67 @@ def checkout_branch(branch_name):
    # Wait for the thread to finish
    checkout_thread.wait()
 
+# @brief: This function is used to run the command that runs the CK metrics generator in a subprocess
+# @param: cmd: Command to be executed
+# @return: None
+def run_ck_metrics_generator(cmd):
+   # Create a thread to run the cmd command
+   thread = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+   stdout, stderr = thread.communicate()
+   print(thread.decode())
+
+# @brief: This function generates the output directory path for the CK metrics generator
+# @param: repository_name: Name of the repository to be analyzed
+# @param: commit_hash: Commit hash of the commit to be analyzed
+# @return: The output_directory and relative_output_directory paths
+def generate_output_directory_paths(repository_name, commit_hash):
+   output_directory = FULL_CK_METRICS_DIRECTORY_PATH + "/" + repository_name + "/" + commit_hash + "/"
+   relative_output_directory = RELATIVE_CK_METRICS_DIRECTORY_PATH + "/" + repository_name + "/" + commit_hash + "/"
+   return output_directory, relative_output_directory
+
+# @brief: This function outputs the progress of the analyzed commit
+# @param: repository_name: Name of the repository to be analyzed
+# @param: commit_hash: Commit hash of the commit to be analyzed
+# @param: commit_number: Number of the commit to be analyzed
+# @param: number_of_commits: Number of commits to be analyzed
+# @return: None
+def output_commit_progress(repository_name, commit_hash, commit_number, number_of_commits):
+   relative_cmd = f"{backgroundColors.OKGREEN}java -jar {backgroundColors.OKCYAN}{RELATIVE_CK_JAR_PATH} {RELATIVE_REPOSITORY_DIRECTORY_PATH}/{repository_name}{backgroundColors.OKGREEN} false 0 false {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{commit_hash}/"
+   print(f"{backgroundColors.OKCYAN}{commit_number} of {number_of_commits}{Style.RESET_ALL} - Running CK: {relative_cmd}{Style.RESET_ALL}")
+
+# @brief: This function traverses the repository
+# @param: repository_name: Name of the repository to be analyzed
+# @param: repository_url: URL of the repository to be analyzed
+# @param: number_of_commits: Number of commits to be analyzed
+# @return: The commit hashes of the repository
+def traverse_repository(repository_name, repository_url, number_of_commits):
+   i = 1
+   commit_hashes = ""
+   for commit in Repository(repository_url).traverse_commits():
+      commit_hashes += f"{commit.hash}\n"
+
+      workdir_directory = FULL_REPOSITORY_DIRECTORY_PATH + "/" + repository_name
+      os.chdir(workdir_directory)        
+      checkout_branch(commit.hash)
+
+      # Create the output directory paths
+      output_directory, relative_output_directory = generate_output_directory_paths(repository_name, commit.hash)
+      # Create the output directory
+      create_directory(output_directory, relative_output_directory)
+
+      # change working directory to the repository directory
+      os.chdir(output_directory)
+
+      # Output the progress of the analyzed commit
+      output_commit_progress(repository_name, commit.hash, i, number_of_commits)
+
+      # Run ck metrics for every commit hash
+      cmd = f"java -jar {FULL_CK_JAR_PATH} {workdir_directory} false 0 false {output_directory}"
+      run_ck_metrics_generator(cmd)
+      
+      i += 1
+   return commit_hashes
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -180,38 +241,9 @@ def main():
    # Clone the repository
    clone_repository(repository_url, repository_name)
    
-   i = 1
-   commit_hashes = ""
-   
    number_of_commits = len(list(Repository(repository_url).traverse_commits()))
-   print(f"{backgroundColors.OKGREEN}Total number of commits: {backgroundColors.OKCYAN}{number_of_commits}{Style.RESET_ALL}")
-   
-   for commit in Repository(repository_url).traverse_commits():
-      commit_hashes += f"{commit.hash}\n"
 
-      workdir_directory = FULL_REPOSITORY_DIRECTORY_PATH + "/" + repository_name
-      os.chdir(workdir_directory)        
-      checkout_branch(commit.hash)
-
-      # Create the output directory
-      output_directory = FULL_CK_METRICS_DIRECTORY_PATH + "/" + repository_name + "/" + commit.hash + "/"
-      relative_output_directory = RELATIVE_CK_METRICS_DIRECTORY_PATH + "/" + repository_name + "/" + commit.hash + "/"
-      create_directory(output_directory, relative_output_directory)
-
-      # change working directory to the repository directory
-      os.chdir(output_directory)
-
-      # Run ck metrics for every commit hash
-      cmd = f"java -jar {FULL_CK_JAR_PATH} {workdir_directory} false 0 false {output_directory}"
-      relative_cmd = f"{backgroundColors.OKGREEN}java -jar {backgroundColors.OKCYAN}{RELATIVE_CK_JAR_PATH} {RELATIVE_REPOSITORY_DIRECTORY_PATH}/{repository_name}{backgroundColors.OKGREEN} false 0 false {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{commit.hash}/"
-      
-      print(f"{backgroundColors.OKCYAN}{i} of {number_of_commits}{Style.RESET_ALL} - Running CK: {relative_cmd}{Style.RESET_ALL}")
-      
-      process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-      stdout, stderr = process.communicate()
-      print(stdout.decode())
-      
-      i += 1
+   commit_hashes = traverse_repository(repository_name, repository_url, number_of_commits)
 
    with open(FULL_CK_METRICS_DIRECTORY_PATH + "/" + "commit_hashes-" + repository_name + ".txt", "w") as file:
       file.write(commit_hashes)
