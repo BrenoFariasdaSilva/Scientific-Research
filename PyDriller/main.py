@@ -59,15 +59,6 @@ def get_user_repository_url():
    # Return the repository URL
    return validate_attribute(repository_url, DEFAULT_REPOSITORY_URL)
 
-# @brief: If inputs are empty, use the default values
-# @param: repository_url: URL of the repository to be analyzed
-# @param: output_directory: Directory to save the output files
-# @return: The repository URL and the output directory
-def check_url_input(repository_url):
-   if not repository_url:
-      repository_url = DEFAULT_REPOSITORY_URL
-   return repository_url
-
 # @brief: Get the string after the last slash
 # @param: url: URL of the repository to be analyzed
 # @return: The name of the repository
