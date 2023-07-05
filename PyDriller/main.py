@@ -49,6 +49,16 @@ def validate_attribute(attribute, default_attribute_value):
       attribute = default_attribute_value
    return attribute
 
+# @brief: Get the user input of the repository URL
+# @param: None
+# @return: repository_url: URL of the repository to be analyzed
+def get_user_repository_url():
+   # Ask for user input of the repository URL
+   repository_url = input(f"{backgroundColors.OKGREEN}Enter the repository URL{backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+
+   # Return the repository URL
+   return validate_attribute(repository_url, DEFAULT_REPOSITORY_URL)
+
 # @brief: Get the user input and check if they are empty
 # @param: None
 # @return: repository_url: URL of the repository to be analyzed
