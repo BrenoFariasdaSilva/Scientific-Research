@@ -109,29 +109,33 @@ def create_directory(full_directory_name, relative_directory_name):
    except OSError: # If the directory cannot be created
       print (f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
 
-# @brief: This verifies if all the metrics are already calculated
+# @brief: This verifies if all the metrics are already calculated by opening the commit hashes file and checking if every commit hash in the file is a folder in the repository folder
 # @param: repository_name: Name of the repository to be analyzed
 # @return: True if all the metrics are already calculated, False otherwise
 def check_metrics_folders(repository_name):
-   print(f"{backgroundColors.OKGREEN}Checking if all the metrics are already calculated{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
    current_path = PATH
-   data_path = os.path.join(current_path, "ck_metrics")
-   repo_path = os.path.join(data_path, repository_name)
-   commit_file = f"commit_hashes-{repository_name}.txt"
-   commit_file_path = os.path.join(data_path, commit_file)
+   data_path = os.path.join(current_path, RELATIVE_CK_METRICS_OUTPUT_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
+   repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
+   commit_file = f"commit_hashes-{repository_name}.txt" # The name of the commit hashes file
+   commit_file_path = os.path.join(data_path, commit_file) # Join the data path with the commit hashes file
 
+   # Check if the repository exists
    if not os.path.exists(commit_file_path):
       print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
       return False
 
+   # Read the commit hashes file
    with open(commit_file_path, "r") as file:
-      lines = file.readlines()
+      lines = file.readlines() # Read all the lines of the file and store them in a list
 
+   # Check if the repository exists
    for line in lines:
-      folder_name = line.strip()
-      folder_path = os.path.join(repo_path, folder_name)
+      # Get the commit hash
+      folder_name = line.strip() # Remove the \n from the line
+      folder_path = os.path.join(repo_path, folder_name) # Join the repo path with the folder name
 
-      if not os.path.exists(folder_path):
+      if not os.path.exists(folder_path): # Check if the folder exists
          print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
          return False
    return True
