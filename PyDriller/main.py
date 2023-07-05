@@ -36,7 +36,6 @@ FULL_CK_JAR_PATH = PATH + RELATIVE_CK_JAR_PATH
 def path_contains_whitespaces():
    # Check if the PATH constant contains whitespaces
    if " " in PATH:
-      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return True
    return False
 
@@ -151,6 +150,7 @@ def checkout_branch(branch_name):
 def main():
    # check if the path constants contains whitespaces
    if path_contains_whitespaces():
+      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return
    
    # Get the user input
