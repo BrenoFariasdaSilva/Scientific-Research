@@ -121,7 +121,6 @@ def traverse_directory(directory_path):
 	# Return the method metrics, which is a dictionary containing the metrics of each method  
 	return metrics_track_record
 
-
 # @brief: Calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
 # @param csv_writer: The csv writer object
 # @param id: The id of the method
