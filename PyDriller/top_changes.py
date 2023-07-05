@@ -12,11 +12,12 @@ from main import backgroundColors
 PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 MINIMUM_CHANGES = 2 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
+DEFAULT_REPOSITORY_NAME = "commons-lang" # The default repository name
 
 # Filenames:
 CK_CSV_FILE = "class.csv" if PROCESS_CLASSES else "method.csv" # The name of the csv generated file from ck.
-TOP_CHANGED_METHODS_CSV_FILENAME = f"top_changed_{CK_CSV_FILE}" # The name of the csv file containing the top changed methods
-SORTED_TOP_CHANGED_METHODS_CSV_FILENAME = f"sorted_top_changed_{CK_CSV_FILE}" # The name of the csv file containing the sorted top changed methods
+CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '').upper()}-changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the top changed methods
+SORTED_CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '').upper()}-sorted_changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the sorted top changed methods
 CK_METRICS_DIRECTORY_NAME = "ck_metrics" # The relative path to the directory containing the ck metrics
 METRICS_STATISTICS_DIRECTORY_NAME = "metrics_statistics" # The relative path to the directory containing the metrics statistics
 
@@ -25,8 +26,8 @@ CK_METRICS_DIRECTORY_PATH = f"{os.getcwd()}/{CK_METRICS_DIRECTORY_NAME}" # The f
 METRICS_STATISTICS_DIRECTORY_PATH = f"{os.getcwd()}/{METRICS_STATISTICS_DIRECTORY_NAME}" # The full path to the directory containing the metrics statistics
 
 # Full Files Paths:
-TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{TOP_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the top changed methods
-SORTED_TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{SORTED_TOP_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the sorted top changed methods
+TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the top changed methods
+SORTED_TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{SORTED_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the sorted top changed methods
 
 # @brief: This function create the output directories if they do not exist
 # @param: None
