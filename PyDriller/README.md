@@ -37,3 +37,9 @@ Run the following command to execute the project:
 make top_changes
 ```
 1. The first thing it will do is check if you don't have whitespaces in the path of the project, if you have, it will not work.
+
+Run the following command to execute the project:
+```
+make specific_files_statistics
+```
+1. The first thing it will do is check if you don't have whitespaces in the path of the project, if you have, it will not work.
