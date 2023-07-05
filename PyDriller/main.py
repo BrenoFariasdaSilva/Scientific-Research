@@ -217,16 +217,6 @@ def main():
 
       checkout_branch("main")
 
-   # Make a for loop to run the search_method_metrics and calculate_statistics function for every method in the user input
-   for method in get_user_method_input():
-      print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{method}{Style.RESET_ALL}")
-      # Calculate the CBO and WMC metrics evolution for the given method
-      search_method_metrics(repository_name, method)
-
-      # Calculate the statistics for the CSV files in the metrics_evolution directory
-      calculate_statistics(FULL_METRICS_EVOLUTION_OUTPUT_DIRECTORY_PATH, "metrics_statistics" + "/" + repository_name + "-" + method + ".csv")
-      print()
-
    print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics for {backgroundColors.OKCYAN}{repository_name}{Style.RESET_ALL}")
 
 # Directly run the main function if the script is executed
