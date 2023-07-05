@@ -154,9 +154,9 @@ def checkout_branch(branch_name):
 # @return: None
 def run_ck_metrics_generator(cmd):
    # Create a thread to run the cmd command
-   thread = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+   thread = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
    stdout, stderr = thread.communicate()
-   print(thread.decode())
+   print(stdout.decode())
 
 # @brief: This function generates the output directory path for the CK metrics generator
 # @param: repository_name: Name of the repository to be analyzed
