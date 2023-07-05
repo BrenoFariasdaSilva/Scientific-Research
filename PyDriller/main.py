@@ -148,61 +148,6 @@ def checkout_branch(branch_name):
    # Wait for the thread to finish
    checkout_thread.wait()
 
-# @brief: This function is analyze the repository metrics evolution over time
-# @param: repository_name: Name of the repository to be analyzed
-# @return: None
-def search_method_metrics(repository_name, method_name):
-   print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} method...{Style.RESET_ALL}")
-
-   last_metrics = None
-   method_data = []
-   method_variables_counter = [0, 0]
-
-   # Get the list of commit hashes
-   commit_hashes = os.listdir(f"ck_metrics/{repository_name}/")
-   
-   for commit_hash in tqdm(commit_hashes):
-      method_path = f"ck_metrics/{repository_name}/{commit_hash}/method.csv"
-
-      # Check if the method file exists for the current commit hash
-      if os.path.isfile(method_path):
-         with open(method_path, "r") as file:
-            reader = csv.DictReader(file) # Read the method.csv file
-            
-            # Search for the method in the current commit's method.csv file
-            for row in reader:
-               if row["method"].split('/')[0] == method_name:
-                  method_variables_counter[0] += 1
-                  cbo = float(row["cbo"])
-                  cboModified = float(row["cboModified"])
-                  wmc = float(row["wmc"])
-                  rfc = float(row["rfc"])
-                  metrics = (cbo, cboModified, wmc, rfc)
-                  data = (commit_hash, cbo, cboModified, wmc, rfc)
-                  
-                  # Store the metrics if they are different from the last recorded metrics
-                  if metrics != last_metrics:
-                     method_data.append(data)
-                     last_metrics = metrics
-                     method_variables_counter[1] += 1
-                  break
-
-   # If the method_data is empty, then the method was not found
-   if not method_data:
-      print(f"{backgroundColors.FAIL}Method {backgroundColors.OKCYAN}{method_name}{backgroundColors.FAIL} not found{Style.RESET_ALL}")
-      return
-   
-   print(f"{backgroundColors.OKGREEN}The method {backgroundColors.OKCYAN}{method_name}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{method_variables_counter[1]} of {method_variables_counter[0]}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
-
-   # Write the method_data to a file in the /metrics_evolution folder
-   output_file = f"metrics_evolution/{repository_name}-{method_name}.csv"
-   with open(output_file, 'w') as file:
-      writer = csv.writer(file)
-      writer.writerow([f"{method_name}", "cbo", "cboModified", "wmc", "rfc"])
-      writer.writerows(method_data)
-   print(f"{backgroundColors.OKGREEN}Successfully wrote the method evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
-   print()
-
 # @brief: This function is used to analyze the repository metrics evolution over time for the CSV files in the given directory
 # @param: directory: Directory containing the CSV files to be analyzed
 # @return: None
