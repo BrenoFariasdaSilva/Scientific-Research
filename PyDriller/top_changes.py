@@ -54,6 +54,12 @@ def get_directory_path():
 
 	return repository_name, directory_path
 
+# @brief: Validate the class name, that is, if it contains any dots in the name
+# @param class_name: The name of the class
+# @return: True if the class name is valid, False otherwise
+def valid_class_name(class_name):
+	return "." in class_name
+
 # @brief: Processes a csv file containing the metrics of a method nor class
 # @param file_path: The path to the csv file
 # @param metrics_track_record: A dictionary containing the track record of the metrics of each method nor class
