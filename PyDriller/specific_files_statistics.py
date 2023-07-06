@@ -264,7 +264,7 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id):
    # Set the attributes of the graph: colors, line styles and marker sizes
    colors = ["blue", "pink", "green", "orange"]
    line_styles = ["-", "--", "-.", ":"]
-   marker_sizes = [6, 10, 6, 10]
+   marker_sizes = [5, 5, 5, 5] if PROCESS_CLASSES else [6, 10, 6, 10]
 
    # Plotting the graph
    plt.figure(figsize=(10, 6))
