@@ -27,10 +27,6 @@ RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics" # The relativ
 CK_METRICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_CK_METRICS_DIRECTORY_PATH}" # The full path to the directory containing the ck metrics
 METRICS_STATISTICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}" # The full path to the directory containing the metrics statistics
 
-# Full Files Paths:
-TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the top changed methods
-SORTED_TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{SORTED_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the sorted top changed methods
-
 # @brief: This function is used to check if the PATH constant contain whitespaces
 # @param: None
 # @return: True if the PATH constant contain whitespaces, False otherwise
