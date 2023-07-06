@@ -3,6 +3,7 @@
 @TODO 2: Create classes for the constants, functions and variables that are used in multiple files. be careful that might be some constants might include '/' or not. So, make sure you use the correct one.  
 @TODO 3: Create code that generates the graphics metrics evolution comparison for specified commit hashes.  Use args.  
 @TODO 4: Create new code that, for a specified name of the class or method and the values of the cbo, cboModified, rfc and wmc, it will return you the commit hash of the commit that introduced the changes value.    
+@TODO 5: Add validation in the specific_files_statistics.py and top_changes.py to check if source files are already processed, if so, ask if the user wants to process them again.  
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
