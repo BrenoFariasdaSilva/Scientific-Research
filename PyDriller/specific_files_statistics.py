@@ -278,6 +278,12 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id):
    plt.xlabel("Commit Hash")
    plt.ylabel("Metric Value")
 
+   # Add the first and last values of each metric (cbo, cboModified, wmc, rfc) to the graphic image
+   plt.text(0.20, 0.97, f"CBO {df['cbo'].iloc[0]} -> {df['cbo'].iloc[-1]}", fontsize=10, color="red", transform=plt.gcf().transFigure)
+   plt.text(0.20, 0.92, f"CBOModified {df['cboModified'].iloc[0]} -> {df['cboModified'].iloc[-1]}", fontsize=10, color="red", transform=plt.gcf().transFigure)
+   plt.text(0.70, 0.97, f"WMC {df['wmc'].iloc[0]} -> {df['wmc'].iloc[-1]}", fontsize=10, color="red", transform=plt.gcf().transFigure)
+   plt.text(0.70, 0.92, f"RFC {df['rfc'].iloc[0]} -> {df['rfc'].iloc[-1]}", fontsize=10, color="red", transform=plt.gcf().transFigure)
+
    # Rotate the x-axis labels for better readability
    plt.xticks(rotation=0)
 
