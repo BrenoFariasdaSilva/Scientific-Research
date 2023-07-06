@@ -153,7 +153,7 @@ def validate_ids(ids, repository_name):
 # @param: repository_name: Name of the repository to be analyzed
 # @param: id_key: Name of the class or method to be analyzed
 # @return: True if the repository was analyzed successfully, False if the id_key was not found
-def search_id_metrics(repository_name, id_key):
+def generate_metric_evolution_by_id(repository_name, id_key):
    print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} {CK_CSV_FILE.replace('.csv', '')}...{Style.RESET_ALL}")
 
    metrics_track_record = [] # Dictionary to store the metrics track records
@@ -392,15 +392,15 @@ def main():
       print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{repository_name.keys()}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
       return
    
-   # Make a for loop to run the search_id_metrics and calculate_statistics function for every class or method in the user input
+   # Make a for loop to run the generate_metric_evolution_by_id and calculate_statistics function for every class or method in the user input
    for id in ids: # Loop trough the ids items in the dictionary
       clean_id = id 
       if "/" in id: # Check if there is a / in the id, if so, remove the class or method name from the id, due to the fact that use it to name the CSV file would cause problems
          clean_id = str(id.split("/")[0:-1])[2:-2]
       print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id} {backgroundColors.OKGREEN}{CK_CSV_FILE.replace('.csv', '')}{Style.RESET_ALL}")
 
-      # Calculate the CBO and WMC metrics evolution for the given class or method
-      if not search_id_metrics(repository_name, id):
+      # Calculate the CBO, CBOModified, WMC and RFC metrics evolution for the given class or method
+      if not generate_metric_evolution_by_id(repository_name, id):
          print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{id} {backgroundColors.FAIL}were not found{Style.RESET_ALL}")
          print(f"{backgroundColors.FAIL}Skipping {backgroundColors.OKCYAN}{id} {backgroundColors.FAIL}metrics evolution{Style.RESET_ALL}")
          continue
