@@ -29,6 +29,15 @@ METRICS_STATISTICS_DIRECTORY_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_
 TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the top changed methods
 SORTED_TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{SORTED_CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the sorted top changed methods
 
+# @brief: This function is used to check if the PATH constant contain whitespaces
+# @param: None
+# @return: True if the PATH constant contain whitespaces, False otherwise
+def path_contains_whitespaces():
+   # Check if the PATH constant contains whitespaces
+   if " " in PATH:
+      return True
+   return False
+
 # @brief: This function create the output directories if they do not exist
 # @param: None
 # @return: None
@@ -215,6 +224,12 @@ def sort_csv_by_changes(repository_name):
 # @param: None
 # @return: None
 def main():
+	# check if the path constants contains whitespaces
+	if path_contains_whitespaces():
+		print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
+		return
+
+
 	print(f"{backgroundColors.OKGREEN}This script calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file.{Style.RESET_ALL}")
 	print(f"{backgroundColors.OKGREEN}The source of the metrics values is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} files.{Style.RESET_ALL}")
 
