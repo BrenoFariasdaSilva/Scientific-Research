@@ -2,10 +2,7 @@
 @TODO 1: Update README to explain the new features (specific_files_statistics.py, top_changes.py).   
 @TODO 2: Create classes for the constants, functions and variables that are used in multiple files. be careful that might be some constants might include '/' or not. So, make sure you use the correct one.  
 @TODO 3: Create code that generates the graphics metrics evolution comparison for specified commit hashes.  Use args.  
-@TODO 4: Create new code that, for a specified name of the class or method and the values of the cbo, cboModified, rfc and wmc, it will return you the commit hash of the commit that introduced the changes value.  
-@TODO 5: Make the labels a optional parameter, so the user can choose if he wants to see the labels or not (bool type).  
-@TODO 5.1: Ask if the user wants the sequential label (1º, 2º, 3º...) or the values it represents in the y axis.  
-@TODO 5.2: Use linear regression to summarize the behavior of the metrics over time.  
+@TODO 4: Create new code that, for a specified name of the class or method and the values of the cbo, cboModified, rfc and wmc, it will return you the commit hash of the commit that introduced the changes value.    
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
