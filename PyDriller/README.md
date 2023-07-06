@@ -6,7 +6,6 @@
 @TODO: Create classes for the constants, functions and variables that are used in multiple files. be careful that some constants might include '/' or not. So, make sure you use the correct one.  
 @TODO: Update the main.py main function. It is very big and kinda messy.   
 @TODO: FEAT top_changes.py -> Line 70 call "validate_class_name" which will see if the class_name has a package (which means, if it has dots .), if it does not, get the file column and get the substring starting from "org" to the end, then replace the "/" for ".".  
-@TODO: FIX specific_files_statistics.py -> Fix overlapping in create_metrics_evolution_graphic.  
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
