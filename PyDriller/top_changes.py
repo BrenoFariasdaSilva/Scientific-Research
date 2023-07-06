@@ -17,6 +17,7 @@ DEFAULT_REPOSITORY_NAME = "commons-lang" # The default repository name
 
 # Filenames:
 CK_CSV_FILE = "class.csv" if PROCESS_CLASSES else "method.csv" # The name of the csv generated file from ck.
+CLASSES_OR_METHODS = "classes" if PROCESS_CLASSES else "methods" # The name of the csv generated file from ck.
 CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '').upper()}-changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the top changed methods
 SORTED_CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '').upper()}-sorted_changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the sorted top changed methods
 RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics" # The relative path to the directory containing the ck metrics
@@ -261,7 +262,7 @@ def main():
 		print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
 		return
 
-	print(f"{backgroundColors.OKGREEN}This script calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file.{Style.RESET_ALL}")
+	print(f"{backgroundColors.OKGREEN}This script generates a csv file with the {CLASSES_OR_METHODS} sorted by the number of times that this {CK_CSV_FILE.replace('.csv', '')} changed and store it inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 	print(f"{backgroundColors.OKGREEN}The source of the metrics values is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} files.{Style.RESET_ALL}")
 
 	# Get the directory path from user input of the repository name
@@ -286,6 +287,8 @@ def main():
 
 	# Remove the old csv file
 	os.remove(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
+
+	print(f"{backgroundColors.OKGREEN}The {CLASSES_OR_METHODS} were successfully sorted by the number of times they changed and stored inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
 # Directive to run the main function
 if __name__ == "__main__":
