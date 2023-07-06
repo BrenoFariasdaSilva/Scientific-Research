@@ -395,6 +395,9 @@ def main():
       print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{repository_name.keys()}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
       return
    
+   # Check if the file that will be used to save the metrics evolution exists, if so, ask the user if he wants to overwrite it
+   # reprocess_data = ask_user_if_wants_to_reprocess_data(RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH, repository_name, ids)
+
    # Make a for loop to run the search_id_metrics and calculate_statistics function for every class or method in the user input
    for id in ids: # Loop trough the ids items in the dictionary
       clean_id = id 
