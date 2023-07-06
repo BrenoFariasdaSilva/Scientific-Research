@@ -9,7 +9,7 @@
 @TODO: Create new code that, for a specified name of the class or method and the values of the cbo, cboModified, rfc and wmc, it will get the commit hash of the commit that introduced the change.  
 @TODO: Make the labels a optional parameter, so the user can choose if he wants to see the labels or not (bool type).  
 @TODO: Ask if the user wants the sequential label (1º, 2º, 3º...) or the values it represents in the y axis.  
-@TODO: Use linear regression to resume the behavior of the metrics over time.
+@TODO: Use linear regression to summarize the behavior of the metrics over time.
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
