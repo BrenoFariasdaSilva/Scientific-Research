@@ -60,13 +60,12 @@ def get_directory_path():
 def valid_class_name(class_name):
 	return "." in class_name
 
-# @brief: Gets the package name of the class, which is, get the substring between "org" until the name of the class and replace the slashes with dots
-# @param class_name: The name of the class
+# @brief: Gets the package name of the class, which is, get the substring between that starts with "/src/"(excluded) until the last dot(excluded)
 # @param file_name: The file name where the class is located
 # @return: The package name of the class
-def get_class_package_name(class_name, file_name):
-	# Get the substring between that starts with "/src/"(excluded) until the last dot(excluded)
-	package_name = file_name[file_name.find("/src/") + 5:file_name.rfind(".")]
+def get_class_package_name(file_name):
+	start_substring = "/src/"
+	package_name = file_name[file_name.find(start_substring) + len(start_substring):file_name.rfind(".")]
 
 	# Replace the slashes with dots
 	package_name = package_name.replace("/", ".")
@@ -87,7 +86,7 @@ def process_csv_file(file_path, metrics_track_record):
 			class_name = row["class"]
 			if PROCESS_CLASSES:
 				if not valid_class_name(class_name):
-					class_name = get_class_package_name(class_name, row["file"])
+					class_name = get_class_package_name(row["file"])
 				variable_attribute = row["type"]
 			else:
 				variable_attribute = row["method"]
