@@ -36,13 +36,23 @@ def path_contains_whitespaces():
       return True
    return False
 
+# @brief: Verifiy if the attribute is empty. If so, set it to the default value
+# @param: attribute: The attribute to be checked
+# @param: default_attribute_value: The default value of the attribute
+# @return: The repository URL and the output directory
+def validate_attribute(attribute, default_attribute_value):
+   if not attribute:
+      print(f"{backgroundColors.WARNING}The attribute is empty! Using the default value: {backgroundColors.OKCYAN}{default_attribute_value}{Style.RESET_ALL}")
+      attribute = default_attribute_value
+   return attribute
+
 # @brief: Gets the user input for the repository name and returns the path to the directory
 # @param: None
 # @return: A tuple containing the repository name and the path to the directory
 def get_directory_path():
 	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
-	if repository_name == "":
-		repository_name = DEFAULT_REPOSITORY_NAME
+	repository_name = validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME)
+	
 	directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
 	# Check if the directory does not exist
