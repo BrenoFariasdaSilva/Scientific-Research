@@ -67,6 +67,8 @@ def process_csv_file(file_path, metrics_track_record):
 		for row in reader:
 			class_name = row["class"]
 			if PROCESS_CLASSES:
+				if not valid_class_name(class_name):
+					class_name = get_class_package_name(class_name, row["file"])
 				variable_attribute = row["type"]
 			else:
 				variable_attribute = row["method"]
