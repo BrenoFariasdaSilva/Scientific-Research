@@ -149,6 +149,16 @@ def validate_ids(ids, repository_name):
             return False
    return True
 
+# @brief: This function receives an id and verify if it contains slashes, if so, it returns the id without the slashes
+# @param: id: ID of the class or method to be analyzed
+# @return: ID of the class or method to be analyzed without the slashes
+def get_clean_id(id):
+   # If the id contains slashes, remove them
+   if "/" in id:
+      return str(id.split("/")[0:-1])[2:-2]
+   else:
+      return id
+
 # @brief: This function is analyze the repository metrics evolution over time
 # @param: repository_name: Name of the repository to be analyzed
 # @param: id_key: Name of the class or method to be analyzed
@@ -394,9 +404,7 @@ def main():
    
    # Make a for loop to run the generate_metric_evolution_by_id and calculate_statistics function for every class or method in the user input
    for id in ids: # Loop trough the ids items in the dictionary
-      clean_id = id 
-      if "/" in id: # Check if there is a / in the id, if so, remove the class or method name from the id, due to the fact that use it to name the CSV file would cause problems
-         clean_id = str(id.split("/")[0:-1])[2:-2]
+      clean_id = get_clean_id(id) # Get the clean id (without the / and the class or method name)
       print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id} {backgroundColors.OKGREEN}{CK_CSV_FILE.replace('.csv', '')}{Style.RESET_ALL}")
 
       # Calculate the CBO, CBOModified, WMC and RFC metrics evolution for the given class or method
