@@ -295,6 +295,7 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
 
    # Rotate the x-axis labels for better readability
    plt.xticks(rotation=0)
+   plt.xticks([commit_hashes[0], commit_hashes.iloc[-1]], visible=True, rotation="horizontal")
 
    # Set the color of x-values (commit hashes) and y-values (metric values)
    plt.tick_params(axis="x", colors="red")
