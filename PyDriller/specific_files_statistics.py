@@ -252,8 +252,9 @@ def calculate_statistics(data_directory, output_file):
 # @param: repository_name: Name of the repository to be analyzed
 # @param: id: ID of the class or method to be analyzed
 # @param: clean_id: ID of the class or method to be analyzed without the / and the class or method name
+# @param: id_key: ID of the class or method to be analyzed without the class or method name
 # @return: None
-def create_metrics_evolution_graphic(repository_name, id, clean_id):
+def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
    # Load the generated CSV files into a dataframe and save a plot of the evolution of the cbo, cboModified, wmc and rfc metrics
    df = pd.read_csv(RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:] + "/" + repository_name + "-" + clean_id + ".csv")
 
@@ -271,10 +272,18 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id):
 
    # Iterate over each metric and plot its evolution with a different color
    for i, metric in enumerate(metrics):
+      metric_values = df[metric]
       plt.plot(commit_hashes, df[metric], marker="o", label=metric, linestyle=line_styles[i], markersize=marker_sizes[i], color=colors[i])
 
-   # Set the graph title and labels
-   plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id} in {repository_name} repository", color="red")
+      # Add labels to each data point
+      for j, value in enumerate(metric_values):
+         plt.text(commit_hashes[j], value, f"{j+1}º", ha="center", va="bottom", fontsize=12)
+
+   # Set the graph title and labels according to the type of analysis (class or method)
+   if PROCESS_CLASSES:
+      plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id} {id_key} in {repository_name} repository", color="red")
+   else:
+      plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id_key} {id} in {repository_name} repository", color="red")
    plt.xlabel("Commit Hash")
    plt.ylabel("Metric Value")
 
@@ -332,7 +341,7 @@ def main():
    if not validate_ids(ids, repository_name):
       print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{repository_name.keys()}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
       return
-
+   
    # Make a for loop to run the search_id_metrics and calculate_statistics function for every class or method in the user input
    for id in ids: # Loop trough the ids items in the dictionary
       clean_id = id 
@@ -351,7 +360,7 @@ def main():
       calculate_statistics(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, output_statistics_csv_file)
 
       # Create the metrics evolution graphs
-      create_metrics_evolution_graphic(repository_name, id, clean_id)
+      create_metrics_evolution_graphic(repository_name, id, clean_id, ids[id])
 
    print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics evolution for {backgroundColors.OKCYAN}{repository_name}->{list(ids.keys())}{Style.RESET_ALL}")
 
