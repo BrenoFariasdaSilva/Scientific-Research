@@ -60,6 +60,19 @@ def get_directory_path():
 def valid_class_name(class_name):
 	return "." in class_name
 
+# @brief: Gets the package name of the class, which is, get the substring between "org" until the name of the class and replace the slashes with dots
+# @param class_name: The name of the class
+# @param file_name: The file name where the class is located
+# @return: The package name of the class
+def get_class_package_name(class_name, file_name):
+	# Get the substring between that starts with "/src/"(excluded) until the last dot(excluded)
+	package_name = file_name[file_name.find("/src/") + 5:file_name.rfind(".")]
+
+	# Replace the slashes with dots
+	package_name = package_name.replace("/", ".")
+
+	return package_name
+
 # @brief: Processes a csv file containing the metrics of a method nor class
 # @param file_path: The path to the csv file
 # @param metrics_track_record: A dictionary containing the track record of the metrics of each method nor class
