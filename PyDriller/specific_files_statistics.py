@@ -11,7 +11,6 @@ from main import backgroundColors
         
 # Constants:
 PATH = os.getcwd() # Get the current working directory
-DEFAULT_FOLDER = PATH # Get the current working directory
 
 # Changable constants:
 CLASS_CSV_FILE = "class.csv" # The name of the csv generated file from ck.
@@ -28,8 +27,6 @@ DEFAULT_IDS = DEFAULT_CLASS_IDS if PROCESS_CLASSES else DEFAULT_METHOD_IDS # The
 RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics"
 RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH = "/metrics_evolution"
 RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics"
-RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories"
-RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
 # Default values:
 FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
