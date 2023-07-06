@@ -142,9 +142,9 @@ def get_user_ids_input():
 def validate_ids(ids, repository_name):
    # Get the path of the file containing the top changes of the classes
    repo_class_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "-" + CK_CSV_FILE.replace('.csv', '').upper() + "-" + "sorted_changes.csv"
-   class_types = pd.read_csv(repo_class_top_changes_file_path)["Type"].unique()
    # Check if the ids to be processed are classes
    if PROCESS_CLASSES:
+      class_types = pd.read_csv(repo_class_top_changes_file_path)["Type"].unique()
       # Check if the ids are classes
       for id in ids.values():
          if id not in class_types:
