@@ -261,15 +261,16 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id):
    commit_hashes = df["commit_hash"]
    metrics = ["cbo", "cboModified", "wmc", "rfc"]
 
-   # Set color palette for the lines
+   # Set the attributes of the graph: colors and line styles.
    colors = ["blue", "pink", "green", "orange"]
+   line_styles = ["-", "--", "-.", ":"]
 
    # Plotting the graph
    plt.figure(figsize=(10, 6))
 
    # Iterate over each metric and plot its evolution with a different color
    for i, metric in enumerate(metrics):
-      plt.plot(commit_hashes, df[metric], marker="o", label=metric, color=colors[i])
+      plt.plot(commit_hashes, df[metric], marker="o", label=metric, linestyle=line_styles[i], color=colors[i])
 
    # Set the graph title and labels
    plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id} in {repository_name} repository")
