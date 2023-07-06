@@ -11,7 +11,7 @@ from main import backgroundColors
 # CONSTANTS:
 PATH = os.getcwd() # Get the current working directory
 PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
-MINIMUM_CHANGES = 2 # The minimum number of changes a method should have to be considered
+MINIMUM_CHANGES = 1 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
 DEFAULT_REPOSITORY_NAME = "commons-lang" # The default repository name
 
@@ -24,8 +24,8 @@ RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics" # The relative path to the di
 RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics" # The relative path to the directory containing the metrics statistics
 
 # Directories Paths:
-CK_METRICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_CK_METRICS_DIRECTORY_PATH}" # The full path to the directory containing the ck metrics
-METRICS_STATISTICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}" # The full path to the directory containing the metrics statistics
+FULL_CK_METRICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_CK_METRICS_DIRECTORY_PATH}" # The full path to the directory containing the ck metrics
+FULL_METRICS_STATISTICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}" # The full path to the directory containing the metrics statistics
 
 # @brief: This function is used to check if the PATH constant contain whitespaces
 # @param: None
@@ -72,8 +72,8 @@ def check_ck_metrics_folders(repository_name):
 # @return: None
 def create_output_directories():
 	# Create the output directories if they do not exist
-	if not os.path.isdir(METRICS_STATISTICS_DIRECTORY_PATH):
-		os.mkdir(METRICS_STATISTICS_DIRECTORY_PATH)
+	if not os.path.isdir(FULL_METRICS_STATISTICS_DIRECTORY_PATH):
+		os.mkdir(FULL_METRICS_STATISTICS_DIRECTORY_PATH)
 
 # @brief: Gets the user input for the repository name and returns the path to the directory
 # @param: None
@@ -82,13 +82,13 @@ def get_directory_path():
 	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 	if repository_name == "":
 		repository_name = DEFAULT_REPOSITORY_NAME
-	directory_path = f"{CK_METRICS_DIRECTORY_PATH}/{repository_name}"
+	directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
 	# Check if the directory does not exist
 	while not os.path.isdir(directory_path):
 		print(f"{backgroundColors.FAIL}The directory does not exist. Please try again.{Style.RESET_ALL}")
 		repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
-		directory_path = f"{CK_METRICS_DIRECTORY_PATH}/{repository_name}"
+		directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
 	return repository_name, directory_path
 
@@ -212,7 +212,7 @@ def write_method_metrics_statistics(csv_writer, id, key, metrics, metrics_values
 # @return: None
 def process_metrics_track_record(repository_name, metrics_track_record):
 	# Open the csv file and process the metrics of each method
-	with open(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME, "w") as csvfile:
+	with open(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME, "w") as csvfile:
 		writer = csv.writer(csvfile)	
 		if PROCESS_CLASSES:
 			writer.writerow(["Class", "Type", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
@@ -243,11 +243,11 @@ def process_metrics_track_record(repository_name, metrics_track_record):
 # @return: None
 def sort_csv_by_changes(repository_name):
 	# Read the csv file
-	data = pd.read_csv(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
+	data = pd.read_csv(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
 	# Sort the csv file by the number of changes
 	data = data.sort_values(by=["Changed"], ascending=False)
 	# Write the sorted csv file to a new csv file
-	data.to_csv(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME, index=False)
+	data.to_csv(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME, index=False)
 
 # @brief: The main function
 # @param: None
@@ -258,7 +258,7 @@ def main():
 		print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
 		return
 
-	print(f"{backgroundColors.OKGREEN}This script generates a csv file with the {CLASSES_OR_METHODS} sorted by the number of times that this {CK_CSV_FILE.replace('.csv', '')} changed and store it inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+	print(f"{backgroundColors.OKGREEN}This script generates a csv file with the {CLASSES_OR_METHODS} sorted by the number of times that the {CK_CSV_FILE.replace('.csv', '')} changed and store it inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 	print(f"{backgroundColors.OKGREEN}The source of the metrics values is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} files.{Style.RESET_ALL}")
 
 	# Get the directory path from user input of the repository name
@@ -282,7 +282,7 @@ def main():
 	sort_csv_by_changes(repository_name)
 
 	# Remove the old csv file
-	os.remove(METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
+	os.remove(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
 
 	print(f"{backgroundColors.OKGREEN}The {CLASSES_OR_METHODS} were successfully sorted by the number of times they changed and stored inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
