@@ -248,6 +248,32 @@ def calculate_statistics(data_directory, output_file):
                      writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile]) # Write the statistics to the output file
    print(f"{backgroundColors.OKGREEN}Successfully wrote the statistics to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
 
+# @brief: This function asks if the user wants labels in the data points of the graphic image. If so, ask which one
+# @param: None
+# @return: labels: The desired option (y/n) and the type of label to be added to the data points
+def insert_labels():
+   # Ask the user if he wants to add labels to the data points
+   labels = ["", ""] # The first position stores the desired option (y/n) and the second stores the type of label to be added to the data points
+   first_run = [True, True] # List to store the first run of the while loops
+   
+   while labels[0] != "y" and labels[0] != "n":
+      if not first_run[0]:
+         print(f"{backgroundColors.FAIL}Invalid option!{Style.RESET_ALL}")
+      first_run[0] = False
+      labels[0] = input(f"{backgroundColors.OKGREEN}Do you want to add labels to the data points? {backgroundColors.OKCYAN}(y/n){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+
+   if labels[0] == "y":
+      labels[0] = True
+      while labels[1] != "1" and labels[1] != "2":
+         if not first_run[1]:
+            print(f"{backgroundColors.FAIL}Invalid option!{Style.RESET_ALL}")
+         first_run[1] = False
+         print(f"{backgroundColors.OKGREEN}Choose the type of label to be added to the data points: {Style.RESET_ALL}")
+         print(f"{backgroundColors.OKCYAN}   1. Sequence of numbers\n   2. Value of the data point{Style.RESET_ALL}")
+         labels[1] = input(f"{backgroundColors.OKGREEN}Type the number of the label you want in your images plot: {Style.RESET_ALL}")
+      
+   return labels
+
 # @brief: This function gets the plt object and add each metric first and last value to the plot
 # @param: plt: plt object
 # @param: df: DataFrame containing the metrics data
@@ -281,14 +307,11 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
    # Plotting the graph
    plt.figure(figsize=(38.4, 21.6))
 
+   labels = insert_labels() # Ask the user if he wants to add labels to the data points and which one
+
    # Iterate over each metric and plot its evolution with a different color
    for i, metric in enumerate(metrics):
-      metric_values = df[metric]
       plt.plot(commit_hashes, df[metric], marker="o", label=metric, linestyle=line_styles[i], markersize=marker_sizes[i], color=colors[i])
-
-      # Add labels to each data point
-      for j, value in enumerate(metric_values):
-         plt.text(commit_hashes[j], value, f"{j+1}º", ha="center", va="bottom", fontsize=12)
 
    # Set the graph title and labels according to the type of analysis (class or method)
    if PROCESS_CLASSES:
