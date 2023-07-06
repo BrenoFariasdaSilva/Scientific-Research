@@ -269,7 +269,7 @@ def insert_labels():
             print(f"{backgroundColors.FAIL}Invalid option!{Style.RESET_ALL}")
          first_run[1] = False
          print(f"{backgroundColors.OKGREEN}Choose the type of label to be added to the data points: {Style.RESET_ALL}")
-         print(f"{backgroundColors.OKCYAN}   1. Sequence of numbers\n   2. Value of the data point{Style.RESET_ALL}")
+         print(f"{backgroundColors.OKCYAN}   1. Sequence of numbers \n   2. Value of the data point (y axis value){Style.RESET_ALL}")
          labels[1] = input(f"{backgroundColors.OKGREEN}Type the number of the label you want in your images plot: {Style.RESET_ALL}")
       
    return labels
