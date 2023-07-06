@@ -248,6 +248,17 @@ def calculate_statistics(data_directory, output_file):
                      writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile]) # Write the statistics to the output file
    print(f"{backgroundColors.OKGREEN}Successfully wrote the statistics to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
 
+# @brief: This function gets the plt object and add each metric first and last value to the plot
+# @param: plt: plt object
+# @param: df: DataFrame containing the metrics data
+# @return: None
+def add_first_and_last_values_to_plot(plt, df):
+   # Add the first and last values of each metric (cbo, cboModified, wmc, rfc) to the graphic image
+   plt.text(0.20, 0.97, f"CBO {df['cbo'].iloc[0]} -> {df['cbo'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
+   plt.text(0.20, 0.92, f"CBOModified {df['cboModified'].iloc[0]} -> {df['cboModified'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
+   plt.text(0.70, 0.97, f"WMC {df['wmc'].iloc[0]} -> {df['wmc'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
+   plt.text(0.70, 0.92, f"RFC {df['rfc'].iloc[0]} -> {df['rfc'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
+
 # @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH folder
 # @param: repository_name: Name of the repository to be analyzed
 # @param: id: ID of the class or method to be analyzed
@@ -287,11 +298,7 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
    plt.xlabel("Commit Hash")
    plt.ylabel("Metric Value")
 
-   # Add the first and last values of each metric (cbo, cboModified, wmc, rfc) to the graphic image
-   plt.text(0.20, 0.97, f"CBO {df['cbo'].iloc[0]} -> {df['cbo'].iloc[-1]}", fontsize=10, color="red", transform=plt.gcf().transFigure)
-   plt.text(0.20, 0.92, f"CBOModified {df['cboModified'].iloc[0]} -> {df['cboModified'].iloc[-1]}", fontsize=10, color="red", transform=plt.gcf().transFigure)
-   plt.text(0.70, 0.97, f"WMC {df['wmc'].iloc[0]} -> {df['wmc'].iloc[-1]}", fontsize=10, color="red", transform=plt.gcf().transFigure)
-   plt.text(0.70, 0.92, f"RFC {df['rfc'].iloc[0]} -> {df['rfc'].iloc[-1]}", fontsize=10, color="red", transform=plt.gcf().transFigure)
+   add_first_and_last_values_to_plot(plt, df)
 
    # Rotate the x-axis labels for better readability
    plt.xticks(rotation=0)
