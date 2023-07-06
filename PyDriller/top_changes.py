@@ -264,7 +264,7 @@ def main():
 	# Get the directory path from user input of the repository name
 	repository_name, directory_path = get_directory_path()
 
-	# Check if the metrics were already calculated
+	# Check if the ck metrics were already calculated, which are the source of the data processed by traverse_directory(directory_path).
 	if not check_ck_metrics_folders(repository_name):
 		print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not calculated. Please run the main.py file first{Style.RESET_ALL}")
 		return
