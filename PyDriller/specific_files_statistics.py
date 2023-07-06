@@ -274,6 +274,24 @@ def insert_labels():
       
    return labels
 
+# @brief: Add the desired label type to the data points of the graphic image
+# @param: plt: plt object
+# @param: df: DataFrame containing the metrics data
+# @param: label_type: Type of label to be added to the data points of the graphic image
+# @param: commit_hashes: List containing the commit hashes
+# @param: metric_values: List containing the metric values
+# @return: None
+def add_labels_to_plot(plt, df, label_type, commit_hashes, metric_values):
+   # Add the desired label type to the data points of the graphic image
+   if label_type == "1":
+      # Add labels to each data point
+      for j, value in enumerate(metric_values):
+         plt.text(commit_hashes[j], value, f"{j+1}º", ha="center", va="bottom", fontsize=12)
+   elif label_type == "2":
+      # Add labels to each data point
+      for j, value in enumerate(metric_values):
+         plt.text(commit_hashes[j], value, f"{value}", ha="center", va="bottom", fontsize=12)
+
 # @brief: This function gets the plt object and add each metric first and last value to the plot
 # @param: plt: plt object
 # @param: df: DataFrame containing the metrics data
@@ -311,7 +329,11 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
 
    # Iterate over each metric and plot its evolution with a different color
    for i, metric in enumerate(metrics):
+      metric_values = df[metric]
       plt.plot(commit_hashes, df[metric], marker="o", label=metric, linestyle=line_styles[i], markersize=marker_sizes[i], color=colors[i])
+
+      if labels[0]:
+         add_labels_to_plot(plt, df, labels[1], commit_hashes, metric_values)
 
    # Set the graph title and labels according to the type of analysis (class or method)
    if PROCESS_CLASSES:
