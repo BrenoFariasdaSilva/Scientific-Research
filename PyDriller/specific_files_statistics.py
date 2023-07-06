@@ -275,8 +275,8 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id):
 
    # Set the graph title and labels
    plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id} in {repository_name} repository", color="red")
-   plt.xlabel("Commit Hash", color="red")
-   plt.ylabel("Metric Value", color="red")
+   plt.xlabel("Commit Hash")
+   plt.ylabel("Metric Value")
 
    # Add the first and last values of each metric (cbo, cboModified, wmc, rfc) to the graphic image
    plt.text(0.20, 0.97, f"CBO {df['cbo'].iloc[0]} -> {df['cbo'].iloc[-1]}", fontsize=10, color="red", transform=plt.gcf().transFigure)
@@ -286,6 +286,10 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id):
 
    # Rotate the x-axis labels for better readability
    plt.xticks(rotation=0)
+
+   # Set the color of x-values (commit hashes) and y-values (metric values)
+   plt.tick_params(axis="x", colors="red")
+   plt.tick_params(axis="y", colors="red")
 
    # Add a legend
    plt.legend()
