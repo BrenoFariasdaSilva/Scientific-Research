@@ -9,6 +9,7 @@ from colorama import Style # For coloring the terminal
 from main import backgroundColors
 
 # CONSTANTS:
+PATH = os.getcwd() # Get the current working directory
 PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 MINIMUM_CHANGES = 2 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
@@ -22,8 +23,8 @@ RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics" # The relative path to the di
 RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics" # The relative path to the directory containing the metrics statistics
 
 # Directories Paths:
-CK_METRICS_DIRECTORY_PATH = f"{os.getcwd()}{RELATIVE_CK_METRICS_DIRECTORY_PATH}" # The full path to the directory containing the ck metrics
-METRICS_STATISTICS_DIRECTORY_PATH = f"{os.getcwd()}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}" # The full path to the directory containing the metrics statistics
+CK_METRICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_CK_METRICS_DIRECTORY_PATH}" # The full path to the directory containing the ck metrics
+METRICS_STATISTICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}" # The full path to the directory containing the metrics statistics
 
 # Full Files Paths:
 TOP_CHANGED_FILES_CSV_FILE_PATH = f"{METRICS_STATISTICS_DIRECTORY_PATH}/{CHANGED_METHODS_CSV_FILENAME}" # The full path to the csv file containing the top changed methods
