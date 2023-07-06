@@ -5,7 +5,6 @@
 @TODO: Generate the graphics metrics evolution comparison for specified commit hashes.  
 @TODO: Create classes for the constants, functions and variables that are used in multiple files. be careful that some constants might include '/' or not. So, make sure you use the correct one.  
 @TODO: Update the main.py main function. It is very big and kinda messy.   
-@TODO: FEAT top_changes.py -> Line 70 call "validate_class_name" which will see if the class_name has a package (which means, if it has dots .), if it does not, get the file column and get the substring starting from "org" to the end, then replace the "/" for ".".  
 @TODO: Create new code that, for a specified name of the class or method and the values of the cbo, cboModified, rfc and wmc, it will get the commit hash of the commit that introduced the change.  
 @TODO: Make the labels a optional parameter, so the user can choose if he wants to see the labels or not (bool type).  
 @TODO: Ask if the user wants the sequential label (1º, 2º, 3º...) or the values it represents in the y axis.  
