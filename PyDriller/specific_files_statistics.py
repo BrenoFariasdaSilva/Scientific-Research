@@ -365,7 +365,7 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
 # @param: None
 # @return: None
 def main(): 
-   # check if the path constants contains whitespaces
+   # check if the path constant contains whitespaces
    if path_contains_whitespaces():
       print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return
