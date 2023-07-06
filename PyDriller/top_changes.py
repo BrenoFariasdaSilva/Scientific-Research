@@ -36,6 +36,23 @@ def path_contains_whitespaces():
       return True
    return False
 
+# @brief: Gets the user input for the repository name and returns the path to the directory
+# @param: None
+# @return: A tuple containing the repository name and the path to the directory
+def get_directory_path():
+	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+	if repository_name == "":
+		repository_name = DEFAULT_REPOSITORY_NAME
+	directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
+
+	# Check if the directory does not exist
+	while not os.path.isdir(directory_path):
+		print(f"{backgroundColors.FAIL}The directory does not exist. Please try again.{Style.RESET_ALL}")
+		repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+		directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
+
+	return repository_name, directory_path
+
 # @brief: This verifies if all the ck metrics are already calculated by opening the commit hashes file and checking if every commit hash in the file is a folder in the repository folder
 # @param: repository_name: Name of the repository to be analyzed
 # @return: True if all the metrics are already calculated, False otherwise
@@ -74,23 +91,6 @@ def create_output_directories():
 	# Create the output directories if they do not exist
 	if not os.path.isdir(FULL_METRICS_STATISTICS_DIRECTORY_PATH):
 		os.mkdir(FULL_METRICS_STATISTICS_DIRECTORY_PATH)
-
-# @brief: Gets the user input for the repository name and returns the path to the directory
-# @param: None
-# @return: A tuple containing the repository name and the path to the directory
-def get_directory_path():
-	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
-	if repository_name == "":
-		repository_name = DEFAULT_REPOSITORY_NAME
-	directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
-
-	# Check if the directory does not exist
-	while not os.path.isdir(directory_path):
-		print(f"{backgroundColors.FAIL}The directory does not exist. Please try again.{Style.RESET_ALL}")
-		repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
-		directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
-
-	return repository_name, directory_path
 
 # @brief: Validate the class name, that is, if it contains any dots in the name
 # @param class_name: The name of the class
