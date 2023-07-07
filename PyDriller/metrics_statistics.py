@@ -37,6 +37,15 @@ def path_contains_whitespaces():
       return True
    return False
 
+# @brief: This function asks for the user input of the repository name
+# @param: None
+# @return: repository_name: Name of the repository to be analyzed
+def get_repository_name_user():
+   # Ask for user input of the repository name
+   repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+
+   return validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME) # Validate the repository name
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -48,6 +57,9 @@ def main():
    
    print(f"{backgroundColors.OKGREEN}This script {backgroundColors.OKCYAN}generates the metrics statistics{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{CK_CSV_FILE.replace('.csv', '')} files{backgroundColors.OKGREEN} in the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
    print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}source of the data{backgroundColors.OKGREEN} used to {backgroundColors.OKCYAN}calculate the metrics statistics{backgroundColors.OKGREEN} is the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+
+   # Get the name of the repository from the user
+   repository_name = get_repository_name_user()
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
