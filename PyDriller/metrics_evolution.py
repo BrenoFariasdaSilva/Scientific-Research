@@ -160,8 +160,9 @@ def get_clean_id(id):
 # @brief: This function is analyze the repository metrics evolution over time
 # @param: repository_name: Name of the repository to be analyzed
 # @param: id_key: Name of the class or method to be analyzed
+# @param: clean_id: Name of the class or method to be analyzed without the slashes
 # @return: True if the repository was analyzed successfully, False if the id_key was not found
-def generate_metric_evolution_by_id(repository_name, id_key):
+def generate_metric_evolution_by_id(repository_name, id_key, clean_id):
    print(f"{backgroundColors.OKGREEN}Analyzing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository for the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} {CK_CSV_FILE.replace('.csv', '')}...{Style.RESET_ALL}")
 
    metrics_track_record = [] # Dictionary to store the metrics track records
@@ -201,15 +202,15 @@ def generate_metric_evolution_by_id(repository_name, id_key):
    if not metrics_track_record:
       return False
    
-   print(f"{backgroundColors.OKGREEN}The {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{metrics_change_counter} of {metrics_change_counter}{backgroundColors.OKGREEN} time(s){Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}The {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} changed {backgroundColors.OKCYAN}{metrics_change_counter} of {metrics_change_counter}{backgroundColors.OKGREEN} time(s).{Style.RESET_ALL}")
 
    # Write the class or method_data to a file in the RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH folder
-   output_file = f"{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}/{repository_name}-{id_key}.csv" if PROCESS_CLASSES else f"{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}/{repository_name}-{str(id_key.split('/')[0:-1])[2:-2]}.csv"
+   output_file = f"{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}/{repository_name}-{id_key}.csv" if PROCESS_CLASSES else f"{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}/{repository_name}-{clean_id}.csv"
    with open(output_file, "w") as file:
       writer = csv.writer(file) # Create the writer
       writer.writerow([f"commit_hash", "cbo", "cboModified", "wmc", "rfc"]) # Write the header
       writer.writerows(metrics_track_record) # Write the metrics track record
-   print(f"{backgroundColors.OKGREEN}Successfully wrote the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} {CK_CSV_FILE.replace('.csv', '')} evolution to {backgroundColors.OKCYAN}{output_file}{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}Successfully wrote the {backgroundColors.OKCYAN}{id_key}{backgroundColors.OKGREEN} {CK_CSV_FILE.replace('.csv', '')} evolution to {backgroundColors.OKCYAN}{output_file}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
 
    return True
 
