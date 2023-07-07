@@ -145,6 +145,46 @@ def check_metrics_files(folder_path, repository_name, ids):
    os.chdir(PATH)
    return True
 
+# @brief: This function is used to analyze the repository metrics evolution over time for the CSV files in the given directory
+# @param: data_directory: Directory containing the CSV files to be analyzed
+# @param: output_file: Name of the output file
+# @return: None
+def calculate_statistics(data_directory, output_file):
+   print(f"{backgroundColors.OKGREEN}Calculating statistics from the CSV file in {backgroundColors.OKCYAN}{data_directory.split('/')[-1]}/{output_file.split('/')[-1]}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+
+   # Create the output file
+   with open(output_file, "w", newline='') as csvfile:
+      writer = csv.writer(csvfile) # Create a CSV writer
+      # Write the header row
+      writer.writerow(["File", "Metric", "Min", "Max", "Average", "Median", "Third Quartile"])
+
+      # Iterate through the CSV files in the data_directory 
+      for root, dirs, files in os.walk(data_directory):
+         # Iterate through the files in the current data_directory 
+         for file in files:
+            # Check if the file is the desired CSV file
+            if file == output_file.split('/')[-1]:
+               file_path = os.path.join(root, file) # Get the full path of the file
+               # Read the CSV file
+               with open(file_path, "r") as csvfile:
+                  reader = csv.reader(csvfile) # Create a CSV reader
+                  header = next(reader)  # Skip the header row
+
+                  values = [] # List to store the values of the CSV file
+                  for row in reader:
+                     values.append(row[1:]) # Append the second to the last value of the row to the values list
+
+                  # For loop that runs trough the columns of the reader. Each column represents a metric (cbo, cboModified, wmc, rfc)
+                  for i in range(0, len(values[0])):
+                     column_values = [float(row[i]) for row in values] # Get the values of the current column
+                     min_value = round(min(column_values), 3) # Calculate the min value of the current column
+                     max_value = round(max(column_values), 3) # Calculate the max value of the current column
+                     average = round(statistics.mean(column_values), 3) # Calculate the average value of the current column
+                     median = round(statistics.median(column_values), 3) # Calculate the median value of the current column
+                     third_quartile = round(statistics.median_high(column_values), 3) # Calculate the third quartile value of the current column
+                     writer.writerow([file_path, header[i + 1], min_value, max_value, average, median, third_quartile]) # Write the statistics to the output file
+   print(f"{backgroundColors.OKGREEN}Successfully wrote the statistics to {backgroundColors.OKCYAN}{output_file}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -184,6 +224,7 @@ def main():
 
       # Calculate the statistics for the CSV files in the metrics_evolution directory
       output_statistics_csv_file = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "-" + clean_id + ".csv"
+      calculate_statistics(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, output_statistics_csv_file)
    
 
 # Directly run the main function if the script is executed
