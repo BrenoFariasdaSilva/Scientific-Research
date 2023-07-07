@@ -1,5 +1,5 @@
 # [PyDriller](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)
-@TODO 1: Update README to explain the new features (specific_files_statistics.py, top_changes.py).   
+@TODO 1: Update README to explain all the features (ck_metrics.py, top_changes.py, metrics_evolution.py, metrics_statistics.py and generate_images.py).   
 @TODO 2: Create classes for the constants, functions and variables that are used in multiple files. be careful that might be some constants might include '/' or not. So, make sure you use the correct one. Save those classes in a new file called main.py.  
 @TODO 3: Create code that generates the graphics metrics evolution comparison for specified commit hashes.  Use args.  
 @TODO 4: Create new code that, for a specified name of the class or method and the values of the cbo, cboModified, rfc and wmc, it will return you the commit hash of the commit that introduced the changes value.    
