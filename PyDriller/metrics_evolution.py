@@ -1,9 +1,7 @@
 import os # OS module in Python provides functions for interacting with the operating system
 import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
-import statistics # The statistics module provides functions for calculating mathematical statistics of numeric (Real-valued) data
 from tqdm import tqdm # TQDM is a progress bar library with good support for nested loops and Jupyter/IPython notebooks.
 import pandas as pd # Pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,
-import matplotlib.pyplot as plt # Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python.
 from colorama import Style # For coloring the terminal
 
 # Import from the main.py file
@@ -17,6 +15,7 @@ CLASS_CSV_FILE = "class.csv" # The name of the csv generated file from ck.
 METHOD_CSV_FILE = "method.csv" # The name of the csv generated file from ck.
 PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 CK_CSV_FILE = CLASS_CSV_FILE if PROCESS_CLASSES else METHOD_CSV_FILE # The name of the csv generated file from ck.
+CLASSES_OR_METHODS = "classes" if PROCESS_CLASSES else "methods" # The name of the csv generated file from ck.
 OPPOSITE_CK_CSV_FILE = METHOD_CSV_FILE if PROCESS_CLASSES else CLASS_CSV_FILE # The name of the csv generated file from ck.
 DEFAULT_REPOSITORY_NAME = "commons-lang"
 DEFAULT_CLASS_IDS = {"org.apache.commons.lang.StringUtils": "class"} # The default ids to be analyzed. It stores the class:type or method:class
@@ -30,7 +29,6 @@ RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics"
 
 # Default values:
 FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
-FULL_METRICS_STATISTICS_DIRECTORY_PATH = PATH + RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH
 
 # @brief: This function is used to check if the PATH constant contain whitespaces
 # @param: None
