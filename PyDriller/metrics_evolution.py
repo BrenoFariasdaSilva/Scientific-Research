@@ -258,17 +258,6 @@ def add_labels_to_plot(plt, df, label_type, commit_hashes, metric_values):
       for j, value in enumerate(metric_values):
          plt.text(commit_hashes[j], value, f"{value}", ha="center", va="bottom", fontsize=12)
 
-# @brief: This function gets the plt object and add each metric first and last value to the plot
-# @param: plt: plt object
-# @param: df: DataFrame containing the metrics data
-# @return: None
-def add_first_and_last_values_to_plot(plt, df):
-   # Add the first and last values of each metric (cbo, cboModified, wmc, rfc) to the graphic image
-   plt.text(0.20, 0.97, f"CBO {df['cbo'].iloc[0]} -> {df['cbo'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
-   plt.text(0.20, 0.92, f"CBOModified {df['cboModified'].iloc[0]} -> {df['cboModified'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
-   plt.text(0.70, 0.97, f"WMC {df['wmc'].iloc[0]} -> {df['wmc'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
-   plt.text(0.70, 0.92, f"RFC {df['rfc'].iloc[0]} -> {df['rfc'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
-
 # @brief: Main function
 # @param: None
 # @return: None
