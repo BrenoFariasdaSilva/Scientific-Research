@@ -181,6 +181,9 @@ def main():
       clean_id = get_clean_id(id) # Remove the / from the id, due to the fact that use it to name the CSV file would cause problems
 
       print(f"{backgroundColors.OKGREEN}Creating the statistics for the {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} of {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository.{Style.RESET_ALL}")
+
+      # Calculate the statistics for the CSV files in the metrics_evolution directory
+      output_statistics_csv_file = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "-" + clean_id + ".csv"
    
 
 # Directly run the main function if the script is executed
