@@ -69,6 +69,34 @@ def create_directory(full_directory_path, relative_directory_path):
    except OSError: # If the directory cannot be created
       print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory failed.{Style.RESET_ALL}")
 
+# brief: Get user input of the name of the class or method to be analyzed
+# param: None
+# return: id: Name of the class or method to be analyzed
+def get_user_ids_input():
+   id = {}
+   name = ""
+   first_run = True
+   while name == "" and first_run:
+      first_run = False
+      # Ask for user input of the class or method name
+      name = input(f"{backgroundColors.OKGREEN}Enter the name of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+      # if the CK_CSV_FILE is a class csv file, ask for the type of the class ('class' 'interface' 'innerclass' 'enum' 'anonymous')
+      if CK_CSV_FILE == CLASS_CSV_FILE:
+         value = input(f"{backgroundColors.OKGREEN}Enter the type of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+      # if the CK_CSV_FILE is a method csv file, ask for the name of the class of the method
+      elif CK_CSV_FILE == METHOD_CSV_FILE:
+         value = input(f"{backgroundColors.OKGREEN}Enter the {CK_CSV_FILE.replace('.csv', '')} name of the {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+
+      # add the name and value to the id dictionary
+      id[name] = value
+
+   # If the id dictionary is empty, get from the DEFAULT_IDS constant
+   if name == "" and not first_run:
+      id = DEFAULT_IDS
+      print(f"{backgroundColors.OKGREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.OKCYAN}{', '.join(id.keys())}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+
+   return id # Return the class or method name
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -86,6 +114,9 @@ def main():
 
    # create the metrics_evolution directory if it does not exist
    create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
+
+   # Get the ids from the user
+   ids = get_user_ids_input()
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
