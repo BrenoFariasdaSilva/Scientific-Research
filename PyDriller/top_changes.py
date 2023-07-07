@@ -268,8 +268,8 @@ def main():
 		print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
 		return
 
-	print(f"{backgroundColors.OKGREEN}This script generates a csv file with the {CLASSES_OR_METHODS} sorted by the number of times that the {CK_CSV_FILE.replace('.csv', '')} changed and store it inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
-	print(f"{backgroundColors.OKGREEN}The source of the metrics values is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} files.{Style.RESET_ALL}")
+	print(f"{backgroundColors.OKGREEN}This script {backgroundColors.OKCYAN}generates a csv file{backgroundColors.OKGREEN} with the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS} sorted{backgroundColors.OKGREEN} by the {backgroundColors.OKCYAN}number of times that the {CK_CSV_FILE.replace('.csv', '')} changed{backgroundColors.OKGREEN} and store it inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+	print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}source of the metrics values{backgroundColors.OKGREEN} is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} files.{Style.RESET_ALL}")
 
 	# Get the directory path from user input of the repository name
 	repository_name, directory_path = get_directory_path()
@@ -294,7 +294,7 @@ def main():
 	# Remove the old csv file
 	os.remove(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
 
-	print(f"{backgroundColors.OKGREEN}The {CLASSES_OR_METHODS} were successfully sorted by the number of times they changed and stored inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+	print(f"{backgroundColors.OKCYAN}Successfully sorted{backgroundColors.OKGREEN} by the {backgroundColors.OKCYAN}number of times they changed{backgroundColors.OKGREEN} and stored inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
 # Directive to run the main function
 if __name__ == "__main__":
