@@ -174,6 +174,12 @@ def main():
    if not check_metrics_files(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, repository_name, ids):
       print(f"{backgroundColors.FAIL}The metrics evolution for {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.FAIL} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not created. Please run the {backgroundColors.OKCYAN}specific_files_statistics.py{backgroundColors.FAIL} file first.{Style.RESET_ALL}")
       return
+   
+   # Make a for loop to run the create_metrics_evolution_graphic function for each id
+   for id in ids: # Loop trough the ids items in the dictionary
+      clean_id = get_clean_id(id) # Remove the / from the id, due to the fact that use it to name the CSV file would cause problems
+
+      print(f"{backgroundColors.OKGREEN}Generating the image for {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
