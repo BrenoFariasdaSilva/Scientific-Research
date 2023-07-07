@@ -225,7 +225,8 @@ def main():
       # Calculate the statistics for the CSV files in the metrics_evolution directory
       output_statistics_csv_file = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "-" + clean_id + ".csv"
       calculate_statistics(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, output_statistics_csv_file)
-   
+
+   print(f"{backgroundColors.OKCYAN}Successfully created the statistics{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.OKGREEN} of {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository.{Style.RESET_ALL}")
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
