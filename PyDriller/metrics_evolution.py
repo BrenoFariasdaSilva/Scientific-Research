@@ -223,6 +223,9 @@ def main():
       print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return
    
+   print(f"{backgroundColors.OKGREEN}This script {backgroundColors.OKCYAN}generates the metrics evolution{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{CK_CSV_FILE.replace('.csv', '')}{backgroundColors.OKGREEN} of a {backgroundColors.OKCYAN}specific repository{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}metrics evolution{backgroundColors.OKGREEN} will be saved in the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH}{backgroundColors.OKGREEN} folder.{Style.RESET_ALL}")
+   
    # Get the name of the repository from the user
    repository_name = get_repository_name_user()
 
@@ -231,7 +234,7 @@ def main():
       print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not calculated. Please run the main.py file first{Style.RESET_ALL}")
       return
    
-   # create the metrics_evolution directory
+   # create the metrics_evolution directory if it doesn't exist
    create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
 
    # Get the ids from the user
@@ -239,21 +242,21 @@ def main():
 
    # Validate the ids, if is related to a class or method
    if not validate_ids(ids, repository_name):
-      print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{repository_name.keys()}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
+      print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{', '.join(repository_name.keys())}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
       return
    
    # Make a for loop to run the generate_metric_evolution_by_id and calculate_statistics function for every class or method in the user input
    for id in ids: # Loop trough the ids items in the dictionary
       clean_id = get_clean_id(id) # Get the clean id (without the / and the class or method name)
-      print(f"{backgroundColors.OKGREEN}Calculating metrics evolution for {backgroundColors.OKCYAN}{id} {backgroundColors.OKGREEN}{CK_CSV_FILE.replace('.csv', '')}{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}Calculating {backgroundColors.OKCYAN}metrics evolution{backgroundColors.OKGREEN} for {backgroundColors.OKCYAN}{id} {backgroundColors.OKGREEN}{CK_CSV_FILE.replace('.csv', '')}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
 
       # Calculate the CBO, CBOModified, WMC and RFC metrics evolution for the given class or method
-      if not generate_metric_evolution_by_id(repository_name, id):
+      if not generate_metric_evolution_by_id(repository_name, id, clean_id):
          print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{id} {backgroundColors.FAIL}were not found{Style.RESET_ALL}")
          print(f"{backgroundColors.FAIL}Skipping {backgroundColors.OKCYAN}{id} {backgroundColors.FAIL}metrics evolution{Style.RESET_ALL}")
          continue
 
-   print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics evolution for {backgroundColors.OKCYAN}{repository_name}->{list(ids.keys())}{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKCYAN}Successfully calculated the metrics evolution{backgroundColors.OKGREEN} for {backgroundColors.OKCYAN}{', '.join(ids.keys())} {backgroundColors.OKGREEN}{CLASSES_OR_METHODS} for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository in the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH}{backgroundColors.OKGREEN} folder.{Style.RESET_ALL}")
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
