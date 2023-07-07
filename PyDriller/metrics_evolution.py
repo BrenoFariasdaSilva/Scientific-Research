@@ -214,32 +214,6 @@ def generate_metric_evolution_by_id(repository_name, id_key, clean_id):
 
    return True
 
-# @brief: This function asks if the user wants labels in the data points of the graphic image. If so, ask which one
-# @param: None
-# @return: labels: The desired option (y/n) and the type of label to be added to the data points
-def insert_labels():
-   # Ask the user if he wants to add labels to the data points
-   labels = ["", ""] # The first position stores the desired option (y/n) and the second stores the type of label to be added to the data points
-   first_run = [True, True] # List to store the first run of the while loops
-   
-   while labels[0] != "y" and labels[0] != "n":
-      if not first_run[0]:
-         print(f"{backgroundColors.FAIL}Invalid option!{Style.RESET_ALL}")
-      first_run[0] = False
-      labels[0] = input(f"{backgroundColors.OKGREEN}Do you want to add labels to the data points? {backgroundColors.OKCYAN}(y/n){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
-
-   if labels[0] == "y":
-      labels[0] = True
-      while labels[1] != "1" and labels[1] != "2":
-         if not first_run[1]:
-            print(f"{backgroundColors.FAIL}Invalid option!{Style.RESET_ALL}")
-         first_run[1] = False
-         print(f"{backgroundColors.OKGREEN}Choose the type of label to be added to the data points: {Style.RESET_ALL}")
-         print(f"{backgroundColors.OKCYAN}   1. Sequence of numbers \n   2. Value of the data point (y axis value){Style.RESET_ALL}")
-         labels[1] = input(f"{backgroundColors.OKGREEN}Type the number of the label you want in your images plot: {Style.RESET_ALL}")
-      
-   return labels
-
 # @brief: Main function
 # @param: None
 # @return: None
