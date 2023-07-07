@@ -37,6 +37,16 @@ def path_contains_whitespaces():
       return True
    return False
 
+# @brief: Verifiy if the attribute is empty. If so, set it to the default value
+# @param: attribute: The attribute to be checked
+# @param: default_attribute_value: The default value of the attribute
+# @return: The repository URL and the output directory
+def validate_attribute(attribute, default_attribute_value):
+   if not attribute:
+      print(f"{backgroundColors.WARNING}The attribute is empty! Using the default value: {backgroundColors.OKCYAN}{default_attribute_value}{backgroundColors.WARNING}.{Style.RESET_ALL}")
+      attribute = default_attribute_value
+   return attribute
+
 # @brief: This function asks for the user input of the repository name
 # @param: None
 # @return: repository_name: Name of the repository to be analyzed
