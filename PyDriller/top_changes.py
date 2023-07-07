@@ -6,7 +6,7 @@ from tqdm import tqdm # for progress bar
 from colorama import Style # For coloring the terminal
 
 # Import from the main.py file
-from main import backgroundColors
+from ck_metrics import backgroundColors
 
 # CONSTANTS:
 PATH = os.getcwd() # Get the current working directory

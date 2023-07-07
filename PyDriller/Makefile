@@ -1,5 +1,5 @@
-all:
-	clear; python3 main.py
+ck_metrics:
+	clear; python3 ck_metrics.py
 
 metrics_evolution:
 	clear; python3 metrics_evolution.py

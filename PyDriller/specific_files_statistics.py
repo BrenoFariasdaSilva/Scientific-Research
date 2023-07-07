@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt # Matplotlib is a comprehensive library for crea
 from colorama import Style # For coloring the terminal
 
 # Import from the main.py file
-from main import backgroundColors
+from ck_metrics import backgroundColors
         
 # Constants:
 PATH = os.getcwd() # Get the current working directory
