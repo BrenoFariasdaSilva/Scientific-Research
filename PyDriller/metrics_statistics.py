@@ -176,6 +176,12 @@ def main():
       print(f"{backgroundColors.FAIL}The metrics evolution for {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.FAIL} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not created. Please run the {backgroundColors.OKCYAN}specific_files_statistics.py{backgroundColors.FAIL} file first{Style.RESET_ALL}")
       return
    
+   # Make a for loop to run the 
+   for id in ids: # Loop trough the ids items in the dictionary
+      clean_id = get_clean_id(id) # Remove the / from the id, due to the fact that use it to name the CSV file would cause problems
+
+      print(f"{backgroundColors.OKGREEN}Creating the statistics for the {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} of {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository.{Style.RESET_ALL}")
+   
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
