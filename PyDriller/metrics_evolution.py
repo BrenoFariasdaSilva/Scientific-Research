@@ -45,7 +45,7 @@ def path_contains_whitespaces():
 # @return: The repository URL and the output directory
 def validate_attribute(attribute, default_attribute_value):
    if not attribute:
-      print(f"{backgroundColors.WARNING}The attribute is empty! Using the default value: {backgroundColors.OKCYAN}{default_attribute_value}{Style.RESET_ALL}")
+      print(f"{backgroundColors.WARNING}The attribute is empty! Using the default value: {backgroundColors.OKCYAN}{default_attribute_value}{backgroundColors.WARNING}.{Style.RESET_ALL}")
       attribute = default_attribute_value
    return attribute
 
@@ -388,9 +388,6 @@ def main():
    
    # create the metrics_evolution directory
    create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
-
-   # create the metrics_statistics directory
-   create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
 
    # Get the ids from the user
    ids = get_user_ids_input()
