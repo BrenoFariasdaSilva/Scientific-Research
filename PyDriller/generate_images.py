@@ -170,6 +170,24 @@ def insert_labels():
       
    return labels
 
+# @brief: Add the desired label type to the data points of the graphic image
+# @param: plt: plt object
+# @param: df: DataFrame containing the metrics data
+# @param: label_type: Type of label to be added to the data points of the graphic image
+# @param: commit_hashes: List containing the commit hashes
+# @param: metric_values: List containing the metric values
+# @return: None
+def add_labels_to_plot(plt, df, label_type, commit_hashes, metric_values):
+   # Add the desired label type to the data points of the graphic image
+   if label_type == "1":
+      # Add labels to each data point
+      for j, value in enumerate(metric_values):
+         plt.text(commit_hashes[j], value, f"{j+1}º", ha="center", va="bottom", fontsize=12)
+   elif label_type == "2":
+      # Add labels to each data point
+      for j, value in enumerate(metric_values):
+         plt.text(commit_hashes[j], value, f"{value}", ha="center", va="bottom", fontsize=12)
+
 # @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH folder
 # @param: repository_name: Name of the repository to be analyzed
 # @param: id: ID of the class or method to be analyzed
