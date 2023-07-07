@@ -1,8 +1,14 @@
 all:
 	clear; python3 main.py
 
-specific_files_statistics:
-	clear; python3 specific_files_statistics.py
+metrics_evolution:
+	clear; python3 metrics_evolution.py
+
+metrics_statistics:
+	clear; python3 metrics_statistics.py
+
+generate_images:
+clear; python3 generate_images.py
 
 top_changes:
 	clear; python3 top_changes.py
