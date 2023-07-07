@@ -1,16 +1,16 @@
-ck_metrics:
+ck_metrics_script:
 	clear; python3 ck_metrics.py
 
-metrics_evolution:
+metrics_evolution_script:
 	clear; python3 metrics_evolution.py
 
-metrics_statistics:
+metrics_statistics_script:
 	clear; python3 metrics_statistics.py
 
-generate_images:
+generate_images_script:
 	clear; python3 generate_images.py
 
-top_changes:
+top_changes_script:
 	clear; python3 top_changes.py
 
 dependencies:
