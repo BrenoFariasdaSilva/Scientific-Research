@@ -28,10 +28,24 @@ RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics"
 # Default values:
 FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
 
+# @brief: This function is used to check if the PATH constant contain whitespaces
+# @param: None
+# @return: True if the PATH constant contain whitespaces, False otherwise
+def path_contains_whitespaces():
+   # Check if the PATH constant contains whitespaces
+   if " " in PATH:
+      return True
+   return False
+
 # @brief: Main function
 # @param: None
 # @return: None
 def main(): 
+   # check if the path constant contains whitespaces
+   if path_contains_whitespaces():
+      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
+      return
+   
    print(f"{backgroundColors.OKGREEN}This script {backgroundColors.OKCYAN}generates the metrics statistics{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{CK_CSV_FILE.replace('.csv', '')} files{backgroundColors.OKGREEN} in the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
    print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}source of the data{backgroundColors.OKGREEN} used to {backgroundColors.OKCYAN}calculate the metrics statistics{backgroundColors.OKGREEN} is the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
