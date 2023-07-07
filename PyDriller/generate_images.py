@@ -113,6 +113,27 @@ def validate_ids(ids, repository_name):
             return False
    return True
 
+# @brief: This verifies if all the metrics are already calculated by opening the commit hashes file and checking if every commit hash in the file is a folder in the repository folder
+# @param: folder_path: The path of the folder to be analyzed
+# @param: repository_name: Name of the repository to be analyzed
+# @param: ids: The ids to be analyzed
+# @return: True if all the metrics are already calculated, False otherwise
+def check_metrics_files(folder_path, repository_name, ids):
+   print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}{folder_path.rsplit('/', 1)[-1]}{backgroundColors.OKGREEN} are already created.{Style.RESET_ALL}")
+   # Change the current working directory to the repository folder
+   os.chdir(folder_path)
+   
+   # Now, for every ids.keys() in the ids dictionary, check if there is a csv file with the name of the id
+   for id in ids.keys():
+      clean_id = get_clean_id(id) # Remove the slashes from the id, if it contains any
+      evolution_file = f"{repository_name}-{clean_id}.csv"
+      if not os.path.isfile(evolution_file):
+         print(f"{backgroundColors.WARNING}The {backgroundColors.OKCYAN}{id}.csv{backgroundColors.WARNING} file does not exist.{Style.RESET_ALL}")
+         os.chdir(PATH)
+         return False
+   os.chdir(PATH)
+   return True
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -137,6 +158,11 @@ def main():
    # Validate the ids, if is related to a class or method
    if not validate_ids(ids, repository_name):
       print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{', '.join(repository_name.keys())}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
+      return
+   
+   # Check if the metrics evolution were already calculated
+   if not check_metrics_files(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, repository_name, ids):
+      print(f"{backgroundColors.FAIL}The metrics evolution for {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.FAIL} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not created. Please run the {backgroundColors.OKCYAN}specific_files_statistics.py{backgroundColors.FAIL} file first.{Style.RESET_ALL}")
       return
 
 # Directly run the main function if the script is executed
