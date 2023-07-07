@@ -27,10 +27,24 @@ RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics"
 # Default values:
 FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
 
+# @brief: This function is used to check if the PATH constant contain whitespaces
+# @param: None
+# @return: True if the PATH constant contain whitespaces, False otherwise
+def path_contains_whitespaces():
+   # Check if the PATH constant contains whitespaces
+   if " " in PATH:
+      return True
+   return False
+
 # @brief: Main function
 # @param: None
 # @return: None
-def main(): 
+def main():
+   # check if the path constant contains whitespaces
+   if path_contains_whitespaces():
+      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
+      return
+   
    print(f"{backgroundColors.OKGREEN}This script {backgroundColors.OKCYAN}generates the images{backgroundColors.OKGREEN} from the {backgroundColors.OKCYAN}metrics evolution{backgroundColors.OKGREEN} of the {CK_CSV_FILE.replace('.csv', '')} of a {backgroundColors.OKCYAN}specific repository{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
    print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}source of the data{backgroundColors.OKGREEN} used to {backgroundColors.OKCYAN}generate the images{backgroundColors.OKGREEN} is the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
