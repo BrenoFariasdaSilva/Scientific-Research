@@ -269,67 +269,6 @@ def add_first_and_last_values_to_plot(plt, df):
    plt.text(0.70, 0.97, f"WMC {df['wmc'].iloc[0]} -> {df['wmc'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
    plt.text(0.70, 0.92, f"RFC {df['rfc'].iloc[0]} -> {df['rfc'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
 
-# @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH folder
-# @param: repository_name: Name of the repository to be analyzed
-# @param: id: ID of the class or method to be analyzed
-# @param: clean_id: ID of the class or method to be analyzed without the / and the class or method name
-# @param: id_key: ID of the class or method to be analyzed without the class or method name
-# @return: None
-def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
-   # Load the generated CSV files into a dataframe and save a plot of the evolution of the cbo, cboModified, wmc and rfc metrics
-   df = pd.read_csv(RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:] + "/" + repository_name + "-" + clean_id + ".csv")
-
-   # Extract the metrics and commit hashes from the DataFrame
-   commit_hashes = df["commit_hash"]
-   metrics = ["cbo", "cboModified", "wmc", "rfc"]
-
-   # Set the attributes of the graph: colors, line styles and marker sizes
-   colors = ["blue", "pink", "green", "orange"]
-   line_styles = ["-", "--", "-.", ":"]
-   marker_sizes = [5, 5, 5, 5] if PROCESS_CLASSES else [6, 10, 6, 10]
-
-   # Plotting the graph
-   plt.figure(figsize=(38.4, 21.6))
-
-   labels = insert_labels() # Ask the user if he wants to add labels to the data points and which one
-
-   # Iterate over each metric and plot its evolution with a different color
-   for i, metric in enumerate(metrics):
-      metric_values = df[metric]
-      plt.plot(commit_hashes, df[metric], marker="o", label=metric, linestyle=line_styles[i], markersize=marker_sizes[i], color=colors[i])
-
-      if labels[0]:
-         add_labels_to_plot(plt, df, labels[1], commit_hashes, metric_values)
-
-   # Set the graph title and labels according to the type of analysis (class or method)
-   if PROCESS_CLASSES:
-      plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id} {id_key} in {repository_name} repository", color="red")
-   else:
-      plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id_key} {id} in {repository_name} repository", color="red")
-   plt.xlabel("Commit Hash")
-   plt.ylabel("Metric Value")
-
-   add_first_and_last_values_to_plot(plt, df)
-
-   # Rotate the x-axis labels for better readability
-   plt.xticks(rotation=0)
-   plt.xticks([commit_hashes[0], commit_hashes.iloc[-1]], visible=True, rotation="horizontal")
-
-   # Set the color of x-values (commit hashes) and y-values (metric values)
-   plt.tick_params(axis="x", colors="red")
-   plt.tick_params(axis="y", colors="red")
-
-   # Add a legend
-   plt.legend()
-
-   # Add a grid
-   plt.tight_layout()
-
-   # Save the graph
-   plt.savefig(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "-" + clean_id + ".png")
-
-   print(f"{backgroundColors.OKGREEN}Successfully created the metrics evolution graphic for {backgroundColors.OKCYAN}{id}{Style.RESET_ALL}")
-
 # @brief: Main function
 # @param: None
 # @return: None
@@ -368,9 +307,6 @@ def main():
          print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{id} {backgroundColors.FAIL}were not found{Style.RESET_ALL}")
          print(f"{backgroundColors.FAIL}Skipping {backgroundColors.OKCYAN}{id} {backgroundColors.FAIL}metrics evolution{Style.RESET_ALL}")
          continue
-
-      # Create the metrics evolution graphs
-      create_metrics_evolution_graphic(repository_name, id, clean_id, ids[id])
 
    print(f"{backgroundColors.OKGREEN}Successfully calculated the metrics evolution for {backgroundColors.OKCYAN}{repository_name}->{list(ids.keys())}{Style.RESET_ALL}")
 
