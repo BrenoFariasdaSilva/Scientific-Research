@@ -199,3 +199,5 @@ PyDriller/repositories
 /PyDriller/junk
 
 # Ignore RefactoringMiner/RefactoringMiner folder
+/RefactoringMiner/RefactoringMiner
+/RefactoringMiner/repositories/
