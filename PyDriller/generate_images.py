@@ -113,6 +113,16 @@ def validate_ids(ids, repository_name):
             return False
    return True
 
+# @brief: This function receives an id and verify if it contains slashes, if so, it returns the id without the slashes
+# @param: id: ID of the class or method to be analyzed
+# @return: ID of the class or method to be analyzed without the slashes
+def get_clean_id(id):
+   # If the id contains slashes, remove them
+   if "/" in id:
+      return str(id.split("/")[0:-1])[2:-2]
+   else:
+      return id
+
 # @brief: This verifies if all the metrics are already calculated by opening the commit hashes file and checking if every commit hash in the file is a folder in the repository folder
 # @param: folder_path: The path of the folder to be analyzed
 # @param: repository_name: Name of the repository to be analyzed
