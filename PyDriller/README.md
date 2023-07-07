@@ -3,8 +3,7 @@
 @TODO 2: Create classes for the constants, functions and variables that are used in multiple files. be careful that might be some constants might include '/' or not. So, make sure you use the correct one. Save those classes in a new file called main.py.  
 @TODO 3: Create code that generates the graphics metrics evolution comparison for specified commit hashes.  Use args.  
 @TODO 4: Create new code that, for a specified name of the class or method and the values of the cbo, cboModified, rfc and wmc, it will return you the commit hash of the commit that introduced the changes value.    
-@TODO 5: Get the specific_files_statistics.py file function of the create_metrics_evolution_graphic function and create a new file for it.
-@TODO 6: Remove most of the prints to make the code execution more clean. Remove most of the sucessfull prints, as they are not necessary. Keep only the error prints and final prints.  
+@TODO 5: Remove most of the prints to make the code execution more clean. Remove most of the sucessfull prints, as they are not necessary. Keep only the error prints and final prints.  
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
