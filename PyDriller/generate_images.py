@@ -55,6 +55,20 @@ def get_repository_name_user():
 
    return validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME) # Validate the repository name
 
+# @brief: Create a directory if it does not exist
+# @param: full_directory_path: Name of the directory to be created
+# @param: relative_directory_path: Relative name of the directory to be created that will be shown in the terminal
+# @return: None
+def create_directory(full_directory_path, relative_directory_path):
+   if os.path.isdir(full_directory_path): # Check if the directory already exists
+      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory already exists.{Style.RESET_ALL}")
+      return
+   try: # Try to create the directory
+      os.makedirs(full_directory_path)
+      print (f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+   except OSError: # If the directory cannot be created
+      print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory failed.{Style.RESET_ALL}")
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -69,6 +83,9 @@ def main():
 
    # Get the name of the repository from the user
    repository_name = get_repository_name_user()
+
+   # create the metrics_evolution directory if it does not exist
+   create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
 
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
