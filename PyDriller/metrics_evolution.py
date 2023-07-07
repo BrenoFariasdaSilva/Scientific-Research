@@ -95,13 +95,13 @@ def check_ck_metrics_folders(repository_name):
 # @return: None
 def create_directory(full_directory_path, relative_directory_path):
    if os.path.isdir(full_directory_path): # Check if the directory already exists
-      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory already exists{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory already exists.{Style.RESET_ALL}")
       return
    try: # Try to create the directory
       os.makedirs(full_directory_path)
-      print (f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory{Style.RESET_ALL}")
+      print (f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
    except OSError: # If the directory cannot be created
-      print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory failed.{Style.RESET_ALL}")
 
 # brief: Get user input of the name of the class or method to be analyzed
 # param: None
@@ -127,7 +127,7 @@ def get_user_ids_input():
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
    if name == "" and not first_run:
       id = DEFAULT_IDS
-      print(f"{backgroundColors.OKGREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.OKCYAN}{list(id.keys())}{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.OKCYAN}{', '.join(list(id.keys()))}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
 
    return id # Return the class or method name
 
