@@ -8,7 +8,7 @@ metrics_statistics:
 	clear; python3 metrics_statistics.py
 
 generate_images:
-clear; python3 generate_images.py
+	clear; python3 generate_images.py
 
 top_changes:
 	clear; python3 top_changes.py
