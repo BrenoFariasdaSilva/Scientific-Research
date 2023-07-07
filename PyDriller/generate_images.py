@@ -300,6 +300,8 @@ def main():
        # Create the metrics evolution graphs
       create_metrics_evolution_graphic(repository_name, id, clean_id, ids[id])
 
+   print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphics{backgroundColors.OKGREEN} for {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+
 # Directly run the main function if the script is executed
 if __name__ == '__main__':
    main() # Run the main function
