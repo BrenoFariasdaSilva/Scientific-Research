@@ -5,6 +5,7 @@
 @TODO 4: Create new code that, for a specified name of the class or method and the values of the cbo, cboModified, rfc and wmc, it will return you the commit hash of the commit that introduced the changes value.    
 @TODO 5: Remove most of the prints to make the code execution more clean. Remove most of the sucessfull prints, as they are not necessary. Keep only the error prints and final prints.  
 @TODO 6: Change `ck_metrics.py` creation of the commit hash list file. Make it use a csv file and not a txt file. Also, add the following fields: `commit.msg`, `commit.committer_date`, and `commit.modified_files`.
+@TODO 7: Verify the folder creation of each python file. Metrics statistics seems to be creating the metrics_evolution folder, but not the metrics_statistics folder.
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
@@ -17,20 +18,23 @@ sudo apt install python3-pip -y
 Great, you now have python3 and pip installed. Now, we need to install the project requirements/dependencies.
 
 ### Requirements
-First, you must run the following command to install the requirements, like ```matplotlib```, ```numpy```, ```pandas```, ```pydriller``` and ```tqdm```:  
+Run the following command to install the requirements, like ```matplotlib```, ```numpy```, ```pandas```, ```pydriller``` and ```tqdm```:  
 ```
 make dependencies
 ```
 	
 ## How to use  
-Run the following command to execute the `ck_metrics.py` file:
+First, you must run the following command to execute the `ck_metrics.py` file:
 ```
 make ck_metrics_script
 ```
 1. The first thing it will do is check if you don't have whitespaces in the path of the project, if you have, it will not work.  
 2. Then it will ask you to enter the url of the repository you want to analyze, for example: ```https://github.com/apache/commons-lang```.
-3. Then it will get the repository name, and create the following folders: ```ck_metrics```, ```metrics_evolution/```, ```metrics_statistics/``` and, lastly, a subfolder inside the ```ck_metrics/``` folder with the name of the repository, in order to store the ck metrics of the repository that ck will generate. 
-4. Now, if the `check_metrics_folders` function notes that the ck output are not where it should, it will assume that ck never ran inside the repository you specified, it will run it. In order to to run the ck, it will clone the repository, check the number of commits in the repository in order for PyDriller to traverse commits tree, storing the commit hashes in a .txt file, so we can do a git branch checkout to run ck for every commit hash in the repository. Keep in mind that the execution of the ck tool will take a while, depending on the number of commits of the repository. Commons-lang, for example, has like 8000 commits, so it will take more than an hour to finish.
+3. Then it will get the repository name from the url you entered, for example: ```commons-lang```.
+4. Now, the `check_ck_metrics_folders` function  will verify if the ck metrics are already calculated. That verification if done by
+   1. Verifying if the commits list file exists inside the `CK_METRICS_DIRECTORY_PATH` directory, which should be named as `commit_hashes-repository_name.txt`, for example: `commit_hashes-commons-lang.txt`.
+   2. 
+   3. notes that the ck output are not where it should, it will assume that ck never ran inside the repository you specified, it will run it. In order to to run the ck, it will clone the repository, check the number of commits in the repository in order for PyDriller to traverse commits tree, storing the commit hashes in a .txt file, so we can do a git branch checkout to run ck for every commit hash in the repository. Keep in mind that the execution of the ck tool will take a while, depending on the number of commits of the repository. Commons-lang, for example, has like 8000 commits, so it will take more than an hour to finish.
 5. Now, the `search_method_metrics` function will be executed. This function will open the csv files in the ck_metrics and extract the `cbo`, `wmc`, `cboModified`, `rfc` of each occurrence of the specified method to be evaluated. Then, it will store the results inside the `metrics_evolution/methodName.csv` file.
 6. Now that every occurrence of the specified method metrics have been compiled into the `metrics_evolution/methodName.csv` file, the function `calculate_statistics` is executed, in which will extract the `minimum`, `maximum`, `average` and `third quartile` of each metric (`cbo, wmc, cboModified and rfc`). It will also create a csv file with the metrics statistics of the repository inside the `metrics_statistics/repositoryName.csv` file.
 
