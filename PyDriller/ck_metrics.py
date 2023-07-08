@@ -114,7 +114,7 @@ def check_ck_metrics_folders(repository_name):
    current_path = PATH
    data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
    repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
-   commit_file = f"commit_hashes-{repository_name}.txt" # The name of the commit hashes file
+   commit_file = f"{repository_name}-commit_hashes.csv" # The name of the commit hashes file
    commit_file_path = os.path.join(data_path, commit_file) # Join the data path with the commit hashes file
 
    # Check if the repository exists
@@ -122,9 +122,9 @@ def check_ck_metrics_folders(repository_name):
       print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
       return False
 
-   # Read the commit hashes file
-   with open(commit_file_path, "r") as file:
-      lines = file.readlines() # Read all the lines of the file and store them in a list
+   # Read the commit hashes csv file and get the commit hashes column
+   lines = pd.read_csv(commit_file_path, sep=',', header=None, usecols=[0])[0].tolist()
+   lines = lines[1:]
 
    # Check if the repository exists
    for line in lines:
