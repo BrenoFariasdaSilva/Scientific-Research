@@ -1,7 +1,8 @@
 import os # OS module in Python provides functions for interacting with the operating system
 import subprocess # The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes
+import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
+import pandas as pd # Pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,
 from pydriller import Repository # PyDriller is a Python framework that helps developers in analyzing Git repositories. 
-from tqdm import tqdm # TQDM is a progress bar library with good support for nested loops and Jupyter/IPython notebooks.
 from colorama import Style # For coloring the terminal
 
 # Macros:
@@ -185,9 +186,11 @@ def output_commit_progress(repository_name, commit_hash, commit_number, number_o
 # @return: The commit hashes of the repository
 def traverse_repository(repository_name, repository_url, number_of_commits):
    i = 1
-   commit_hashes = ""
+   commit_hashes = []
    for commit in Repository(repository_url).traverse_commits():
-      commit_hashes += f"{commit.hash}\n"
+      # now store the commit hash, commit message and commit date in one line of the list, separated by commas
+      commit_hashes.append(f"{commit.hash},{commit.message},{commit.author_date}")
+      print(commit_hashes)
 
       workdir_directory = FULL_REPOSITORY_DIRECTORY_PATH + "/" + repository_name
       os.chdir(workdir_directory)        
