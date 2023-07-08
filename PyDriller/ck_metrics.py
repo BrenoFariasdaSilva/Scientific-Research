@@ -37,7 +37,7 @@ FULL_CK_JAR_PATH = PATH + RELATIVE_CK_JAR_PATH
 # @param: None
 # @return: True if the PATH constant contain whitespaces, False otherwise
 def path_contains_whitespaces():
-   # Check if the PATH constant contains whitespaces
+   # Verify if the PATH constant contains whitespaces
    if " " in PATH:
       return True
    return False
@@ -86,7 +86,7 @@ def update_repository(repository_name):
 # @param: repository_url: URL of the repository to be analyzed
 # @return: None
 def clone_repository(repository_name, repository_url):
-   # Check if the repository directory already exists and if it is not empty
+   # Verify if the repository directory already exists and if it is not empty
    if os.path.isdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name) and os.listdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name):
       print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository is already cloned!{Style.RESET_ALL}")
       update_repository(repository_name)
@@ -104,7 +104,7 @@ def clone_repository(repository_name, repository_url):
 # @param: relative_directory_name: Relative name of the directory to be created that will be shown in the terminal
 # @return: None
 def create_directory(full_directory_name, relative_directory_name):
-   if os.path.isdir(full_directory_name): # Check if the directory already exists
+   if os.path.isdir(full_directory_name): # Verify if the directory already exists
       print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory already exists{Style.RESET_ALL}")
       return
    try: # Try to create the directory
@@ -124,22 +124,22 @@ def check_ck_metrics_folders(repository_name):
    commit_file = f"{repository_name}-commit_hashes{COMMIT_HASHES_FILE_EXTENSION}" # The name of the commit hashes file
    commit_file_path = os.path.join(data_path, commit_file) # Join the data path with the commit hashes file
 
-   # Check if the repository exists
+   # Verify if the repository exists
    if not os.path.exists(commit_file_path):
       print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
       return False
 
-   # Read the commit hashes csv file and get the commit hashes column
+   # Read the commit hashes csv file and get the commit hashes column, but ignore the first line
    lines = pd.read_csv(commit_file_path, sep=',', header=None, usecols=[0])[0].tolist()
    lines = lines[1:]
 
-   # Check if the repository exists
+   # Verify if the repository exists
    for line in lines:
       # Get the commit hash
       folder_name = line.strip() # Remove the \n from the line
       folder_path = os.path.join(repo_path, folder_name) # Join the repo path with the folder name
 
-      # Check if the folder exists
+      # Verify if the folder exists
       if not os.path.exists(folder_path):
          # check if the CK_METRICS_FILES are not in the folder
          for ck_metric_file in CK_METRICS_FILES:
@@ -251,7 +251,7 @@ def main():
    # Get the name of the repository
    repository_name = get_repository_name(repository_url)
 
-   # Check if the metrics were already calculated
+   # Verify if the metrics were already calculated
    if check_ck_metrics_folders(repository_name):
       print(f"{backgroundColors.OKGREEN}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} were already calculated{Style.RESET_ALL}")
       return
