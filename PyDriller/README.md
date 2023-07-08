@@ -20,9 +20,9 @@ make dependencies
 ```
 	
 ## How to use  
-Run the following command to execute the `main.py` file:
+Run the following command to execute the `ck_metrics.py` file:
 ```
-make
+make ck_metrics_script
 ```
 1. The first thing it will do is check if you don't have whitespaces in the path of the project, if you have, it will not work.  
 2. Then it will ask you to enter the url of the repository you want to analyze, for example: ```https://github.com/apache/commons-lang```.
