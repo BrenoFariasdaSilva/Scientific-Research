@@ -121,7 +121,7 @@ def check_ck_metrics_folders(repository_name):
    current_path = PATH
    data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
    repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
-   commit_file = f"{repository_name}-commit_hashes.csv" # The name of the commit hashes file
+   commit_file = f"{repository_name}-commit_hashes{COMMIT_HASHES_FILE_EXTENSION}" # The name of the commit hashes file
    commit_file_path = os.path.join(data_path, commit_file) # Join the data path with the commit hashes file
 
    # Check if the repository exists
@@ -139,8 +139,14 @@ def check_ck_metrics_folders(repository_name):
       folder_name = line.strip() # Remove the \n from the line
       folder_path = os.path.join(repo_path, folder_name) # Join the repo path with the folder name
 
-      # Check if the folder exists and there is a class and method csv files inside of it
-      if not os.path.exists(folder_path) or not os.path.exists(os.path.join(folder_path, "class.csv")) or not os.path.exists(os.path.join(folder_path, "method.csv")):
+      # Check if the folder exists
+      if not os.path.exists(folder_path):
+         # check if the CK_METRICS_FILES are not in the folder
+         for ck_metric_file in CK_METRICS_FILES:
+            ck_metric_file_path = os.path.join(folder_path, ck_metric_file)
+            if not os.path.exists(ck_metric_file_path):
+               print(f"{backgroundColors.FAIL}The file {backgroundColors.OKCYAN}{ck_metric_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{folder_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+               return False
          print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
          return False
    return True
