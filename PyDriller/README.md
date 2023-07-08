@@ -14,7 +14,7 @@ sudo apt install python3 -y
 ```
 	
 ### Requirements
-Run the following command to install the requirements, like ```matplotlib```, ```numpy```, ```pandas```, ```pydriller``` and ```tqdm```:  
+First, you must run the following command to install the requirements, like ```matplotlib```, ```numpy```, ```pandas```, ```pydriller``` and ```tqdm```:  
 ```
 make dependencies
 ```
