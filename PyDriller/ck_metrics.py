@@ -73,7 +73,7 @@ def get_repository_name(url):
 # @param: repository_name: Name of the repository to be analyzed
 # @return: None
 def update_repository(repository_name):
-   print(f"Updating the {backgroundColors.OKGREEN}{repository_name}{Style.RESET_ALL} repository using {backgroundColors.OKGREEN}git pull{Style.RESET_ALL}.")
+   print(f"{backgroundColors.OKGREEN}Updating the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository using {backgroundColors.OKCYAN}git pull{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
    os.chdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name)
    # Create a thread to update the repository located in RELATIVE_REPOSITORY_DIRECTORY + '/' + repository_name
    update_thread = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -166,7 +166,7 @@ def run_ck_metrics_generator(cmd):
    # Create a thread to run the cmd command
    thread = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
    stdout, stderr = thread.communicate()
-   print(stdout.decode())
+   print(f"{backgroundColors.OKGREEN}{stdout.decode('utf-8')}{Style.RESET_ALL}")
 
 # @brief: This function generates the output directory path for the CK metrics generator
 # @param: repository_name: Name of the repository to be analyzed
