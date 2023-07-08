@@ -135,7 +135,8 @@ def check_ck_metrics_folders(repository_name):
       folder_name = line.strip() # Remove the \n from the line
       folder_path = os.path.join(repo_path, folder_name) # Join the repo path with the folder name
 
-      if not os.path.exists(folder_path): # Check if the folder exists
+      # Check if the folder exists and there is a class and method csv files inside of it
+      if not os.path.exists(folder_path) or not os.path.exists(os.path.join(folder_path, "class.csv")) or not os.path.exists(os.path.join(folder_path, "method.csv")):
          print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
          return False
    return True
