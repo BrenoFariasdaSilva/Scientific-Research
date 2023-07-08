@@ -241,8 +241,11 @@ def main():
 
    commit_hashes = traverse_repository(repository_name, repository_url, number_of_commits)
 
-   with open(FULL_CK_METRICS_DIRECTORY_PATH + "/" + "commit_hashes-" + repository_name + ".txt", "w") as file:
-      file.write(commit_hashes)
+   # Write the commit hashes list to a csv file
+   with open(FULL_CK_METRICS_DIRECTORY_PATH + "/" + repository_name + "-commit_hashes" + ".csv", "w") as file:
+      writer = csv.writer(file)
+      writer.writerow(["commit hash", "commit message", "commit date"])
+      writer.writerows(commit_hashes)
 
    checkout_branch("main")
 
