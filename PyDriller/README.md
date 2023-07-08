@@ -8,11 +8,13 @@
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
 ## Installation
-You need to install python3.  
+You need to install python3. If you are using Linux, you (must likely) can install it by just running the following commands:
 ```
 sudo apt install python3 -y
+sudo apt install python3-pip -y
 ```
-	
+Great, you now have python3 and pip installed. Now, we need to install the project requirements/dependencies.
+
 ### Requirements
 First, you must run the following command to install the requirements, like ```matplotlib```, ```numpy```, ```pandas```, ```pydriller``` and ```tqdm```:  
 ```
