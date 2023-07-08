@@ -210,6 +210,16 @@ def traverse_repository(repository_name, repository_url, number_of_commits):
       i += 1
    return commit_hashes
 
+# @brief: This function writes the commit hashes to a csv file
+# @param: repository_name: Name of the repository to be analyzed
+# @param: commit_hashes: List of tuples containing the commit hashes, commit messages and commit dates
+# @return: None
+def write_commit_hashes_to_csv(repository_name, commit_hashes):
+   with open(FULL_CK_METRICS_DIRECTORY_PATH + "/" + repository_name + "/" + "commit_hashes.csv", "w", newline='') as csv_file:
+      writer = csv.writer(csv_file)
+      writer.writerow(["commit hash", "commit message", "commit date"])
+      writer.writerows(commit_hashes)
+
 # @brief: Main function
 # @param: None
 # @return: None
@@ -241,11 +251,7 @@ def main():
 
    commit_hashes = traverse_repository(repository_name, repository_url, number_of_commits)
 
-   # Write the commit hashes list to a csv file
-   with open(FULL_CK_METRICS_DIRECTORY_PATH + "/" + repository_name + "-commit_hashes" + ".csv", "w") as file:
-      writer = csv.writer(file)
-      writer.writerow(["commit hash", "commit message", "commit date"])
-      writer.writerows(commit_hashes)
+   write_commit_hashes_to_csv(repository_name, commit_hashes)
 
    checkout_branch("main")
 
