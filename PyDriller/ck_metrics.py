@@ -224,11 +224,6 @@ def main():
    # Get the name of the repository
    repository_name = get_repository_name(repository_url)
 
-   # create the metrics_evolution directory
-   create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
-   # create the metrics_statistics directory
-   create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
-
    # Check if the metrics were already calculated
    if check_ck_metrics_folders(repository_name):
       print(f"{backgroundColors.OKGREEN}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} were already calculated{Style.RESET_ALL}")
