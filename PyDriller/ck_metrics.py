@@ -192,18 +192,18 @@ def output_commit_progress(repository_name, commit_hash, commit_number, number_o
    print(f"{backgroundColors.OKCYAN}{commit_number} of {number_of_commits}{Style.RESET_ALL} - Running CK: {relative_cmd}{Style.RESET_ALL}")
 
 # @brief: This function outputs time, considering the appropriate time unit
-# @param: string: String to be outputted
+# @param: output_string: String to be outputted
 # @param: time: Time to be outputted
 # @return: None
-def output_time(string, time):
+def output_time(output_string, time):
    if time < TIME_UNITS[0]:
-      print(f"{backgroundColors.OKGREEN}{string}{backgroundColors.OKCYAN}{time} seconds{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}{output_string}{backgroundColors.OKCYAN}{time} seconds{Style.RESET_ALL}")
    elif time < TIME_UNITS[1]:
-      print(f"{backgroundColors.OKGREEN}{string}{backgroundColors.OKCYAN}{time / TIME_UNITS[0]} minutes{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}{output_string}{backgroundColors.OKCYAN}{time / TIME_UNITS[0]} minutes{Style.RESET_ALL}")
    elif time < TIME_UNITS[2]:
-      print(f"{backgroundColors.OKGREEN}{string}{backgroundColors.OKCYAN}{time / TIME_UNITS[1]} hours{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}{output_string}{backgroundColors.OKCYAN}{time / TIME_UNITS[1]} hours{Style.RESET_ALL}")
    else:
-      print(f"{backgroundColors.OKGREEN}{string}{backgroundColors.OKCYAN}{time / TIME_UNITS[2]} days{Style.RESET_ALL}")
+      print(f"{backgroundColors.OKGREEN}{output_string}{backgroundColors.OKCYAN}{time / TIME_UNITS[2]} days{Style.RESET_ALL}")
 
 # @brief: This function traverses the repository
 # @param: repository_name: Name of the repository to be analyzed
