@@ -32,7 +32,7 @@ RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories"
 RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar"
 
 # Default values:
-DEFAULT_REPOSITORY_URL = "https://github.com/apache/commons-lang"
+DEFAULT_REPOSITORY_URL = ["https://github.com/apache/commons-lang", "https://github.com/JabRef/jabref"]
 FULL_CK_METRICS_DIRECTORY_PATH = PATH + RELATIVE_CK_METRICS_DIRECTORY_PATH
 FULL_REPOSITORY_DIRECTORY_PATH = PATH + RELATIVE_REPOSITORY_DIRECTORY_PATH
 FULL_CK_JAR_PATH = PATH + RELATIVE_CK_JAR_PATH
@@ -64,7 +64,7 @@ def get_user_repository_url():
    repository_url = input(f"{backgroundColors.OKGREEN}Enter the repository URL {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
    # Return the repository URL
-   return validate_attribute(repository_url, DEFAULT_REPOSITORY_URL)
+   return validate_attribute(repository_url, DEFAULT_REPOSITORY_URL[0])
 
 # @brief: Get the string after the last slash
 # @param: url: URL of the repository to be analyzed
