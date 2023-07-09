@@ -217,7 +217,7 @@ def traverse_repository(repository_name, repository_url, number_of_commits):
    commit_hashes = []
    for commit in Repository(repository_url).traverse_commits():
       # now store the commit hash, commit message and commit date in one line of the list, separated by commas
-      current_tuple = (commit.hash, commit.msg.split('\n')[0], commit.author_date)
+      current_tuple = (commit.hash, commit.msg.split('\n')[0], commit.committer_date)
       commit_hashes.append(current_tuple)
 
       # change working directory to the repository directory
