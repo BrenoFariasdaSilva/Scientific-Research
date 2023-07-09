@@ -132,26 +132,21 @@ def check_ck_metrics_folders(repository_name):
       print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
       return False
 
-   # Read the commit hashes csv file and get the commit hashes column, but ignore the first line
-   lines = pd.read_csv(commit_file_path, sep=',', header=None, usecols=[0])[0].tolist()
-   lines = lines[1:]
+   # Read the commit hashes csv file and get the commit_hashes column, but ignore the first line
+   commit_hashes = pd.read_csv(commit_file_path, sep=",", usecols=["commit hash"], header=0).values.tolist()
 
    # Verify if the repository exists
-   for line in lines:
-      # Get the commit hash
-      folder_name = line.strip() # Remove the \n from the line
-      folder_path = os.path.join(repo_path, folder_name) # Join the repo path with the folder name
+   for commit_hash in commit_hashes:
+      commit_hash = commit_hash[0] # This removes the [] and the '' from the commit hash
+      folder_path = os.path.join(repo_path, commit_hash) # Join the repo path with the folder name
 
-      # Verify if the folder exists
-      if not os.path.exists(folder_path):
+      if os.path.exists(folder_path):
          # check if the CK_METRICS_FILES are not in the folder
          for ck_metric_file in CK_METRICS_FILES:
             ck_metric_file_path = os.path.join(folder_path, ck_metric_file)
             if not os.path.exists(ck_metric_file_path):
                print(f"{backgroundColors.FAIL}The file {backgroundColors.OKCYAN}{ck_metric_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{folder_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
                return False
-         print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
-         return False
    return True
 
 # @brief: This function is used to checkout a specific branch
