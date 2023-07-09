@@ -36,9 +36,8 @@ make ck_metrics_script
    2. If the csv file exists, it will, for every commit hash in the csv file, verify if there is a subdirectory inside the `CK_METRICS_DIRECTORY_PATH/repository_name` directory, which should be named as `commit_hash` and contains all the ck metrics generated files, which are defined in the `CK_METRICS_FILES` constant.  
    
    If those verifications are all true, it stop executing, due to the fact that the ck metrics are already calculated. If not, it will continue executing.
-1. Now, we call twice the `create_directory` function, which will create the `CK_METRICS_DIRECTORY_PATH` and `CK_METRICS_DIRECTORY_PATH/repository_name` directories.
-2. the `search_method_metrics` function will be executed. This function will open the csv files in the ck_metrics and extract the `cbo`, `wmc`, `cboModified`, `rfc` of each occurrence of the specified method to be evaluated. Then, it will store the results inside the `metrics_evolution/methodName.csv` file.
-3. Now that every occurrence of the specified method metrics have been compiled into the `metrics_evolution/methodName.csv` file, the function `calculate_statistics` is executed, in which will extract the `minimum`, `maximum`, `average` and `third quartile` of each metric (`cbo, wmc, cboModified and rfc`). It will also create a csv file with the metrics statistics of the repository inside the `metrics_statistics/repositoryName.csv` file.
+5. Now, as the ck metrics are not calculated, it will call `create_directory` twice, one for the `FULL_CK_METRICS_DIRECTORY_PATH` directory and another for the `FULL_REPOSITORY_DIRECTORY_PATH` directory.
+6. With all the subfolders created, we must call `clone_repository` function, which will clone the repository to the `FULL_REPOSITORY_DIRECTORY_PATH` directory.
 
 Run the following command to execute the `top_changes.py` file:
 ```
@@ -55,9 +54,9 @@ make top_changes
    3. Store the number of times that class or method changed it's metrics.  
    These informations will be stored in a dictionary called `metrics_track_record`.  
 Now that the `metrics_track_record` dictionary is filled with the metrics evolution of every class or method, the `traverse_directory` function will return the `metrics_track_record` dictionary, in order for the metrics be processed to generate statistics.
-7. Now that we have the record of the times the metrics changed and it's values for every class or method, the main function calls the `process_metrics_track_record(repository_name, metrics_track_record)`, which will generate the metrics statistics (Minimum, Maximum, Average and Third Quartile) for every metric (cbo, cboModified, wmc and rfc), which allow us to have a better understanding of the metrics behavior over time. Those statistics will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` file.
-8. Finally, with those statistics generated and stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` csv file, the main funcion call the `sort_csv_by_changes(repository_name)` function that is going to sort the lines of the metrics statistics csv file by the `times_changed` column, which is the number of times the metrics changed. The top changes will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME` csv file.  
-9. Now, that we have the sorted csv file, the main function will call the `os.remove` to delete the old, unsorted csv file.
+1. Now that we have the record of the times the metrics changed and it's values for every class or method, the main function calls the `process_metrics_track_record(repository_name, metrics_track_record)`, which will generate the metrics statistics (Minimum, Maximum, Average and Third Quartile) for every metric (cbo, cboModified, wmc and rfc), which allow us to have a better understanding of the metrics behavior over time. Those statistics will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` file.
+2. Finally, with those statistics generated and stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` csv file, the main funcion call the `sort_csv_by_changes(repository_name)` function that is going to sort the lines of the metrics statistics csv file by the `times_changed` column, which is the number of times the metrics changed. The top changes will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME` csv file.  
+3. Now, that we have the sorted csv file, the main function will call the `os.remove` to delete the old, unsorted csv file.
 
 Run the following command to execute the `specific_files_statistics.py` file:
 ```
