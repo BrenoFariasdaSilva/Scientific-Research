@@ -37,7 +37,7 @@ FULL_CK_METRICS_DIRECTORY_PATH = PATH + RELATIVE_CK_METRICS_DIRECTORY_PATH
 FULL_REPOSITORY_DIRECTORY_PATH = PATH + RELATIVE_REPOSITORY_DIRECTORY_PATH
 FULL_CK_JAR_PATH = PATH + RELATIVE_CK_JAR_PATH
 
-# @brief: This function is used to check if the PATH constant contain whitespaces
+# @brief: This function is used to verify if the PATH constant contain whitespaces
 # @param: None
 # @return: True if the PATH constant contain whitespaces, False otherwise
 def path_contains_whitespaces():
@@ -141,7 +141,7 @@ def check_ck_metrics_folders(repository_name):
       folder_path = os.path.join(repo_path, commit_hash) # Join the repo path with the folder name
 
       if os.path.exists(folder_path):
-         # check if the CK_METRICS_FILES are not in the folder
+         # Verify if the CK_METRICS_FILES are not in the folder
          for ck_metric_file in CK_METRICS_FILES:
             ck_metric_file_path = os.path.join(folder_path, ck_metric_file)
             if not os.path.exists(ck_metric_file_path):
@@ -276,7 +276,7 @@ def write_commit_hashes_to_csv(repository_name, commit_hashes):
 # @param: None
 # @return: None
 def main():
-   # check if the path constants contains whitespaces
+   # Verify if the path constants contains whitespaces
    if path_contains_whitespaces():
       print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return
