@@ -189,7 +189,7 @@ def generate_output_directory_paths(repository_name, commit_hash):
 # @return: None
 def output_commit_progress(repository_name, commit_hash, commit_number, number_of_commits):
    relative_cmd = f"{backgroundColors.OKGREEN}java -jar {backgroundColors.OKCYAN}{RELATIVE_CK_JAR_PATH} {RELATIVE_REPOSITORY_DIRECTORY_PATH}/{repository_name}{backgroundColors.OKGREEN} false 0 false {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{commit_hash}/"
-   print(f"{backgroundColors.OKCYAN}{commit_number} of {number_of_commits}{Style.RESET_ALL} - Running CK: {relative_cmd}{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKCYAN}{commit_number} of {number_of_commits}{backgroundColors.OKGREEN} - Running CK: {relative_cmd}{Style.RESET_ALL}")
 
 # @brief: This function outputs time, considering the appropriate time unit
 # @param: output_string: String to be outputted
