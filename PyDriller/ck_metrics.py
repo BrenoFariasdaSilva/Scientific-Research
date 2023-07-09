@@ -241,19 +241,19 @@ def traverse_repository(repository_name, repository_url, number_of_commits):
       run_ck_metrics_generator(cmd)
 
       if i == 1:
-         output_string = "Time taken to generate CK metrics for the first commit: "
+         first_iteration_time_string = "Time taken to generate CK metrics for the first commit: "
          first_iteration_duration = time.time() - start_time
-         output_time(output_string, first_iteration_duration)
+         output_time(first_iteration_time_string, round(first_iteration_duration, 2))
 
       i += 1
 
    elapsed_time = time.time() - start_time  # Calculate elapsed time
    first_iteration_time_string = "Time taken to generate CK metrics for the first commit: "
-   output_time(first_iteration_time_string, first_iteration_duration)
+   output_time(first_iteration_time_string, round(first_iteration_duration, 2))
    estimated_time_string = "Estimated time for the rest of the iterations: "
-   output_time(estimated_time_string, first_iteration_time_string * number_of_commits)
+   output_time(estimated_time_string, round(first_iteration_duration * number_of_commits, 2))
    time_taken_string = f"Time taken to generate CK metrics for {number_of_commits} commits in {repository_name} repository: "
-   output_time(time_taken_string, elapsed_time)
+   output_time(time_taken_string, round(elapsed_time, 2))
 
    return commit_hashes
 
