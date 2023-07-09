@@ -212,7 +212,6 @@ def output_time(output_string, time):
    rounded_time = round(time_value, 2)
    print(f"{backgroundColors.OKGREEN}{output_string}{backgroundColors.OKCYAN}{rounded_time} {time_unit}{Style.RESET_ALL}")
 
-
 # @brief: This function traverses the repository
 # @param: repository_name: Name of the repository to be analyzed
 # @param: repository_url: URL of the repository to be analyzed
@@ -270,7 +269,8 @@ def traverse_repository(repository_name, repository_url, number_of_commits):
 # @param: commit_hashes: List of tuples containing the commit hashes, commit messages and commit dates
 # @return: None
 def write_commit_hashes_to_csv(repository_name, commit_hashes):
-   with open(FULL_CK_METRICS_DIRECTORY_PATH + "/" + repository_name + "/" + "commit_hashes" + {COMMIT_HASHES_FILE_EXTENSION}, "w", newline='') as csv_file:
+   file_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}-commit_hashes{COMMIT_HASHES_FILE_EXTENSION}"
+   with open(file_path, "w", newline='') as csv_file:
       writer = csv.writer(csv_file)
       # write the header
       writer.writerow(["commit hash", "commit message", "commit date"])
