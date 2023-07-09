@@ -140,11 +140,10 @@ def check_ck_metrics_folders(repository_name):
       commit_hash = commit_hash[0] # This removes the [] and the '' from the commit hash
       folder_path = os.path.join(repo_path, commit_hash) # Join the repo path with the folder name
 
-      if os.path.exists(folder_path):
-         # Verify if the CK_METRICS_FILES are not in the folder
-         for ck_metric_file in CK_METRICS_FILES:
+      if os.path.exists(folder_path): # Verify if the folder exists
+         for ck_metric_file in CK_METRICS_FILES: # Verify if all the ck metrics files exist inside the folder
             ck_metric_file_path = os.path.join(folder_path, ck_metric_file)
-            if not os.path.exists(ck_metric_file_path):
+            if not os.path.exists(ck_metric_file_path): # If the file does not exist
                print(f"{backgroundColors.FAIL}The file {backgroundColors.OKCYAN}{ck_metric_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{folder_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
                return False
    return True
