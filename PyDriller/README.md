@@ -42,7 +42,7 @@ make ck_metrics_script
    1. Get the tuple containing the `commit.hash`, `commit.msg` and `commit.author_date` and store these commit data in the `commit_hashes` list, in order to, later on, store them inside the `CK_METRICS_DIRECTORY_PATH/repository_name-commit_hashes.csv` file;  
    2. Checkout to the `commit.hash` branch;  
    3. Create a subfolder inside the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name` with the name of the `commit.hash` value;  
-   4. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit.hash` folder.  
+   4. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit.hash` folder;  
 8. Now that we have the list of tuples containing the commit hashe, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commit_hashes.csv` file, with the call of `write_commit_hashes_to_csv` function.
 9.  And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
 
