@@ -15,6 +15,9 @@ MINIMUM_CHANGES = 1 # The minimum number of changes a method should have to be c
 NUMBER_OF_METRICS = 4 # The number of metrics
 DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref"] # The default repository name
 
+# Extensions:
+COMMIT_HASHES_FILE_EXTENSION = ".csv" # The extension of the file that contains the commit hashes
+
 # Filenames:
 CK_CSV_FILE = "class.csv" if PROCESS_CLASSES else "method.csv" # The name of the csv generated file from ck.
 CLASSES_OR_METHODS = "classes" if PROCESS_CLASSES else "methods" # The name of the csv generated file from ck.
@@ -71,7 +74,7 @@ def verify_ck_metrics_folders(repository_name):
    current_path = PATH
    data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
    repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
-   commit_file = f"commit_hashes-{repository_name}.txt" # The name of the commit hashes file
+   commit_file = f"{repository_name}-commit_hashes{COMMIT_HASHES_FILE_EXTENSION}" # The name of the commit hashes file
    commit_file_path = os.path.join(data_path, commit_file) # Join the data path with the commit hashes file
 
    # Verify if the repository exists
