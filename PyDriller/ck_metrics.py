@@ -103,7 +103,7 @@ def clone_repository(repository_name, repository_url):
       thread.wait()
       print(f"{backgroundColors.OKGREEN}Successfully cloned the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository{Style.RESET_ALL}")
 
-# @brief: Create a subdirectory
+# @brief: Create a directory
 # @param: full_directory_name: Name of the directory to be created
 # @param: relative_directory_name: Relative name of the directory to be created that will be shown in the terminal
 # @return: None
