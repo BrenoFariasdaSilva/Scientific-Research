@@ -13,7 +13,7 @@ PATH = os.getcwd() # Get the current working directory
 PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 MINIMUM_CHANGES = 1 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
-DEFAULT_REPOSITORY_NAME = "commons-lang" # The default repository name
+DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref"] # The default repository name
 
 # Filenames:
 CK_CSV_FILE = "class.csv" if PROCESS_CLASSES else "method.csv" # The name of the csv generated file from ck.
@@ -31,7 +31,7 @@ FULL_METRICS_STATISTICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_METRICS_STATISTICS_DI
 # @param: None
 # @return: True if the PATH constant contain whitespaces, False otherwise
 def path_contains_whitespaces():
-   # Check if the PATH constant contains whitespaces
+   # Verify if the PATH constant contains whitespaces
    if " " in PATH:
       return True
    return False
@@ -51,11 +51,11 @@ def validate_attribute(attribute, default_attribute_value):
 # @return: A tuple containing the repository name and the path to the directory
 def get_directory_path():
 	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
-	repository_name = validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME)
+	repository_name = validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME[0])
 	
 	directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
-	# Check if the directory does not exist
+	# Verify if the directory does not exist
 	while not os.path.isdir(directory_path):
 		print(f"{backgroundColors.FAIL}The directory does not exist. Please try again.{Style.RESET_ALL}")
 		repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
@@ -66,7 +66,7 @@ def get_directory_path():
 # @brief: This verifies if all the ck metrics are already calculated by opening the commit hashes file and checking if every commit hash in the file is a folder in the repository folder
 # @param: repository_name: Name of the repository to be analyzed
 # @return: True if all the metrics are already calculated, False otherwise
-def check_ck_metrics_folders(repository_name):
+def verify_ck_metrics_folders(repository_name):
    print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
    current_path = PATH
    data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
@@ -74,7 +74,7 @@ def check_ck_metrics_folders(repository_name):
    commit_file = f"commit_hashes-{repository_name}.txt" # The name of the commit hashes file
    commit_file_path = os.path.join(data_path, commit_file) # Join the data path with the commit hashes file
 
-   # Check if the repository exists
+   # Verify if the repository exists
    if not os.path.exists(commit_file_path):
       print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
       return False
@@ -83,13 +83,13 @@ def check_ck_metrics_folders(repository_name):
    with open(commit_file_path, "r") as file:
       lines = file.readlines() # Read all the lines of the file and store them in a list
 
-   # Check if the repository exists
+   # Verify if the repository exists
    for line in lines:
       # Get the commit hash
       folder_name = line.strip() # Remove the \n from the line
       folder_path = os.path.join(repo_path, folder_name) # Join the repo path with the folder name
 
-      if not os.path.exists(folder_path): # Check if the folder exists
+      if not os.path.exists(folder_path): # Verify if the folder exists
          print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
          return False
    return True
@@ -274,9 +274,9 @@ def main():
 	# Get the directory path from user input of the repository name
 	repository_name, directory_path = get_directory_path()
 
-	# Check if the ck metrics were already calculated, which are the source of the data processed by traverse_directory(directory_path).
-	if not check_ck_metrics_folders(repository_name):
-		print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not calculated. Please run the main.py file first{Style.RESET_ALL}")
+	# Verify if the ck metrics were already calculated, which are the source of the data processed by traverse_directory(directory_path).
+	if not verify_ck_metrics_folders(repository_name):
+		print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not calculated. Please run the ck_metrics.py file first{Style.RESET_ALL}")
 		return
 
 	# Create the output directories if they do not exist
