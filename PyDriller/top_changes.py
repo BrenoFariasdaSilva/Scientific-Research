@@ -97,13 +97,19 @@ def verify_ck_metrics_folders(repository_name):
          return False
    return True
 
-# @brief: This function create the output directories if they do not exist
-# @param: None
+# @brief: Create a directory
+# @param: full_directory_name: Name of the directory to be created
+# @param: relative_directory_name: Relative name of the directory to be created that will be shown in the terminal
 # @return: None
-def create_output_directories():
-	# Create the output directories if they do not exist
-	if not os.path.isdir(FULL_METRICS_STATISTICS_DIRECTORY_PATH):
-		os.mkdir(FULL_METRICS_STATISTICS_DIRECTORY_PATH)
+def create_directory(full_directory_name, relative_directory_name):
+   if os.path.isdir(full_directory_name): # Verify if the directory already exists
+      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory already exists{Style.RESET_ALL}")
+      return
+   try: # Try to create the directory
+      os.makedirs(full_directory_name)
+      print (f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory{Style.RESET_ALL}")
+   except OSError: # If the directory cannot be created
+      print (f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
 
 # @brief: Validate the class name, that is, if it contains any dots in the name
 # @param class_name: The name of the class
@@ -282,8 +288,8 @@ def main():
 		print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not calculated. Please run the ck_metrics.py file first{Style.RESET_ALL}")
 		return
 
-	# Create the output directories if they do not exist
-	create_output_directories()
+	# Create the output RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH directory if it does not exist
+	create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
 
 	# Traverse the directory and get the method metrics
 	metrics_track_record = traverse_directory(directory_path)
