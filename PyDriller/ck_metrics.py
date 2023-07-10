@@ -238,7 +238,7 @@ def traverse_repository(repository_name, repository_url, number_of_commits):
       # Output the progress of the analyzed commit
       output_commit_progress(repository_name, commit.hash, i, number_of_commits)
 
-      # Run ck metrics for every commit hash
+      # Run ck metrics for the current commit hash
       cmd = f"java -jar {FULL_CK_JAR_PATH} {workdir_directory} false 0 false {output_directory}"
       run_ck_metrics_generator(cmd)
 
