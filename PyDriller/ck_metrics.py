@@ -216,14 +216,15 @@ def traverse_repository(repository_name, repository_url, number_of_commits):
    i = 1
    commit_hashes = []
    for commit in Repository(repository_url).traverse_commits():
-      # now store the commit hash, commit message and commit date in one line of the list, separated by commas
+      # Store the commit hash, commit message and commit date in one line of the list, separated by commas
       current_tuple = (commit.hash, commit.msg.split('\n')[0], commit.committer_date)
       commit_hashes.append(current_tuple)
 
-      # change working directory to the repository directory
+      # Change working directory to the repository directory
       workdir_directory = FULL_REPOSITORY_DIRECTORY_PATH + "/" + repository_name
       os.chdir(workdir_directory)        
-      # checkout the commit hash branch to run ck
+
+      # Checkout the commit hash branch to run ck
       checkout_branch(commit.hash)
 
       # Create the output directory paths
@@ -231,7 +232,7 @@ def traverse_repository(repository_name, repository_url, number_of_commits):
       # Create the output directory
       create_directory(output_directory, relative_output_directory)
 
-      # change working directory to the repository directory
+      # Change working directory to the repository directory
       os.chdir(output_directory)
 
       # Output the progress of the analyzed commit
@@ -266,9 +267,9 @@ def write_commit_hashes_to_csv(repository_name, commit_hashes):
    file_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}-commit_hashes{COMMIT_HASHES_FILE_EXTENSION}"
    with open(file_path, "w", newline='') as csv_file:
       writer = csv.writer(csv_file)
-      # write the header
+      # Write the header
       writer.writerow(["commit hash", "commit message", "commit date"])
-      # write the commit hashes
+      # Write the commit hashes
       writer.writerows(commit_hashes)
 
 # @brief: Main function
