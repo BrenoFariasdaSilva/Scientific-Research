@@ -120,7 +120,7 @@ def create_directory(full_directory_name, relative_directory_name):
 # @brief: This verifies if all the metrics are already calculated by opening the commit hashes file and checking if every commit hash in the file is a folder in the repository folder
 # @param: repository_name: Name of the repository to be analyzed
 # @return: True if all the metrics are already calculated, False otherwise
-def check_ck_metrics_folders(repository_name):
+def verify_ck_metrics_folder(repository_name):
    print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
    data_path = os.path.join(PATH, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the PATH with the relative path of the ck metrics directory
    repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
@@ -287,7 +287,7 @@ def main():
    repository_name = get_repository_name(repository_url)
 
    # Verify if the metrics were already calculated
-   if check_ck_metrics_folders(repository_name):
+   if verify_ck_metrics_folder(repository_name):
       print(f"{backgroundColors.OKGREEN}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} were already calculated{Style.RESET_ALL}")
       return
    
