@@ -48,7 +48,7 @@ make ck_metrics_script
 
 Considering that you now have the ck metrics calculated, you are able to run the following command to execute the `top_changes.py` file:
 ```
-make top_changes_script
+make metrics_changes_script
 ```
 1. The first thing it will do is ask you if you want to process classes or methods, if you want to process classes, type ```True```, if you want to process methods, type ```False```. Note that it is case sensitive, so make sure you type it correctly.
 2. The second thing it will do is verify if you don't have whitespaces in the path of the project by calling the `path_contains_whitespaces` function. If you have, it will not work.
