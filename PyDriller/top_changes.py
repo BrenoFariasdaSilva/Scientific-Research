@@ -16,19 +16,15 @@ NUMBER_OF_METRICS = 4 # The number of metrics
 DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref"] # The default repository name
 
 # Extensions:
-COMMIT_HASHES_FILE_EXTENSION = ".csv" # The extension of the file that contains the commit hashes
+CSV_FILE_EXTENSION = ".csv" # The extension of the file that contains the commit hashes
 
 # Filenames:
 CK_CSV_FILE = "class.csv" if PROCESS_CLASSES else "method.csv" # The name of the csv generated file from ck.
 CLASSES_OR_METHODS = "classes" if PROCESS_CLASSES else "methods" # The name of the csv generated file from ck.
-CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '').upper()}-changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the top changed methods
-SORTED_CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '').upper()}-sorted_changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the sorted top changed methods
+CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '')}-changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the top changed methods
+SORTED_CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '')}-sorted_changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the sorted top changed methods
 RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics" # The relative path to the directory containing the ck metrics
 RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics" # The relative path to the directory containing the metrics statistics
-
-# Directories Paths:
-FULL_CK_METRICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_CK_METRICS_DIRECTORY_PATH}" # The full path to the directory containing the ck metrics
-FULL_METRICS_STATISTICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}" # The full path to the directory containing the metrics statistics
 
 # @brief: This function is used to check if the PATH constant contain whitespaces
 # @param: None
