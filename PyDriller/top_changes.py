@@ -24,10 +24,12 @@ CLASSES_OR_METHODS = "classes" if PROCESS_CLASSES else "methods" # The name of t
 CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '')}-changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the top changed methods
 SORTED_CHANGED_METHODS_CSV_FILENAME = f"{CK_CSV_FILE.replace('.csv', '')}-sorted_changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the sorted top changed methods
 RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics" # The relative path to the directory containing the ck metrics
+RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH = "/metrics_evolution" # The relative path to the directory containing the metrics evolution
 RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics" # The relative path to the directory containing the metrics statistics
 
 # Directories Paths:
 FULL_CK_METRICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_CK_METRICS_DIRECTORY_PATH}" # The full path to the directory containing the ck metrics
+FULL_METRICS_EVOLUTION_DIRECTORY_PATH = f"{PATH}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH}" # The full path to the directory containing the metrics evolution
 FULL_METRICS_STATISTICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}" # The full path to the directory containing the metrics statistics
 
 # @brief: This function is used to check if the PATH constant contain whitespaces
@@ -268,6 +270,26 @@ def sort_csv_by_changes(repository_name):
 	# Write the sorted csv file to a new csv file
 	data.to_csv(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "/" + SORTED_CHANGED_METHODS_CSV_FILENAME, index=False)
 
+# @brief: This function writes the metrics evolution to a csv file
+# @param: repository_name: The name of the repository
+# @param: metrics_track_record: A dictionary containing the metrics of each method or class
+# @return: None
+def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
+	# For every identifier in the metrics_track_record, store each metrics values tuple in a row of the csv file
+	for identifier, metrics in metrics_track_record.items():
+		identifier = identifier.split(' ')[0] # Get the identifier which is currently the class name
+		variable_attribute = identifier.split(" ")[1] # Get the variable attribute which could be the type of the class or the method name
+		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + identifier + "-" + variable_attribute + CSV_FILE_EXTENSION, "w") as csvfile:
+			writer = csv.writer(csvfile)
+			if PROCESS_CLASSES:
+				writer.writerow(["Class", "CBO", "CBO Modified", "WMC", "RFC"])
+			else:
+				identifier = identifier.split(" ")[1] # Make the identifier be the method name
+				writer.writerow(["Method", "CBO", "CBO Modified", "WMC", "RFC"])
+			
+			for metrics_values in metrics["metrics"]:
+				writer.writerow([identifier, metrics_values[0], metrics_values[1], metrics_values[2], metrics_values[3], metrics_values[4]])
+
 # @brief: The main function
 # @param: None
 # @return: None
@@ -302,6 +324,9 @@ def main():
 
 	# Remove the old csv file
 	os.remove(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
+
+	# Write the metrics_evolution files to a csv file
+	write_metrics_evolution_to_csv(repository_name, metrics_track_record)
 
 	print(f"{backgroundColors.OKCYAN}Successfully sorted{backgroundColors.OKGREEN} by the {backgroundColors.OKCYAN}number of times they changed{backgroundColors.OKGREEN} and {backgroundColors.OKCYAN}stored{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
