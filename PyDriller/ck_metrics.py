@@ -209,11 +209,11 @@ def output_time(output_string, time):
 # @brief: This function outputs the execution time of the CK metrics generator
 # @param: start_time: Start time of the execution
 # @param: first_iteration_duration: Duration of the first iteration
+# @param: elapsed_time: Elapsed time of the execution
 # @param: number_of_commits: Number of commits to be analyzed
 # @param: repository_name: Name of the repository to be analyzed
 # @return: None
-def show_execution_time(start_time, first_iteration_duration, number_of_commits, repository_name):
-   elapsed_time = time.time() - start_time  # Calculate elapsed time
+def show_execution_time(start_time, first_iteration_duration, elapsed_time, number_of_commits, repository_name):
    first_iteration_time_string = "Time taken to generate CK metrics for the first commit: "
    output_time(first_iteration_time_string, round(first_iteration_duration, 2))
    estimated_time_string = "Estimated time for the rest of the iterations: "
@@ -268,7 +268,8 @@ def traverse_repository(repository_name, repository_url, number_of_commits):
       i += 1
 
    if traversed_first_commit:
-      show_execution_time(start_time, first_iteration_duration, number_of_commits, repository_name)
+      elapsed_time = time.time() - start_time  # Calculate elapsed time
+      show_execution_time(start_time, first_iteration_duration, elapsed_time, number_of_commits, repository_name)
       
    return commit_hashes
 
