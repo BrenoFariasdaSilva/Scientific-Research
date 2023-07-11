@@ -298,6 +298,7 @@ def main():
 		print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
 		return
 
+	print(f"{backgroundColors.OKGREEN}This script {backgroundColors.OKCYAN}generates the csv files{backgroundColors.OKGREEN} with the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS} metrics values{backgroundColors.OKGREEN} for {backgroundColors.OKCYAN}each commit hash{backgroundColors.OKGREEN} and store them inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}/repository_name/commit_hash{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 	print(f"{backgroundColors.OKGREEN}This script {backgroundColors.OKCYAN}generates a csv file{backgroundColors.OKGREEN} with the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS} sorted{backgroundColors.OKGREEN} by the {backgroundColors.OKCYAN}number of times that the {CK_CSV_FILE.replace('.csv', '')} changed{backgroundColors.OKGREEN} and store it inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 	print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}source of the metrics values{backgroundColors.OKGREEN} is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} files.{Style.RESET_ALL}")
 
@@ -315,6 +316,12 @@ def main():
 	# Create the output RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH directory if it does not exist
 	create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
 
+	# Create the metrics evolution output repository_name directory if it does not exist
+	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name)
+
+	# Create the metrics statistics output repository_name directory if it does not exist
+	create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name)
+
 	# Traverse the directory and get the method metrics
 	metrics_track_record = traverse_directory(directory_path)
 
@@ -328,9 +335,7 @@ def main():
 	sort_csv_by_changes(repository_name)
 
 	# Remove the old csv file
-	os.remove(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
-
-	print(f"{backgroundColors.OKCYAN}Successfully sorted{backgroundColors.OKGREEN} by the {backgroundColors.OKCYAN}number of times they changed{backgroundColors.OKGREEN} and {backgroundColors.OKCYAN}stored{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+	os.remove(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "/" + CHANGED_METHODS_CSV_FILENAME)
 
 # Directive to run the main function
 if __name__ == "__main__":
