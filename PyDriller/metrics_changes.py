@@ -72,32 +72,29 @@ def get_directory_path():
 # @param: repository_name: Name of the repository to be analyzed
 # @return: True if all the metrics are already calculated, False otherwise
 def verify_ck_metrics_folders(repository_name):
-   print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
-   current_path = PATH
-   data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
-   repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
-   commit_file = f"{repository_name}-commit_hashes{CSV_FILE_EXTENSION}" # The name of the commit hashes file
-   commit_file_path = os.path.join(data_path, commit_file) # Join the data path with the commit hashes file
+	print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
+	current_path = PATH
+	data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
+	commit_file = f"{repository_name}-commit_hashes{CSV_FILE_EXTENSION}" # The name of the commit hashes file
+	commit_file_path = os.path.join(data_path, commit_file) # Join the data path with the commit hashes file
 
-   # Verify if the repository exists
-   if not os.path.exists(commit_file_path):
-      print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
-      return False
+	# Verify if the repository exists
+	if not os.path.exists(commit_file_path):
+		print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+		return False
 
-   # Read the commit hashes file
-   with open(commit_file_path, "r") as file:
-      lines = file.readlines() # Read all the lines of the file and store them in a list
+	# Read the commit hashes file with pandas and get only the "commit_hash" column
+	commit_hashes = pd.read_csv(commit_file_path)["commit_hash"].tolist()
 
-   # Verify if the repository exists
-   for line in lines:
-      # Get the commit hash
-      folder_name = line.strip() # Remove the \n from the line
-      folder_path = os.path.join(repo_path, folder_name) # Join the repo path with the folder name
+	repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
+	# Verify if the repository exists
+	for commit_hash in commit_hashes:
+		folder_path = os.path.join(repo_path, commit_hash) # Join the repo path with the commit hash
 
-      if not os.path.exists(folder_path): # Verify if the folder exists
-         print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{folder_name}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
-         return False
-   return True
+		if not os.path.exists(folder_path): # Verify if the folder exists
+			print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{commit_hash}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+			return False
+	return True
 
 # @brief: Create a directory
 # @param: full_directory_name: Name of the directory to be created
