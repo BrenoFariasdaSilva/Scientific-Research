@@ -275,9 +275,6 @@ def main():
    # Get the name of the repository from the user
    repository_name = get_repository_name_user()
 
-   # create the metrics_evolution directory if it does not exist
-   create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
-
    # Get the ids from the user
    ids = get_user_ids_input()
 

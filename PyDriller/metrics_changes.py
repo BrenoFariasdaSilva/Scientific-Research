@@ -84,7 +84,7 @@ def verify_ck_metrics_folders(repository_name):
 		return False
 
 	# Read the commit hashes file with pandas and get only the "commit_hash" column
-	commit_hashes = pd.read_csv(commit_file_path)["commit_hash"].tolist()
+	commit_hashes = pd.read_csv(commit_file_path)["commit hash"].tolist()
 
 	repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
 	# Verify if the repository exists
@@ -94,6 +94,8 @@ def verify_ck_metrics_folders(repository_name):
 		if not os.path.exists(folder_path): # Verify if the folder exists
 			print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{commit_hash}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
 			return False
+		
+	print(f"{backgroundColors.OKGREEN}All the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository.{Style.RESET_ALL}")
 	return True
 
 # @brief: Create a directory
