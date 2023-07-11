@@ -204,20 +204,24 @@ def traverse_directory(directory_path):
 # @param: metrics_track_record: A dictionary containing the metrics of each method or class
 # @return: None
 def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
+	print(f"{backgroundColors.OKGREEN}Writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}...{Style.RESET_ALL}")
 	# For every identifier in the metrics_track_record, store each metrics values tuple in a row of the csv file
-	for identifier, metrics in metrics_track_record.items():
-		identifier = identifier.split(' ')[0] # Get the identifier which is currently the class name
+	for identifier, record in metrics_track_record.items():
+		metrics = record["metrics"]
+		class_name = identifier.split(' ')[0] # Get the identifier which is currently the class name
 		variable_attribute = identifier.split(" ")[1] # Get the variable attribute which could be the type of the class or the method name
-		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + identifier + "-" + variable_attribute + CSV_FILE_EXTENSION, "w") as csvfile:
+		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + class_name + "-" + variable_attribute + CSV_FILE_EXTENSION, "w") as csvfile:
 			writer = csv.writer(csvfile)
 			if PROCESS_CLASSES:
+				unique_identifier = class_name
 				writer.writerow(["Class", "CBO", "CBO Modified", "WMC", "RFC"])
 			else:
-				identifier = identifier.split(" ")[1] # Make the identifier be the method name
+				unique_identifier = variable_attribute
 				writer.writerow(["Method", "CBO", "CBO Modified", "WMC", "RFC"])
 			
-			for metrics_values in metrics["metrics"]:
-				writer.writerow([identifier, metrics_values[0], metrics_values[1], metrics_values[2], metrics_values[3], metrics_values[4]])
+			for metrics_tuple in metrics:
+				writer.writerow([unique_identifier, metrics_tuple])
+	print(f"{backgroundColors.OKGREEN}Finished writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}{Style.RESET_ALL}")
 
 # @brief: Calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
 # @param csv_writer: The csv writer object
