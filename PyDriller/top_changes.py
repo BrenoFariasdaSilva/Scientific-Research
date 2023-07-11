@@ -231,7 +231,7 @@ def write_method_metrics_statistics(csv_writer, id, key, metrics, metrics_values
 # @return: None
 def process_metrics_track_record(repository_name, metrics_track_record):
 	# Open the csv file and process the metrics of each method
-	with open(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME, "w") as csvfile:
+	with open(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "/" + CHANGED_METHODS_CSV_FILENAME, "w") as csvfile:
 		writer = csv.writer(csvfile)	
 		if PROCESS_CLASSES:
 			writer.writerow(["Class", "Type", "Changed", "CBO Min", "CBO Max", "CBO Avg", "CBO Q3", "CBOModified Min", "CBOModified Max", "CBOModified Avg", "CBOModified Q3", "WMC Min", "WMC Max", "WMC Avg", "WMC Q3", "RFC Min", "RFC Max", "RFC Avg", "RFC Q3"])
@@ -262,11 +262,11 @@ def process_metrics_track_record(repository_name, metrics_track_record):
 # @return: None
 def sort_csv_by_changes(repository_name):
 	# Read the csv file
-	data = pd.read_csv(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME)
+	data = pd.read_csv(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "/" + CHANGED_METHODS_CSV_FILENAME)
 	# Sort the csv file by the number of changes
 	data = data.sort_values(by=["Changed"], ascending=False)
 	# Write the sorted csv file to a new csv file
-	data.to_csv(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME, index=False)
+	data.to_csv(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "/" + SORTED_CHANGED_METHODS_CSV_FILENAME, index=False)
 
 # @brief: The main function
 # @param: None
