@@ -309,6 +309,9 @@ def main():
 	if not verify_ck_metrics_folders(repository_name):
 		print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not calculated. Please run the ck_metrics.py file first{Style.RESET_ALL}")
 		return
+	
+	# Create the output RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH directory if it does not exist
+	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
 
 	# Create the output RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH directory if it does not exist
 	create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
