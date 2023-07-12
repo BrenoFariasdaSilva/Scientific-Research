@@ -197,6 +197,7 @@ PyDriller/repositories
 /PyDriller/metrics_statistics
 /PyDriller/ck_metrics.7z
 /PyDriller/junk
+/PyDriller/graphics
 
 # Ignore RefactoringMiner/RefactoringMiner folder
 /RefactoringMiner/RefactoringMiner
