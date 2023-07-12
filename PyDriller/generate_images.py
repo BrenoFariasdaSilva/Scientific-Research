@@ -195,11 +195,11 @@ def add_labels_to_plot(plt, label_type, commit_hashes, metric_values):
 # @param: df: DataFrame containing the metrics data
 # @return: None
 def add_first_and_last_values_to_plot(plt, df):
-   # Add the first and last values of each metric (cbo, cboModified, wmc, rfc) to the graphic image
-   plt.text(0.20, 0.97, f"CBO {df['cbo'].iloc[0]} -> {df['cbo'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
-   plt.text(0.20, 0.92, f"CBOModified {df['cboModified'].iloc[0]} -> {df['cboModified'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
-   plt.text(0.70, 0.97, f"WMC {df['wmc'].iloc[0]} -> {df['wmc'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
-   plt.text(0.70, 0.92, f"RFC {df['rfc'].iloc[0]} -> {df['rfc'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
+   # Add the first and last values of each metric (CBO, CBO Modified, WMC, RFC) to the graphic image
+   plt.text(0.20, 0.97, f"CBO {df['CBO'].iloc[0]} -> {df['CBO'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
+   plt.text(0.20, 0.92, f"CBOModified {df['CBO Modified'].iloc[0]} -> {df['CBO Modified'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
+   plt.text(0.70, 0.97, f"WMC {df['WMC'].iloc[0]} -> {df['WMC'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
+   plt.text(0.70, 0.92, f"RFC {df['RFC'].iloc[0]} -> {df['RFC'].iloc[-1]}", fontsize=12, color="red", transform=plt.gcf().transFigure)
 
 # @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH folder
 # @param: repository_name: Name of the repository to be analyzed
