@@ -218,27 +218,28 @@ def get_clean_id(id):
 # @param: metrics_track_record: A dictionary containing the metrics of each method or class
 # @return: None
 def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
-	print(f"{backgroundColors.OKGREEN}Writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}...{Style.RESET_ALL}")
+	print(f"{backgroundColors.OKGREEN}Writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{backgroundColors.OKGREEN}...{Style.RESET_ALL}")
 	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS) # Create the directory where the csv file will be stored
 	# For every identifier in the metrics_track_record, store each metrics values tuple in a row of the csv file
 	for identifier, record in metrics_track_record.items():
 		metrics = record["metrics"]
 		class_name = identifier.split(' ')[0] # Get the identifier which is currently the class name
 		variable_attribute = get_clean_id(identifier.split(" ")[1]) # Get the variable attribute which could be the type of the class or the method name
-		if "/" in variable_attribute: 
-			variable_attribute = variable_attribute.split("/")[0]
-		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + class_name + "-" + variable_attribute + CSV_FILE_EXTENSION, "w") as csvfile:
+		file_path = class_name + CSV_FILE_EXTENSION if PROCESS_CLASSES else variable_attribute + CSV_FILE_EXTENSION
+		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + file_path, "w") as csvfile:
 			writer = csv.writer(csvfile)
 			if PROCESS_CLASSES:
 				unique_identifier = class_name
-				writer.writerow(["Class", "CBO", "CBO Modified", "WMC", "RFC"])
+				writer.writerow(["Class", "Commit Hash", "CBO", "CBO Modified", "WMC", "RFC"])
 			else:
 				unique_identifier = variable_attribute
-				writer.writerow(["Method", "CBO", "CBO Modified", "WMC", "RFC"])
+				writer.writerow(["Method", "Commit Hash", "CBO", "CBO Modified", "WMC", "RFC"])
 			
-			for metrics_tuple in metrics:
-				writer.writerow([unique_identifier, metrics_tuple])
-	print(f"{backgroundColors.OKGREEN}Finished writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}{Style.RESET_ALL}")
+			# get the len of the metrics list
+			metrics_len = len(metrics)
+			for i in range(metrics_len):
+				writer.writerow([unique_identifier, record["commit_hashes"][i], metrics[i][0], metrics[i][1], metrics[i][2], metrics[i][3]])
+	print(f"{backgroundColors.OKGREEN}Finished writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{Style.RESET_ALL}")
 
 # @brief: Calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
 # @param csv_writer: The csv writer object
