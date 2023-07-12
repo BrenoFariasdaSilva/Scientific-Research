@@ -219,7 +219,6 @@ def get_clean_id(id):
 # @return: None
 def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 	print(f"{backgroundColors.OKGREEN}Writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{backgroundColors.OKGREEN}...{Style.RESET_ALL}")
-	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS) # Create the directory where the csv file will be stored
 	# For every identifier in the metrics_track_record, store each metrics values tuple in a row of the csv file
 	for identifier, record in metrics_track_record.items():
 		metrics = record["metrics"]
@@ -342,7 +341,7 @@ def main():
 	create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
 
 	# Create the metrics evolution output repository_name directory if it does not exist
-	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name)
+	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS) # Create the directory where the csv file will be stored
 
 	# Create the metrics statistics output repository_name directory if it does not exist
 	create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name)
