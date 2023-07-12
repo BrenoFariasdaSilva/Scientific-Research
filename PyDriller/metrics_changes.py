@@ -13,7 +13,7 @@ PATH = os.getcwd() # Get the current working directory
 PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 MINIMUM_CHANGES = 1 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
-DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref"] # The default repository name
+DEFAULT_REPOSITORY_NAME = ["jabref", "commons-lang"] # The default repository name
 
 # Extensions:
 CSV_FILE_EXTENSION = ".csv" # The extension of the file that contains the commit hashes
@@ -205,12 +205,15 @@ def traverse_directory(directory_path):
 # @return: None
 def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 	print(f"{backgroundColors.OKGREEN}Writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}...{Style.RESET_ALL}")
+	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS) # Create the directory where the csv file will be stored
 	# For every identifier in the metrics_track_record, store each metrics values tuple in a row of the csv file
 	for identifier, record in metrics_track_record.items():
 		metrics = record["metrics"]
 		class_name = identifier.split(' ')[0] # Get the identifier which is currently the class name
 		variable_attribute = identifier.split(" ")[1] # Get the variable attribute which could be the type of the class or the method name
-		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + class_name + "-" + variable_attribute + CSV_FILE_EXTENSION, "w") as csvfile:
+		if "/" in variable_attribute: 
+			variable_attribute = variable_attribute.split("/")[0]
+		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + class_name + "-" + variable_attribute + CSV_FILE_EXTENSION, "w") as csvfile:
 			writer = csv.writer(csvfile)
 			if PROCESS_CLASSES:
 				unique_identifier = class_name
