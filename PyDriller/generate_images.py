@@ -174,13 +174,12 @@ def insert_labels():
    return labels
 
 # @brief: Add the desired label type to the data points of the graphic image
-# @param: plt: plt object
 # @param: df: DataFrame containing the metrics data
 # @param: label_type: Type of label to be added to the data points of the graphic image
 # @param: commit_hashes: List containing the commit hashes
 # @param: metric_values: List containing the metric values
 # @return: None
-def add_labels_to_plot(plt, df, label_type, commit_hashes, metric_values):
+def add_labels_to_plot(plt, label_type, commit_hashes, metric_values):
    # Add the desired label type to the data points of the graphic image
    if label_type == "1":
       # Add labels to each data point
@@ -232,7 +231,7 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
       plt.plot(commit_hashes, df[metric], marker="o", label=metric, linestyle=line_styles[i], markersize=marker_sizes[i], color=colors[i])
 
       if labels[0]:
-         add_labels_to_plot(plt, df, labels[1], commit_hashes, metric_values)
+         add_labels_to_plot(plt, labels[1], commit_hashes, metric_values)
 
    # Set the graph title and labels according to the type of analysis (class or method)
    if PROCESS_CLASSES:
