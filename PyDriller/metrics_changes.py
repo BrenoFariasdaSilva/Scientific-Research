@@ -158,15 +158,19 @@ def process_csv_file(file_path, metrics_track_record):
 			identifier = f"{class_name} {variable_attribute}"
 
 			if identifier not in metrics_track_record: # if the identifier (of the method or class) is not in the dictionary
-				metrics_track_record[identifier] = {"metrics": [], "changed": 0}
+				metrics_track_record[identifier] = {"metrics": [], "commit_hashes": [], "changed": 0}
 
 			# Get the metrics_changes list for the method
 			metrics_changes = metrics_track_record[identifier]["metrics"]
+			# Get the commit hashes list for the method
+			commit_hashes = metrics_track_record[identifier]["commit_hashes"]
 
 			# Try to find the same metrics in the list for the same method. If it does not exist, then add it to the list
 			if metrics not in metrics_changes: # if the metrics are not in the list
 				metrics_changes.append(metrics) # add the metrics values to the list
 				metrics_track_record[identifier]["changed"] += 1 # increment the number of changes
+				commit_hash = file_path[file_path.rfind("/", 0, file_path.rfind("/")) + 1:file_path.rfind("/")]
+				commit_hashes.append(commit_hash) # add the commit hash to the list
 
 # @brief: Traverses a directory and processes all the csv files
 # @param directory_path: The path to the directory
