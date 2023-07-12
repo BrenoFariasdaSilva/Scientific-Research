@@ -14,8 +14,9 @@ CLASS_CSV_FILE = "class.csv" # The name of the csv generated file from ck.
 METHOD_CSV_FILE = "method.csv" # The name of the csv generated file from ck.
 PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 CK_CSV_FILE = CLASS_CSV_FILE if PROCESS_CLASSES else METHOD_CSV_FILE # The name of the csv generated file from ck.
+CLASSES_OR_METHODS = "classes" if PROCESS_CLASSES else "methods" # The name of the csv generated file from ck.
 OPPOSITE_CK_CSV_FILE = METHOD_CSV_FILE if PROCESS_CLASSES else CLASS_CSV_FILE # The name of the csv generated file from ck.
-DEFAULT_REPOSITORY_NAME = "commons-lang"
+DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref"]
 DEFAULT_CLASS_IDS = {"org.apache.commons.lang.StringUtils": "class"} # The default ids to be analyzed. It stores the class:type or method:class
 DEFAULT_METHOD_IDS = {"testBothArgsNull/0": "org.apache.commons.lang3.AnnotationUtilsTest", "suite/0": "org.apache.commons.lang.LangTestSuite"} # The default ids to be analyzed. It stores the class:type or method:class
 DEFAULT_IDS = DEFAULT_CLASS_IDS if PROCESS_CLASSES else DEFAULT_METHOD_IDS # The default ids to be analyzed. It stores the class:type or method:class
@@ -23,9 +24,11 @@ DEFAULT_IDS = DEFAULT_CLASS_IDS if PROCESS_CLASSES else DEFAULT_METHOD_IDS # The
 # Relative paths:
 RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH = "/metrics_evolution"
 RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics"
+RELATIVE_GRAPHICS_DIRECTORY_PATH = "/graphics"
 
 # Default values:
 FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
+FULL_GRAPHICS_DIRECTORY_PATH = PATH + RELATIVE_GRAPHICS_DIRECTORY_PATH
 
 # @brief: This function is used to check if the PATH constant contain whitespaces
 # @param: None
