@@ -203,6 +203,16 @@ def traverse_directory(directory_path):
 	# Return the method metrics, which is a dictionary containing the metrics of each method  
 	return metrics_track_record
 
+# @brief: This function receives an id and verify if it contains slashes, if so, it returns the id without the slashes
+# @param: id: ID of the class or method to be analyzed
+# @return: ID of the class or method to be analyzed without the slashes
+def get_clean_id(id):
+   # If the id contains slashes, remove them
+   if "/" in id:
+      return str(id.split("/")[0:-1])[2:-2]
+   else:
+      return id
+
 # @brief: This function writes the metrics evolution to a csv file
 # @param: repository_name: The name of the repository
 # @param: metrics_track_record: A dictionary containing the metrics of each method or class
@@ -214,7 +224,7 @@ def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 	for identifier, record in metrics_track_record.items():
 		metrics = record["metrics"]
 		class_name = identifier.split(' ')[0] # Get the identifier which is currently the class name
-		variable_attribute = identifier.split(" ")[1] # Get the variable attribute which could be the type of the class or the method name
+		variable_attribute = get_clean_id(identifier.split(" ")[1]) # Get the variable attribute which could be the type of the class or the method name
 		if "/" in variable_attribute: 
 			variable_attribute = variable_attribute.split("/")[0]
 		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + class_name + "-" + variable_attribute + CSV_FILE_EXTENSION, "w") as csvfile:
