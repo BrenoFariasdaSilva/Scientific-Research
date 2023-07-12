@@ -56,7 +56,7 @@ def get_repository_name_user():
    # Ask for user input of the repository name
    repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
-   return validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME) # Validate the repository name
+   return validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME[0]) # Validate the repository name
 
 # @brief: Create a directory if it does not exist
 # @param: full_directory_path: Name of the directory to be created
