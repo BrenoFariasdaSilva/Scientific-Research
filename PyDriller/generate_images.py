@@ -208,12 +208,12 @@ def add_first_and_last_values_to_plot(plt, df):
 # @param: id_key: ID of the class or method to be analyzed without the class or method name
 # @return: None
 def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
-   # Load the generated CSV files into a dataframe and save a plot of the evolution of the cbo, cboModified, wmc and rfc metrics
-   df = pd.read_csv(PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "-" + clean_id + ".csv")
+   # Load the generated CSV files into a dataframe and save a plot of the evolution of the CBO, CBO Modified, WMC and RFC metrics
+   df = pd.read_csv(PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + clean_id + ".csv")
 
    # Extract the metrics and commit hashes from the DataFrame
-   commit_hashes = df["commit_hash"]
-   metrics = ["cbo", "cboModified", "wmc", "rfc"]
+   commit_hashes = df["Commit Hash"]
+   metrics = ["CBO", "CBO Modified", "WMC", "RFC"]
 
    # Set the attributes of the graph: colors, line styles and marker sizes
    colors = ["blue", "pink", "green", "orange"]
@@ -257,10 +257,13 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
    # Add a grid
    plt.tight_layout()
 
-   # Save the graph
-   plt.savefig(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "-" + clean_id + ".png")
+   # create the graphics directory if it doesn't exist
+   create_directory(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS, RELATIVE_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS)
 
-   print(f"{backgroundColors.OKGREEN}Successfully created the metrics evolution graphic for {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+   # Save the graph
+   plt.savefig(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + clean_id + ".png")
+
+   print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphic for {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
 
 # @brief: Main function
 # @param: None
