@@ -294,12 +294,10 @@ def main():
    
    # Make a for loop to run the create_metrics_evolution_graphic function for each id
    for id in ids: # Loop trough the ids items in the dictionary
-      clean_id = get_clean_id(id) # Remove the / from the id, due to the fact that use it to name the CSV file would cause problems
-
       print(f"{backgroundColors.OKGREEN}Generating the image for {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
-       # Create the metrics evolution graphs
-      create_metrics_evolution_graphic(repository_name, id, clean_id, ids[id])
+      # Create the metrics evolution graphs
+      create_metrics_evolution_graphic(repository_name, id, get_clean_id(ids[id]))
 
    print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphics{backgroundColors.OKGREEN} for {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
