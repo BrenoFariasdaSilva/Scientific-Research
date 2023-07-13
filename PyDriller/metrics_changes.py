@@ -112,6 +112,19 @@ def create_directory(full_directory_name, relative_directory_name):
    except OSError: # If the directory cannot be created
       print (f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
 
+# @brief: This function create all the desired directories
+# @param: repository_name: Name of the repository to be analyzed
+# @return: None
+def create_directories(repository_name):
+	# Create the output RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH directory if it does not exist
+	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
+	# Create the output RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH directory if it does not exist
+	create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
+	# Create the metrics evolution output repository_name directory if it does not exist
+	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS) # Create the directory where the csv file will be stored
+	# Create the metrics statistics output repository_name directory if it does not exist
+	create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name)
+
 # @brief: Validate the class name, that is, if it contains any dots in the name
 # @param class_name: The name of the class
 # @return: True if the class name is valid, False otherwise
@@ -334,17 +347,8 @@ def main():
 		print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not calculated. Please run the ck_metrics.py file first{Style.RESET_ALL}")
 		return
 	
-	# Create the output RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH directory if it does not exist
-	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH)
-
-	# Create the output RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH directory if it does not exist
-	create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH)
-
-	# Create the metrics evolution output repository_name directory if it does not exist
-	create_directory(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS, RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS) # Create the directory where the csv file will be stored
-
-	# Create the metrics statistics output repository_name directory if it does not exist
-	create_directory(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name, RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name)
+	# Create the desired directory if it does not exist
+	create_directories(repository_name)
 
 	# Traverse the directory and get the method metrics
 	metrics_track_record = traverse_directory(directory_path)
