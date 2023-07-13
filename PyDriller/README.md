@@ -47,7 +47,7 @@ make ck_metrics_script
 8. Now that we have the list of tuples containing the commit hashe, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commit_hashes.csv` file, with the call of `write_commit_hashes_to_csv` function.
 9.  And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
 
-Considering that you now have the ck metrics calculated, you are able to run the following command to execute the `top_changes.py` file:
+Considering that you now have the ck metrics calculated, you are able to run the following command to execute the `metrics_changes.py` file:
 ```
 make metrics_changes_script
 ```
