@@ -36,8 +36,8 @@ FULL_GRAPHICS_DIRECTORY_PATH = PATH + RELATIVE_GRAPHICS_DIRECTORY_PATH # The ful
 def path_contains_whitespaces():
    # Verify if the PATH constant contains whitespaces
    if " " in PATH:
-      return True
-   return False
+      return True # Return True if the PATH constant contains whitespaces
+   return False # Return False if the PATH constant does not contain whitespaces
 
 # @brief: Verifiy if the attribute is empty. If so, set it to the default value
 # @param: attribute: The attribute to be checked
@@ -113,8 +113,8 @@ def validate_ids(ids, repository_name):
       # Verify if the ids are classes
       for id in ids.values():
          if id not in class_types: # If the id is not a class
-            return False
-   return True
+            return False # Return False because the id is not a class
+   return True # Return True because the ids are valid
 
 # @brief: This function receives an id and verify if it contains slashes, if so, it returns the id without the slashes
 # @param: id: ID of the class or method to be analyzed
