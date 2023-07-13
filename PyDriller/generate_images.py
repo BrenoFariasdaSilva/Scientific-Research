@@ -30,11 +30,11 @@ RELATIVE_GRAPHICS_DIRECTORY_PATH = "/graphics"
 FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
 FULL_GRAPHICS_DIRECTORY_PATH = PATH + RELATIVE_GRAPHICS_DIRECTORY_PATH
 
-# @brief: This function is used to check if the PATH constant contain whitespaces
+# @brief: This function is used to verify if the PATH constant contain whitespaces
 # @param: None
 # @return: True if the PATH constant contain whitespaces, False otherwise
 def path_contains_whitespaces():
-   # Check if the PATH constant contains whitespaces
+   # Verify if the PATH constant contains whitespaces
    if " " in PATH:
       return True
    return False
@@ -63,7 +63,7 @@ def get_repository_name_user():
 # @param: relative_directory_path: Relative name of the directory to be created that will be shown in the terminal
 # @return: None
 def create_directory(full_directory_path, relative_directory_path):
-   if os.path.isdir(full_directory_path): # Check if the directory already exists
+   if os.path.isdir(full_directory_path): # Verify if the directory already exists
       print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory already exists.{Style.RESET_ALL}")
       return
    try: # Try to create the directory
@@ -107,10 +107,10 @@ def get_user_ids_input():
 def validate_ids(ids, repository_name):
    # Get the path of the file containing the top changes of the classes
    repo_class_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
-   # Check if the ids to be processed are classes
+   # Verify if the ids to be processed are classes
    if PROCESS_CLASSES:
       class_types = pd.read_csv(repo_class_top_changes_file_path)["Type"].unique()
-      # Check if the ids are classes
+      # Verify if the ids are classes
       for id in ids.values():
          if id not in class_types:
             return False
@@ -136,7 +136,7 @@ def check_metrics_files(folder_path, repository_name, ids):
    # Change the current working directory to the repository folder
    os.chdir(folder_path)
    
-   # Now, for every ids.keys() in the ids dictionary, check if there is a csv file with the name of the id
+   # Now, for every ids.keys() in the ids dictionary, verify if there is a csv file with the name of the id
    for id in ids.keys():
       file_name = f"{id} {ids[id]}" if PROCESS_CLASSES else f"{id} {get_clean_id(ids[id])}"
       evolution_file = f"{repository_name}/{CLASSES_OR_METHODS}/{file_name}.csv"
@@ -268,7 +268,7 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id_key):
 # @param: None
 # @return: None
 def main():
-   # check if the path constant contains whitespaces
+   # Verify if the path constant contains whitespaces
    if path_contains_whitespaces():
       print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return
@@ -287,7 +287,7 @@ def main():
       print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{', '.join(repository_name.keys())}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
       return
    
-   # Check if the metrics evolution were already calculated
+   # Verify if the metrics evolution were already calculated
    if not check_metrics_files(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, repository_name, ids):
       print(f"{backgroundColors.FAIL}The metrics evolution for {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.FAIL} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not created. Please run the {backgroundColors.OKCYAN}specific_files_statistics.py{backgroundColors.FAIL} file first.{Style.RESET_ALL}")
       return
