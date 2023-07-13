@@ -138,7 +138,7 @@ def check_metrics_files(folder_path, repository_name, ids):
    
    # Now, for every ids.keys() in the ids dictionary, check if there is a csv file with the name of the id
    for id in ids.keys():
-      file_name = id if PROCESS_CLASSES else get_clean_id(id)
+      file_name = f"{id} {ids[id]}" if PROCESS_CLASSES else f"{id} {get_clean_id(ids[id])}"
       evolution_file = f"{repository_name}/{CLASSES_OR_METHODS}/{file_name}.csv"
       if not os.path.isfile(evolution_file):
          print(f"{backgroundColors.WARNING}The {backgroundColors.OKCYAN}{id}.csv{backgroundColors.WARNING} file does not exist.{Style.RESET_ALL}")
