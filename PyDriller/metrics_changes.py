@@ -37,18 +37,18 @@ FULL_METRICS_STATISTICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_METRICS_STATISTICS_DI
 # @return: True if the PATH constant contain whitespaces, False otherwise
 def path_contains_whitespaces():
    # Verify if the PATH constant contains whitespaces
-   if " " in PATH:
-      return True
-   return False
+   if " " in PATH: 
+      return True # Return True if the PATH constant contains whitespaces
+   return False # Return False if the PATH constant does not contain whitespaces
 
 # @brief: Verifiy if the attribute is empty. If so, set it to the default value
 # @param: attribute: The attribute to be checked
 # @param: default_attribute_value: The default value of the attribute
 # @return: The repository URL and the output directory
 def validate_attribute(attribute, default_attribute_value):
-   if not attribute:
+   if not attribute: # Verify if the attribute is empty
       print(f"{backgroundColors.WARNING}The attribute is empty! Using the default value: {backgroundColors.OKCYAN}{default_attribute_value}{Style.RESET_ALL}")
-      attribute = default_attribute_value
+      attribute = default_attribute_value # Set the attribute to the default value
    return attribute
 
 # @brief: Gets the user input for the repository name and returns the path to the directory
@@ -56,7 +56,7 @@ def validate_attribute(attribute, default_attribute_value):
 # @return: A tuple containing the repository name and the path to the directory
 def get_directory_path():
 	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
-	repository_name = validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME[0])
+	repository_name = validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME[0]) # Validate the repository name
 	
 	directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
@@ -81,7 +81,7 @@ def verify_ck_metrics_folders(repository_name):
 	# Verify if the repository exists
 	if not os.path.exists(commit_file_path):
 		print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
-		return False
+		return False # Return False if the repository does not exist
 
 	# Read the commit hashes file with pandas and get only the "commit_hash" column
 	commit_hashes = pd.read_csv(commit_file_path)["commit hash"].tolist()
@@ -93,10 +93,10 @@ def verify_ck_metrics_folders(repository_name):
 
 		if not os.path.exists(folder_path): # Verify if the folder exists
 			print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{commit_hash}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
-			return False
+			return False # Return False if the folder does not exist
 		
 	print(f"{backgroundColors.OKGREEN}All the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository.{Style.RESET_ALL}")
-	return True
+	return True # Return True if all the metrics are already calculated
 
 # @brief: Create a directory
 # @param: full_directory_name: Name of the directory to be created
