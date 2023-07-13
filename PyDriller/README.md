@@ -4,9 +4,7 @@
 @TODO 3: Create code that generates the graphics metrics evolution comparison for specified commit hashes.  Use args.  
 @TODO 4: Create new code that, for a specified name of the class or method and the values of the cbo, cboModified, rfc and wmc, it will return you the commit hash of the commit that introduced the changes value.    
 @TODO 5: Remove most of the prints to make the code execution more clean. Remove most of the sucessfull prints, as they are not necessary. Keep only the error prints and final prints.  
-@TODO 6: Change `ck_metrics.py` creation of the commit hash list file. Make it use a csv file and not a txt file. Also, add the following fields: `commit.msg`, `commit.committer_date`, and `commit.modified_files`.  
-@TODO 7: Verify the folder creation of each python file. Metrics statistics seems to be creating the metrics_evolution folder, but not the metrics_statistics folder.  
-@TODO 8: Make the `metrics_changes.py` file generated files to be differentiated from classes or methods by using subfolders, like, `repository_name/class/class_name/` or `repository_name/method/method_name/`.  
+@TODO 6: Verify the folder creation of each python file. Metrics statistics seems to be creating the metrics_evolution folder, but not the metrics_statistics folder.   
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
