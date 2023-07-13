@@ -204,12 +204,11 @@ def add_first_and_last_values_to_plot(plt, df):
 # @brief: This function creates the metrics evolution graphs fronm the RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH folder
 # @param: repository_name: Name of the repository to be analyzed
 # @param: id: ID of the class or method to be analyzed
-# @param: clean_id: ID of the class or method to be analyzed without the / and the class or method name
-# @param: id_key: ID of the class or method to be analyzed without the class or method name
+# @param: clean_id_key: Clean ID of the class or method to be analyzed
 # @return: None
-def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
+def create_metrics_evolution_graphic(repository_name, id, clean_id_key):
    # Load the generated CSV files into a dataframe and save a plot of the evolution of the CBO, CBO Modified, WMC and RFC metrics
-   df = pd.read_csv(PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + clean_id + ".csv")
+   df = pd.read_csv(PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + " " + clean_id_key + ".csv")
 
    # Extract the metrics and commit hashes from the DataFrame
    commit_hashes = df["Commit Hash"]
@@ -235,9 +234,9 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
 
    # Set the graph title and labels according to the type of analysis (class or method)
    if PROCESS_CLASSES:
-      plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id} {id_key} in {repository_name} repository", color="red")
+      plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id} {clean_id_key} in {repository_name} repository", color="red")
    else:
-      plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {id_key} {id} in {repository_name} repository", color="red")
+      plt.title(f"Metrics Evolution of the {CK_CSV_FILE.replace('.csv', '')} named {clean_id_key} {id} in {repository_name} repository", color="red")
    plt.xlabel("Commit Hash")
    plt.ylabel("Metric Value")
 
@@ -261,7 +260,7 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id, id_key):
    create_directory(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS, RELATIVE_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS)
 
    # Save the graph
-   plt.savefig(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + clean_id + ".png")
+   plt.savefig(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + " " + clean_id_key + ".png")
 
    print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphic for {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
 
