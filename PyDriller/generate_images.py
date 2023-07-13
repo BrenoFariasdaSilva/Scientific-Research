@@ -16,19 +16,19 @@ PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {
 CK_CSV_FILE = CLASS_CSV_FILE if PROCESS_CLASSES else METHOD_CSV_FILE # The name of the csv generated file from ck.
 CLASSES_OR_METHODS = "classes" if PROCESS_CLASSES else "methods" # The name of the csv generated file from ck.
 OPPOSITE_CK_CSV_FILE = METHOD_CSV_FILE if PROCESS_CLASSES else CLASS_CSV_FILE # The name of the csv generated file from ck.
-DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref"]
+DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref"] # The default repository names
 DEFAULT_CLASS_IDS = {"org.apache.commons.lang.StringUtils": "class"} # The default ids to be analyzed. It stores the class:type or class:method
 DEFAULT_METHOD_IDS = {"org.apache.commons.lang3.AnnotationUtilsTest": "testBothArgsNull/0", "org.apache.commons.lang.LangTestSuite": "suite/0"} # The default ids to be analyzed. It stores the class:type or class:method
 DEFAULT_IDS = DEFAULT_CLASS_IDS if PROCESS_CLASSES else DEFAULT_METHOD_IDS # The default ids to be analyzed. It stores the class:type or method:class
  
 # Relative paths:
-RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH = "/metrics_evolution"
-RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics"
-RELATIVE_GRAPHICS_DIRECTORY_PATH = "/graphics"
+RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH = "/metrics_evolution" # The relative path of the metrics_evolution directory
+RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics" # The relative path of the metrics_statistics directory
+RELATIVE_GRAPHICS_DIRECTORY_PATH = "/graphics" # The relative path of the graphics directory
 
 # Default values:
-FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH
-FULL_GRAPHICS_DIRECTORY_PATH = PATH + RELATIVE_GRAPHICS_DIRECTORY_PATH
+FULL_METRICS_EVOLUTION_DIRECTORY_PATH = PATH + RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH # The full path of the metrics_evolution directory
+FULL_GRAPHICS_DIRECTORY_PATH = PATH + RELATIVE_GRAPHICS_DIRECTORY_PATH # The full path of the graphics directory
 
 # @brief: This function is used to verify if the PATH constant contain whitespaces
 # @param: None
@@ -44,10 +44,10 @@ def path_contains_whitespaces():
 # @param: default_attribute_value: The default value of the attribute
 # @return: The repository URL and the output directory
 def validate_attribute(attribute, default_attribute_value):
-   if not attribute:
+   if not attribute: # Verify if the attribute is empty
       print(f"{backgroundColors.WARNING}The attribute is empty! Using the default value: {backgroundColors.OKCYAN}{default_attribute_value}{backgroundColors.WARNING}.{Style.RESET_ALL}")
-      attribute = default_attribute_value
-   return attribute
+      attribute = default_attribute_value # Set the attribute to the default value
+   return attribute # Return the attribute
 
 # @brief: This function asks for the user input of the repository name
 # @param: None
@@ -76,7 +76,7 @@ def create_directory(full_directory_path, relative_directory_path):
 # param: None
 # return: id: Name of the class or method to be analyzed
 def get_user_ids_input():
-   id = {}
+   id = {} # Dictionary that stores the ids to be analyzed
    name = ""
    first_run = True
    while name == "" and first_run:
@@ -112,7 +112,7 @@ def validate_ids(ids, repository_name):
       class_types = pd.read_csv(repo_class_top_changes_file_path)["Type"].unique()
       # Verify if the ids are classes
       for id in ids.values():
-         if id not in class_types:
+         if id not in class_types: # If the id is not a class
             return False
    return True
 
@@ -120,8 +120,7 @@ def validate_ids(ids, repository_name):
 # @param: id: ID of the class or method to be analyzed
 # @return: ID of the class or method to be analyzed without the slashes
 def get_clean_id(id):
-   # If the id contains slashes, remove them
-   if "/" in id:
+   if "/" in id: # If the id contains slashes, remove them
       return str(id.split("/")[0:-1])[2:-2]
    else:
       return id
@@ -140,11 +139,11 @@ def check_metrics_files(folder_path, repository_name, ids):
    for id in ids.keys():
       file_name = f"{id} {ids[id]}" if PROCESS_CLASSES else f"{id} {get_clean_id(ids[id])}"
       evolution_file = f"{repository_name}/{CLASSES_OR_METHODS}/{file_name}.csv"
-      if not os.path.isfile(evolution_file):
+      if not os.path.isfile(evolution_file): # If the file does not exist
          print(f"{backgroundColors.WARNING}The {backgroundColors.OKCYAN}{id}.csv{backgroundColors.WARNING} file does not exist.{Style.RESET_ALL}")
-         os.chdir(PATH)
+         os.chdir(PATH) # Change the current working directory to the original path
          return False
-   os.chdir(PATH)
+   os.chdir(PATH) # Change the current working directory to the original path
    return True
 
 # @brief: This function asks if the user wants labels in the data points of the graphic image. If so, ask which one
@@ -162,7 +161,7 @@ def insert_labels():
       labels[0] = input(f"{backgroundColors.OKGREEN}Do you want to add labels to the data points? {backgroundColors.OKCYAN}(y/n){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
    if labels[0] == "y":
-      labels[0] = True
+      labels[0] = True 
       while labels[1] != "1" and labels[1] != "2":
          if not first_run[1]:
             print(f"{backgroundColors.FAIL}Invalid option!{Style.RESET_ALL}")
