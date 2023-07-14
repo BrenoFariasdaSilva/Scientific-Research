@@ -283,7 +283,7 @@ def main():
 
    # Validate the ids, if is related to a class or method
    if not validate_ids(ids, repository_name):
-      print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{', '.join(repository_name.keys())}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
+      print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
       return
    
    # Verify if the metrics evolution were already calculated
