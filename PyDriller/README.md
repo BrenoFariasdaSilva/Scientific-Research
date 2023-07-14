@@ -73,3 +73,5 @@ Considering that you now have the ck metrics statistics calculated, you are able
 ```
 make generate_images_script
 ```
+1. The first thing it will do is ask you if you want to process classes or methods, if you want to process classes, type ```True```, if you want to process methods, type ```False```. Note that it is case sensitive, so make sure you type it correctly.  
+2. The second thing, as always, what it will do is verify if you don't have whitespaces in the path of the project by calling the `path_contains_whitespaces` function. If you have, it will not work.
