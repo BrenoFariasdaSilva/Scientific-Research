@@ -4,7 +4,7 @@
 @TODO 3: Create new code that, for a specified name of the class or method and the values of the cbo, cboModified, rfc and wmc, it will return you the commit hash of the commit that introduced the changes value.    
 @TODO 4: Create code that generates the graphics metrics evolution comparison for specified commit hashes.  
 @TODO 5: Remove most of the prints to make the code execution more clean. Remove most of the sucessfull prints, as they are not necessary. Keep only the error prints and final prints.  
-@TODO 6: Verify the folder creation of each python file.  
+@TODO 6: Verify the folder creation of each python file (ck_metrics.py, metrics_changes.py and generate_images.py).  
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
