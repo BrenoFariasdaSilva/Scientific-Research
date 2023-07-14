@@ -51,7 +51,7 @@ make metrics_changes_script
 ```
 1. The first thing it will do is ask you if you want to process classes or methods, if you want to process classes, type ```True```, if you want to process methods, type ```False```. Note that it is case sensitive, so make sure you type it correctly.
 2. The second thing it will do is verify if you don't have whitespaces in the path of the project by calling the `path_contains_whitespaces` function. If you have, it will not work.
-3. Then, the main function will call `get_directory_path`, which will ask you the repository name, for example: ```commons-lang```. If you simply press enter, it will get the first repository name from the ```DEFAULT_REPOSITORY_NAME``` constant inside the ```top_changes.py``` file.
+3. Then, the main function will call `get_directory_path`, which will ask you the repository name, for example: ```commons-lang```. If you simply press enter, it will get the first repository name from the ```DEFAULT_REPOSITORY_NAME``` constant list inside the ```metrics_changes.py``` file.
 4. Now, it calls `verify_ck_metrics_folders` function, as the code must verify if you have already executed the `ck_metrics.py` file. If they aren't, it will tell you to run the `ck_metrics.py` file, which will generate the ck metrics. This verification is done by:
    1. Verifying if the repository commit hash csv file exists inside the `CK_METRICS_DIRECTORY_PATH` directory, which should be named as `repository_name-commit_hashes.csv`, for example: `commons-lang-commit_hashes.csv`. If it doesn't exist, it will return false;  
    2. If the csv file exists, it will, for every commit hash, which is inside the `commit hash`column in the csv file, verify if there is a subdirectory inside the `CK_METRICS_DIRECTORY_PATH/repository_name` directory, which should be named as the value in the current `commit_hash` and contains all the ck metrics generated files, which are defined in the `CK_METRICS_FILES` constant. If it doesn't exist, it will return false;
@@ -75,3 +75,4 @@ make generate_images_script
 ```
 1. The first thing it will do is ask you if you want to process classes or methods, if you want to process classes, type ```True```, if you want to process methods, type ```False```. Note that it is case sensitive, so make sure you type it correctly.  
 2. The second thing, as always, what it will do is verify if you don't have whitespaces in the path of the project by calling the `path_contains_whitespaces` function. If you have, it will not work.
+3. Then, it will ask for the user input related to the repository name, for example: ```commons-lang```. If you simply press enter, it will get the first repository name from the ```DEFAULT_REPOSITORY_NAME``` constant list inside the ```generate_images.py``` file.
