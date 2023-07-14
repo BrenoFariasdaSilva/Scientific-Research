@@ -69,3 +69,7 @@ make metrics_changes_script
 3. Finally, with those statistics generated and stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` csv file, the main funcion call the `sort_csv_by_changes(repository_name)` function that is going to sort the lines of the metrics statistics csv file by the `Changed` column, which is the number of times the metrics changed. The top changes will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME` csv file.  
 4. Now, that we have the sorted csv file, the main function will call the `os.remove` to delete the old, unsorted csv file.
    
+Considering that you now have the ck metrics statistics calculated, you are able to run the following command to execute the `generate_images.py` file:
+```
+make generate_images_script
+```
