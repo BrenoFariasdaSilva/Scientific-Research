@@ -1,6 +1,14 @@
+<div align="center">
+   
 # [Scientific Research](https://github.com/BrenoFariasdaSilva/Scientific-Research.git)
 
-[![wakatime This Week](https://wakatime.com/badge/github/BrenoFariasdaSilva/Scientific-Research.svg)](https://wakatime.com/badge/github/BrenoFariasdaSilva/Scientific-Research)
+</div>
+
+<p align="center">
+  <a href="https://wakatime.com/badge/github/BrenoFariasdaSilva/Scientific-Research.svg">
+    <img src="https://wakatime.com/badge/github/BrenoFariasdaSilva/Scientific-Research.svg" alt="wakatime This Week">
+  </a>
+</p>
 
 Welcome to the Scientific Research Repository! This repository contains code and data related to our ongoing scientific research project. Our team is focused on various goals, as described below.
 
