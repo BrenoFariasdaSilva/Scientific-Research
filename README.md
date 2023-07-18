@@ -71,4 +71,4 @@ Our research project involves expertise in the following areas:
 - Code metrics
 - Python (Programming Language)
 
-Feel free to explore the code and data in this repository. If you have any questions or suggestions, please don't hesitate to reach out to us.
+Feel free to explore the code and data in this repository. If you have any questions or suggestions, please don't hesitate to reach out to me.
