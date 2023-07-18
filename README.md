@@ -26,6 +26,8 @@ Welcome to the Scientific Research Repository! This repository contains code and
 
 </div>
 
+## Table of Contents
+
 ## Goals
 
 1. Similarity Analysis:
