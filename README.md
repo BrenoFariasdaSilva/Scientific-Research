@@ -8,7 +8,7 @@
   
 ---
 
-Welcome to the Scientific Research Repository! This repository contains code and data related to our ongoing scientific research project. Our team is focused on various goals, as described below.
+Welcome to my Scientific Research Repository! This repository contains code and data related to my ongoing scientific research project. Our team is focused on various goals, in which will be described later on.
   
 ---
 
