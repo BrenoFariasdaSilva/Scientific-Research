@@ -32,7 +32,6 @@ Welcome to the Scientific Research Repository! This repository contains code and
   - [Goals](#goals)
   - [Skills](#skills)
 
-
 ## Goals
 
 1. Similarity Analysis:
@@ -41,9 +40,9 @@ Welcome to the Scientific Research Repository! This repository contains code and
    - Using these datasets, we determine the most similar solved questions for each unsolved question and auto-recommend changes based on the similarity of those questions.
 
 2. Enhancing Code Solutions:
-   - We study the use of tools like ChatGPT and Github Copilot to improve students' code solutions when they are stuck.
+   - We study the use of tools like ChatGPT and GitHub Copilot to improve students' code solutions when they are stuck.
    - Currently, we utilize CK to generate Code Metrics for repositories like Apache Commons-lang and Jabref.
-   - We employ PyDriller to traverse the commits tree in the repository and run CK for every commit hash it is in.
+   - We employ PyDriller to traverse the commit tree in the repository and run CK for every commit hash it is in.
    - This allows us to gather code metrics such as CBO, CBOModified, WMC, RFC, and others to create graphics depicting the metrics evolution of specific classes or methods within the repository.
 
 3. Analyzing Code Evolution:
@@ -51,7 +50,7 @@ Welcome to the Scientific Research Repository! This repository contains code and
    - We aim to identify good code examples that indicate what makes code better and what changes are typically made to improve it.
 
 4. Providing Data to AI Tools:
-   - We gather valuable data to provide to tools like ChatGPT and Github Copilot, showcasing what constitutes good code and why.
+   - We gather valuable data to provide to tools like ChatGPT and GitHub Copilot, showcasing what constitutes good code and why.
    - We explore how contextual information, such as code samples, can assist these tools in suggesting better code improvements for students.
 
 ## Skills
@@ -67,7 +66,7 @@ Our research project involves expertise in the following areas:
 - Word2Vector
 - Statistical Data Analysis
 - Similarity measures
-- Apache Commons lang
+- Apache Commons-lang
 - Jabref
 - Code metrics
 - Python (Programming Language)
