@@ -1,6 +1,6 @@
 <div align="center">
    
-# [Scientific Research](https://github.com/BrenoFariasdaSilva/Scientific-Research.git)
+# [Scientific Research](https://github.com/BrenoFariasdaSilva/Scientific-Research)
 
 </div>
 
