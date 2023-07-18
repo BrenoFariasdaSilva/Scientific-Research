@@ -4,6 +4,16 @@
 
 </div>
 
+<div align="center">
+  
+---
+
+Welcome to the Scientific Research Repository! This repository contains code and data related to our ongoing scientific research project. Our team is focused on various goals, as described below.
+  
+---
+
+</div>
+
 <p align="center">
   <a href="https://wakatime.com/badge/github/BrenoFariasdaSilva/Scientific-Research.svg">
     <img src="https://wakatime.com/badge/github/BrenoFariasdaSilva/Scientific-Research.svg" alt="wakatime This Week">
@@ -15,8 +25,6 @@
 ![Repobeats Statistics](https://repobeats.axiom.co/api/embed/cc926b338fcd1c49112ae0c1707e41cbfc07f606.svg "Repobeats analytics image")
 
 </div>
-
-Welcome to the Scientific Research Repository! This repository contains code and data related to our ongoing scientific research project. Our team is focused on various goals, as described below.
 
 ## Goals
 
