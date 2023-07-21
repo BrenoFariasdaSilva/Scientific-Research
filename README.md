@@ -14,11 +14,14 @@ Welcome to my Scientific Research Repository! This repository contains code and 
 
 </div>
 
-<p align="center">
-  <a href="https://wakatime.com/badge/github/BrenoFariasdaSilva/Scientific-Research.svg">
-    <img src="https://wakatime.com/badge/github/BrenoFariasdaSilva/Scientific-Research.svg" alt="wakatime This Week">
-  </a>
-</p>
+<div align="center">
+
+![GitHub Code Size in Bytes](https://img.shields.io/github/languages/code-size/BrenoFariasdaSilva/Scientific-Research)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Scientific-Research)
+![GitHub](https://img.shields.io/github/license/BrenoFariasdaSilva/Scientific-Research)
+![wakatime](https://wakatime.com/badge/github/BrenoFariasdaSilva/Scientific-Research.svg)
+
+</div>
 
 <div align="center">
    
