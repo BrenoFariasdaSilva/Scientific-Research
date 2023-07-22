@@ -1,6 +1,6 @@
 <div align="center">
    
-# [Scientific Research.](https://github.com/BrenoFariasdaSilva/Scientific-Research) <img src="https://github.com/BrenoFariasdaSilva/Scientific-Research/blob/main/assets/Bash.svg"  width="3%" height="3%">
+# [Scientific Research.](https://github.com/BrenoFariasdaSilva/Scientific-Research) <img src="https://github.com/BrenoFariasdaSilva/Scientific-Research/blob/main/.assets/Bash.svg"  width="3%" height="3%">
 
 </div>
 
