@@ -202,3 +202,8 @@ PyDriller/repositories
 # Ignore RefactoringMiner/RefactoringMiner folder
 /RefactoringMiner/RefactoringMiner
 /RefactoringMiner/repositories/
+
+# Ignore any zip or 7z or tar.gz file
+*.zip
+*.7z
+*.tar.gz
