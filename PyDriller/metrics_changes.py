@@ -2,11 +2,14 @@ import os # for walking through directories
 import csv # for reading csv files
 import numpy as np # for calculating the min, max, avg, and third quartile of each metric
 import pandas as pd # for the csv file operations
+import matplotlib.pyplot as plt # for plotting the graphs
 from tqdm import tqdm # for progress bar
+from sklearn.linear_model import LinearRegression # for the linear regression
+from sklearn.model_selection import train_test_split # for splitting the data into training and testing
 from colorama import Style # For coloring the terminal
 
 # Import from the main.py file
-from ck_metrics import backgroundColors
+from ck_metrics import backgroundColors # For coloring the terminal outputs
 
 # CONSTANTS:
 PATH = os.getcwd() # Get the current working directory
