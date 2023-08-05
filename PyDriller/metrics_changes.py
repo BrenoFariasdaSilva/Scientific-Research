@@ -230,7 +230,7 @@ def get_clean_id(id):
       return str(id.split("/")[0:-1])[2:-2]
    else:
       return id
-
+   
 # @brief: This function writes the metrics evolution to a csv file
 # @param: repository_name: The name of the repository
 # @param: metrics_track_record: A dictionary containing the metrics of each method or class
@@ -256,6 +256,8 @@ def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 			metrics_len = len(metrics)
 			for i in range(metrics_len):
 				writer.writerow([unique_identifier, record["commit_hashes"][i], metrics[i][0], metrics[i][1], metrics[i][2], metrics[i][3]])
+		linear_regression_predictions(metrics, unique_identifier, repository_name)
+
 	print(f"{backgroundColors.OKGREEN}Finished writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{Style.RESET_ALL}")
 
 # @brief: Calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
