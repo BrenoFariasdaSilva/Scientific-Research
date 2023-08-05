@@ -244,7 +244,6 @@ def linear_regression_predictions(metrics, filename, repository_name):
 	print(f"{backgroundColors.OKGREEN}Performing linear regression for the {backgroundColors.OKCYAN}{repository_name} {filename}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
 	# Check for empty metrics list
 	if not metrics:
-		print("Error: Metrics list is empty.")
 		return
 
 	# Check for invalid values in the metrics
@@ -258,7 +257,6 @@ def linear_regression_predictions(metrics, filename, repository_name):
 
 	# Check for sufficient data points for regression
 	if len(x) < 2 or len(y) < 2:
-		print("Error: Insufficient data points for linear regression.")
 		return
 
 	# Perform linear regression using numpy.polyfit
