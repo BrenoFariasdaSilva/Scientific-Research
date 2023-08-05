@@ -242,8 +242,8 @@ def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 		metrics = record["metrics"]
 		class_name = identifier.split(' ')[0] # Get the identifier which is currently the class name
 		variable_attribute = get_clean_id(identifier.split(" ")[1]) # Get the variable attribute which could be the type of the class or the method name
-		file_path = f"{class_name} {variable_attribute}{CSV_FILE_EXTENSION}" if PROCESS_CLASSES else f"{class_name} {variable_attribute}{CSV_FILE_EXTENSION}"
-		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + file_path, "w") as csvfile:
+		filename = f"{class_name} {variable_attribute}{CSV_FILE_EXTENSION}" if PROCESS_CLASSES else f"{class_name} {variable_attribute}{CSV_FILE_EXTENSION}"
+		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + filename, "w") as csvfile:
 			writer = csv.writer(csvfile)
 			if PROCESS_CLASSES:
 				unique_identifier = class_name
@@ -256,7 +256,7 @@ def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 			metrics_len = len(metrics)
 			for i in range(metrics_len):
 				writer.writerow([unique_identifier, record["commit_hashes"][i], metrics[i][0], metrics[i][1], metrics[i][2], metrics[i][3]])
-		linear_regression_predictions(metrics, unique_identifier, repository_name)
+		linear_regression_predictions(metrics, filename, repository_name)
 
 	print(f"{backgroundColors.OKGREEN}Finished writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{Style.RESET_ALL}")
 
