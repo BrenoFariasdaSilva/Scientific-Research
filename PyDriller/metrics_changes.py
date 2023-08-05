@@ -235,6 +235,49 @@ def get_clean_id(id):
    else:
       return id
    
+# @brief: Perform linear regression on the given metrics and save the plot to a PNG file
+# @param: metrics: A list containing the metrics values for linear regression
+# @param: filename: The filename for the PNG plot
+# @param: repository_name: The name of the repository
+# @return: None
+def linear_regression_predictions(metrics, filename, repository_name):
+	print(f"{backgroundColors.OKGREEN}Performing linear regression for the {backgroundColors.OKCYAN}{repository_name} {filename}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
+	# Check for empty metrics list
+	if not metrics:
+		print("Error: Metrics list is empty.")
+		return
+
+	# Check for invalid values in the metrics
+	if np.isnan(metrics).any() or np.isinf(metrics).any():
+		print("Error: Metrics list contains invalid values (NaN or inf).")
+		return
+
+	# Extract the metrics values
+	x = np.arange(len(metrics))
+	y = np.array(metrics)[:, 0]  # Considering the first metric for linear regression
+
+	# Check for sufficient data points for regression
+	if len(x) < 2 or len(y) < 2:
+		print("Error: Insufficient data points for linear regression.")
+		return
+
+	# Perform linear regression using numpy.polyfit
+	coeffs = np.polyfit(x, y, deg=1)
+	linear_fit = coeffs[1] + coeffs[0] * x
+
+	# Create the plot
+	plt.figure(figsize=(10, 6))
+	plt.plot(x, y, "o", label="Actual Metrics")
+	plt.plot(x, linear_fit, "-", label="Linear Regression Fit")
+	plt.xlabel("Iterations")
+	plt.ylabel("Metric Value")
+	plt.title("Linear Regression for Metrics")
+	plt.legend()
+
+	# Save the plot to a PNG file
+	plt.savefig(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}.png")
+	plt.close()
+   
 # @brief: This function writes the metrics evolution to a csv file
 # @param: repository_name: The name of the repository
 # @param: metrics_track_record: A dictionary containing the metrics of each method or class
