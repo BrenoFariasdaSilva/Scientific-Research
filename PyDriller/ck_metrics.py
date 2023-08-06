@@ -3,6 +3,8 @@ import subprocess # The subprocess module allows you to spawn new processes, con
 import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
 import pandas as pd # Pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,
 import time # This module provides various time-related functions
+import atexit # For playing a sound when the program finishes
+import platform # For getting the operating system name
 from pydriller import Repository # PyDriller is a Python framework that helps developers in analyzing Git repositories. 
 from colorama import Style # For coloring the terminal
 
@@ -12,6 +14,10 @@ class backgroundColors: # Colors for the terminal
 	OKGREEN = "\033[92m" # Green
 	WARNING = "\033[93m" # Yellow
 	FAIL = "\033[91m" # Red
+        
+# Constants:
+SOUND_COMMANDS = {"Darwin": "afplay", "Linux": "aplay", "Windows": "start"} # The sound commands for each operating system
+SOUND_FILE = "../.assets/NotificationSound.wav" # The path to the sound file
         
 # Default paths:
 PATH = os.getcwd() # Get the current working directory
@@ -283,6 +289,21 @@ def write_commit_hashes_to_csv(repository_name, commit_hashes):
       writer.writerow(["commit hash", "commit message", "commit date"])
       # Write the commit hashes
       writer.writerows(commit_hashes)
+
+# @brief: This function defines the command to play a sound when the program finishes
+# @param: None
+# @return: None
+def play_sound():
+	if os.path.exists(SOUND_FILE):
+		if platform.system() in SOUND_COMMANDS: # if the platform.system() is in the SOUND_COMMANDS dictionary
+			os.system(f"{SOUND_COMMANDS[platform.system()]} {SOUND_FILE}")
+		else: # if the platform.system() is not in the SOUND_COMMANDS dictionary
+			print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}platform.system(){backgroundColors.FAIL} is not in the {backgroundColors.OKCYAN}SOUND_COMMANDS dictionary{backgroundColors.FAIL}. Please add it!{Style.RESET_ALL}")
+	else: # if the sound file does not exist
+		print(f"{backgroundColors.FAIL}Sound file {backgroundColors.OKCYAN}{SOUND_FILE}{backgroundColors.FAIL} not found. Make sure the file exists.{Style.RESET_ALL}")
+
+# Register the function to play a sound when the program finishes
+atexit.register(play_sound)
 
 # @brief: Main function
 # @param: None
