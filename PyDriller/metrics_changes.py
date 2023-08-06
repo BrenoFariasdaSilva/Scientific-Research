@@ -5,6 +5,7 @@ import pandas as pd # for the csv file operations
 import matplotlib.pyplot as plt # for plotting the graphs
 import atexit # For playing a sound when the program finishes
 import platform # For getting the operating system name
+import time # For measuring the time
 from tqdm import tqdm # for progress bar
 from sklearn.linear_model import LinearRegression # for the linear regression
 from sklearn.model_selection import train_test_split # for splitting the data into training and testing
@@ -20,6 +21,9 @@ MINIMUM_CHANGES = 1 # The minimum number of changes a method should have to be c
 NUMBER_OF_METRICS = 4 # The number of metrics
 DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref"] # The default repository name
 SOUND_COMMANDS = {"Darwin": "afplay", "Linux": "aplay", "Windows": "start"} # The sound commands for each operating system
+
+# Time units:
+TIME_UNITS = [60, 3600, 86400] # Seconds in a minute, seconds in an hour, seconds in a day
 
 # Extensions:
 CSV_FILE_EXTENSION = ".csv" # The extension of the file that contains the commit hashes
@@ -400,10 +404,32 @@ def play_sound():
 # Register the function to play a sound when the program finishes
 atexit.register(play_sound)
 
+# @brief: This function outputs time, considering the appropriate time unit
+# @param: output_string: String to be outputted
+# @param: time: Time to be outputted
+# @return: None
+def output_time(output_string, time):
+   if float(time) < int(TIME_UNITS[0]):
+      time_unit = "seconds"
+      time_value = time
+   elif float(time) < float(TIME_UNITS[1]):
+      time_unit = "minutes"
+      time_value = time / TIME_UNITS[0]
+   elif float(time) < float(TIME_UNITS[2]):
+      time_unit = "hours"
+      time_value = time / TIME_UNITS[1]
+   else:
+      time_unit = "days"
+      time_value = time / TIME_UNITS[2]
+
+   rounded_time = round(time_value, 2)
+   print(f"{backgroundColors.OKGREEN}{output_string}{backgroundColors.OKCYAN}{rounded_time} {time_unit}{Style.RESET_ALL}")
+
 # @brief: The main function
 # @param: None
 # @return: None
 def main():
+	start_time = time.time() # Start the timer
 	# check if the path constants contains whitespaces
 	if path_contains_whitespaces():
 		print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
@@ -438,6 +464,10 @@ def main():
 
 	# Remove the old csv file
 	os.remove(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "/" + CHANGED_METHODS_CSV_FILENAME)
+
+	elapsed_time = time.time() - start_time
+	elapsed_time_string = f"Time taken to generate the {backgroundColors.OKCYAN} metrics changes {backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN} {CLASSES_OR_METHODS} {backgroundColors.OKGREEN} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN}: "
+	output_time(elapsed_time_string, round(elapsed_time, 2))
 
 # Directive to run the main function
 if __name__ == "__main__":
