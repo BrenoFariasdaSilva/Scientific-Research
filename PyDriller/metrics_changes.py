@@ -3,6 +3,8 @@ import csv # for reading csv files
 import numpy as np # for calculating the min, max, avg, and third quartile of each metric
 import pandas as pd # for the csv file operations
 import matplotlib.pyplot as plt # for plotting the graphs
+import atexit # For playing a sound when the program finishes
+import platform # For getting the operating system name
 from tqdm import tqdm # for progress bar
 from sklearn.linear_model import LinearRegression # for the linear regression
 from sklearn.model_selection import train_test_split # for splitting the data into training and testing
@@ -17,6 +19,7 @@ PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {
 MINIMUM_CHANGES = 1 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
 DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref"] # The default repository name
+SOUND_COMMANDS = {"Darwin": "afplay", "Linux": "aplay", "Windows": "start"} # The sound commands for each operating system
 
 # Extensions:
 CSV_FILE_EXTENSION = ".csv" # The extension of the file that contains the commit hashes
@@ -30,6 +33,7 @@ RELATIVE_CK_METRICS_DIRECTORY_PATH = "/ck_metrics" # The relative path to the di
 RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH = "/metrics_evolution" # The relative path to the directory containing the metrics evolution
 RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH = "/metrics_statistics" # The relative path to the directory containing the metrics statistics
 RELATIVE_METRICS_PREDICTION_DIRECTORY_PATH = "/metrics_predictions" # The relative path to the directory containing the metrics prediction
+SOUND_FILE = "../.assets/NotificationSound.wav" # The path to the sound file
 
 # Directories Paths:
 FULL_CK_METRICS_DIRECTORY_PATH = f"{PATH}{RELATIVE_CK_METRICS_DIRECTORY_PATH}" # The full path to the directory containing the ck metrics
@@ -377,6 +381,21 @@ def sort_csv_by_changes(repository_name):
 	# Write the sorted csv file to a new csv file
 	data.to_csv(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "/" + SORTED_CHANGED_METHODS_CSV_FILENAME, index=False)
 	print(f"{backgroundColors.OKCYAN}Successfully sorted{backgroundColors.OKGREEN} the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS}{backgroundColors.OKGREEN} by the {backgroundColors.OKCYAN}number of times they changed{backgroundColors.OKGREEN} and {backgroundColors.OKCYAN}stored{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+
+# @brief: This function defines the command to play a sound when the program finishes
+# @param: None
+# @return: None
+def play_sound():
+	if os.path.exists(SOUND_FILE):
+		if platform.system() in SOUND_COMMANDS: # if the platform.system() is in the SOUND_COMMANDS dictionary
+			os.system(f"{SOUND_COMMANDS[platform.system()]} {SOUND_FILE}")
+		else: # if the platform.system() is not in the SOUND_COMMANDS dictionary
+			print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}platform.system(){backgroundColors.FAIL} is not in the {backgroundColors.OKCYAN}SOUND_COMMANDS dictionary{backgroundColors.FAIL}. Please add it!{Style.RESET_ALL}")
+	else: # if the sound file does not exist
+		print(f"{backgroundColors.FAIL}Sound file {backgroundColors.OKCYAN}{SOUND_FILE}{backgroundColors.FAIL} not found. Make sure the file exists.{Style.RESET_ALL}")
+
+# Register the function to play a sound when the program finishes
+atexit.register(play_sound)
 
 # @brief: The main function
 # @param: None
