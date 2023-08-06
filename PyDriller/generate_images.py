@@ -1,6 +1,8 @@
 import os # OS module in Python provides functions for interacting with the operating system
 import pandas as pd # Pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,
 import matplotlib.pyplot as plt # Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python.
+import atexit # For playing a sound when the program finishes
+import platform # For getting the operating system name
 from colorama import Style # For coloring the terminal
 
 # Import from the main.py file
@@ -8,6 +10,8 @@ from ck_metrics import backgroundColors
         
 # Constants:
 PATH = os.getcwd() # Get the current working directory
+SOUND_COMMANDS = {"Darwin": "afplay", "Linux": "aplay", "Windows": "start"} # The sound commands for each operating system
+SOUND_FILE = "../.assets/NotificationSound.wav" # The path to the sound file
 
 # Changable constants:
 CLASS_CSV_FILE = "class.csv" # The name of the csv generated file from ck.
@@ -262,6 +266,21 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id_key):
    plt.savefig(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + " " + clean_id_key + ".png")
 
    print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphic for {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+
+# @brief: This function defines the command to play a sound when the program finishes
+# @param: None
+# @return: None
+def play_sound():
+	if os.path.exists(SOUND_FILE):
+		if platform.system() in SOUND_COMMANDS: # if the platform.system() is in the SOUND_COMMANDS dictionary
+			os.system(f"{SOUND_COMMANDS[platform.system()]} {SOUND_FILE}")
+		else: # if the platform.system() is not in the SOUND_COMMANDS dictionary
+			print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}platform.system(){backgroundColors.FAIL} is not in the {backgroundColors.OKCYAN}SOUND_COMMANDS dictionary{backgroundColors.FAIL}. Please add it!{Style.RESET_ALL}")
+	else: # if the sound file does not exist
+		print(f"{backgroundColors.FAIL}Sound file {backgroundColors.OKCYAN}{SOUND_FILE}{backgroundColors.FAIL} not found. Make sure the file exists.{Style.RESET_ALL}")
+
+# Register the function to play a sound when the program finishes
+atexit.register(play_sound)
 
 # @brief: Main function
 # @param: None
