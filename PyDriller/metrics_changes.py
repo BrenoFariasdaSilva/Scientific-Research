@@ -264,11 +264,10 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 		return
 	
 	metric = "CBOModified"
-	print(f"metrics postion: {METRICS_POSITION.get(metric)}")
 
 	# Extract the metrics values
 	x = np.arange(len(metrics))
-	y = np.array(metrics)[:, 1] # Considering the first metric (CBO) for linear regression
+	y = np.array(metrics)[:, 0] # Considering the first metric (CBO) for linear regression
 
 	# Check for sufficient data points for regression
 	if len(x) < 2 or len(y) < 2:
