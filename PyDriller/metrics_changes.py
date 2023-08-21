@@ -21,6 +21,7 @@ MINIMUM_CHANGES = 1 # The minimum number of changes a method should have to be c
 NUMBER_OF_METRICS = 4 # The number of metrics
 DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref"] # The default repository name
 SOUND_COMMANDS = {"Darwin": "afplay", "Linux": "aplay", "Windows": "start"} # The sound commands for each operating system
+METRICS_POSITION = {"CBO": 0, "CBOModified": 1, "WMC": 2, "RFC": 3}
 
 # Time units:
 TIME_UNITS = [60, 3600, 86400] # Seconds in a minute, seconds in an hour, seconds in a day
@@ -250,6 +251,8 @@ def get_clean_id(id):
 # @param: progress_status: The progress status
 # @return: None
 def linear_regression_predictions(metrics, filename, repository_name, progress_status):
+	# Make here a for loop to run for every metrics and store the collection of prediction this way:
+	# {FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class method}/all four metrics here.
 	print(f"{backgroundColors.OKGREEN}Linear regression {progress_status} for the {backgroundColors.OKCYAN}{repository_name} {filename}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
 	# Check for empty metrics list
 	if not metrics:
@@ -259,10 +262,13 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 	if np.isnan(metrics).any() or np.isinf(metrics).any():
 		print("Error: Metrics list contains invalid values (NaN or inf).")
 		return
+	
+	metric = "CBOModified"
+	print(f"metrics postion: {METRICS_POSITION.get(metric)}")
 
 	# Extract the metrics values
 	x = np.arange(len(metrics))
-	y = np.array(metrics)[:, 0] # Considering the first metric for linear regression
+	y = np.array(metrics)[:, 1] # Considering the first metric (CBO) for linear regression
 
 	# Check for sufficient data points for regression
 	if len(x) < 2 or len(y) < 2:
@@ -282,7 +288,7 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 	plt.legend()
 
 	# Save the plot to a PNG file
-	plt.savefig(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}.png")
+	plt.savefig(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/CBOM/{filename}.png")
 	plt.close()
    
 # @brief: This function writes the metrics evolution to a csv file
@@ -312,7 +318,7 @@ def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 			for i in range(metrics_len):
 				writer.writerow([unique_identifier, record["commit_hashes"][i], metrics[i][0], metrics[i][1], metrics[i][2], metrics[i][3]])
 		progress_status = f"{backgroundColors.OKCYAN}{i + 1}{backgroundColors.OKGREEN} of {backgroundColors.OKCYAN}{len(metrics_track_record)}{Style.RESET_ALL}"
-		linear_regression_predictions(metrics, filename, repository_name, progress_status)
+		linear_regression_predictions(metrics, filename, repository_name, progress_status) # Update the filename to remove the csv file extension
 
 	print(f"{backgroundColors.OKGREEN}Finished writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{Style.RESET_ALL}")
 

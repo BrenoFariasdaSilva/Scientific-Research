@@ -8,6 +8,7 @@ metrics_changes_script:
 	clear; python3 metrics_changes.py
 
 dependencies:
+	pip install scikit-learn
 	pip install matplotlib
 	pip install numpy
 	pip install pandas
