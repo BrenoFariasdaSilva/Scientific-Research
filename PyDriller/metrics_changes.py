@@ -263,34 +263,28 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 		print("Error: Metrics list contains invalid values (NaN or inf).")
 		return
 	
-	for key, value in METRICS_POSITION:
-		print(f"KEY: {key}, VALUE: {value}")
-
+	# Loop through the metrics_position dictionary
+	for key, value in METRICS_POSITION.items():
 		# Extract the metrics values
 		x = np.arange(len(metrics))
-		y = np.array(metrics)[:, 0] # Considering the first metric (CBO) for linear regression
+		y = np.array(metrics)[:, value] # Considering the metric in the value variable for linear regression
 
 		# Check for sufficient data points for regression
 		if len(x) < 2 or len(y) < 2:
 			return
 		
-		print(f"NP ARRAY: {np.array(metrics)[:, value]}")
-
 		# Perform linear regression using numpy.polyfit
 		coeffs = np.polyfit(x, y, deg=1)
 		linear_fit = coeffs[1] + coeffs[0] * x
 
 		# Create the plot
 		plt.figure(figsize=(10, 6))
-		plt.plot(x, y, "o", label=key)
+		plt.plot(x, y, "o", label=f"{key}")
 		plt.plot(x, linear_fit, "-", label="Linear Regression Fit")
-		plt.xlabel("Iterations")
-		plt.ylabel("Metric Value")
-		plt.title("Linear Regression for Metrics")
+		plt.xlabel("Commit Number")
+		plt.ylabel(f"{key} Value")
+		plt.title(f"Linear Regression for {key} metric of {filename}")
 		plt.legend()
-
-		print(f"filename: {filename}")
-		print(f"SaveFig PATH: {FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}/{key}.png")
 
 		# make the directory if it does not exist
 		if not os.path.exists(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}"):
