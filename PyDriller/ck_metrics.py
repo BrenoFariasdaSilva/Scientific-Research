@@ -38,7 +38,7 @@ RELATIVE_REPOSITORY_DIRECTORY_PATH = "/repositories" # The relative path of the 
 RELATIVE_CK_JAR_PATH = "/ck/ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar" # The relative path of the CK JAR file
 
 # Default values:
-DEFAULT_REPOSITORY_URL = ["https://github.com/apache/commons-lang", "https://github.com/JabRef/jabref"] # The default repository URL
+DEFAULT_REPOSITORY_URL = ["https://github.com/apache/commons-lang", "https://github.com/JabRef/jabref", "https://github.com/apache/kafka", "https://github.com/apache/zookeeper"] # The default repository URL
 FULL_CK_METRICS_DIRECTORY_PATH = PATH + RELATIVE_CK_METRICS_DIRECTORY_PATH # The full path of the directory that contains the CK generated files
 FULL_REPOSITORY_DIRECTORY_PATH = PATH + RELATIVE_REPOSITORY_DIRECTORY_PATH # The full path of the directory that contains the repositories
 FULL_CK_JAR_PATH = PATH + RELATIVE_CK_JAR_PATH # The full path of the CK JAR file
