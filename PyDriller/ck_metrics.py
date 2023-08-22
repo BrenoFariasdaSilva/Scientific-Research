@@ -314,6 +314,11 @@ def main():
       print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return
    
+   # Verify if the CK JAR file exists
+   if not os.path.exists(FULL_CK_JAR_PATH):
+      print(f"{backgroundColors.FAIL}The CK JAR file does not exist. Please download it and place it in {backgroundColors.OKCYAN}{RELATIVE_CK_JAR_PATH[0:RELATIVE_CK_JAR_PATH.find('/', 1)]}/{backgroundColors.FAIL}.{Style.RESET_ALL}")
+      return
+   
    # Get the user input
    repository_url = get_user_repository_url()
    # Get the name of the repository
