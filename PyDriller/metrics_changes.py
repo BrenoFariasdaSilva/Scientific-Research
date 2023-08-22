@@ -251,8 +251,6 @@ def get_clean_id(id):
 # @param: progress_status: The progress status
 # @return: None
 def linear_regression_predictions(metrics, filename, repository_name, progress_status):
-	# Make here a for loop to run for every metrics and store the collection of prediction this way:
-	# {FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class method}/all four metrics here.
 	print(f"{backgroundColors.OKGREEN}Linear regression {progress_status} for the {backgroundColors.OKCYAN}{repository_name} {filename}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
 	# Check for empty metrics list
 	if not metrics:
@@ -300,7 +298,7 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 # @return: None
 def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 	print(f"{backgroundColors.OKGREEN}Writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{backgroundColors.OKGREEN}...{Style.RESET_ALL}")
-	i = 0
+	progress_counter = 0
 	# For every identifier in the metrics_track_record, store each metrics values tuple in a row of the csv file
 	for identifier, record in metrics_track_record.items():
 		metrics = record["metrics"]
@@ -320,7 +318,8 @@ def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 			metrics_len = len(metrics)
 			for i in range(metrics_len):
 				writer.writerow([unique_identifier, record["commit_hashes"][i], metrics[i][0], metrics[i][1], metrics[i][2], metrics[i][3]])
-		progress_status = f"{backgroundColors.OKCYAN}{i + 1}{backgroundColors.OKGREEN} of {backgroundColors.OKCYAN}{len(metrics_track_record)}{Style.RESET_ALL}"
+		progress_counter += 1
+		progress_status = f"{backgroundColors.OKCYAN}{progress_counter}{backgroundColors.OKGREEN} of {backgroundColors.OKCYAN}{len(metrics_track_record)}{Style.RESET_ALL}"
 		linear_regression_predictions(metrics, filename, repository_name, progress_status) # Update the filename to remove the csv file extension
 
 	print(f"{backgroundColors.OKGREEN}Finished writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{Style.RESET_ALL}")
