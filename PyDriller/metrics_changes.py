@@ -263,32 +263,42 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 		print("Error: Metrics list contains invalid values (NaN or inf).")
 		return
 	
-	metric = "CBOModified"
+	for key, value in METRICS_POSITION:
+		print(f"KEY: {key}, VALUE: {value}")
 
-	# Extract the metrics values
-	x = np.arange(len(metrics))
-	y = np.array(metrics)[:, 0] # Considering the first metric (CBO) for linear regression
+		# Extract the metrics values
+		x = np.arange(len(metrics))
+		y = np.array(metrics)[:, 0] # Considering the first metric (CBO) for linear regression
 
-	# Check for sufficient data points for regression
-	if len(x) < 2 or len(y) < 2:
-		return
+		# Check for sufficient data points for regression
+		if len(x) < 2 or len(y) < 2:
+			return
+		
+		print(f"NP ARRAY: {np.array(metrics)[:, value]}")
 
-	# Perform linear regression using numpy.polyfit
-	coeffs = np.polyfit(x, y, deg=1)
-	linear_fit = coeffs[1] + coeffs[0] * x
+		# Perform linear regression using numpy.polyfit
+		coeffs = np.polyfit(x, y, deg=1)
+		linear_fit = coeffs[1] + coeffs[0] * x
 
-	# Create the plot
-	plt.figure(figsize=(10, 6))
-	plt.plot(x, y, "o", label="Actual Metrics")
-	plt.plot(x, linear_fit, "-", label="Linear Regression Fit")
-	plt.xlabel("Iterations")
-	plt.ylabel("Metric Value")
-	plt.title("Linear Regression for Metrics")
-	plt.legend()
+		# Create the plot
+		plt.figure(figsize=(10, 6))
+		plt.plot(x, y, "o", label=key)
+		plt.plot(x, linear_fit, "-", label="Linear Regression Fit")
+		plt.xlabel("Iterations")
+		plt.ylabel("Metric Value")
+		plt.title("Linear Regression for Metrics")
+		plt.legend()
 
-	# Save the plot to a PNG file
-	plt.savefig(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/CBOM/{filename}.png")
-	plt.close()
+		print(f"filename: {filename}")
+		print(f"SaveFig PATH: {FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}/{key}.png")
+
+		# make the directory if it does not exist
+		if not os.path.exists(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}"):
+			os.makedirs(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}")
+
+		# Save the plot to a PNG file
+		plt.savefig(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}/{key}.png")
+		plt.close()
    
 # @brief: This function writes the metrics evolution to a csv file
 # @param: repository_name: The name of the repository
@@ -302,8 +312,8 @@ def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 		metrics = record["metrics"]
 		class_name = identifier.split(' ')[0] # Get the identifier which is currently the class name
 		variable_attribute = get_clean_id(identifier.split(" ")[1]) # Get the variable attribute which could be the type of the class or the method name
-		filename = f"{class_name} {variable_attribute}{CSV_FILE_EXTENSION}" if PROCESS_CLASSES else f"{class_name} {variable_attribute}{CSV_FILE_EXTENSION}"
-		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + filename, "w") as csvfile:
+		filename = f"{class_name} {variable_attribute}" # The filename of the csv file without the file extension
+		with open(FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + filename + CSV_FILE_EXTENSION, "w") as csvfile:
 			writer = csv.writer(csvfile)
 			if PROCESS_CLASSES:
 				unique_identifier = class_name
