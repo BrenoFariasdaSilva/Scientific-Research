@@ -70,7 +70,8 @@ def validate_attribute(attribute, default_attribute_value):
 # @return: A tuple containing the repository name and the path to the directory
 def get_directory_path():
 	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
-	repository_name = validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME[0]) # Validate the repository name
+	# repository_name = validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME[3]) # Validate the repository name
+	repository_name = validate_attribute(repository_name, "zookeeper") # Validate the repository name
 	
 	directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
