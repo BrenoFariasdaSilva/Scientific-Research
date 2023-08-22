@@ -284,7 +284,7 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 		plt.title(f"Linear Regression for {key} metric of {filename}")
 		plt.legend()
 
-		# make the directory if it does not exist
+		# Create the Class/Method linear prediction directory if it does not exist
 		if not os.path.exists(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}"):
 			os.makedirs(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}")
 
