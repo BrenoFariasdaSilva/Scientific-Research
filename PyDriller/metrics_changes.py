@@ -254,11 +254,12 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 	print(f"{backgroundColors.OKGREEN}Linear regression {progress_status} for the {backgroundColors.OKCYAN}{repository_name} {filename}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
 	# Check for empty metrics list
 	if not metrics:
+		print(f"{backgroundColors.FAIL}Metrics list is empty!{Style.RESET_ALL}")
 		return
 
 	# Check for invalid values in the metrics
 	if np.isnan(metrics).any() or np.isinf(metrics).any():
-		print("Error: Metrics list contains invalid values (NaN or inf).")
+		print(f"{backgroundColors.FAIL}Metrics list contains invalid values (NaN or inf)!{Style.RESET_ALL}")
 		return
 	
 	# Loop through the metrics_position dictionary
