@@ -285,11 +285,11 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 		plt.legend()
 
 		# Create the Class/Method linear prediction directory if it does not exist
-		if not os.path.exists(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}"):
-			os.makedirs(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}")
+		if not os.path.exists(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename.split(' ')[0]}/{filename.split(' ')[1]}"):
+			os.makedirs(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename.split(' ')[0]}/{filename.split(' ')[1]}")
 
 		# Save the plot to a PNG file
-		plt.savefig(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename}/{key}.png")
+		plt.savefig(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename.split(' ')[0]}/{filename.split(' ')[1]}/{key}.png")
 		plt.close()
    
 # @brief: This function writes the metrics evolution to a csv file
