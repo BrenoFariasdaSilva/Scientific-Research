@@ -284,12 +284,15 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 		plt.title(f"Linear Regression for {key} metric of {filename}")
 		plt.legend()
 
+		class_name = filename.split(' ')[0] # Get the class name
+		variable_attribute = get_clean_id(filename.split(" ")[1]) # Get the variable attribute which could be the type of the class or the method name
+
 		# Create the Class/Method linear prediction directory if it does not exist
-		if not os.path.exists(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename.split(' ')[0]}/{filename.split(' ')[1]}"):
-			os.makedirs(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename.split(' ')[0]}/{filename.split(' ')[1]}")
+		if not os.path.exists(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class_name}/{variable_attribute}"):
+			os.makedirs(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class_name}/{variable_attribute}")
 
 		# Save the plot to a PNG file
-		plt.savefig(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{filename.split(' ')[0]}/{filename.split(' ')[1]}/{key}.png")
+		plt.savefig(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class_name}/{variable_attribute}/{key}.png")
 		plt.close()
    
 # @brief: This function writes the metrics evolution to a csv file
