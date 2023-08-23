@@ -28,6 +28,7 @@ DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref", "kafka", "zookeeper"] # The
 DEFAULT_CLASS_IDS = {"org.apache.commons.lang.StringUtils": "class"} # The default ids to be analyzed. It stores the class:type or class:method
 DEFAULT_METHOD_IDS = {"org.apache.commons.lang3.AnnotationUtilsTest": "testBothArgsNull/0", "org.apache.commons.lang.LangTestSuite": "suite/0"} # The default ids to be analyzed. It stores the class:type or class:method
 DEFAULT_IDS = DEFAULT_CLASS_IDS if PROCESS_CLASSES else DEFAULT_METHOD_IDS # The default ids to be analyzed. It stores the class:type or method:class
+IMAGE_LABELS = [False, False]
  
 # Relative paths:
 RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH = "/metrics_evolution" # The relative path of the metrics_evolution directory
@@ -80,33 +81,41 @@ def create_directory(full_directory_path, relative_directory_path):
    except OSError: # If the directory cannot be created
       print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory failed.{Style.RESET_ALL}")
 
-# brief: Get user input of the name of the class or method to be analyzed
-# param: None
-# return: id: Name of the class or method to be analyzed
-def get_user_ids_input():
-   id = {} # Dictionary that stores the ids to be analyzed
+# @brief: Get user input of the name of the class or method to be analyzed
+# @param: repository_name: Name of the repository to be analyzed
+# @return: id: Name of the class or method to be analyzed
+def get_user_ids_input(repository_name):
+   ids = {} # Dictionary that stores the ids to be analyzed
    name = ""
    first_run = True
+   csv_file = CK_CSV_FILE.replace('.csv', '') # The name of the csv generated file from ck.
    while name == "" and first_run:
       first_run = False
       # Ask for user input of the class or method name
-      name = input(f"{backgroundColors.OKGREEN}Enter the name of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+      name = input(f"{backgroundColors.OKGREEN}Enter the name of the {csv_file} {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
       # if the CK_CSV_FILE is a class csv file, ask for the type of the class ('class' 'interface' 'innerclass' 'enum' 'anonymous')
       if CK_CSV_FILE == CLASS_CSV_FILE:
-         value = input(f"{backgroundColors.OKGREEN}Enter the type of the {CK_CSV_FILE.replace('.csv', '')} {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+         value = input(f"{backgroundColors.OKGREEN}Enter the type of the {csv_file} {backgroundColors.OKCYAN}{ids}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
       # if the CK_CSV_FILE is a method csv file, ask for the name of the class of the method
       elif CK_CSV_FILE == METHOD_CSV_FILE:
-         value = input(f"{backgroundColors.OKGREEN}Enter the {CK_CSV_FILE.replace('.csv', '')} name of the {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+         value = input(f"{backgroundColors.OKGREEN}Enter the {csv_file} name of the {backgroundColors.OKCYAN}{ids}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
       # add the name and value to the id dictionary
-      id[name] = value
+      ids[name] = value
+
+   # If the name is "*", them do for every Class/Method in the Repository.
+   if name == "*" and not first_run:
+      variable_attributes = "Type" if PROCESS_CLASSES else "Method"
+      repo_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
+      df = pd.read_csv(repo_top_changes_file_path)
+      ids = dict(zip(df["Class"], df[variable_attributes])) # Create a dictionary with the class name as the key and the type or method as the value
 
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
    if name == "" and not first_run:
-      id = DEFAULT_IDS
+      ids = DEFAULT_IDS
       print(f"{backgroundColors.OKGREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.OKCYAN}{', '.join(id.keys())}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
 
-   return id # Return the class or method name
+   return ids # Return the class or method name
 
 # @brief: This function validates if the ids are as the same type as the files to be analyzed defined in CK_CSV_FILE according to PROCESS_CLASSES
 # @param: ids: Dictionary containing the ids to be analyzed
@@ -114,14 +123,15 @@ def get_user_ids_input():
 # @return: True if the ids are valid, False otherwise
 def validate_ids(ids, repository_name):
    # Get the path of the file containing the top changes of the classes
-   repo_class_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
-   # Verify if the ids to be processed are classes
-   if PROCESS_CLASSES:
-      class_types = pd.read_csv(repo_class_top_changes_file_path)["Type"].unique()
-      # Verify if the ids are classes
-      for id in ids.values():
-         if id not in class_types: # If the id is not a class
-            return False # Return False because the id is not a class
+   repo_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
+
+   classnames = pd.read_csv(repo_top_changes_file_path)["Class"].unique()
+   attribute = "Type" if PROCESS_CLASSES else "Method"
+   variable_attributes = pd.read_csv(repo_top_changes_file_path)[attribute].unique()
+   # Verify if the ids are as the same type as the files to be analyzed defined in CK_CSV_FILE according to PROCESS_CLASSES
+   for key, value in ids.items():
+      if key not in classnames or value not in variable_attributes: # If the id is not a class or the value is not in the attribute field
+         return False # Return False because the id is not a class
    return True # Return True because the ids are valid
 
 # @brief: This function receives an id and verify if it contains slashes, if so, it returns the id without the slashes
@@ -162,11 +172,18 @@ def insert_labels():
    labels = ["", ""] # The first position stores the desired option (y/n) and the second stores the type of label to be added to the data points
    first_run = [True, True] # List to store the first run of the while loops
    
-   while labels[0] != "y" and labels[0] != "n":
+   while labels[0] != "y" and labels[0] != "n" and labels[0] != "y*" and labels[0] != "n*":
       if not first_run[0]:
          print(f"{backgroundColors.FAIL}Invalid option!{Style.RESET_ALL}")
       first_run[0] = False
-      labels[0] = input(f"{backgroundColors.OKGREEN}Do you want to add labels to the data points? {backgroundColors.OKCYAN}(y/n){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+      labels[0] = input(f"{backgroundColors.OKGREEN}Do you want to add labels to the data points? {backgroundColors.OKCYAN}(y/n/y*/n*){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+
+   if labels[0] == "y*":
+      IMAGE_LABELS[0] = True
+      labels[0] = "y"
+   elif labels[0] == "n*":
+      IMAGE_LABELS[0] = False
+      labels[0] = "n"
 
    if labels[0] == "y":
       labels[0] = True 
@@ -177,6 +194,8 @@ def insert_labels():
          print(f"{backgroundColors.OKGREEN}Choose the type of label to be added to the data points: {Style.RESET_ALL}")
          print(f"{backgroundColors.OKCYAN}   1. Sequence of numbers \n   2. Value of the data point (y axis value){Style.RESET_ALL}")
          labels[1] = input(f"{backgroundColors.OKGREEN}Type the number of the label you want in your images plot: {Style.RESET_ALL}")
+         if IMAGE_LABELS[0]:
+            IMAGE_LABELS[1] = labels[1]
       
    return labels
 
@@ -229,7 +248,10 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id_key):
    # Plotting the graph
    plt.figure(figsize=(38.4, 21.6))
 
-   labels = insert_labels() # Ask the user if he wants to add labels to the data points and which one
+   if not IMAGE_LABELS[0]:
+      labels = insert_labels() # Ask the user if he wants to add labels to the data points and which one
+   else:
+      labels = IMAGE_LABELS
 
    # Iterate over each metric and plot its evolution with a different color
    for i, metric in enumerate(metrics):
@@ -264,12 +286,12 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id_key):
    plt.tight_layout()
 
    # create the graphics directory if it doesn't exist
-   create_directory(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS, RELATIVE_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS)
+   create_directory(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id, RELATIVE_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id)
 
    # Save the graph
-   plt.savefig(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + " " + clean_id_key + ".png")
+   plt.savefig(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + "/" + clean_id_key + ".png")
 
-   print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphic for {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+   print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphic for {backgroundColors.OKCYAN}{id} {clean_id_key}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
 
 # @brief: This function defines the command to play a sound when the program finishes
 # @param: None
@@ -325,7 +347,7 @@ def main():
    repository_name = get_repository_name_user()
 
    # Get the ids from the user
-   ids = get_user_ids_input()
+   ids = get_user_ids_input(repository_name)
 
    # If the ids is "*", them do for every Class/Method in the Repository.
 
