@@ -312,6 +312,7 @@ def output_time(output_string, time):
 # @return: None
 def main():
    start_time = time.time() # Start the timer
+   
    # Verify if the path constant contains whitespaces
    if path_contains_whitespaces():
       print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
@@ -325,6 +326,8 @@ def main():
 
    # Get the ids from the user
    ids = get_user_ids_input()
+
+   # If the ids is "*", them do for every Class/Method in the Repository.
 
    # Validate the ids, if is related to a class or method
    if not validate_ids(ids, repository_name):
