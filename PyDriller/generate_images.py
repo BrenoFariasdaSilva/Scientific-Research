@@ -292,6 +292,7 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id_key):
    plt.savefig(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + "/" + clean_id_key + ".png")
 
    print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphic for {backgroundColors.OKCYAN}{id} {clean_id_key}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+   print()
 
 # @brief: This function defines the command to play a sound when the program finishes
 # @param: None
@@ -361,9 +362,10 @@ def main():
       print(f"{backgroundColors.FAIL}The metrics evolution for {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.FAIL} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not created. Please run the {backgroundColors.OKCYAN}metrics_changes.py{backgroundColors.FAIL} file first.{Style.RESET_ALL}")
       return
    
+   number_of_ids = len(ids.keys())
    # Make a for loop to run the create_metrics_evolution_graphic function for each id
-   for id in ids: # Loop trough the ids items in the dictionary
-      print(f"{backgroundColors.OKGREEN}Generating the image for {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+   for index, id in enumerate(ids): # Loop trough the ids items in the dictionary
+      print(f"{backgroundColors.OKCYAN}{index+1} of {number_of_ids}{backgroundColors.OKGREEN}Generating the image for {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
       # Create the metrics evolution graphs
       create_metrics_evolution_graphic(repository_name, id, get_clean_id(ids[id]))
