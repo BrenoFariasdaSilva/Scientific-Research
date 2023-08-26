@@ -294,6 +294,8 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 
 		# Save the plot to a PNG file
 		plt.savefig(f"{FULL_METRICS_PREDICTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class_name}/{variable_attribute}/{key}.png")
+		
+		# Close the plot
 		plt.close()
    
 # @brief: This function writes the metrics evolution to a csv file
