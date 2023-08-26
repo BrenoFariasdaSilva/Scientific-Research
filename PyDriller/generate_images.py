@@ -362,8 +362,6 @@ def main():
    # Get the ids from the user
    ids = get_user_ids_input(repository_name)
 
-   # If the ids is "*", them do for every Class/Method in the Repository.
-
    # Validate the ids, if is related to a class or method
    if not validate_ids(ids, repository_name):
       print(f"{backgroundColors.RED}The {backgroundColors.CYAN}{', '.join(ids.keys())}{backgroundColors.RED} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
