@@ -374,7 +374,7 @@ def main():
       # Create the metrics evolution graphs
       create_metrics_evolution_graphic(repository_name, id, get_clean_id(ids[id]))
 
-   print(f"{backgroundColors.CYAN}Successfully created the metrics evolution graphics{backgroundColors.GREEN} for the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} inside the {backgroundColors.CYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
+   print(f"{backgroundColors.CYAN}Successfully created the metrics evolution graphics{backgroundColors.GREEN} for the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository inside the {backgroundColors.CYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
 
    elapsed_time = time.time() - start_time
    elapsed_time_string = f"Time taken to generate the {backgroundColors.CYAN}images{backgroundColors.GREEN} for the {backgroundColors.CYAN}{CLASSES_OR_METHODS}{backgroundColors.GREEN} in {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN}: "
