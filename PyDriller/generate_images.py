@@ -117,6 +117,7 @@ def get_user_ids_input(repository_name):
                class_key = row["Class"]
                variable_attribute_value = row[variable_attribute]
                result_dict[class_key] = variable_attribute_value
+      return result_dict # Return the class or method name
 
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
    if name == "" and not first_run:
