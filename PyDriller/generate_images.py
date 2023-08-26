@@ -92,7 +92,7 @@ def get_user_ids_input(repository_name):
    while name == "" and first_run:
       first_run = False
       # Ask for user input of the class or method name
-      name = input(f"{backgroundColors.GREEN}Enter the name of the {csv_file} {backgroundColors.RED}(String){backgroundColors.GREEN}: {backgroundColors.RED}(String/*){Style.RESET_ALL}")
+      name = input(f"{backgroundColors.GREEN}Enter the name of the {csv_file} {backgroundColors.RED}(String/*){backgroundColors.GREEN}: {Style.RESET_ALL}")
       # if the CK_CSV_FILE is a class csv file, ask for the type of the class ('class' 'interface' 'innerclass' 'enum' 'anonymous')
       if CK_CSV_FILE == CLASS_CSV_FILE:
          value = input(f"{backgroundColors.GREEN}Enter the type of the {csv_file} {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
@@ -365,7 +365,7 @@ def main():
    number_of_ids = len(ids.keys())
    # Make a for loop to run the create_metrics_evolution_graphic function for each id
    for index, id in enumerate(ids): # Loop trough the ids items in the dictionary
-      print(f"{backgroundColors.CYAN}{index+1} of {number_of_ids}{backgroundColors.GREEN}Generating the image for {backgroundColors.CYAN}{id}{backgroundColors.GREEN} inside the {backgroundColors.CYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}Generating Image {backgroundColors.CYAN}{index+1} of {number_of_ids}{backgroundColors.GREEN} for the {backgroundColors.CYAN}{id} {CK_CSV_FILE.replace('.csv', '')}{backgroundColors.GREEN} inside the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository.{Style.RESET_ALL}")
 
       # Create the metrics evolution graphs
       create_metrics_evolution_graphic(repository_name, id, get_clean_id(ids[id]))
