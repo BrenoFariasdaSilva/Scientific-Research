@@ -10,10 +10,10 @@ from colorama import Style # For coloring the terminal
 
 # Macros:
 class backgroundColors: # Colors for the terminal
-	OKCYAN = "\033[96m" # Cyan
-	OKGREEN = "\033[92m" # Green
-	WARNING = "\033[93m" # Yellow
-	FAIL = "\033[91m" # Red
+	CYAN = "\033[96m" # Cyan
+	GREEN = "\033[92m" # Green
+	YELLOW = "\033[93m" # Yellow
+	RED = "\033[91m" # Red
         
 # Constants:
 SOUND_COMMANDS = {"Darwin": "afplay", "Linux": "aplay", "Windows": "start"} # The sound commands for each operating system
@@ -58,7 +58,7 @@ def path_contains_whitespaces():
 # @return: The repository URL and the output directory
 def validate_attribute(attribute, default_attribute_value):
    if not attribute: # Verify if the attribute is empty
-      print(f"{backgroundColors.WARNING}The attribute is empty! Using the default value: {backgroundColors.OKCYAN}{default_attribute_value}{Style.RESET_ALL}")
+      print(f"{backgroundColors.YELLOW}The attribute is empty! Using the default value: {backgroundColors.CYAN}{default_attribute_value}{Style.RESET_ALL}")
       attribute = default_attribute_value # Set the attribute to the default value
    return attribute
 
@@ -67,7 +67,7 @@ def validate_attribute(attribute, default_attribute_value):
 # @return: repository_url: URL of the repository to be analyzed
 def get_user_repository_url():
    # Ask for user input of the repository URL
-   repository_url = input(f"{backgroundColors.OKGREEN}Enter the repository URL {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+   repository_url = input(f"{backgroundColors.GREEN}Enter the repository URL {backgroundColors.CYAN}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
 
    # Return the repository URL
    return validate_attribute(repository_url, DEFAULT_REPOSITORY_URL[0])
@@ -83,7 +83,7 @@ def get_repository_name(url):
 # @param: repository_name: Name of the repository to be analyzed
 # @return: None
 def update_repository(repository_name):
-   print(f"{backgroundColors.OKGREEN}Updating the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository using {backgroundColors.OKCYAN}git pull{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+   print(f"{backgroundColors.GREEN}Updating the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository using {backgroundColors.CYAN}git pull{backgroundColors.GREEN}.{Style.RESET_ALL}")
    os.chdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name)
    # Create a thread to update the repository located in RELATIVE_REPOSITORY_DIRECTORY + '/' + repository_name
    update_thread = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -97,16 +97,16 @@ def update_repository(repository_name):
 def clone_repository(repository_name, repository_url):
    # Verify if the repository directory already exists and if it is not empty
    if os.path.isdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name) and os.listdir(FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name):
-      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository is already cloned!{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}The {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository is already cloned!{Style.RESET_ALL}")
       update_repository(repository_name) # Update the repository
       return
    else:
-      print(f"{backgroundColors.OKGREEN}Cloning the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}Cloning the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository...{Style.RESET_ALL}")
       # Create a thread to clone the repository
       thread = subprocess.Popen(["git", "clone", repository_url, FULL_REPOSITORY_DIRECTORY_PATH + '/' + repository_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
       # Wait for the thread to finish
       thread.wait()
-      print(f"{backgroundColors.OKGREEN}Successfully cloned the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}Successfully cloned the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository{Style.RESET_ALL}")
 
 # @brief: Create a directory
 # @param: full_directory_name: Name of the directory to be created
@@ -114,19 +114,19 @@ def clone_repository(repository_name, repository_url):
 # @return: None
 def create_directory(full_directory_name, relative_directory_name):
    if os.path.isdir(full_directory_name): # Verify if the directory already exists
-      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory already exists{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}The {backgroundColors.CYAN}{relative_directory_name}{backgroundColors.GREEN} directory already exists{Style.RESET_ALL}")
       return
    try: # Try to create the directory
       os.makedirs(full_directory_name)
-      print(f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}Successfully created the {backgroundColors.CYAN}{relative_directory_name}{backgroundColors.GREEN} directory{Style.RESET_ALL}")
    except OSError: # If the directory cannot be created
-      print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}The creation of the {backgroundColors.CYAN}{relative_directory_name}{backgroundColors.GREEN} directory failed{Style.RESET_ALL}")
 
 # @brief: This verifies if all the metrics are already calculated by opening the commit hashes file and checking if every commit hash in the file is a folder in the repository folder
 # @param: repository_name: Name of the repository to be analyzed
 # @return: True if all the metrics are already calculated, False otherwise
 def verify_ck_metrics_folder(repository_name):
-   print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
+   print(f"{backgroundColors.GREEN}Checking if all the {backgroundColors.CYAN}CK metrics{backgroundColors.GREEN} are already calculated for the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository...{Style.RESET_ALL}")
    data_path = os.path.join(PATH, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the PATH with the relative path of the ck metrics directory
    repo_path = os.path.join(data_path, repository_name) # Join the data path with the repository name
    commit_file = f"{repository_name}-commit_hashes{COMMIT_HASHES_FILE_EXTENSION}" # The name of the commit hashes file
@@ -134,7 +134,7 @@ def verify_ck_metrics_folder(repository_name):
 
    # Verify if the repository exists
    if not os.path.exists(commit_file_path):
-      print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+      print(f"{backgroundColors.RED}File {backgroundColors.CYAN}{commit_file}{backgroundColors.RED} does not exist inside {backgroundColors.CYAN}{data_path}{backgroundColors.RED}.{Style.RESET_ALL}")
       return False # Return False because the repository does not exist
 
    # Read the commit hashes csv file and get the commit_hashes column, but ignore the first line
@@ -149,7 +149,7 @@ def verify_ck_metrics_folder(repository_name):
          for ck_metric_file in CK_METRICS_FILES: # Verify if all the ck metrics files exist inside the folder
             ck_metric_file_path = os.path.join(folder_path, ck_metric_file)
             if not os.path.exists(ck_metric_file_path): # If the file does not exist
-               print(f"{backgroundColors.FAIL}The file {backgroundColors.OKCYAN}{ck_metric_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{folder_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+               print(f"{backgroundColors.RED}The file {backgroundColors.CYAN}{ck_metric_file}{backgroundColors.RED} does not exist inside {backgroundColors.CYAN}{folder_path}{backgroundColors.RED}.{Style.RESET_ALL}")
                return False # If the file does not exist, then the metrics are not calculated
    return True # If all the metrics are already calculated
 
@@ -169,7 +169,7 @@ def run_ck_metrics_generator(cmd):
    # Create a thread to run the cmd command
    thread = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
    stdout, stderr = thread.communicate()
-   print(f"{backgroundColors.OKGREEN}{stdout.decode('utf-8')}{Style.RESET_ALL}")
+   print(f"{backgroundColors.GREEN}{stdout.decode('utf-8')}{Style.RESET_ALL}")
 
 # @brief: This function generates the output directory path for the CK metrics generator
 # @param: repository_name: Name of the repository to be analyzed
@@ -187,8 +187,8 @@ def generate_output_directory_paths(repository_name, commit_hash):
 # @param: number_of_commits: Number of commits to be analyzed
 # @return: None
 def output_commit_progress(repository_name, commit_hash, commit_number, number_of_commits):
-   relative_cmd = f"{backgroundColors.OKGREEN}java -jar {backgroundColors.OKCYAN}{RELATIVE_CK_JAR_PATH} {RELATIVE_REPOSITORY_DIRECTORY_PATH}/{repository_name}{backgroundColors.OKGREEN} false 0 false {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{commit_hash}/"
-   print(f"{backgroundColors.OKCYAN}{commit_number} of {number_of_commits}{backgroundColors.OKGREEN} - Running CK: {relative_cmd}{Style.RESET_ALL}")
+   relative_cmd = f"{backgroundColors.GREEN}java -jar {backgroundColors.CYAN}{RELATIVE_CK_JAR_PATH} {RELATIVE_REPOSITORY_DIRECTORY_PATH}/{repository_name}{backgroundColors.GREEN} false 0 false {backgroundColors.CYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{commit_hash}/"
+   print(f"{backgroundColors.CYAN}{commit_number} of {number_of_commits}{backgroundColors.GREEN} - Running CK: {relative_cmd}{Style.RESET_ALL}")
 
 # @brief: This function outputs time, considering the appropriate time unit
 # @param: output_string: String to be outputted
@@ -209,7 +209,7 @@ def output_time(output_string, time):
       time_value = time / TIME_UNITS[2]
 
    rounded_time = round(time_value, 2)
-   print(f"{backgroundColors.OKGREEN}{output_string}{backgroundColors.OKCYAN}{rounded_time} {time_unit}{Style.RESET_ALL}")
+   print(f"{backgroundColors.GREEN}{output_string}{backgroundColors.CYAN}{rounded_time} {time_unit}{Style.RESET_ALL}")
 
 # @brief: This function outputs the execution time of the CK metrics generator
 # @param: first_iteration_duration: Duration of the first iteration
@@ -218,11 +218,11 @@ def output_time(output_string, time):
 # @param: repository_name: Name of the repository to be analyzed
 # @return: None
 def show_execution_time(first_iteration_duration, elapsed_time, number_of_commits, repository_name):
-   first_iteration_time_string = f"Time taken to generate {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} for the first commit in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN}: "
+   first_iteration_time_string = f"Time taken to generate {backgroundColors.CYAN}CK metrics{backgroundColors.GREEN} for the first commit in {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN}: "
    output_time(first_iteration_time_string, round(first_iteration_duration, 2))
-   estimated_time_string = f"Estimated time for the rest of the iterations in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN}: "
+   estimated_time_string = f"Estimated time for the rest of the iterations in {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN}: "
    output_time(estimated_time_string, round(first_iteration_duration * number_of_commits, 2))
-   time_taken_string = f"Time taken to generate CK metrics for {backgroundColors.OKCYAN}{number_of_commits}{backgroundColors.OKGREEN} commits in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository: "
+   time_taken_string = f"Time taken to generate CK metrics for {backgroundColors.CYAN}{number_of_commits}{backgroundColors.GREEN} commits in {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository: "
    output_time(time_taken_string, round(elapsed_time, 2))
 
 # @brief: This function traverses the repository
@@ -265,7 +265,7 @@ def traverse_repository(repository_name, repository_url, number_of_commits):
 
       if i == 1:
          traversed_first_commit = True
-         first_iteration_time_string = f"Time taken to generate {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} for the first commit in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN}: "
+         first_iteration_time_string = f"Time taken to generate {backgroundColors.CYAN}CK metrics{backgroundColors.GREEN} for the first commit in {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN}: "
          first_iteration_duration = time.time() - start_time
          output_time(first_iteration_time_string, round(first_iteration_duration, 2))
 
@@ -298,9 +298,9 @@ def play_sound():
 		if platform.system() in SOUND_COMMANDS: # if the platform.system() is in the SOUND_COMMANDS dictionary
 			os.system(f"{SOUND_COMMANDS[platform.system()]} {SOUND_FILE}")
 		else: # if the platform.system() is not in the SOUND_COMMANDS dictionary
-			print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}platform.system(){backgroundColors.FAIL} is not in the {backgroundColors.OKCYAN}SOUND_COMMANDS dictionary{backgroundColors.FAIL}. Please add it!{Style.RESET_ALL}")
+			print(f"{backgroundColors.RED}The {backgroundColors.CYAN}platform.system(){backgroundColors.RED} is not in the {backgroundColors.CYAN}SOUND_COMMANDS dictionary{backgroundColors.RED}. Please add it!{Style.RESET_ALL}")
 	else: # if the sound file does not exist
-		print(f"{backgroundColors.FAIL}Sound file {backgroundColors.OKCYAN}{SOUND_FILE}{backgroundColors.FAIL} not found. Make sure the file exists.{Style.RESET_ALL}")
+		print(f"{backgroundColors.RED}Sound file {backgroundColors.CYAN}{SOUND_FILE}{backgroundColors.RED} not found. Make sure the file exists.{Style.RESET_ALL}")
 
 # Register the function to play a sound when the program finishes
 atexit.register(play_sound)
@@ -311,12 +311,12 @@ atexit.register(play_sound)
 def main():
    # Verify if the path constants contains whitespaces
    if path_contains_whitespaces():
-      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
+      print(f"{backgroundColors.RED}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return
    
    # Verify if the CK JAR file exists
    if not os.path.exists(FULL_CK_JAR_PATH):
-      print(f"{backgroundColors.FAIL}The CK JAR file does not exist. Please download it and place it in {backgroundColors.OKCYAN}{RELATIVE_CK_JAR_PATH[0:RELATIVE_CK_JAR_PATH.find('/', 1)]}/{backgroundColors.FAIL}.{Style.RESET_ALL}")
+      print(f"{backgroundColors.RED}The CK JAR file does not exist. Please download it and place it in {backgroundColors.CYAN}{RELATIVE_CK_JAR_PATH[0:RELATIVE_CK_JAR_PATH.find('/', 1)]}/{backgroundColors.RED}.{Style.RESET_ALL}")
       return
    
    # Get the user input
@@ -326,7 +326,7 @@ def main():
 
    # Verify if the metrics were already calculated
    if verify_ck_metrics_folder(repository_name):
-      print(f"{backgroundColors.OKGREEN}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} were already calculated{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}The metrics for {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} were already calculated{Style.RESET_ALL}")
       return
    
    # Create the ck metrics directory

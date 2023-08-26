@@ -16,7 +16,7 @@ from ck_metrics import backgroundColors # For coloring the terminal outputs
 
 # CONSTANTS:
 PATH = os.getcwd() # Get the current working directory
-PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file {backgroundColors.FAIL}(True/False){backgroundColors.OKGREEN}? {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
+PROCESS_CLASSES = input(f"{backgroundColors.GREEN}Do you want to process the {backgroundColors.CYAN}class.csv{backgroundColors.GREEN} file {backgroundColors.RED}(True/False){backgroundColors.GREEN}? {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 MINIMUM_CHANGES = 1 # The minimum number of changes a method should have to be considered
 NUMBER_OF_METRICS = 4 # The number of metrics
 DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref", "kafka", "zookeeper"] # The default repository names
@@ -61,7 +61,7 @@ def path_contains_whitespaces():
 # @return: The repository URL and the output directory
 def validate_attribute(attribute, default_attribute_value):
    if not attribute: # Verify if the attribute is empty
-      print(f"{backgroundColors.WARNING}The attribute is empty! Using the default value: {backgroundColors.OKCYAN}{default_attribute_value}{Style.RESET_ALL}")
+      print(f"{backgroundColors.YELLOW}The attribute is empty! Using the default value: {backgroundColors.CYAN}{default_attribute_value}{Style.RESET_ALL}")
       attribute = default_attribute_value # Set the attribute to the default value
    return attribute
 
@@ -69,15 +69,15 @@ def validate_attribute(attribute, default_attribute_value):
 # @param: None
 # @return: A tuple containing the repository name and the path to the directory
 def get_directory_path():
-	repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+	repository_name = input(f"{backgroundColors.GREEN}Enter the repository name {backgroundColors.CYAN}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
 	repository_name = validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME[0]) # Validate the repository name
 	
 	directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
 	# Verify if the directory does not exist
 	while not os.path.isdir(directory_path):
-		print(f"{backgroundColors.FAIL}The directory does not exist. Please try again.{Style.RESET_ALL}")
-		repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+		print(f"{backgroundColors.RED}The directory does not exist. Please try again.{Style.RESET_ALL}")
+		repository_name = input(f"{backgroundColors.GREEN}Enter the repository name {backgroundColors.CYAN}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
 		directory_path = f"{FULL_CK_METRICS_DIRECTORY_PATH}/{repository_name}"
 
 	return repository_name, directory_path
@@ -86,7 +86,7 @@ def get_directory_path():
 # @param: repository_name: Name of the repository to be analyzed
 # @return: True if all the metrics are already calculated, False otherwise
 def verify_ck_metrics_folders(repository_name):
-	print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
+	print(f"{backgroundColors.GREEN}Checking if all the {backgroundColors.CYAN}CK metrics{backgroundColors.GREEN} are already calculated for the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository...{Style.RESET_ALL}")
 	current_path = PATH
 	data_path = os.path.join(current_path, RELATIVE_CK_METRICS_DIRECTORY_PATH[1:]) # Join the current path with the relative path of the ck metrics directory
 	commit_file = f"{repository_name}-commit_hashes{CSV_FILE_EXTENSION}" # The name of the commit hashes file
@@ -94,7 +94,7 @@ def verify_ck_metrics_folders(repository_name):
 
 	# Verify if the repository exists
 	if not os.path.exists(commit_file_path):
-		print(f"{backgroundColors.FAIL}File {backgroundColors.OKCYAN}{commit_file}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{data_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+		print(f"{backgroundColors.RED}File {backgroundColors.CYAN}{commit_file}{backgroundColors.RED} does not exist inside {backgroundColors.CYAN}{data_path}{backgroundColors.RED}.{Style.RESET_ALL}")
 		return False # Return False if the repository does not exist
 
 	# Read the commit hashes file with pandas and get only the "commit_hash" column
@@ -106,10 +106,10 @@ def verify_ck_metrics_folders(repository_name):
 		folder_path = os.path.join(repo_path, commit_hash) # Join the repo path with the commit hash
 
 		if not os.path.exists(folder_path): # Verify if the folder exists
-			print(f"{backgroundColors.FAIL}Folder {backgroundColors.OKCYAN}{commit_hash}{backgroundColors.FAIL} does not exist inside {backgroundColors.OKCYAN}{repo_path}{backgroundColors.FAIL}.{Style.RESET_ALL}")
+			print(f"{backgroundColors.RED}Folder {backgroundColors.CYAN}{commit_hash}{backgroundColors.RED} does not exist inside {backgroundColors.CYAN}{repo_path}{backgroundColors.RED}.{Style.RESET_ALL}")
 			return False # Return False if the folder does not exist
 		
-	print(f"{backgroundColors.OKGREEN}All the {backgroundColors.OKCYAN}CK metrics{backgroundColors.OKGREEN} are already calculated for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository.{Style.RESET_ALL}")
+	print(f"{backgroundColors.GREEN}All the {backgroundColors.CYAN}CK metrics{backgroundColors.GREEN} are already calculated for the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository.{Style.RESET_ALL}")
 	return True # Return True if all the metrics are already calculated
 
 # @brief: Create a directory
@@ -118,13 +118,13 @@ def verify_ck_metrics_folders(repository_name):
 # @return: None
 def create_directory(full_directory_name, relative_directory_name):
    if os.path.isdir(full_directory_name): # Verify if the directory already exists
-      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory already exists{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}The {backgroundColors.CYAN}{relative_directory_name}{backgroundColors.GREEN} directory already exists{Style.RESET_ALL}")
       return
    try: # Try to create the directory
       os.makedirs(full_directory_name)
-      print (f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory{Style.RESET_ALL}")
+      print (f"{backgroundColors.GREEN}Successfully created the {backgroundColors.CYAN}{relative_directory_name}{backgroundColors.GREEN} directory{Style.RESET_ALL}")
    except OSError: # If the directory cannot be created
-      print (f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_name}{backgroundColors.OKGREEN} directory failed{Style.RESET_ALL}")
+      print (f"{backgroundColors.GREEN}The creation of the {backgroundColors.CYAN}{relative_directory_name}{backgroundColors.GREEN} directory failed{Style.RESET_ALL}")
 
 # @brief: This function create all the desired directories
 # @param: repository_name: Name of the repository to be analyzed
@@ -207,7 +207,7 @@ def process_csv_file(file_path, metrics_track_record):
 # @param directory_path: The path to the directory
 # @return: A dictionary containing the metrics of each class and method combination
 def traverse_directory(directory_path):
-	print(f"{backgroundColors.OKGREEN}Traversing the {backgroundColors.OKCYAN}{'/'.join(directory_path.rsplit('/', 2)[-2:])}{backgroundColors.OKGREEN} directory...{Style.RESET_ALL}")
+	print(f"{backgroundColors.GREEN}Traversing the {backgroundColors.CYAN}{'/'.join(directory_path.rsplit('/', 2)[-2:])}{backgroundColors.GREEN} directory...{Style.RESET_ALL}")
 	metrics_track_record = {}
 	file_count = 0
 	progress_bar = None
@@ -251,15 +251,15 @@ def get_clean_id(id):
 # @param: progress_status: The progress status
 # @return: None
 def linear_regression_predictions(metrics, filename, repository_name, progress_status):
-	print(f"{backgroundColors.OKGREEN}Linear Regression {progress_status}{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{filename} {CK_CSV_FILE.replace('.csv', '')}{backgroundColors.OKGREEN} in the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
+	print(f"{backgroundColors.GREEN}Linear Regression {progress_status}{backgroundColors.GREEN} for the {backgroundColors.CYAN}{filename} {CK_CSV_FILE.replace('.csv', '')}{backgroundColors.GREEN} in the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository...{Style.RESET_ALL}")
 	# Check for empty metrics list
 	if not metrics:
-		print(f"{backgroundColors.FAIL}Metrics list is empty!{Style.RESET_ALL}")
+		print(f"{backgroundColors.RED}Metrics list is empty!{Style.RESET_ALL}")
 		return
 
 	# Check for invalid values in the metrics
 	if np.isnan(metrics).any() or np.isinf(metrics).any():
-		print(f"{backgroundColors.FAIL}Metrics list contains invalid values (NaN or inf)!{Style.RESET_ALL}")
+		print(f"{backgroundColors.RED}Metrics list contains invalid values (NaN or inf)!{Style.RESET_ALL}")
 		return
 	
 	# Loop through the metrics_position dictionary
@@ -301,7 +301,7 @@ def linear_regression_predictions(metrics, filename, repository_name, progress_s
 # @param: metrics_track_record: A dictionary containing the metrics of each method or class
 # @return: None
 def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
-	print(f"{backgroundColors.OKGREEN}Writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{backgroundColors.OKGREEN}...{Style.RESET_ALL}")
+	print(f"{backgroundColors.GREEN}Writing the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} metrics track record to a csv file inside {backgroundColors.CYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{backgroundColors.GREEN}...{Style.RESET_ALL}")
 	progress_counter = 0
 	# For every identifier in the metrics_track_record, store each metrics values tuple in a row of the csv file
 	for identifier, record in metrics_track_record.items():
@@ -323,10 +323,10 @@ def write_metrics_evolution_to_csv(repository_name, metrics_track_record):
 			for i in range(metrics_len):
 				writer.writerow([unique_identifier, record["commit_hashes"][i], metrics[i][0], metrics[i][1], metrics[i][2], metrics[i][3]])
 		progress_counter += 1
-		progress_status = f"{backgroundColors.OKCYAN}{progress_counter}{backgroundColors.OKGREEN} of {backgroundColors.OKCYAN}{len(metrics_track_record)}{Style.RESET_ALL}"
+		progress_status = f"{backgroundColors.CYAN}{progress_counter}{backgroundColors.GREEN} of {backgroundColors.CYAN}{len(metrics_track_record)}{Style.RESET_ALL}"
 		linear_regression_predictions(metrics, filename, repository_name, progress_status) # Update the filename to remove the csv file extension
 
-	print(f"{backgroundColors.OKGREEN}Finished writing the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} metrics track record to a csv file inside {backgroundColors.OKCYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{Style.RESET_ALL}")
+	print(f"{backgroundColors.GREEN}Finished writing the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} metrics track record to a csv file inside {backgroundColors.CYAN}{RELATIVE_CK_METRICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{Style.RESET_ALL}")
 
 # @brief: Calculates the minimum, maximum, average, and third quartile of each metric and writes it to a csv file
 # @param csv_writer: The csv writer object
@@ -399,7 +399,7 @@ def sort_csv_by_changes(repository_name):
 	data = data.sort_values(by=["Changed"], ascending=False)
 	# Write the sorted csv file to a new csv file
 	data.to_csv(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "/" + SORTED_CHANGED_METHODS_CSV_FILENAME, index=False)
-	print(f"{backgroundColors.OKCYAN}Successfully sorted{backgroundColors.OKGREEN} the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS}{backgroundColors.OKGREEN} by the {backgroundColors.OKCYAN}number of times they changed{backgroundColors.OKGREEN} and {backgroundColors.OKCYAN}stored{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+	print(f"{backgroundColors.CYAN}Successfully sorted{backgroundColors.GREEN} the {backgroundColors.CYAN}{CLASSES_OR_METHODS}{backgroundColors.GREEN} by the {backgroundColors.CYAN}number of times they changed{backgroundColors.GREEN} and {backgroundColors.CYAN}stored{backgroundColors.GREEN} inside the {backgroundColors.CYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
 
 # @brief: This function defines the command to play a sound when the program finishes
 # @param: None
@@ -409,9 +409,9 @@ def play_sound():
 		if platform.system() in SOUND_COMMANDS: # if the platform.system() is in the SOUND_COMMANDS dictionary
 			os.system(f"{SOUND_COMMANDS[platform.system()]} {SOUND_FILE}")
 		else: # if the platform.system() is not in the SOUND_COMMANDS dictionary
-			print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}platform.system(){backgroundColors.FAIL} is not in the {backgroundColors.OKCYAN}SOUND_COMMANDS dictionary{backgroundColors.FAIL}. Please add it!{Style.RESET_ALL}")
+			print(f"{backgroundColors.RED}The {backgroundColors.CYAN}platform.system(){backgroundColors.RED} is not in the {backgroundColors.CYAN}SOUND_COMMANDS dictionary{backgroundColors.RED}. Please add it!{Style.RESET_ALL}")
 	else: # if the sound file does not exist
-		print(f"{backgroundColors.FAIL}Sound file {backgroundColors.OKCYAN}{SOUND_FILE}{backgroundColors.FAIL} not found. Make sure the file exists.{Style.RESET_ALL}")
+		print(f"{backgroundColors.RED}Sound file {backgroundColors.CYAN}{SOUND_FILE}{backgroundColors.RED} not found. Make sure the file exists.{Style.RESET_ALL}")
 
 # Register the function to play a sound when the program finishes
 atexit.register(play_sound)
@@ -435,7 +435,7 @@ def output_time(output_string, time):
       time_value = time / TIME_UNITS[2]
 
    rounded_time = round(time_value, 2)
-   print(f"{backgroundColors.OKGREEN}{output_string}{backgroundColors.OKCYAN}{rounded_time} {time_unit}{Style.RESET_ALL}")
+   print(f"{backgroundColors.GREEN}{output_string}{backgroundColors.CYAN}{rounded_time} {time_unit}{Style.RESET_ALL}")
 
 # @brief: The main function
 # @param: None
@@ -444,19 +444,19 @@ def main():
 	start_time = time.time() # Start the timer
 	# check if the path constants contains whitespaces
 	if path_contains_whitespaces():
-		print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
+		print(f"{backgroundColors.RED}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
 		return
 
-	print(f"{backgroundColors.OKGREEN}This script {backgroundColors.OKCYAN}generates the csv files{backgroundColors.OKGREEN} with the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS} metrics values{backgroundColors.OKGREEN} for {backgroundColors.OKCYAN}each commit hash{backgroundColors.OKGREEN} and store them inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}/repository_name/commit_hash{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
-	print(f"{backgroundColors.OKGREEN}This script {backgroundColors.OKCYAN}generates a csv file{backgroundColors.OKGREEN} with the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS} sorted{backgroundColors.OKGREEN} by the {backgroundColors.OKCYAN}number of times that the {CK_CSV_FILE.replace('.csv', '')} changed{backgroundColors.OKGREEN} and store it inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
-	print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}source of the metrics values{backgroundColors.OKGREEN} is the {backgroundColors.OKCYAN}{CK_CSV_FILE}{backgroundColors.OKGREEN} files.{Style.RESET_ALL}")
+	print(f"{backgroundColors.GREEN}This script {backgroundColors.CYAN}generates the csv files{backgroundColors.GREEN} with the {backgroundColors.CYAN}{CLASSES_OR_METHODS} metrics values{backgroundColors.GREEN} for {backgroundColors.CYAN}each commit hash{backgroundColors.GREEN} and store them inside the {backgroundColors.CYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}/repository_name/commit_hash{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
+	print(f"{backgroundColors.GREEN}This script {backgroundColors.CYAN}generates a csv file{backgroundColors.GREEN} with the {backgroundColors.CYAN}{CLASSES_OR_METHODS} sorted{backgroundColors.GREEN} by the {backgroundColors.CYAN}number of times that the {CK_CSV_FILE.replace('.csv', '')} changed{backgroundColors.GREEN} and store it inside the {backgroundColors.CYAN}{RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH}{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
+	print(f"{backgroundColors.GREEN}The {backgroundColors.CYAN}source of the metrics values{backgroundColors.GREEN} is the {backgroundColors.CYAN}{CK_CSV_FILE}{backgroundColors.GREEN} files.{Style.RESET_ALL}")
 
 	# Get the directory path from user input of the repository name
 	repository_name, directory_path = get_directory_path()
 
 	# Verify if the ck metrics were already calculated, which are the source of the data processed by traverse_directory(directory_path).
 	if not verify_ck_metrics_folders(repository_name):
-		print(f"{backgroundColors.FAIL}The metrics for {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not calculated. Please run the ck_metrics.py file first{Style.RESET_ALL}")
+		print(f"{backgroundColors.RED}The metrics for {backgroundColors.CYAN}{repository_name}{backgroundColors.RED} were not calculated. Please run the ck_metrics.py file first{Style.RESET_ALL}")
 		return
 	
 	# Create the desired directory if it does not exist
@@ -478,7 +478,7 @@ def main():
 	os.remove(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "/" + CHANGED_METHODS_CSV_FILENAME)
 
 	elapsed_time = time.time() - start_time
-	elapsed_time_string = f"Time taken to generate the {backgroundColors.OKCYAN}metrics changes{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS}{backgroundColors.OKGREEN} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN}: "
+	elapsed_time_string = f"Time taken to generate the {backgroundColors.CYAN}metrics changes{backgroundColors.GREEN} for the {backgroundColors.CYAN}{CLASSES_OR_METHODS}{backgroundColors.GREEN} in {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN}: "
 	output_time(elapsed_time_string, round(elapsed_time, 2))
 
 # Directive to run the main function

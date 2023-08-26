@@ -20,7 +20,7 @@ TIME_UNITS = [60, 3600, 86400] # Seconds in a minute, seconds in an hour, second
 # Changable constants:
 CLASS_CSV_FILE = "class.csv" # The name of the csv generated file from ck.
 METHOD_CSV_FILE = "method.csv" # The name of the csv generated file from ck.
-PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file {backgroundColors.FAIL}(True/False){backgroundColors.OKGREEN}? {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
+PROCESS_CLASSES = input(f"{backgroundColors.GREEN}Do you want to process the {backgroundColors.CYAN}class.csv{backgroundColors.GREEN} file {backgroundColors.RED}(True/False){backgroundColors.GREEN}? {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 CK_CSV_FILE = CLASS_CSV_FILE if PROCESS_CLASSES else METHOD_CSV_FILE # The name of the csv generated file from ck.
 CLASSES_OR_METHODS = "classes" if PROCESS_CLASSES else "methods" # The name of the csv generated file from ck.
 OPPOSITE_CK_CSV_FILE = METHOD_CSV_FILE if PROCESS_CLASSES else CLASS_CSV_FILE # The name of the csv generated file from ck.
@@ -54,7 +54,7 @@ def path_contains_whitespaces():
 # @return: The repository URL and the output directory
 def validate_attribute(attribute, default_attribute_value):
    if not attribute: # Verify if the attribute is empty
-      print(f"{backgroundColors.WARNING}The attribute is empty! Using the default value: {backgroundColors.OKCYAN}{default_attribute_value}{backgroundColors.WARNING}.{Style.RESET_ALL}")
+      print(f"{backgroundColors.YELLOW}The attribute is empty! Using the default value: {backgroundColors.CYAN}{default_attribute_value}{backgroundColors.YELLOW}.{Style.RESET_ALL}")
       attribute = default_attribute_value # Set the attribute to the default value
    return attribute # Return the attribute
 
@@ -63,7 +63,7 @@ def validate_attribute(attribute, default_attribute_value):
 # @return: repository_name: Name of the repository to be analyzed
 def get_repository_name_user():
    # Ask for user input of the repository name
-   repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.FAIL}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+   repository_name = input(f"{backgroundColors.GREEN}Enter the repository name {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
 
    return validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME[0]) # Validate the repository name
 
@@ -73,13 +73,13 @@ def get_repository_name_user():
 # @return: None
 def create_directory(full_directory_path, relative_directory_path):
    if os.path.isdir(full_directory_path): # Verify if the directory already exists
-      print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory already exists.{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}The {backgroundColors.CYAN}{relative_directory_path}{backgroundColors.GREEN} directory already exists.{Style.RESET_ALL}")
       return
    try: # Try to create the directory
       os.makedirs(full_directory_path)
-      print(f"{backgroundColors.OKGREEN}Successfully created the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}Successfully created the {backgroundColors.CYAN}{relative_directory_path}{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
    except OSError: # If the directory cannot be created
-      print(f"{backgroundColors.OKGREEN}The creation of the {backgroundColors.OKCYAN}{relative_directory_path}{backgroundColors.OKGREEN} directory failed.{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}The creation of the {backgroundColors.CYAN}{relative_directory_path}{backgroundColors.GREEN} directory failed.{Style.RESET_ALL}")
 
 # @brief: Get user input of the name of the class or method to be analyzed
 # @param: repository_name: Name of the repository to be analyzed
@@ -92,13 +92,13 @@ def get_user_ids_input(repository_name):
    while name == "" and first_run:
       first_run = False
       # Ask for user input of the class or method name
-      name = input(f"{backgroundColors.OKGREEN}Enter the name of the {csv_file} {backgroundColors.FAIL}(String){backgroundColors.OKGREEN}: {backgroundColors.FAIL}(String/*){Style.RESET_ALL}")
+      name = input(f"{backgroundColors.GREEN}Enter the name of the {csv_file} {backgroundColors.RED}(String){backgroundColors.GREEN}: {backgroundColors.RED}(String/*){Style.RESET_ALL}")
       # if the CK_CSV_FILE is a class csv file, ask for the type of the class ('class' 'interface' 'innerclass' 'enum' 'anonymous')
       if CK_CSV_FILE == CLASS_CSV_FILE:
-         value = input(f"{backgroundColors.OKGREEN}Enter the type of the {csv_file} {backgroundColors.OKCYAN}{ids}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.FAIL}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+         value = input(f"{backgroundColors.GREEN}Enter the type of the {csv_file} {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
       # if the CK_CSV_FILE is a method csv file, ask for the name of the class of the method
       elif CK_CSV_FILE == METHOD_CSV_FILE:
-         value = input(f"{backgroundColors.OKGREEN}Enter the {csv_file} name of the {backgroundColors.OKCYAN}{ids}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.FAIL}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+         value = input(f"{backgroundColors.GREEN}Enter the {csv_file} name of the {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
 
       # add the name and value to the id dictionary
       ids[name] = value
@@ -113,7 +113,7 @@ def get_user_ids_input(repository_name):
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
    if name == "" and not first_run:
       ids = DEFAULT_IDS
-      print(f"{backgroundColors.OKGREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.OKCYAN}{', '.join(id.keys())}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.CYAN}{', '.join(id.keys())}{backgroundColors.GREEN}.{Style.RESET_ALL}")
 
    return ids # Return the class or method name
 
@@ -149,7 +149,7 @@ def get_clean_id(id):
 # @param: ids: The ids to be analyzed
 # @return: True if all the metrics are already calculated, False otherwise
 def check_metrics_files(folder_path, repository_name, ids):
-   print(f"{backgroundColors.OKGREEN}Checking if all the {backgroundColors.OKCYAN}{folder_path.rsplit('/', 1)[-1]}{backgroundColors.OKGREEN} are already created.{Style.RESET_ALL}")
+   print(f"{backgroundColors.GREEN}Checking if all the {backgroundColors.CYAN}{folder_path.rsplit('/', 1)[-1]}{backgroundColors.GREEN} are already created.{Style.RESET_ALL}")
    # Change the current working directory to the repository folder
    os.chdir(folder_path)
    
@@ -158,7 +158,7 @@ def check_metrics_files(folder_path, repository_name, ids):
       file_name = f"{id} {ids[id]}" if PROCESS_CLASSES else f"{id} {get_clean_id(ids[id])}"
       evolution_file = f"{repository_name}/{CLASSES_OR_METHODS}/{file_name}.csv"
       if not os.path.isfile(evolution_file): # If the file does not exist
-         print(f"{backgroundColors.WARNING}The {backgroundColors.OKCYAN}{id}.csv{backgroundColors.WARNING} file does not exist.{Style.RESET_ALL}")
+         print(f"{backgroundColors.YELLOW}The {backgroundColors.CYAN}{id}.csv{backgroundColors.YELLOW} file does not exist.{Style.RESET_ALL}")
          os.chdir(PATH) # Change the current working directory to the original path
          return False
    os.chdir(PATH) # Change the current working directory to the original path
@@ -174,9 +174,9 @@ def insert_labels():
    
    while labels[0] != "y" and labels[0] != "n" and labels[0] != "y*" and labels[0] != "n*":
       if not first_run[0]:
-         print(f"{backgroundColors.FAIL}Invalid option!{Style.RESET_ALL}")
+         print(f"{backgroundColors.RED}Invalid option!{Style.RESET_ALL}")
       first_run[0] = False
-      labels[0] = input(f"{backgroundColors.OKGREEN}Do you want to add labels to the data points {backgroundColors.FAIL}(y*/n*/y/n){backgroundColors.OKGREEN}? {Style.RESET_ALL}")
+      labels[0] = input(f"{backgroundColors.GREEN}Do you want to add labels to the data points {backgroundColors.RED}(y*/n*/y/n){backgroundColors.GREEN}? {Style.RESET_ALL}")
 
    if labels[0] == "y*":
       IMAGE_LABELS[0] = True
@@ -189,11 +189,11 @@ def insert_labels():
       labels[0] = True 
       while labels[1] != "1" and labels[1] != "2":
          if not first_run[1]:
-            print(f"{backgroundColors.FAIL}Invalid option!{Style.RESET_ALL}")
+            print(f"{backgroundColors.RED}Invalid option!{Style.RESET_ALL}")
          first_run[1] = False
-         print(f"{backgroundColors.OKGREEN}Choose the type of label to be added to the data points: {Style.RESET_ALL}")
-         print(f"{backgroundColors.OKCYAN}   1. Sequence of numbers \n   2. Value of the data point (y axis value){Style.RESET_ALL}")
-         labels[1] = input(f"{backgroundColors.OKGREEN}Type the number of the label you want in your images plot {backgroundColors.FAIL}(1/2){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+         print(f"{backgroundColors.GREEN}Choose the type of label to be added to the data points: {Style.RESET_ALL}")
+         print(f"{backgroundColors.CYAN}   1. Sequence of numbers \n   2. Value of the data point (y axis value){Style.RESET_ALL}")
+         labels[1] = input(f"{backgroundColors.GREEN}Type the number of the label you want in your images plot {backgroundColors.RED}(1/2){backgroundColors.GREEN}: {Style.RESET_ALL}")
          if IMAGE_LABELS[0]:
             IMAGE_LABELS[1] = labels[1]
       
@@ -291,7 +291,7 @@ def create_metrics_evolution_graphic(repository_name, id, clean_id_key):
    # Save the graph
    plt.savefig(FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + "/" + clean_id_key + ".png")
 
-   print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphic for {backgroundColors.OKCYAN}{id} {clean_id_key}{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
+   print(f"{backgroundColors.CYAN}Successfully created the metrics evolution graphic for {backgroundColors.CYAN}{id} {clean_id_key}{backgroundColors.GREEN}.{Style.RESET_ALL}")
    print()
 
 # @brief: This function defines the command to play a sound when the program finishes
@@ -302,9 +302,9 @@ def play_sound():
 		if platform.system() in SOUND_COMMANDS: # if the platform.system() is in the SOUND_COMMANDS dictionary
 			os.system(f"{SOUND_COMMANDS[platform.system()]} {SOUND_FILE}")
 		else: # if the platform.system() is not in the SOUND_COMMANDS dictionary
-			print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}platform.system(){backgroundColors.FAIL} is not in the {backgroundColors.OKCYAN}SOUND_COMMANDS dictionary{backgroundColors.FAIL}. Please add it!{Style.RESET_ALL}")
+			print(f"{backgroundColors.RED}The {backgroundColors.CYAN}platform.system(){backgroundColors.RED} is not in the {backgroundColors.CYAN}SOUND_COMMANDS dictionary{backgroundColors.RED}. Please add it!{Style.RESET_ALL}")
 	else: # if the sound file does not exist
-		print(f"{backgroundColors.FAIL}Sound file {backgroundColors.OKCYAN}{SOUND_FILE}{backgroundColors.FAIL} not found. Make sure the file exists.{Style.RESET_ALL}")
+		print(f"{backgroundColors.RED}Sound file {backgroundColors.CYAN}{SOUND_FILE}{backgroundColors.RED} not found. Make sure the file exists.{Style.RESET_ALL}")
 
 # Register the function to play a sound when the program finishes
 atexit.register(play_sound)
@@ -328,7 +328,7 @@ def output_time(output_string, time):
       time_value = time / TIME_UNITS[2]
 
    rounded_time = round(time_value, 2)
-   print(f"{backgroundColors.OKGREEN}{output_string}{backgroundColors.OKCYAN}{rounded_time} {time_unit}{Style.RESET_ALL}")
+   print(f"{backgroundColors.GREEN}{output_string}{backgroundColors.CYAN}{rounded_time} {time_unit}{Style.RESET_ALL}")
 
 # @brief: Main function
 # @param: None
@@ -338,11 +338,11 @@ def main():
    
    # Verify if the path constant contains whitespaces
    if path_contains_whitespaces():
-      print(f"{backgroundColors.FAIL}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
+      print(f"{backgroundColors.RED}The PATH constant contains whitespaces. Please remove them!{Style.RESET_ALL}")
       return
    
-   print(f"{backgroundColors.OKGREEN}This script {backgroundColors.OKCYAN}generates the images{backgroundColors.OKGREEN} from the {backgroundColors.OKCYAN}metrics evolution{backgroundColors.OKGREEN} of the {CK_CSV_FILE.replace('.csv', '')} of a {backgroundColors.OKCYAN}specific repository{backgroundColors.OKGREEN}.{Style.RESET_ALL}")
-   print(f"{backgroundColors.OKGREEN}The {backgroundColors.OKCYAN}source of the data{backgroundColors.OKGREEN} used to {backgroundColors.OKCYAN}generate the images{backgroundColors.OKGREEN} is the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+   print(f"{backgroundColors.GREEN}This script {backgroundColors.CYAN}generates the images{backgroundColors.GREEN} from the {backgroundColors.CYAN}metrics evolution{backgroundColors.GREEN} of the {CK_CSV_FILE.replace('.csv', '')} of a {backgroundColors.CYAN}specific repository{backgroundColors.GREEN}.{Style.RESET_ALL}")
+   print(f"{backgroundColors.GREEN}The {backgroundColors.CYAN}source of the data{backgroundColors.GREEN} used to {backgroundColors.CYAN}generate the images{backgroundColors.GREEN} is the {backgroundColors.CYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH}{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
 
    # Get the name of the repository from the user
    repository_name = get_repository_name_user()
@@ -354,26 +354,26 @@ def main():
 
    # Validate the ids, if is related to a class or method
    if not validate_ids(ids, repository_name):
-      print(f"{backgroundColors.FAIL}The {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.FAIL} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
+      print(f"{backgroundColors.RED}The {backgroundColors.CYAN}{', '.join(ids.keys())}{backgroundColors.RED} are {OPPOSITE_CK_CSV_FILE.replace('.csv', '')} instead of {CK_CSV_FILE.replace('.csv', '')} names. Please change them!{Style.RESET_ALL}")
       return
    
    # Verify if the metrics evolution were already calculated
    if not check_metrics_files(FULL_METRICS_EVOLUTION_DIRECTORY_PATH, repository_name, ids):
-      print(f"{backgroundColors.FAIL}The metrics evolution for {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.FAIL} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.FAIL} were not created. Please run the {backgroundColors.OKCYAN}metrics_changes.py{backgroundColors.FAIL} file first.{Style.RESET_ALL}")
+      print(f"{backgroundColors.RED}The metrics evolution for {backgroundColors.CYAN}{', '.join(ids.keys())}{backgroundColors.RED} in {backgroundColors.CYAN}{repository_name}{backgroundColors.RED} were not created. Please run the {backgroundColors.CYAN}metrics_changes.py{backgroundColors.RED} file first.{Style.RESET_ALL}")
       return
    
    number_of_ids = len(ids.keys())
    # Make a for loop to run the create_metrics_evolution_graphic function for each id
    for index, id in enumerate(ids): # Loop trough the ids items in the dictionary
-      print(f"{backgroundColors.OKCYAN}{index+1} of {number_of_ids}{backgroundColors.OKGREEN}Generating the image for {backgroundColors.OKCYAN}{id}{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+      print(f"{backgroundColors.CYAN}{index+1} of {number_of_ids}{backgroundColors.GREEN}Generating the image for {backgroundColors.CYAN}{id}{backgroundColors.GREEN} inside the {backgroundColors.CYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
 
       # Create the metrics evolution graphs
       create_metrics_evolution_graphic(repository_name, id, get_clean_id(ids[id]))
 
-   print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphics{backgroundColors.OKGREEN} for {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
+   print(f"{backgroundColors.CYAN}Successfully created the metrics evolution graphics{backgroundColors.GREEN} for {backgroundColors.CYAN}{', '.join(ids.keys())}{backgroundColors.GREEN} for the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} inside the {backgroundColors.CYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
 
    elapsed_time = time.time() - start_time
-   elapsed_time_string = f"Time taken to generate the {backgroundColors.OKCYAN}images{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS}{backgroundColors.OKGREEN} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN}: "
+   elapsed_time_string = f"Time taken to generate the {backgroundColors.CYAN}images{backgroundColors.GREEN} for the {backgroundColors.CYAN}{CLASSES_OR_METHODS}{backgroundColors.GREEN} in {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN}: "
    output_time(elapsed_time_string, round(elapsed_time, 2))
 
 # Directly run the main function if the script is executed
