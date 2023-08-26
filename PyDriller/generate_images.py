@@ -20,7 +20,7 @@ TIME_UNITS = [60, 3600, 86400] # Seconds in a minute, seconds in an hour, second
 # Changable constants:
 CLASS_CSV_FILE = "class.csv" # The name of the csv generated file from ck.
 METHOD_CSV_FILE = "method.csv" # The name of the csv generated file from ck.
-PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file? {backgroundColors.OKCYAN}(True/False){backgroundColors.OKGREEN}: {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
+PROCESS_CLASSES = input(f"{backgroundColors.OKGREEN}Do you want to process the {backgroundColors.OKCYAN}class.csv{backgroundColors.OKGREEN} file {backgroundColors.FAIL}(True/False){backgroundColors.OKGREEN}? {Style.RESET_ALL}") == "True" # If True, then process the method.csv file. If False, then process the class.csv file
 CK_CSV_FILE = CLASS_CSV_FILE if PROCESS_CLASSES else METHOD_CSV_FILE # The name of the csv generated file from ck.
 CLASSES_OR_METHODS = "classes" if PROCESS_CLASSES else "methods" # The name of the csv generated file from ck.
 OPPOSITE_CK_CSV_FILE = METHOD_CSV_FILE if PROCESS_CLASSES else CLASS_CSV_FILE # The name of the csv generated file from ck.
@@ -63,7 +63,7 @@ def validate_attribute(attribute, default_attribute_value):
 # @return: repository_name: Name of the repository to be analyzed
 def get_repository_name_user():
    # Ask for user input of the repository name
-   repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+   repository_name = input(f"{backgroundColors.OKGREEN}Enter the repository name {backgroundColors.FAIL}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
    return validate_attribute(repository_name, DEFAULT_REPOSITORY_NAME[0]) # Validate the repository name
 
@@ -92,13 +92,13 @@ def get_user_ids_input(repository_name):
    while name == "" and first_run:
       first_run = False
       # Ask for user input of the class or method name
-      name = input(f"{backgroundColors.OKGREEN}Enter the name of the {csv_file} {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+      name = input(f"{backgroundColors.OKGREEN}Enter the name of the {csv_file} {backgroundColors.FAIL}(String){backgroundColors.OKGREEN}: {backgroundColors.FAIL}(String/*){Style.RESET_ALL}")
       # if the CK_CSV_FILE is a class csv file, ask for the type of the class ('class' 'interface' 'innerclass' 'enum' 'anonymous')
       if CK_CSV_FILE == CLASS_CSV_FILE:
-         value = input(f"{backgroundColors.OKGREEN}Enter the type of the {csv_file} {backgroundColors.OKCYAN}{ids}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+         value = input(f"{backgroundColors.OKGREEN}Enter the type of the {csv_file} {backgroundColors.OKCYAN}{ids}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.FAIL}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
       # if the CK_CSV_FILE is a method csv file, ask for the name of the class of the method
       elif CK_CSV_FILE == METHOD_CSV_FILE:
-         value = input(f"{backgroundColors.OKGREEN}Enter the {csv_file} name of the {backgroundColors.OKCYAN}{ids}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.OKCYAN}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+         value = input(f"{backgroundColors.OKGREEN}Enter the {csv_file} name of the {backgroundColors.OKCYAN}{ids}{backgroundColors.OKGREEN} to be analyzed {backgroundColors.FAIL}(String){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
 
       # add the name and value to the id dictionary
       ids[name] = value
@@ -176,7 +176,7 @@ def insert_labels():
       if not first_run[0]:
          print(f"{backgroundColors.FAIL}Invalid option!{Style.RESET_ALL}")
       first_run[0] = False
-      labels[0] = input(f"{backgroundColors.OKGREEN}Do you want to add labels to the data points? {backgroundColors.OKCYAN}(y/n/y*/n*){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
+      labels[0] = input(f"{backgroundColors.OKGREEN}Do you want to add labels to the data points {backgroundColors.FAIL}(y*/n*/y/n){backgroundColors.OKGREEN}? {Style.RESET_ALL}")
 
    if labels[0] == "y*":
       IMAGE_LABELS[0] = True
@@ -193,7 +193,7 @@ def insert_labels():
          first_run[1] = False
          print(f"{backgroundColors.OKGREEN}Choose the type of label to be added to the data points: {Style.RESET_ALL}")
          print(f"{backgroundColors.OKCYAN}   1. Sequence of numbers \n   2. Value of the data point (y axis value){Style.RESET_ALL}")
-         labels[1] = input(f"{backgroundColors.OKGREEN}Type the number of the label you want in your images plot: {Style.RESET_ALL}")
+         labels[1] = input(f"{backgroundColors.OKGREEN}Type the number of the label you want in your images plot {backgroundColors.FAIL}(1/2){backgroundColors.OKGREEN}: {Style.RESET_ALL}")
          if IMAGE_LABELS[0]:
             IMAGE_LABELS[1] = labels[1]
       
