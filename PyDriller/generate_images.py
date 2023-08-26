@@ -1,4 +1,5 @@
 import os # OS module in Python provides functions for interacting with the operating system
+import csv # CSV (Comma Separated Values) is a simple file format used to store tabular data, such as a spreadsheet or database
 import pandas as pd # Pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,
 import matplotlib.pyplot as plt # Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python.
 import atexit # For playing a sound when the program finishes
@@ -13,6 +14,7 @@ from ck_metrics import backgroundColors
 PATH = os.getcwd() # Get the current working directory
 SOUND_COMMANDS = {"Darwin": "afplay", "Linux": "aplay", "Windows": "start"} # The sound commands for each operating system
 SOUND_FILE = "../.assets/NotificationSound.wav" # The path to the sound file
+MINIMUM_CHANGES = 1 # The minimum number of changes a method should have to be considered
 
 # Time units:
 TIME_UNITS = [60, 3600, 86400] # Seconds in a minute, seconds in an hour, seconds in a day
@@ -105,10 +107,16 @@ def get_user_ids_input(repository_name):
 
    # If the name is "*", them do for every Class/Method in the Repository.
    if name == "*" and not first_run:
-      variable_attributes = "Type" if PROCESS_CLASSES else "Method"
-      repo_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
-      df = pd.read_csv(repo_top_changes_file_path)
-      ids = dict(zip(df["Class"], df[variable_attributes])) # Create a dictionary with the class name as the key and the type or method as the value
+      variable_attribute = "Type" if PROCESS_CLASSES else "Method"
+      top_changes_csv_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
+      result_dict = {} # Create a dictionary with the class name as the key and the type or method as the value, but the "Changed" column must be at least 2.
+      with open(top_changes_csv_path, "r") as file:
+         csv_reader = csv.DictReader(file)
+         for row in csv_reader:
+            if int(row["Changed"]) > MINIMUM_CHANGES:
+               class_key = row["Class"]
+               variable_attribute_value = row[variable_attribute]
+               result_dict[class_key] = variable_attribute_value
 
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
    if name == "" and not first_run:
