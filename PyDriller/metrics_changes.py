@@ -251,7 +251,7 @@ def get_clean_id(id):
 # @param: progress_status: The progress status
 # @return: None
 def linear_regression_predictions(metrics, filename, repository_name, progress_status):
-	print(f"{backgroundColors.OKGREEN}Linear regression {progress_status} for the {backgroundColors.OKCYAN}{repository_name} {filename}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
+	print(f"{backgroundColors.OKGREEN}Linear Regression {progress_status}{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{filename} {CK_CSV_FILE.replace('.csv', '')}{backgroundColors.OKGREEN} in the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} repository...{Style.RESET_ALL}")
 	# Check for empty metrics list
 	if not metrics:
 		print(f"{backgroundColors.FAIL}Metrics list is empty!{Style.RESET_ALL}")
