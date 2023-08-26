@@ -373,7 +373,7 @@ def main():
    print(f"{backgroundColors.OKCYAN}Successfully created the metrics evolution graphics{backgroundColors.OKGREEN} for {backgroundColors.OKCYAN}{', '.join(ids.keys())}{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN} inside the {backgroundColors.OKCYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.OKGREEN} directory.{Style.RESET_ALL}")
 
    elapsed_time = time.time() - start_time
-   elapsed_time_string = f"Time taken to generate the {backgroundColors.OKCYAN} images {backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN} {CLASSES_OR_METHODS} {backgroundColors.OKGREEN} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN}: "
+   elapsed_time_string = f"Time taken to generate the {backgroundColors.OKCYAN}images{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS}{backgroundColors.OKGREEN} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN}: "
    output_time(elapsed_time_string, round(elapsed_time, 2))
 
 # Directly run the main function if the script is executed

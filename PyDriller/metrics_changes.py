@@ -478,7 +478,7 @@ def main():
 	os.remove(FULL_METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "/" + CHANGED_METHODS_CSV_FILENAME)
 
 	elapsed_time = time.time() - start_time
-	elapsed_time_string = f"Time taken to generate the {backgroundColors.OKCYAN} metrics changes {backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN} {CLASSES_OR_METHODS} {backgroundColors.OKGREEN} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN}: "
+	elapsed_time_string = f"Time taken to generate the {backgroundColors.OKCYAN}metrics changes{backgroundColors.OKGREEN} for the {backgroundColors.OKCYAN}{CLASSES_OR_METHODS}{backgroundColors.OKGREEN} in {backgroundColors.OKCYAN}{repository_name}{backgroundColors.OKGREEN}: "
 	output_time(elapsed_time_string, round(elapsed_time, 2))
 
 # Directive to run the main function
