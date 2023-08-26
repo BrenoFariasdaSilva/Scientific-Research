@@ -113,7 +113,7 @@ def get_user_ids_input(repository_name):
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
    if name == "" and not first_run:
       ids = DEFAULT_IDS
-      print(f"{backgroundColors.GREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.CYAN}{', '.join(id.keys())}{backgroundColors.GREEN}.{Style.RESET_ALL}")
+      print(f"{backgroundColors.GREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.CYAN}{', '.join(ids.keys())}{backgroundColors.GREEN}.{Style.RESET_ALL}")
 
    return ids # Return the class or method name
 
