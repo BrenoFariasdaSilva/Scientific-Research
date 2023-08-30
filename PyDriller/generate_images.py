@@ -89,25 +89,14 @@ def create_directory(full_directory_path, relative_directory_path):
 # @return: id: Name of the class or method to be analyzed
 def get_user_ids_input(repository_name):
    ids = {} # Dictionary that stores the ids to be analyzed
-   class_name = ""
-   first_run = True
-   csv_file = CK_CSV_FILE.replace('.csv', '') # The name of the csv generated file from ck.
-   while class_name == "" and first_run:
-      first_run = False
-      # Ask for user input of the class name
-      class_name = input(f"{backgroundColors.GREEN}Enter the name of the name of the class {backgroundColors.RED}(String/*){backgroundColors.GREEN}: {Style.RESET_ALL}")
-      # If the CK_CSV_FILE is a class csv file, ask for the type of the class ('class' 'interface' 'innerclass' 'enum' 'anonymous')
-      if CK_CSV_FILE == CLASS_CSV_FILE:
-         variable_attribute = input(f"{backgroundColors.GREEN}Enter the type of the {csv_file} {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
-      # If the CK_CSV_FILE is a method csv file, ask for the name of the class of the method
-      elif CK_CSV_FILE == METHOD_CSV_FILE:
-         variable_attribute = input(f"{backgroundColors.GREEN}Enter the {csv_file} name of the {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
+   input_source = input(f"{backgroundColors.GREEN}Enter the {backgroundColors.CYAN}source of input{backgroundColors.GREEN} to get {backgroundColors.CYAN}IDS{backgroundColors.GREEN} {backgroundColors.RED}(default/all){backgroundColors.GREEN}: {Style.RESET_ALL}")
 
-      # Add the class_name and variable_attribute to the id dictionary
-      ids[class_name] = variable_attribute
+   while input_source.lower() != "default" and input_source.lower() != "all": # While the input_source is not "default" or "all"
+      print(f"{backgroundColors.RED}Invalid input source!{Style.RESET_ALL}")
+      input_source = input(f"{backgroundColors.GREEN}Enter the {backgroundColors.CYAN}source of input{backgroundColors.GREEN} to get {backgroundColors.CYAN}IDS{backgroundColors.GREEN} {backgroundColors.RED}(default/all){backgroundColors.GREEN}: {Style.RESET_ALL}")
 
-   # If the class_name is "*", them get every variable_attribute of each class.
-   if class_name == "*" and not first_run:
+   # If the input_source is "all", them get every variable_attribute of each class.
+   if input_source.lower() == "all":
       variable_attribute = "Type" if PROCESS_CLASSES else "Method"
       top_changes_csv_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + SORTED_CHANGES_CSV_FILENAME
       # Open the top changes csv file and get the class/method and variable attribute data
@@ -123,10 +112,8 @@ def get_user_ids_input(repository_name):
                else: # If the class is in the dictionary
                   ids[class_name].append(variable_attribute_value) # Append variable attribute to the existing list
 
-      return ids # Return the dictionary containing class/method and variable attribute data
-
-   # If the id dictionary is empty, get from the DEFAULT_IDS constant
-   if class_name == "" and not first_run:
+   # If the input_source is "default", them get the ids from the DEFAULT_IDS dictionary.
+   if input_source.lower() == "default":
       ids = DEFAULT_IDS
       print(f"{backgroundColors.GREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.CYAN}{', '.join(ids.keys())}{backgroundColors.GREEN}.{Style.RESET_ALL}")
 
