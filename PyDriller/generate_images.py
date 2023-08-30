@@ -119,7 +119,7 @@ def get_user_ids_input(repository_name):
       ids = DEFAULT_IDS
       print(f"{backgroundColors.GREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.CYAN}{', '.join(ids.keys())}{backgroundColors.GREEN}.{Style.RESET_ALL}")
 
-   return ids # Return the class or method name
+   return ids # Return the IDs to be analyzed
 
 # @brief: This function validates if the ids are as the same type as the files to be analyzed defined in CK_CSV_FILE according to PROCESS_CLASSES
 # @param: ids: Dictionary containing the ids to be analyzed
