@@ -110,7 +110,7 @@ def get_user_ids_input(repository_name):
       variable_attribute = "Type" if PROCESS_CLASSES else "Method"
       top_changes_csv_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
       
-      result_dict = {}  # Create a dictionary with the class name as the key and the type or method as the value, but the "Changed" column must be at least 2.
+      ids = {}  # Create a dictionary with the class name as the key and the type or method as the value, but the "Changed" column must be at least 2.
       
       with open(top_changes_csv_path, "r") as file:
          csv_reader = csv.DictReader(file)
@@ -119,12 +119,12 @@ def get_user_ids_input(repository_name):
                class_key = row["Class"]
                variable_attribute_value = row[variable_attribute]
                
-               if class_key not in result_dict:
-                  result_dict[class_key] = [variable_attribute_value]  # Initialize list for variable attributes
+               if class_key not in ids:
+                  ids[class_key] = [variable_attribute_value]  # Initialize list for variable attributes
                else:
-                  result_dict[class_key].append(variable_attribute_value)  # Append variable attribute to the existing list
+                  ids[class_key].append(variable_attribute_value)  # Append variable attribute to the existing list
 
-      return result_dict  # Return the dictionary containing class/method and variable attribute data
+      return ids  # Return the dictionary containing class/method and variable attribute data
 
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
    if name == "" and not first_run:
