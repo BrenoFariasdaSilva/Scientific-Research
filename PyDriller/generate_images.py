@@ -129,14 +129,16 @@ def validate_ids(ids, repository_name):
    # Get the path of the file containing the top changes of the classes
    repo_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + SORTED_CHANGES_CSV_FILENAME
 
-   class_names = pd.read_csv(repo_top_changes_file_path)["Class"].unique()
-   attribute = "Type" if PROCESS_CLASSES else "Method"
-   variable_attributes = pd.read_csv(repo_top_changes_file_path)[attribute].unique()
+   df = pd.read_csv(repo_top_changes_file_path)
+   variable_attribute = "Type" if PROCESS_CLASSES else "Method"
+
    # Verify if the ids are as the same type as the files to be analyzed defined in CK_CSV_FILE according to PROCESS_CLASSES
-   for key, value in ids.items():
-      if key not in class_names or value not in variable_attributes: # If the id is not a class or the value is not in the attribute field
-         return False # Return False because the id is not a class
-   return True # Return True because the ids are valid
+   for key, values in ids.items():
+      for value in values:
+         matching_row = df[(df["Class"] == key) & (df[variable_attribute] == value)] # Get the row that matches the class and variable attribute
+         if matching_row.empty:
+            return False  # Return False if the id is not found in the CSV file
+   return True  # Return True if all ids are valid (found in the CSV file)
 
 # @brief: This function receives an id and verify if it contains slashes, if so, it returns the id without the slashes
 # @param: id: ID of the class or method to be analyzed
