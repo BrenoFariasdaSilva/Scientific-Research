@@ -94,16 +94,16 @@ def get_user_ids_input(repository_name):
    while class_name == "" and first_run:
       first_run = False
       # Ask for user input of the class name
-      class_name = input(f"{backgroundColors.GREEN}Enter the name of the {csv_file} {backgroundColors.RED}(String/*){backgroundColors.GREEN}: {Style.RESET_ALL}")
+      class_name = input(f"{backgroundColors.GREEN}Enter the name of the name of the class {backgroundColors.RED}(String/*){backgroundColors.GREEN}: {Style.RESET_ALL}")
       # if the CK_CSV_FILE is a class csv file, ask for the type of the class ('class' 'interface' 'innerclass' 'enum' 'anonymous')
       if CK_CSV_FILE == CLASS_CSV_FILE:
-         value = input(f"{backgroundColors.GREEN}Enter the type of the {csv_file} {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
+         variable_attribute = input(f"{backgroundColors.GREEN}Enter the type of the {csv_file} {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
       # if the CK_CSV_FILE is a method csv file, ask for the name of the class of the method
       elif CK_CSV_FILE == METHOD_CSV_FILE:
-         value = input(f"{backgroundColors.GREEN}Enter the {csv_file} name of the {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
+         variable_attribute = input(f"{backgroundColors.GREEN}Enter the {csv_file} name of the {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
 
-      # add the class_name and value to the id dictionary
-      ids[class_name] = value
+      # add the class_name and variable_attribute to the id dictionary
+      ids[class_name] = variable_attribute
 
    # If the class_name is "*", them get every variable_attribute of each class.
    if class_name == "*" and not first_run:
