@@ -95,14 +95,14 @@ def get_user_ids_input(repository_name):
       first_run = False
       # Ask for user input of the class name
       class_name = input(f"{backgroundColors.GREEN}Enter the name of the name of the class {backgroundColors.RED}(String/*){backgroundColors.GREEN}: {Style.RESET_ALL}")
-      # if the CK_CSV_FILE is a class csv file, ask for the type of the class ('class' 'interface' 'innerclass' 'enum' 'anonymous')
+      # If the CK_CSV_FILE is a class csv file, ask for the type of the class ('class' 'interface' 'innerclass' 'enum' 'anonymous')
       if CK_CSV_FILE == CLASS_CSV_FILE:
          variable_attribute = input(f"{backgroundColors.GREEN}Enter the type of the {csv_file} {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
-      # if the CK_CSV_FILE is a method csv file, ask for the name of the class of the method
+      # If the CK_CSV_FILE is a method csv file, ask for the name of the class of the method
       elif CK_CSV_FILE == METHOD_CSV_FILE:
          variable_attribute = input(f"{backgroundColors.GREEN}Enter the {csv_file} name of the {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
 
-      # add the class_name and variable_attribute to the id dictionary
+      # Add the class_name and variable_attribute to the id dictionary
       ids[class_name] = variable_attribute
 
    # If the class_name is "*", them get every variable_attribute of each class.
@@ -118,11 +118,11 @@ def get_user_ids_input(repository_name):
                variable_attribute_value = row[variable_attribute]
                
                if class_key not in ids:
-                  ids[class_key] = [variable_attribute_value]  # Initialize list for variable attributes
+                  ids[class_key] = [variable_attribute_value] # Initialize list for variable attributes
                else:
-                  ids[class_key].append(variable_attribute_value)  # Append variable attribute to the existing list
+                  ids[class_key].append(variable_attribute_value) # Append variable attribute to the existing list
 
-      return ids  # Return the dictionary containing class/method and variable attribute data
+      return ids # Return the dictionary containing class/method and variable attribute data
 
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
    if class_name == "" and not first_run:
