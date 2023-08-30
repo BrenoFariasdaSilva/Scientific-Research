@@ -31,6 +31,7 @@ DEFAULT_CLASS_IDS = {"org.apache.commons.lang.StringUtils": "class"} # The defau
 DEFAULT_METHOD_IDS = {"org.apache.commons.lang3.AnnotationUtilsTest": "testBothArgsNull/0", "org.apache.commons.lang.LangTestSuite": "suite/0"} # The default ids to be analyzed. It stores the class:type or class:method
 DEFAULT_IDS = DEFAULT_CLASS_IDS if PROCESS_CLASSES else DEFAULT_METHOD_IDS # The default ids to be analyzed. It stores the class:type or method:class
 IMAGE_LABELS = [False, False]
+SORTED_CHANGES_CSV_FILENAME = f"sorted_changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the sorted top changes
  
 # Relative paths:
 RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH = "/metrics_evolution" # The relative path of the metrics_evolution directory
@@ -108,7 +109,7 @@ def get_user_ids_input(repository_name):
    # If the class_name is "*", them get every variable_attribute of each class.
    if class_name == "*" and not first_run:
       variable_attribute = "Type" if PROCESS_CLASSES else "Method"
-      top_changes_csv_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
+      top_changes_csv_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + SORTED_CHANGES_CSV_FILENAME
       # Open the top changes csv file and get the class/method and variable attribute data
       with open(top_changes_csv_path, "r") as file: 
          csv_reader = csv.DictReader(file) # Read the csv file
@@ -137,7 +138,7 @@ def get_user_ids_input(repository_name):
 # @return: True if the ids are valid, False otherwise
 def validate_ids(ids, repository_name):
    # Get the path of the file containing the top changes of the classes
-   repo_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
+   repo_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + SORTED_CHANGES_CSV_FILENAME
 
    class_names = pd.read_csv(repo_top_changes_file_path)["Class"].unique()
    attribute = "Type" if PROCESS_CLASSES else "Method"
