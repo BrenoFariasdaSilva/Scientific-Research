@@ -109,18 +109,18 @@ def get_user_ids_input(repository_name):
    if class_name == "*" and not first_run:
       variable_attribute = "Type" if PROCESS_CLASSES else "Method"
       top_changes_csv_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
-      
-      with open(top_changes_csv_path, "r") as file:
-         csv_reader = csv.DictReader(file)
-         for row in csv_reader:
-            if int(row["Changed"]) > MINIMUM_CHANGES:
-               class_key = row["Class"]
-               variable_attribute_value = row[variable_attribute]
-               
-               if class_key not in ids:
-                  ids[class_key] = [variable_attribute_value] # Initialize list for variable attributes
-               else:
-                  ids[class_key].append(variable_attribute_value) # Append variable attribute to the existing list
+      # Open the top changes csv file and get the class/method and variable attribute data
+      with open(top_changes_csv_path, "r") as file: 
+         csv_reader = csv.DictReader(file) # Read the csv file
+         for row in csv_reader: # Loop trough the csv file
+            if int(row["Changed"]) > MINIMUM_CHANGES: # If the number of changes is greater than the minimum number of changes
+               class_name = row["Class"] # Get the class name
+               variable_attribute_value = row[variable_attribute] # Get the variable attribute
+                
+               if class_name not in ids: # If the class is not in the dictionary
+                  ids[class_name] = [variable_attribute_value] # Initialize list for variable attributes
+               else: # If the class is in the dictionary
+                  ids[class_name].append(variable_attribute_value) # Append variable attribute to the existing list
 
       return ids # Return the dictionary containing class/method and variable attribute data
 
