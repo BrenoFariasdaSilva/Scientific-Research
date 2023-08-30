@@ -137,8 +137,8 @@ def validate_ids(ids, repository_name):
       for value in values:
          matching_row = df[(df["Class"] == key) & (df[variable_attribute] == value)] # Get the row that matches the class and variable attribute
          if matching_row.empty:
-            return False  # Return False if the id is not found in the CSV file
-   return True  # Return True if all ids are valid (found in the CSV file)
+            return False # Return False if the id is not found in the CSV file
+   return True # Return True if all ids are valid (found in the CSV file)
 
 # @brief: This function receives an id and verify if it contains slashes, if so, it returns the id without the slashes
 # @param: id: ID of the class or method to be analyzed
