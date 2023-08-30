@@ -88,13 +88,13 @@ def create_directory(full_directory_path, relative_directory_path):
 # @return: id: Name of the class or method to be analyzed
 def get_user_ids_input(repository_name):
    ids = {} # Dictionary that stores the ids to be analyzed
-   name = ""
+   class_name = ""
    first_run = True
    csv_file = CK_CSV_FILE.replace('.csv', '') # The name of the csv generated file from ck.
-   while name == "" and first_run:
+   while class_name == "" and first_run:
       first_run = False
-      # Ask for user input of the class or method name
-      name = input(f"{backgroundColors.GREEN}Enter the name of the {csv_file} {backgroundColors.RED}(String/*){backgroundColors.GREEN}: {Style.RESET_ALL}")
+      # Ask for user input of the class name
+      class_name = input(f"{backgroundColors.GREEN}Enter the name of the {csv_file} {backgroundColors.RED}(String/*){backgroundColors.GREEN}: {Style.RESET_ALL}")
       # if the CK_CSV_FILE is a class csv file, ask for the type of the class ('class' 'interface' 'innerclass' 'enum' 'anonymous')
       if CK_CSV_FILE == CLASS_CSV_FILE:
          value = input(f"{backgroundColors.GREEN}Enter the type of the {csv_file} {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
@@ -102,15 +102,13 @@ def get_user_ids_input(repository_name):
       elif CK_CSV_FILE == METHOD_CSV_FILE:
          value = input(f"{backgroundColors.GREEN}Enter the {csv_file} name of the {backgroundColors.CYAN}{ids}{backgroundColors.GREEN} to be analyzed {backgroundColors.RED}(String){backgroundColors.GREEN}: {Style.RESET_ALL}")
 
-      # add the name and value to the id dictionary
-      ids[name] = value
+      # add the class_name and value to the id dictionary
+      ids[class_name] = value
 
-   # If the name is "*", them get every variable_attribute of each class.
-   if name == "*" and not first_run:
+   # If the class_name is "*", them get every variable_attribute of each class.
+   if class_name == "*" and not first_run:
       variable_attribute = "Type" if PROCESS_CLASSES else "Method"
       top_changes_csv_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
-      
-      ids = {}  # Create a dictionary with the class name as the key and the type or method as the value, but the "Changed" column must be at least 2.
       
       with open(top_changes_csv_path, "r") as file:
          csv_reader = csv.DictReader(file)
@@ -127,7 +125,7 @@ def get_user_ids_input(repository_name):
       return ids  # Return the dictionary containing class/method and variable attribute data
 
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
-   if name == "" and not first_run:
+   if class_name == "" and not first_run:
       ids = DEFAULT_IDS
       print(f"{backgroundColors.GREEN}Using the default stored {CK_CSV_FILE.replace('.csv', '')} names: {backgroundColors.CYAN}{', '.join(ids.keys())}{backgroundColors.GREEN}.{Style.RESET_ALL}")
 
@@ -141,12 +139,12 @@ def validate_ids(ids, repository_name):
    # Get the path of the file containing the top changes of the classes
    repo_top_changes_file_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
 
-   classnames = pd.read_csv(repo_top_changes_file_path)["Class"].unique()
+   class_names = pd.read_csv(repo_top_changes_file_path)["Class"].unique()
    attribute = "Type" if PROCESS_CLASSES else "Method"
    variable_attributes = pd.read_csv(repo_top_changes_file_path)[attribute].unique()
    # Verify if the ids are as the same type as the files to be analyzed defined in CK_CSV_FILE according to PROCESS_CLASSES
    for key, value in ids.items():
-      if key not in classnames or value not in variable_attributes: # If the id is not a class or the value is not in the attribute field
+      if key not in class_names or value not in variable_attributes: # If the id is not a class or the value is not in the attribute field
          return False # Return False because the id is not a class
    return True # Return True because the ids are valid
 
