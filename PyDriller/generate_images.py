@@ -27,8 +27,10 @@ CK_CSV_FILE = CLASS_CSV_FILE if PROCESS_CLASSES else METHOD_CSV_FILE # The name 
 CLASSES_OR_METHODS = "classes" if PROCESS_CLASSES else "methods" # The name of the csv generated file from ck.
 OPPOSITE_CK_CSV_FILE = METHOD_CSV_FILE if PROCESS_CLASSES else CLASS_CSV_FILE # The name of the csv generated file from ck.
 DEFAULT_REPOSITORY_NAME = ["commons-lang", "jabref", "kafka", "zookeeper"] # The default repository names
-DEFAULT_CLASS_IDS = {"org.apache.commons.lang.StringUtils": "class"} # The default ids to be analyzed. It stores the class:type or class:method
-DEFAULT_METHOD_IDS = {"org.apache.commons.lang3.AnnotationUtilsTest": "testBothArgsNull/0", "org.apache.commons.lang.LangTestSuite": "suite/0"} # The default ids to be analyzed. It stores the class:type or class:method
+DEFAULT_CLASS_IDS = {"org.apache.commons.lang.StringUtils": ["class"]} # The default ids to be analyzed. It stores the class:type
+DEFAULT_METHOD_IDS = { # The default ids to be analyzed. It stores the method:class
+   "org.apache.commons.lang3.AnnotationUtilsTest": ["testBothArgsNull/0"],
+   "org.apache.commons.lang.LangTestSuite": ["suite/0"]}
 DEFAULT_IDS = DEFAULT_CLASS_IDS if PROCESS_CLASSES else DEFAULT_METHOD_IDS # The default ids to be analyzed. It stores the class:type or method:class
 IMAGE_LABELS = [False, False]
 SORTED_CHANGES_CSV_FILENAME = f"sorted_changes.{CK_CSV_FILE.split('.')[1]}" # The name of the csv file containing the sorted top changes
