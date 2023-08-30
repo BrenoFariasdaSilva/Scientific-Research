@@ -105,19 +105,26 @@ def get_user_ids_input(repository_name):
       # add the name and value to the id dictionary
       ids[name] = value
 
-   # If the name is "*", them do for every Class/Method in the Repository.
+   # If the name is "*", them get every variable_attribute of each class.
    if name == "*" and not first_run:
       variable_attribute = "Type" if PROCESS_CLASSES else "Method"
       top_changes_csv_path = RELATIVE_METRICS_STATISTICS_DIRECTORY_PATH[1:] + "/" + repository_name + "/" + CK_CSV_FILE.replace('.csv', '') + "-" + "sorted_changes.csv"
-      result_dict = {} # Create a dictionary with the class name as the key and the type or method as the value, but the "Changed" column must be at least 2.
+      
+      result_dict = {}  # Create a dictionary with the class name as the key and the type or method as the value, but the "Changed" column must be at least 2.
+      
       with open(top_changes_csv_path, "r") as file:
          csv_reader = csv.DictReader(file)
          for row in csv_reader:
             if int(row["Changed"]) > MINIMUM_CHANGES:
                class_key = row["Class"]
                variable_attribute_value = row[variable_attribute]
-               result_dict[class_key] = variable_attribute_value
-      return result_dict # Return the class or method name
+               
+               if class_key not in result_dict:
+                  result_dict[class_key] = [variable_attribute_value]  # Initialize list for variable attributes
+               else:
+                  result_dict[class_key].append(variable_attribute_value)  # Append variable attribute to the existing list
+
+      return result_dict  # Return the dictionary containing class/method and variable attribute data
 
    # If the id dictionary is empty, get from the DEFAULT_IDS constant
    if name == "" and not first_run:
