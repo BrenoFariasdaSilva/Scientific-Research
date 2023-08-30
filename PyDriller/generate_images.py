@@ -368,13 +368,14 @@ def main():
       print(f"{backgroundColors.RED}The metrics evolution for {backgroundColors.CYAN}{', '.join(ids.keys())}{backgroundColors.RED} in {backgroundColors.CYAN}{repository_name}{backgroundColors.RED} were not created. Please run the {backgroundColors.CYAN}metrics_changes.py{backgroundColors.RED} file first.{Style.RESET_ALL}")
       return
    
-   number_of_ids = len(ids.keys())
-   # Make a for loop to run the create_metrics_evolution_graphic function for each id
-   for index, id in enumerate(ids): # Loop trough the ids items in the dictionary
-      print(f"{backgroundColors.GREEN}Generating Image {backgroundColors.CYAN}{index+1} of {number_of_ids}{backgroundColors.GREEN} for the {backgroundColors.CYAN}{id} {CK_CSV_FILE.replace('.csv', '')}{backgroundColors.GREEN} inside the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository.{Style.RESET_ALL}")
+   # Get the number of ids to be analyzed
+   number_of_ids = sum(len(attributes) for attributes in ids.values())
 
-      # Create the metrics evolution graphs
-      create_metrics_evolution_graphic(repository_name, id, get_clean_id(ids[id]))
+   # Iterate through each class and its variable attributes
+   for index, (class_name, variable_attributes) in enumerate(ids.items()):
+      for attribute in variable_attributes: # Iterate through each variable attribute of the class
+         print(f"{backgroundColors.GREEN}Generating Image {backgroundColors.CYAN}{index+1} of {number_of_ids}{backgroundColors.GREEN} for the {backgroundColors.CYAN}{attribute} {CK_CSV_FILE.replace('.csv', '')}{backgroundColors.GREEN} inside the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository.{Style.RESET_ALL}")
+         create_metrics_evolution_graphic(repository_name, class_name, get_clean_id(attribute)) # Create the metrics evolution graphs
 
    print(f"{backgroundColors.CYAN}Successfully created the metrics evolution graphics{backgroundColors.GREEN} for the {backgroundColors.CYAN}{repository_name}{backgroundColors.GREEN} repository inside the {backgroundColors.CYAN}{RELATIVE_METRICS_EVOLUTION_DIRECTORY_PATH[1:]}{backgroundColors.GREEN} directory.{Style.RESET_ALL}")
 
