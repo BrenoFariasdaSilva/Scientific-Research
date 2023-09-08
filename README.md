@@ -30,10 +30,11 @@ Welcome to my Scientific Research Repository! This repository contains code and 
 </div>
 
 ## Table of Contents
-- [Scientific Research ](#scientific-research-)
+- [Scientific Research. ](#scientific-research-)
   - [Table of Contents](#table-of-contents)
   - [Goals](#goals)
   - [Skills](#skills)
+  - [License](#license)
 
 ## Goals
 
@@ -75,3 +76,6 @@ Our research project involves expertise in the following areas:
 - Python (Programming Language)
 
 Feel free to explore the code and data in this repository. If you have any questions or suggestions, please don't hesitate to reach out to me.
+
+## License
+This project is licensed under the [Creative Commons Zero v1.0 Universal](LICENSE), which means you are free to use, modify, and distribute the code. See the [LICENSE](LICENSE) file for more details.
