@@ -193,6 +193,7 @@ PyDriller/repositories
 
 # Ignore every file inside PyDriller/ck_metrics files
 /PyDriller/ck_metrics
+/PyDriller/diff
 /PyDriller/metrics_evolution
 /PyDriller/metrics_statistics
 /PyDriller/metrics_predictions
