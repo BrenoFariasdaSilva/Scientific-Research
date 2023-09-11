@@ -191,7 +191,7 @@ Jabref/.github/*
 
 PyDriller/repositories
 
-# Ignore every file inside PyDriller/ck_metrics files
+# Ignore every file inside PyDriller specified folders
 /PyDriller/ck_metrics
 /PyDriller/diffs
 /PyDriller/metrics_evolution
@@ -200,7 +200,7 @@ PyDriller/repositories
 /PyDriller/ck_metrics.7z
 /PyDriller/junk
 /PyDriller/graphics
-/PyDriller/sorted
+/PyDriller/sorted/
 
 # Ignore RefactoringMiner/RefactoringMiner folder
 /RefactoringMiner/RefactoringMiner
