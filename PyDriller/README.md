@@ -2,6 +2,7 @@
 @TODO 1: Update README to explain all the features (ck_metrics.py, file_diffs.py, metrics_changes.py and generate_images.py).   
 @TODO 2: Create classes for the constants, functions and variables that are used in multiple files. Be careful that might be some constants might include '/' or not. So, make sure you use the correct one. Save those classes in a new file called main.py.  
 @TODO 3: Remove most of the prints to make the code execution more clean. Remove most of the sucessfull prints, as they are not necessary. Keep only the error prints and final prints.  
+@TODO 4: Explain /Scripts in the README.
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
