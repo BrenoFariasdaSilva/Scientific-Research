@@ -2,7 +2,7 @@
 
 # [PyDriller.](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)  <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg"  width="3%" height="3%">
 
-TODO: Make every algorithm work for every repository in the DEFAULT_REPOSITORY_NAMES constant list.
+TODO: Make every algorithm work for every repository in the DEFAULT_REPOSITORY_NAMES constant list and for classes and methods.
 
 </div>
 
