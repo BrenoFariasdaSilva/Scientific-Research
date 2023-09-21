@@ -25,7 +25,6 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
       - [CK\_Metrics](#ck_metrics)
       - [Metrics\_Changes](#metrics_changes)
       - [Generate\_Images](#generate_images)
-      - [File\_Diffs](#file_diffs)
     - [Auxiliar Scripts:](#auxiliar-scripts)
       - [Empty Folders](#empty-folders)
       - [Extract Zip Files](#extract-zip-files)
@@ -74,9 +73,10 @@ make ck_metrics_script
 6. With all the subfolders created, we must call `clone_repository` function, which will clone the repository to the `FULL_REPOSITORY_DIRECTORY_PATH` directory.
 7. As now we have the repository cloned, we must call `traverse_repository` function, in which will loop through the repository commits tree with the use of `PyDriller.traverse_commits()` to go through all the commit hashes of the repository and do the following for each commit in the repository: 
    1. Get the tuple containing the `commit.hash`, `commit.msg` and `commit.author_date` and store these commit data in the `commit_hashes` list, in order to, later on, store them inside the `CK_METRICS_DIRECTORY_PATH/repository_name-commit_hashes.csv` file;  
-   2. Checkout to the `commit.hash` branch;  
-   3. Create a subfolder inside the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name` with the name of the `commit.hash` value;  
-   4. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit.hash` folder;  
+   2. Call `generate_diffs(repository_name, commit_hash, commit_number)`, which will fo through all the modified files of the current commit and store the diffs of the files in the `{cwd}{DEFAULT_DIFFS_DIRECTORY}/{repository_name}/{commit_number}-{commit_hash.hash}/{modified_file.filename}{DIFF_FILE_EXTENSION}` folder;
+   3. Checkout to the `commit.hash` branch;  
+   4. Create a subfolder inside the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name` with the name of the `commit.hash` value;  
+   5. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit.hash` folder;  
 8. Now that we have the list of tuples containing the commit hashe, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commit_hashes.csv` file, with the call of `write_commit_hashes_to_csv` function.
 9.  And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
 10. After everything is done, the `ck_metrics.py` script will be done and play a sound to notify you that it is done.
@@ -108,7 +108,7 @@ make metrics_changes_script
 5. After everything is done, the `metrics_changes.py` script will be done and play a sound to notify you that it is done.
 
 #### Generate_Images
-Considering that you now have the ck metrics statistics calculated, you are able to run the following command to execute the `generate_images.py` file:
+Lastly, considering that you now have the ck metrics statistics calculated, you are able to run the following command to execute the `generate_images.py` file:
 ```
 make generate_images_script
 ```
@@ -125,19 +125,6 @@ make generate_images_script
    4. With the labels type defined, it will do a for loop for iterating over each commit hash of the id analysed, so it gets the `CBO`, `CBO Modified`, `WMC` and `RFC` values of the commit hash in order to plot them in the graphic.
    5. Now there still lots of line of code in that function, but the main thing to note is that it will plot the graphic and save it in the `FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + " " + clean_id_key + ".png"` file.
 8. After everything is done, the `generate_images.py` script will be done and play a sound to notify you that it is done.
-
-#### File_Diffs
-Lastly, considering that you have already run all the scripts above, there is the `file_diffs.py` file, which is used to generate the file diffs of the repositories in `DEFAULT_REPOSITORY_NAMES`. To execute it, you must run the following command:
-```
-make file_diffs_script
-```
-1. The first thing it will do is verify if you don't have whitespaces in the path of the project by calling the `path_contains_whitespaces` function. If you have, it will not work.
-2. Then, it will call `loop_through_repositories(cwd)` function, which will loop through the `DEFAULT_REPOSITORY_NAMES` dictionary, which contains the repositories names and URLs.
-   1. This function will store the `commits` list variable, which contains the commits of the repository, and the `repository_name` variable.
-   2. Now, it must verify if the repository has at least 2 commits, if it doesn't, it will stop running the script.
-   3. If the repository has at least 2 commits, it will call the `generate_diffs(cwd, repository_name, commits_generator)` function.
-3. The `generate_diffs(cwd, repository_name, commits_generator)` function will loop through the commits of the repository, and for each commit, it will loop into the `modified_files` of the commit and save the diffs of the files in the `f"{cwd}/diffs/{repository_name}/{i} - {commit.hash}/{modified_file.filename}.diff"` file.
-4. After the step 2 is done, the `file_diffs.py` script will be done and play a sound to notify you that it is done.
 
 ### Auxiliar Scripts:
 There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
