@@ -4,7 +4,7 @@
 
 </div>
 
-TODO: Verify why the things of not repeating the metrics values in the metrics_track_record dictionary in the metrics_changes.py script, cause it might be making a problem that we have less metrics evolution than the number of commits of that file?  
+TODO: Verify why the things of not repeating the metrics values in the metrics_track_record dictionary in the metrics_changes.py script, cause it might be making a problem that we have less metrics evolution than the number of commits of that file?  Lines 243 and 244
 
 TODO: Update the README.md file about what the scripts do after the new changes. 
 
