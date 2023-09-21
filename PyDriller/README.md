@@ -92,4 +92,10 @@ Lastly, there is the `file_diffs.py` file, which is used to generate the file di
 ```
 make file_diffs_script
 ```
-1. The firs
+1. The first thing it will do is verify if you don't have whitespaces in the path of the project by calling the `path_contains_whitespaces` function. If you have, it will not work.
+2. Then, it will call `loop_through_repositories(cwd)` function, which will loop through the `DEFAULT_REPOSITORY_NAMES` dictionary, which contains the repositories names and URLs.
+   1. This function will store the `commits` list variable, which contains the commits of the repository, and the `repository_name` variable.
+   2. Now, it must verify if the repository has at least 2 commits, if it doesn't, it will stop running the script.
+   3. If the repository has at least 2 commits, it will call the `generate_diffs(cwd, repository_name, commits_generator)` function.
+3. The `generate_diffs(cwd, repository_name, commits_generator)` function will loop through the commits of the repository, and for each commit, it will loop into the `modified_files` of the commit and save the diffs of the files in the `f"{cwd}/diffs/{repository_name}/{i} - {commit.hash}/{modified_file.filename}.diff"` file.
+4. After the step 2 is done, the `file_diffs.py` script will be done and play a sound to notify you that it is done.
