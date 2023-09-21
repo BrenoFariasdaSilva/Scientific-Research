@@ -1,8 +1,12 @@
 # [PyDriller](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)
 @TODO 1: Update README to explain all the features (ck_metrics.py, file_diffs.py, metrics_changes.py and generate_images.py).   
-@TODO 2: Create classes for the constants, functions and variables that are used in multiple files. Be careful that might be some constants might include '/' or not. So, make sure you use the correct one. Save those classes in a new file called main.py.  
-@TODO 3: Remove most of the prints to make the code execution more clean. Remove most of the sucessfull prints, as they are not necessary. Keep only the error prints and final prints.  
 @TODO 4: Explain /Scripts in the README.
+
+- [PyDriller](#pydriller)
+    - [Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.](#important-note-make-sure-you-dont-have-whitespaces-in-the-path-of-the-project-otherwise-it-will-not-work)
+  - [Installation](#installation)
+    - [Requirements](#requirements)
+  - [How to use](#how-to-use)
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
@@ -83,3 +87,9 @@ make generate_images_script
    3. It will ask the user if he wants to insert labels in the graphic `(y/n)`, if he does, it will ask for the user input to choose the type of the labels, being `1. Sequence of numbers` or `2. Value of the data point (y axis value)`
    4. With the labels type defined, it will do a for loop for iterating over each commit hash of the id analysed, so it gets the `CBO`, `CBO Modified`, `WMC` and `RFC` values of the commit hash in order to plot them in the graphic.
    5. Now there still lots of line of code in that function, but the main thing to note is that it will plot the graphic and save it in the `FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + " " + clean_id_key + ".png"` file.
+
+Lastly, there is the `file_diffs.py` file, which is used to generate the file diffs of the repository. To execute it, you must run the following command:
+```
+make file_diffs_script
+```
+1. The first thing it will do is ask you if you want to process classes or methods, if you want to process classes, type ```True```, if you want to process methods, type ```False```. Note that it is case sensitive, so make sure you type it correctly.
