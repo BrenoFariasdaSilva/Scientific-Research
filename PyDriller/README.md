@@ -29,7 +29,7 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
 
 ### Important Notes:
 - Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
-- The execution of this scripts will take a long time and store a lot of data, so make sure you have enough space in your disk and be patient.
+- The execution of this scripts will take a long time and store a lot of data, so make sure you have enough space in your disk and be patient. Example: Running all the scrips only for `Apache Kafka` generates a total of 115 GB.
 - Why is it not parallelized? Because, for example, the first script (ck_metrics.py), which is the one who takes the most time to execute (could be days easily depending on the size of the repository of interest), the result of the iteration x depends on the result since the first iteration until x-1, so it is not possible to parallelize it. The other scripts, for example, actually could have some room for parallelization, but as all those scripts depends on file reading and writing, it would be a mess to parallelize it, so I decided to not parallelize it. If you want to parallelize it, feel free to do it, i'll be glad aproving your pull request.
 
 ## Installation
