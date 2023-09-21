@@ -3,7 +3,7 @@
 # [PyDriller.](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)  <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg"  width="3%" height="3%">
 
 </div>
-@TODO 1: Explain /Scripts in the README.
+@TODO 1: Explain /Scripts in the README.  
 
 <div align="center">
   
@@ -16,17 +16,21 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
 </div>
 
 - [PyDriller.  ](#pydriller--)
-    - [Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.](#important-note-make-sure-you-dont-have-whitespaces-in-the-path-of-the-project-otherwise-it-will-not-work)
+    - [Important Notes:](#important-notes)
   - [Installation](#installation)
     - [Requirements](#requirements)
   - [How to use](#how-to-use)
       - [CK\_Metrics](#ck_metrics)
       - [Metrics\_Changes](#metrics_changes)
       - [Generate\_Images](#generate_images)
-- [File\_Diffs](#file_diffs)
+      - [File\_Diffs](#file_diffs)
+  - [Auxiliar Scripts](#auxiliar-scripts)
 
 
-### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
+### Important Notes:
+- Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
+- The execution of this scripts will take a long time and store a lot of data, so make sure you have enough space in your disk and be patient.
+- Why is it not parallelized? Because, for example, the first script (ck_metrics.py), which is the one who takes the most time to execute (could be days easily depending on the size of the repository of interest), the result of the iteration x depends on the result since the first iteration until x-1, so it is not possible to parallelize it. The other scripts, for example, actually could have some room for parallelization, but as all those scripts depends on file reading and writing, it would be a mess to parallelize it, so I decided to not parallelize it. If you want to parallelize it, feel free to do it, i'll be glad aproving your pull request.
 
 ## Installation
 You need to install python3. If you are using Linux, you (must likely) can install it by just running the following commands:
@@ -112,7 +116,7 @@ make generate_images_script
    5. Now there still lots of line of code in that function, but the main thing to note is that it will plot the graphic and save it in the `FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + " " + clean_id_key + ".png"` file.
 8. After everything is done, the `generate_images.py` script will be done and play a sound to notify you that it is done.
 
-# File_Diffs
+#### File_Diffs
 Lastly, considering that you have already run all the scripts above, there is the `file_diffs.py` file, which is used to generate the file diffs of the repositories in `DEFAULT_REPOSITORY_NAMES`. To execute it, you must run the following command:
 ```
 make file_diffs_script
@@ -124,3 +128,7 @@ make file_diffs_script
    3. If the repository has at least 2 commits, it will call the `generate_diffs(cwd, repository_name, commits_generator)` function.
 3. The `generate_diffs(cwd, repository_name, commits_generator)` function will loop through the commits of the repository, and for each commit, it will loop into the `modified_files` of the commit and save the diffs of the files in the `f"{cwd}/diffs/{repository_name}/{i} - {commit.hash}/{modified_file.filename}.diff"` file.
 4. After the step 2 is done, the `file_diffs.py` script will be done and play a sound to notify you that it is done.
+
+## Auxiliar Scripts
+There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are used to 
+```
