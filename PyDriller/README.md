@@ -16,14 +16,20 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
 
 - [PyDriller.  ](#pydriller--)
     - [Important Notes:](#important-notes)
-  - [Installation](#installation)
-    - [Requirements](#requirements)
-  - [How to use](#how-to-use)
+  - [Installation:](#installation)
+    - [Requirements:](#requirements)
+  - [How to use:](#how-to-use)
+    - [Main Scripts:](#main-scripts)
       - [CK\_Metrics](#ck_metrics)
       - [Metrics\_Changes](#metrics_changes)
       - [Generate\_Images](#generate_images)
       - [File\_Diffs](#file_diffs)
-  - [Auxiliar Scripts](#auxiliar-scripts)
+    - [Auxiliar Scripts:](#auxiliar-scripts)
+      - [Empty Folders](#empty-folders)
+      - [Extract Zip Files](#extract-zip-files)
+      - [Generate Zip Files](#generate-zip-files)
+      - [Move Extracted Files](#move-extracted-files)
+  - [Dependencies:](#dependencies)
 
 
 ### Important Notes:
@@ -31,7 +37,7 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
 - The execution of this scripts will take a long time and store a lot of data, so make sure you have enough space in your disk and be patient. Example: Running all the scrips only for `Apache Kafka` generates a total of 115 GB.
 - Why is it not parallelized? Because, for example, the first script (ck_metrics.py), which is the one who takes the most time to execute (could be days easily depending on the size of the repository of interest), the result of the iteration x depends on the result since the first iteration until x-1, so it is not possible to parallelize it. The other scripts, for example, actually could have some room for parallelization, but as all those scripts depends on file reading and writing (which generates a race condition), so I decided to not parallelize it. If you want to parallelize it, feel free to do it, i'll be glad aproving your pull request.
 
-## Installation
+## Installation:
 You need to install python3. If you are using Linux, you (must likely) can install it by just running the following commands:
 ```
 sudo apt install python3 -y
@@ -39,13 +45,14 @@ sudo apt install python3-pip -y
 ```
 Great, you now have python3 and pip installed. Now, we need to install the project requirements/dependencies.
 
-### Requirements
+### Requirements:
 Run the following command to install the requirements, like ```matplotlib```, ```numpy```, ```pandas```, ```pydriller``` and ```tqdm```:  
 ```
 make dependencies
 ```
 	
-## How to use  
+## How to use: 
+### Main Scripts:
 First, you must run the following command to execute the `ck_metrics.py` file:
 #### CK_Metrics
 ```
@@ -128,21 +135,38 @@ make file_diffs_script
 3. The `generate_diffs(cwd, repository_name, commits_generator)` function will loop through the commits of the repository, and for each commit, it will loop into the `modified_files` of the commit and save the diffs of the files in the `f"{cwd}/diffs/{repository_name}/{i} - {commit.hash}/{modified_file.filename}.diff"` file.
 4. After the step 2 is done, the `file_diffs.py` script will be done and play a sound to notify you that it is done.
 
-## Auxiliar Scripts
+### Auxiliar Scripts:
 There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
-1. `empty_folders.py`: This script is used to verify if there are empty folders inside a specified directory. It is really usefull to make sure your files where processed or extracted correctly. To execute it, you must run the following command:
+
+#### Empty Folders
+This script is used to verify if there are empty folders inside a specified directory. It is really usefull to make sure your files where processed or extracted correctly. To execute it, you must run the following command:
 ```
 make empty_folders_script
 ```
-2. `extractZipFiles.sh`: This script is used to extract the zip files of the repositories. It is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using the `generateZipFiles.sh`. To execute it, you must run the following command:
+
+#### Extract Zip Files
+ This script is used to extract the zip files of the repositories. It is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using the `generateZipFiles.sh`. To execute it, you must run the following command:
 ```
 make extract_zip_files_script
 ```
-3. `generateZipFiles.sh`: This script is used to generate the zip files of the repositories. As mentioned in the script above, tt is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using this script. To execute it, you must run the following command:
+
+#### Generate Zip Files
+This script is used to generate the zip files of the repositories. As mentioned in the script above, tt is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using this script. To execute it, you must run the following command:
 ```
 make generate_zip_files_script
 ```
-1. `moveExtractedFiles.sh`: This is a really simple script, which is used to run after you execute the `extractZipFiles.sh` script, as it will move the extracted files to the right directory, for example, the extracted `/kafka/ck_metrics` will be placed in `/ck_metrics/kafka`. To execute it, you must run the following command:
+
+#### Move Extracted Files
+This is a really simple script, which is used to run after you execute the `extractZipFiles.sh` script, as it will move the extracted files to the right directory, for example, the extracted `/kafka/ck_metrics` will be placed in `/ck_metrics/kafka`. To execute it, you must run the following command:
 ```
 make move_extracted_files_script
 ```
+
+## Dependencies:
+This project depends on the following libraries:
+- [PyDriller](https://pydriller.readthedocs.io/en/latest/) -> PyDriller is the core of this project, as it is used to traverse the commits tree of the repositories and get many informations about it, like the commit hash, commit message, commit date and many other things.
+- [MatPlotLib](https://matplotlib.org/) -> MatPlotLib is used to generate the graphics of the metrics evolution and the linear prediction.
+- [NumPy](https://numpy.org/) -> NumPy is used to generate the linear prediction of the linear regression and to many operations in the list of the metrics.
+- [Pandas](https://pandas.pydata.org/) -> Pandas is used maintly to read and write the csv files.
+- [SciKit-Learn](https://scikit-learn.org/stable/) -> SciKit-Learn is used to generate the linear prediction of the linear regression.
+- [TQDM](https://tqdm.github.io/) -> TQDM is used to show the progress bar of the scripts.
