@@ -1,12 +1,16 @@
 # [PyDriller](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)
-@TODO 1: Update README to explain all the features (ck_metrics.py, file_diffs.py, metrics_changes.py and generate_images.py).   
-@TODO 4: Explain /Scripts in the README.
+@TODO 1: Explain /Scripts in the README.
 
 - [PyDriller](#pydriller)
     - [Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.](#important-note-make-sure-you-dont-have-whitespaces-in-the-path-of-the-project-otherwise-it-will-not-work)
   - [Installation](#installation)
     - [Requirements](#requirements)
   - [How to use](#how-to-use)
+      - [CK\_Metrics](#ck_metrics)
+      - [Metrics\_Changes](#metrics_changes)
+      - [Generate\_Images](#generate_images)
+- [File\_Diffs](#file_diffs)
+
 
 ### Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 
@@ -26,6 +30,7 @@ make dependencies
 	
 ## How to use  
 First, you must run the following command to execute the `ck_metrics.py` file:
+#### CK_Metrics
 ```
 make ck_metrics_script
 ```
@@ -47,6 +52,7 @@ make ck_metrics_script
 8. Now that we have the list of tuples containing the commit hashe, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commit_hashes.csv` file, with the call of `write_commit_hashes_to_csv` function.
 9.  And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
 
+#### Metrics_Changes
 Considering that you now have the ck metrics calculated, you are able to run the following command to execute the `metrics_changes.py` file:
 ```
 make metrics_changes_script
@@ -70,7 +76,8 @@ make metrics_changes_script
 2. Now that we have the record of the times the metrics changed and it's values for every class or method, the main function calls the `process_metrics_track_record(repository_name, metrics_track_record)`, which will generate the metrics statistics (`Minimum`, `Maximum`, `Average` and `Third Quartile`) for every metric (`cbo`, `cboModified`, `wmc` and `rfc`), which allow us to have a better understanding of the metrics behavior over time. Those statistics will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` file.
 3. Finally, with those statistics generated and stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` csv file, the main funcion call the `sort_csv_by_changes(repository_name)` function that is going to sort the lines of the metrics statistics csv file by the `Changed` column, which is the number of times the metrics changed. The top changes will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME` csv file.  
 4. Now, that we have the sorted csv file, the main function will call the `os.remove` to delete the old, unsorted csv file.
-   
+
+#### Generate_Images
 Considering that you now have the ck metrics statistics calculated, you are able to run the following command to execute the `generate_images.py` file:
 ```
 make generate_images_script
@@ -88,7 +95,8 @@ make generate_images_script
    4. With the labels type defined, it will do a for loop for iterating over each commit hash of the id analysed, so it gets the `CBO`, `CBO Modified`, `WMC` and `RFC` values of the commit hash in order to plot them in the graphic.
    5. Now there still lots of line of code in that function, but the main thing to note is that it will plot the graphic and save it in the `FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + " " + clean_id_key + ".png"` file.
 
-Lastly, there is the `file_diffs.py` file, which is used to generate the file diffs of the repositories in `DEFAULT_REPOSITORY_NAMES`. To execute it, you must run the following command:
+# File_Diffs
+Lastly, considering that you have already run all the scripts above, there is the `file_diffs.py` file, which is used to generate the file diffs of the repositories in `DEFAULT_REPOSITORY_NAMES`. To execute it, you must run the following command:
 ```
 make file_diffs_script
 ```
