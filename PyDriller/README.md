@@ -130,5 +130,9 @@ make file_diffs_script
 4. After the step 2 is done, the `file_diffs.py` script will be done and play a sound to notify you that it is done.
 
 ## Auxiliar Scripts
-There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are used to 
+There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
+1. `empty_folders.py`: This script is used to verify if there are empty folders inside a specified directory. It is really usefull to make sure your files where processed or extracted correctly. To execute it, you must run the following command:
 ```
+python3 Scripts/empty_folders.py
+```
+1. `extractZipFiles.sh`: This script is used to extract the zip files of the repositories. To execute it, you must run the following command:
