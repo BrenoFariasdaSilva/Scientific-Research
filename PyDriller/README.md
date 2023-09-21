@@ -24,7 +24,6 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
     - [Main Scripts:](#main-scripts)
       - [CK\_Metrics](#ck_metrics)
       - [Metrics\_Changes](#metrics_changes)
-      - [Generate\_Images](#generate_images)
     - [Auxiliar Scripts:](#auxiliar-scripts)
       - [Empty Folders](#empty-folders)
       - [Extract Zip Files](#extract-zip-files)
@@ -106,25 +105,6 @@ make metrics_changes_script
 3. Finally, with those statistics generated and stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` csv file, the main funcion call the `sort_csv_by_changes(repository_name)` function that is going to sort the lines of the metrics statistics csv file by the `Changed` column, which is the number of times the metrics changed. The top changes will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME` csv file.  
 4. Now, that we have the sorted csv file, the main function will call the `os.remove` to delete the old, unsorted csv file.
 5. After everything is done, the `metrics_changes.py` script will be done and play a sound to notify you that it is done.
-
-#### Generate_Images
-Lastly, considering that you now have the ck metrics statistics calculated, you are able to run the following command to execute the `generate_images.py` file:
-```
-make generate_images_script
-```
-1. The first thing it will do is ask you if you want to process classes or methods, if you want to process classes, type ```True```, if you want to process methods, type ```False```. Note that it is case sensitive, so make sure you type it correctly.  
-2. The second thing, as always, what it will do is verify if you don't have whitespaces in the path of the project by calling the `path_contains_whitespaces` function. If you have, it will not work.
-3. Then, it will ask for the user input related to the repository name, for example: ```commons-lang```. If you simply press enter, it will get the first repository name from the ```DEFAULT_REPOSITORY_NAME``` constant list inside the ```generate_images.py``` file.  
-4. Now, it will call the `get_user_ids_input` function, which will ask for the user input to insert, for classes, the class name and the class type, or for methods, it will be the class name and the method name. If you simply press enter, it will get the first class or method name from the ```DEFAULT_IDS``` constant list inside the ```generate_images.py``` file.  
-5. In this step, it must be verified if the user input is valid, so it will call the `validate_ids` function, which will verify if the user input is valid, if it isn't, it will stop running the script.  
-6. Now, it will call the `check_metrics_files` function, which is related to the verification if all the ck metrics files are generated. If they aren't, it will ask you to run the `metrics_changes.py` and stop running the script.  
-7. If the metrics files are generated, it will do a for loop for every id in the user input, calling the `create_metrics_evolution_graphic` function, which will generate the images for the class or method. Also, inside the `create_metrics_evolution_graphic` function, there are a few important steps, as follows:
-   1. First, it will read the classes or method csv file of the desired repository, which is the `FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + class_name + "-" + variable_attribute + CSV_FILE_EXTENSION` csv file.
-   2. Now, it will load to the pandas dataframe the `Commit Hash` column. 
-   3. It will ask the user if he wants to insert labels in the graphic `(y/n)`, if he does, it will ask for the user input to choose the type of the labels, being `1. Sequence of numbers` or `2. Value of the data point (y axis value)`
-   4. With the labels type defined, it will do a for loop for iterating over each commit hash of the id analysed, so it gets the `CBO`, `CBO Modified`, `WMC` and `RFC` values of the commit hash in order to plot them in the graphic.
-   5. Now there still lots of line of code in that function, but the main thing to note is that it will plot the graphic and save it in the `FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + " " + clean_id_key + ".png"` file.
-8. After everything is done, the `generate_images.py` script will be done and play a sound to notify you that it is done.
 
 ### Auxiliar Scripts:
 There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
