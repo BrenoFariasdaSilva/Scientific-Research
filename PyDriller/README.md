@@ -84,9 +84,8 @@ make ck_metrics_script
    6. Now it changes the working directory again to the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit_number-commit.hash` directory, which is the output for the execution of the `ck` command for the current commit.hash;
    7. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit.hash` folder;  
 9. Now that we have the list of tuples containing the commit hashes, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commits_list.csv` file, with the call of `write_commit_hashes_to_csv` function.
-10. Now we call `sort_commit_hashes_by_commit_date(repository_name)` in order to sort the `CK_METRICS_DIRECTORY_PATH/repository_name-commits_list.csv` file by the commit date, which is the third column of the csv file. If the csv file is already sorted, it will print information about it and return.
-11. And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
-12. After everything is done, the `ck_metrics.py` script will be done and play a sound to notify you that it is done.
+10. And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
+11. After everything is done, the `ck_metrics.py` script will be done and play a sound to notify you that it is done.
 
 #### Metrics_Changes
 Considering that you now have the ck metrics calculated, you are able to run the following command to execute the `metrics_changes.py` file:
