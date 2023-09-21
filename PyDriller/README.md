@@ -30,6 +30,8 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
       - [Generate Zip Files](#generate-zip-files)
       - [Move Extracted Files](#move-extracted-files)
   - [Dependencies:](#dependencies)
+  - [Contributing:](#contributing)
+  - [License:](#license)
 
 
 ### Important Notes:
@@ -170,3 +172,10 @@ This project depends on the following libraries:
 - [Pandas](https://pandas.pydata.org/) -> Pandas is used maintly to read and write the csv files.
 - [SciKit-Learn](https://scikit-learn.org/stable/) -> SciKit-Learn is used to generate the linear prediction of the linear regression.
 - [TQDM](https://tqdm.github.io/) -> TQDM is used to show the progress bar of the scripts.
+
+## Contributing:
+Feel free to contribute to this project, as it is open source and i'll be glad to accept your pull request.  
+If you have any questions, feel free to contact me at any of my Social Networks in my [GitHub Profile](https://github.com/BrenoFariasdaSilva).
+
+## License:
+This project is licensed under the [Creative Commons Zero v1.0 Universal](LICENSE) License. So, for those who want to use this project for study, commercial use or any other thing, feel free to use it, as you want, as long as you don't claim that you made this project and remember to give the credits to the original creator.
