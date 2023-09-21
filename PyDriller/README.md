@@ -1,7 +1,21 @@
-# [PyDriller](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)
+<div align="center">
+
+# [PyDriller.](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)
+
+</div>
 @TODO 1: Explain /Scripts in the README.
 
-- [PyDriller](#pydriller)
+<div align="center">
+  
+---
+
+Welcome to the PyDriller folder, in which you will find the scripts used to generate the ck metrics, metrics changes, metrics evolution, metrics linear predictions, graphics and commit files diff of the repositories of interest.
+
+---
+
+</div>
+
+- [PyDriller.](#pydriller)
     - [Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.](#important-note-make-sure-you-dont-have-whitespaces-in-the-path-of-the-project-otherwise-it-will-not-work)
   - [Installation](#installation)
     - [Requirements](#requirements)
