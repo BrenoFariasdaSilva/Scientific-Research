@@ -2,9 +2,11 @@
 
 # [PyDriller.](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)  <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg"  width="3%" height="3%">
 
-TODO: Make every algorithm work for every repository in the DEFAULT_REPOSITORY_NAMES constant list and for classes and methods.
-
 </div>
+
+TODO: Verify why the things of not repeating the metrics values in the metrics_track_record dictionary in the metrics_changes.py script, cause it might be making a problem that we have less metrics evolution than the number of commits of that file?  
+
+TODO: Update the README.md file about what the scripts do after the new changes. 
 
 <div align="center">
   
