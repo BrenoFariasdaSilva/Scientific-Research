@@ -1,6 +1,6 @@
 <div align="center">
 
-# [PyDriller.](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)
+# [PyDriller.](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)  <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg"  width="3%" height="3%">
 
 </div>
 @TODO 1: Explain /Scripts in the README.
@@ -15,7 +15,7 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
 
 </div>
 
-- [PyDriller.](#pydriller)
+- [PyDriller.  ](#pydriller--)
     - [Important Note: Make sure you don't have whitespaces in the path of the project, otherwise it will not work.](#important-note-make-sure-you-dont-have-whitespaces-in-the-path-of-the-project-otherwise-it-will-not-work)
   - [Installation](#installation)
     - [Requirements](#requirements)
