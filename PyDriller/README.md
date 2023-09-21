@@ -88,8 +88,8 @@ make generate_images_script
    4. With the labels type defined, it will do a for loop for iterating over each commit hash of the id analysed, so it gets the `CBO`, `CBO Modified`, `WMC` and `RFC` values of the commit hash in order to plot them in the graphic.
    5. Now there still lots of line of code in that function, but the main thing to note is that it will plot the graphic and save it in the `FULL_GRAPHICS_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + id + " " + clean_id_key + ".png"` file.
 
-Lastly, there is the `file_diffs.py` file, which is used to generate the file diffs of the repository. To execute it, you must run the following command:
+Lastly, there is the `file_diffs.py` file, which is used to generate the file diffs of the repositories in `DEFAULT_REPOSITORY_NAMES`. To execute it, you must run the following command:
 ```
 make file_diffs_script
 ```
-1. The first thing it will do is ask you if you want to process classes or methods, if you want to process classes, type ```True```, if you want to process methods, type ```False```. Note that it is case sensitive, so make sure you type it correctly.
+1. The firs
