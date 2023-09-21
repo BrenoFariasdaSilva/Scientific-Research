@@ -3,7 +3,6 @@
 # [PyDriller.](https://github.com/BrenoFariasdaSilva/Scientific-Research/tree/main/PyDriller)  <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg"  width="3%" height="3%">
 
 </div>
-@TODO 1: Explain /Scripts in the README.  
 
 <div align="center">
   
@@ -133,6 +132,17 @@ make file_diffs_script
 There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
 1. `empty_folders.py`: This script is used to verify if there are empty folders inside a specified directory. It is really usefull to make sure your files where processed or extracted correctly. To execute it, you must run the following command:
 ```
-python3 Scripts/empty_folders.py
+make empty_folders_script
 ```
-1. `extractZipFiles.sh`: This script is used to extract the zip files of the repositories. To execute it, you must run the following command:
+2. `extractZipFiles.sh`: This script is used to extract the zip files of the repositories. It is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using the `generateZipFiles.sh`. To execute it, you must run the following command:
+```
+make extract_zip_files_script
+```
+3. `generateZipFiles.sh`: This script is used to generate the zip files of the repositories. As mentioned in the script above, tt is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using this script. To execute it, you must run the following command:
+```
+make generate_zip_files_script
+```
+1. `moveExtractedFiles.sh`: This is a really simple script, which is used to run after you execute the `extractZipFiles.sh` script, as it will move the extracted files to the right directory, for example, the extracted `/kafka/ck_metrics` will be placed in `/ck_metrics/kafka`. To execute it, you must run the following command:
+```
+make move_extracted_files_script
+```
