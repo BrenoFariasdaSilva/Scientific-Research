@@ -4,8 +4,6 @@
 
 </div>
 
-TODO: Create class of the constants, so we don't have to repeat the code. 
-
 <div align="center">
   
 ---
