@@ -12,6 +12,8 @@ TODO: Update the README.md file about what the scripts do after the new changes.
 
 TODO: Make metrics_changes.py call the `path_contains_whitespaces`, `verify_ck_metrics_folder` and so other functions that are also in the ck_metrics.py file, so we don't have to repeat the code.
 
+TODO: Create class of the constants, so we don't have to repeat the code.
+
 <div align="center">
   
 ---
