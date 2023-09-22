@@ -10,6 +10,8 @@ TODO: Clean the metrics_changes.py outputs. Add progress bar and make it as clea
 
 TODO: Update the README.md file about what the scripts do after the new changes. 
 
+TODO: Make metrics_changes.py call the `path_contains_whitespaces`, `verify_ck_metrics_folders` and so other functions that are also in the ck_metrics.py file, so we don't have to repeat the code.
+
 <div align="center">
   
 ---
@@ -65,7 +67,7 @@ First, you must run the following command to execute the `ck_metrics.py` file:
 make ck_metrics_script
 ```
 1. As for every file in this project, the first thing it will do is verify if you don't have whitespaces in the path of the project, if you have, it will not work.  
-2. Next, it will aso verify if the `ck`file exists in the `FULL_CK_JAR_PATH` directory.
+2. Next, it will also verify if the `ck`file exists in the `FULL_CK_JAR_PATH` directory.
 3. Now, it calls `process_repositories_concurrently()` which will create a thread for each of the repositories inside the `DEFAULT_REPOSITORIES` dictionary and process it's ck metrics and save each commit file diff. Each thread has as it's target the `process_repository(repository_name, repository_url)` function.
 4. Now, the `verify_ck_metrics_folder(repository_name)` function  is called to verify if the ck metrics are already calculated. That verification is done by:
    1. Verifying if the repository commits list csv file exists inside the `CK_METRICS_DIRECTORY_PATH` directory, which should be named as `repository_name-commits_list.csv`, for example: `commons-lang-commits_list.csv`;
@@ -94,8 +96,8 @@ make metrics_changes_script
 ```
 1. The first thing it will do is ask you if you want to process classes or methods, if you want to process classes, type ```True```, if you want to process methods, type ```False```. Note that it is case sensitive, so make sure you type it correctly.
 2. The second thing it will do is verify if you don't have whitespaces in the path of the project by calling the `path_contains_whitespaces` function. If you have, it will not work.
-3. Then, the main function will call `get_directory_path`, which will ask you the repository name, for example: ```commons-lang```. If you simply press enter, it will get the first repository name from the ```DEFAULT_REPOSITORY_NAME``` constant list inside the ```metrics_changes.py``` file.
-4. Now, it calls `verify_ck_metrics_folders` function, as the code must verify if you have already executed the `ck_metrics.py` file. If they aren't, it will tell you to run the `ck_metrics.py` file, which will generate the ck metrics. This verification is done by:
+3. Next, it will call the `loop_through_default_repository_names()` function, which will loop through the `DEFAULT_REPOSITORIES` dictionary and call the `process_repository(repository_name)` function for each repository name.
+4. In this step, the `process_repository` function will get the path to the `ck_metrics`of that repository, so it can call `verify_ck_metrics_folders` function, as the code must verify if you have already executed the `ck_metrics.py` file. If they aren't, it will tell you to run the `ck_metrics.py` file, which will generate the ck metrics. This verification is done by:
    1. Verifying if the repository commit hash csv file exists inside the `CK_METRICS_DIRECTORY_PATH` directory, which should be named as `repository_name-commits_list.csv`, for example: `commons-lang-commits_list.csv`. If it doesn't exist, it will return false;  
    2. If the csv file exists, it will, for every commit hash, which is inside the `commit hash`column in the csv file, verify if there is a subdirectory inside the `CK_METRICS_DIRECTORY_PATH/repository_name` directory, which should be named as the value in the current `commit_hash` and contains all the ck metrics generated files, which are defined in the `CK_METRICS_FILES` constant. If it doesn't exist, it will return false;
 
@@ -107,11 +109,11 @@ make metrics_changes_script
    3. Now it gets the metrics values list in the identifier position of the dictionary and verify if the current metrics combination aren't inside that metrics values list. If it ain't, it means that those metrics combination haven't appeared yet, so we can add it to the list and increment the value of times that this class or method changed. If they are in, we won't add them to the list, as those values would be repeated;  
      
    Now that the `metrics_track_record` dictionary is filled with the metrics evolution of every class or method, the `traverse_directory` function will return the `metrics_track_record` dictionary, in order for the metrics be processed to generate statistics.
-1. Now its time to write those `metrics_track_record`to the `metrics_evolution`folder with the call of the `write_metrics_track_record_to_csv` function, which will write the `metrics_track_record` dictionary to the `FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + class_name + "-" + variable_attribute + CSV_FILE_EXTENSION` csv file.
-2. Now that we have the record of the times the metrics changed and it's values for every class or method, the main function calls the `process_metrics_track_record(repository_name, metrics_track_record)`, which will generate the metrics statistics (`Minimum`, `Maximum`, `Average` and `Third Quartile`) for every metric (`cbo`, `cboModified`, `wmc` and `rfc`), which allow us to have a better understanding of the metrics behavior over time. Those statistics will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` file.
-3. Finally, with those statistics generated and stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` csv file, the main funcion call the `sort_csv_by_changes(repository_name)` function that is going to sort the lines of the metrics statistics csv file by the `Changed` column, which is the number of times the metrics changed. The top changes will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME` csv file.  
-4. Now, that we have the sorted csv file, the main function will call the `os.remove` to delete the old, unsorted csv file.
-5. After everything is done, the `metrics_changes.py` script will be done and play a sound to notify you that it is done.
+7. Now its time to write those `metrics_track_record`to the `metrics_evolution`folder with the call of the `write_metrics_track_record_to_csv` function, which will write the `metrics_track_record` dictionary to the `FULL_METRICS_EVOLUTION_DIRECTORY_PATH + "/" + repository_name + "/" + CLASSES_OR_METHODS + "/" + class_name + "-" + variable_attribute + CSV_FILE_EXTENSION` csv file.
+8. Now that we have the record of the times the metrics changed and it's values for every class or method, the main function calls the `process_metrics_track_record(repository_name, metrics_track_record)`, which will generate the metrics statistics (`Minimum`, `Maximum`, `Average` and `Third Quartile`) for every metric (`cbo`, `cboModified`, `wmc` and `rfc`), which allow us to have a better understanding of the metrics behavior over time. Those statistics will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` file.
+9. Finally, with those statistics generated and stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` csv file, the main funcion call the `sort_csv_by_changes(repository_name)` function that is going to sort the lines of the metrics statistics csv file by the `Changed` column, which is the number of times the metrics changed. The top changes will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME` csv file.  
+10. Now, that we have the sorted csv file, the main function will call the `os.remove` to delete the old, unsorted csv file.
+11. After everything is done, the `metrics_changes.py` script will be done and play a sound to notify you that it is done.
 
 ### Auxiliar Scripts:
 There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
