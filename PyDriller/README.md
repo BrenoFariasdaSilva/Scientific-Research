@@ -4,13 +4,9 @@
 
 </div>
 
-TODO: Clean the metrics_changes.py outputs. Add progress bar and make it as clean as possible.  
+TODO: Update the README.md file about what the metrics_changes.py script do after the new changes. 
 
-TODO: Update the README.md file about what the scripts do after the new changes. 
-
-TODO: Create class of the constants, so we don't have to repeat the code.
-
-TODOD: Add a way to verify if the metrics_changes.py files are already generated, so we don't have to generate them again.
+TODO: Create class of the constants, so we don't have to repeat the code. 
 
 <div align="center">
   
