@@ -4,15 +4,13 @@
 
 </div>
 
-TODO: Verify why the things of not repeating the metrics values in the metrics_track_record dictionary in the metrics_changes.py script, cause it might be making a problem that we have less metrics evolution than the number of commits of that file?  Lines 243 and 244
-
 TODO: Clean the metrics_changes.py outputs. Add progress bar and make it as clean as possible.  
 
 TODO: Update the README.md file about what the scripts do after the new changes. 
 
-TODO: Make metrics_changes.py call the `path_contains_whitespaces`, `verify_ck_metrics_folder` and so other functions that are also in the ck_metrics.py file, so we don't have to repeat the code.
-
 TODO: Create class of the constants, so we don't have to repeat the code.
+
+TODOD: Add a way to verify if the metrics_changes.py files are already generated, so we don't have to generate them again.
 
 <div align="center">
   
