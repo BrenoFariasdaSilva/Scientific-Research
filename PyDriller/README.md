@@ -28,7 +28,7 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
     - [Requirements:](#requirements)
   - [How to use:](#how-to-use)
     - [Main Scripts:](#main-scripts)
-      - [CK\_Metrics](#ck_metrics)
+      - [Code\_Metrics](#code_metrics)
       - [Metrics\_Changes](#metrics_changes)
     - [Auxiliar Scripts:](#auxiliar-scripts)
       - [Empty Folders](#empty-folders)
@@ -43,7 +43,7 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
 ### Important Notes:
 - Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 - The execution of this scripts will take a long time and store a lot of data, so make sure you have enough space in your disk and be patient. Example: Running all the scrips only for `Apache Kafka` generates a total of 115 GB.
-- Why is it not parallelized? Because, for example, the first script (ck_metrics.py), which is the one who takes the most time to execute (could be days easily depending on the size of the repository of interest), the result of the iteration x depends on the result since the first iteration until x-1, so it is not possible to parallelize it. The other scripts, for example, actually could have some room for parallelization, but as all those scripts depends on file reading and writing (which generates a race condition), so I decided to not parallelize it. If you want to parallelize it, feel free to do it, i'll be glad aproving your pull request.
+- Why is it not parallelized? Because, for example, the first script (code_metrics.py), which is the one who takes the most time to execute (could be days easily depending on the size of the repository of interest), the result of the iteration x depends on the result since the first iteration until x-1, so it is not possible to parallelize it. The other scripts, for example, actually could have some room for parallelization, but as all those scripts depends on file reading and writing (which generates a race condition), so I decided to not parallelize it. If you want to parallelize it, feel free to do it, i'll be glad aproving your pull request.
 
 ## Installation:
 You need to install python3. If you are using Linux, you (must likely) can install it by just running the following commands:
@@ -61,10 +61,10 @@ make dependencies
 	
 ## How to use: 
 ### Main Scripts:
-First, you must run the following command to execute the `ck_metrics.py` file:
-#### CK_Metrics
+First, you must run the following command to execute the `code_metrics.py` file:
+#### Code_Metrics
 ```
-make ck_metrics_script
+make code_metrics_script
 ```
 1. As for every file in this project, the first thing it will do is verify if you don't have whitespaces in the path of the project, if you have, it will not work.  
 2. Next, it will also verify if the `ck`file exists in the `FULL_CK_JAR_PATH` directory.
@@ -87,7 +87,7 @@ make ck_metrics_script
    7. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit.hash` folder;  
 9. Now that we have the list of tuples containing the commit hashes, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commits_list.csv` file, with the call of `write_commit_hashes_to_csv` function.
 10. And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
-11. After everything is done, the `ck_metrics.py` script will be done and play a sound to notify you that it is done.
+11. After everything is done, the `code_metrics.py` script will be done and play a sound to notify you that it is done.
 
 #### Metrics_Changes
 Considering that you now have the ck metrics calculated, you are able to run the following command to execute the `metrics_changes.py` file:
@@ -97,7 +97,7 @@ make metrics_changes_script
 1. The first thing it will do is ask you if you want to process classes or methods, if you want to process classes, type ```True```, if you want to process methods, type ```False```. Note that it is case sensitive, so make sure you type it correctly.
 2. The second thing it will do is verify if you don't have whitespaces in the path of the project by calling the `path_contains_whitespaces` function. If you have, it will not work.
 3. Next, it will call the `loop_through_default_repository_names()` function, which will loop through the `DEFAULT_REPOSITORIES` dictionary and call the `process_repository(repository_name)` function for each repository name.
-4. In this step, the `process_repository` function will get the path to the `ck_metrics`of that repository, so it can call `verify_ck_metrics_folder` function, as the code must verify if you have already executed the `ck_metrics.py` file. If they aren't, it will tell you to run the `ck_metrics.py` file, which will generate the ck metrics. This verification is done by:
+4. In this step, the `process_repository` function will get the path to the `ck_metrics`of that repository, so it can call `verify_ck_metrics_folder` function, as the code must verify if you have already executed the `code_metrics.py` file. If they aren't, it will tell you to run the `code_metrics.py` file, which will generate the ck metrics. This verification is done by:
    1. Verifying if the repository commit hash csv file exists inside the `CK_METRICS_DIRECTORY_PATH` directory, which should be named as `repository_name-commits_list.csv`, for example: `commons-lang-commits_list.csv`. If it doesn't exist, it will return false;  
    2. If the csv file exists, it will, for every commit hash, which is inside the `commit hash`column in the csv file, verify if there is a subdirectory inside the `CK_METRICS_DIRECTORY_PATH/repository_name` directory, which should be named as the value in the current `commit_hash` and contains all the ck metrics generated files, which are defined in the `CK_METRICS_FILES` constant. If it doesn't exist, it will return false;
 
