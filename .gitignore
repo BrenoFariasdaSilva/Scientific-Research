@@ -194,6 +194,7 @@ PyDriller/repositories
 /PyDriller/ck_metrics
 /PyDriller/compressed
 /PyDriller/diffs
+/PyDriller/metrics_data
 /PyDriller/metrics_evolution
 /PyDriller/metrics_statistics
 /PyDriller/metrics_predictions
