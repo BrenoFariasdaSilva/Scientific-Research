@@ -196,12 +196,11 @@ PyDriller/repositories
 /PyDriller/diffs
 /PyDriller/metrics_data
 /PyDriller/metrics_evolution
-/PyDriller/metrics_statistics
 /PyDriller/metrics_predictions
-/PyDriller/ck_metrics.7z
+/PyDriller/metrics_statistics
+/PyDriller/progress
 /PyDriller/junk
-/PyDriller/graphics
-/PyDriller/sorted/
+/PyDriller/tmp
 
 # Ignore RefactoringMiner/RefactoringMiner folder
 /RefactoringMiner/RefactoringMiner
