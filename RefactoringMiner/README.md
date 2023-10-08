@@ -37,7 +37,9 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
       - [8. `output_time(output_string, time)`](#8-output_timeoutput_string-time)
       - [9. `play_sound()`](#9-play_sound)
       - [10. `main()`](#10-main)
-  - [RefactoringMiner](#refactoringminer)
+  - [Repository Refactors](#repository-refactors)
+    - [Function Explanations](#function-explanations-1)
+      - [1.](#1)
     - [Purpose](#purpose)
     - [Usage in the Script](#usage-in-the-script)
     - [Output](#output)
@@ -183,7 +185,11 @@ In this section, we provide explanations for each function in the provided Pytho
 - **Parameters**: None
 - **Return**: None
 
-## RefactoringMiner
+## Repository Refactors
+
+### Function Explanations
+
+#### 1.
 
 ### Purpose
 RefactoringMiner is a Java-based tool designed to detect refactorings in the commit history of Git repositories. It identifies refactorings like method extractions, renames, and more.
