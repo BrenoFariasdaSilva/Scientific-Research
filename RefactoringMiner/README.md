@@ -14,6 +14,10 @@ Welcome to the Refactoring Miner folder, in which you will find the scripts used
 
 </div>
 
+@TODO: Format  
+@TODO: Add a section explaining the files and the directory structure  
+@TODO: Add a section explaining the output  
+
 - [Refactoring Miner. ](#refactoring-miner-)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
@@ -40,10 +44,6 @@ Welcome to the Refactoring Miner folder, in which you will find the scripts used
 - [Customization](#customization)
 - [Troubleshooting](#troubleshooting)
 
-@TODO: Format  
-@TODO: Add a section explaining the files and the directory structure  
-@TODO: Add a section explaining the output  
-
 # Prerequisites
 
 Before using this script, ensure you have the following prerequisites installed:
@@ -61,19 +61,29 @@ To install and set up the required environment for the script, follow these step
 1. Clone this repository to your local machine:
    
    ```shell
-   git clone https://github.com/BrenoFariasdaSilva/Scientific-Research
+  git clone https://github.com/BrenoFariasdaSilva/Scientific-Research
    ```
 
 2. Navigate to the `RefactoringMiner` directory:
    
    ```shell
-   cd Scientific-Research/RefactoringMiner
+  cd Scientific-Research/RefactoringMiner
    ```
 
 3. Install the necessary Python libraries using pip:
 
   ```shell
-   pip install pydriller pandas colorama
+  make dependencies
+  ```
+
+1. Run the desired scripts using the following command:
+
+  ```shell
+  make repositories_refactors_script
+  ```
+  or 
+  ```shell
+  make metrics_evolution_refactors_script
   ```
 
 
