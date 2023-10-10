@@ -24,27 +24,11 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 - [Workflow](#workflow)
 - [Python Script](#python-script)
   - [Metrics Evolution Refactors](#metrics-evolution-refactors-1)
-    - [Function Explanations](#function-explanations)
-      - [1. `path_contains_whitespaces()`](#1-path_contains_whitespaces)
-      - [2. `create_directory(full_directory_name, relative_directory_name)`](#2-create_directoryfull_directory_name-relative_directory_name)
-      - [3. `process_repository(repository_name, repository_url)`](#3-process_repositoryrepository_name-repository_url)
-      - [4. `clone_repository(repository_name, repository_url)`](#4-clone_repositoryrepository_name-repository_url)
-      - [5. `update_repository(repository_name)`](#5-update_repositoryrepository_name)
-      - [6. `generate_refactorings_concurrently(repository_name)`](#6-generate_refactorings_concurrentlyrepository_name)
-      - [7. `generate_commit_refactors_for_class_or_methods(repository_name, classname, variable_attribute)`](#7-generate_commit_refactors_for_class_or_methodsrepository_name-classname-variable_attribute)
-      - [8. `output_time(output_string, time)`](#8-output_timeoutput_string-time)
-      - [9. `play_sound()`](#9-play_sound)
-      - [10. `main()`](#10-main)
   - [Repository Refactors](#repository-refactors-1)
-    - [Function Explanations](#function-explanations-1)
-      - [1.](#1)
-    - [Purpose](#purpose)
-    - [Usage in the Script](#usage-in-the-script)
-    - [Output](#output)
-    - [Integration](#integration)
-- [Output](#output-1)
-- [Customization](#customization)
+- [RefactoringMiner JSON Output](#refactoringminer-json-output)
 - [Troubleshooting](#troubleshooting)
+  - [Contributing:](#contributing)
+  - [License:](#license)
 
 # Prerequisites
 
@@ -82,13 +66,13 @@ To install and set up the required environment for the script, follow these step
 
 1. Run the desired scripts using the following command:
 
-    ```shell
-    make repositories_refactors_script
-    ```
-    or 
-    ```shell
-    make metrics_evolution_refactors_script
-    ```
+  ```shell
+  make repositories_refactors_script
+  ```
+  or 
+  ```shell
+  make metrics_evolution_refactors_script
+  ```
 
 # Usage
 
@@ -136,95 +120,13 @@ Here's a brief overview of how the script works:
 In this section, we provide explanations for each function in the provided Python script and introduce RefactoringMiner, an essential tool used by the script.
 
 ## Metrics Evolution Refactors
-### Function Explanations
 
-#### 1. `path_contains_whitespaces()`
-- **Purpose**: Checks if the `START_PATH` constant contains whitespaces.
-- **Return**: `True` if `START_PATH` contains whitespaces, `False` otherwise.
-
-#### 2. `create_directory(full_directory_name, relative_directory_name)`
-- **Purpose**: Creates a directory with the given name.
-- **Parameters**:
-  - `full_directory_name`: Name of the directory to be created (full path).
-  - `relative_directory_name`: Relative name of the directory shown in the terminal.
-- **Return**: None
-
-#### 3. `process_repository(repository_name, repository_url)`
-- **Purpose**: Analyzes a specified repository.
-- **Parameters**:
-  - `repository_name`: Name of the repository to be analyzed.
-  - `repository_url`: URL of the repository to be analyzed.
-- **Return**: None
-
-#### 4. `clone_repository(repository_name, repository_url)`
-- **Purpose**: Clones or updates a GitHub repository.
-- **Parameters**:
-  - `repository_name`: Name of the repository to be cloned or updated.
-  - `repository_url`: URL of the repository to be cloned or updated.
-- **Return**: None
-
-#### 5. `update_repository(repository_name)`
-- **Purpose**: Updates an existing GitHub repository using `git pull`.
-- **Parameters**:
-  - `repository_name`: Name of the repository to be updated.
-- **Return**: None
-
-#### 6. `generate_refactorings_concurrently(repository_name)`
-- **Purpose**: Generates refactoring data concurrently for multiple classes or methods in a repository.
-- **Parameters**:
-  - `repository_name`: Name of the repository to be analyzed.
-- **Return**: None
-
-#### 7. `generate_commit_refactors_for_class_or_methods(repository_name, classname, variable_attribute)`
-- **Purpose**: Generates refactoring data for a specific class or method in a repository.
-- **Parameters**:
-  - `repository_name`: Name of the repository to be analyzed.
-  - `classname`: Name of the class to be analyzed.
-  - `variable_attribute`: Name of the variable or attribute to be analyzed.
-- **Return**: None
-
-#### 8. `output_time(output_string, time)`
-- **Purpose**: Outputs time considering the appropriate time unit (e.g., seconds, minutes, hours, or days).
-- **Parameters**:
-  - `output_string`: String to be displayed.
-  - `time`: Time value to be displayed.
-- **Return**: None
-
-#### 9. `play_sound()`
-- **Purpose**: Defines the command to play a sound when the program finishes.
-- **Parameters**: None
-- **Return**: None
-
-#### 10. `main()`
-- **Purpose**: Main function that coordinates the script's execution.
-- **Parameters**: None
-- **Return**: None
 
 ## Repository Refactors
 
-### Function Explanations
-
-#### 1.
-
-### Purpose
-RefactoringMiner is a Java-based tool designed to detect refactorings in the commit history of Git repositories. It identifies refactorings like method extractions, renames, and more.
-
-### Usage in the Script
-In this script, RefactoringMiner is invoked through subprocess calls to analyze commits and generate refactoring data in JSON format.
-
-### Output
-RefactoringMiner generates JSON files containing information about detected refactorings, which are then processed by this script.
-
-### Integration
-The script runs RefactoringMiner by specifying the repository path, commit hash, and output JSON file path. It uses the extracted refactoring data for further analysis.
-
-# Output
+# RefactoringMiner JSON Output
 
 The script generates JSON files containing refactoring data for commits in the specified classes or methods of the repository. These files are organized in the `json_files` directory, following the repository's structure.
-
-# Customization
-
-You can customize the script's behavior by modifying the constants defined at the beginning of the script, such as `DEFAULT_REPOSITORY`, `FILES_TO_ANALYZE`, and others. These constants control which repository is analyzed and which classes or methods are considered for refactoring data generation.
 
 # Troubleshooting
 
@@ -236,7 +138,15 @@ If you encounter any issues while using the script, consider the following:
 
 - Verify that the paths specified in the script are correct, and the necessary directories exist.
 
-If you encounter any unexpected errors or issues, please consult the script's author or project documentation for further assistance.
+- Verify if you have the PyDriller Metrics Evolution files that should be located as follows, otherwise it will not work:
+  ```shell
+  Scientific-Research/PyDriller/metrics_evolution
+  ```
 
-Feel free to customize and extend the script to suit your specific needs. Happy analyzing!
+## Contributing:
+Feel free to contribute to this project, as it is open source and i'll be glad to accept your pull request.  
+If you encounter any unexpected errors or issues, feel free to open an issue in this repository.
+If you have any questions, feel free to contact me at any of my Social Networks in my [GitHub Profile](https://github.com/BrenoFariasdaSilva).
 
+## License:
+This project is licensed under the [Creative Commons Zero v1.0 Universal](../LICENSE) License. So, for those who want to use this project for study, commercial use or any other thing, feel free to use it, as you want, as long as you don't claim that you made this project and remember to give the credits to the original creator.
