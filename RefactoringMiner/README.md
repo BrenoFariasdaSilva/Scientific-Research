@@ -132,6 +132,7 @@ Before running the script, be sure to modify the following variables to suit you
    2. Then, it calls `generate_refactorings_concurrently(repository_name)` where, for each of the items in the `FILES_TO_ANALYZE` dictionary, creating a thread for handling the analysis of each file.
         1. In this function, it will loop through each of the commit hashes in the csv from the `PyDriller/metrics_evolution` directory and generate the refactorings for that commit hash using the `-c` parameter of the `RefactoringMiner` tool and save the output in the `json_files` directory.
         2. Lastly, it calls the `filter_json_file(classname, json_filepath, json_filtered_filepath)` that will read the generated json file and filter the refactorings by the `DESIRED_REFACTORING_TYPES` variable and save the filtered refactorings in the `json_files` directory.
+4. Lastly, it will output the execution time of the script.
 
 ## Repository Refactors
 
