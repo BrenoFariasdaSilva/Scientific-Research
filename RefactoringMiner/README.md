@@ -13,19 +13,17 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
   
 ---
 
-</div>
-
-@TODO: Format  
-@TODO: Add a section explaining the files and the directory structure  
-@TODO: Add a section explaining the output  
+</div> 
 
 - [Refactoring Miner. ](#refactoring-miner-)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Repository Refactors](#repository-refactors)
+  - [Metrics Evolution Refactors](#metrics-evolution-refactors)
 - [Workflow](#workflow)
 - [Python Script](#python-script)
-  - [Metrics Evolution Refactors](#metrics-evolution-refactors)
+  - [Metrics Evolution Refactors](#metrics-evolution-refactors-1)
     - [Function Explanations](#function-explanations)
       - [1. `path_contains_whitespaces()`](#1-path_contains_whitespaces)
       - [2. `create_directory(full_directory_name, relative_directory_name)`](#2-create_directoryfull_directory_name-relative_directory_name)
@@ -37,7 +35,7 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
       - [8. `output_time(output_string, time)`](#8-output_timeoutput_string-time)
       - [9. `play_sound()`](#9-play_sound)
       - [10. `main()`](#10-main)
-  - [Repository Refactors](#repository-refactors)
+  - [Repository Refactors](#repository-refactors-1)
     - [Function Explanations](#function-explanations-1)
       - [1.](#1)
     - [Purpose](#purpose)
@@ -53,10 +51,13 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 Before using this script, ensure you have the following prerequisites installed:
 - Python 3.x
 - Git
+- AtExit library (included in the project)
+- Colorama library (included in the project)
 - RefactoringMiner tool (included in the project)
-- PyDriller library (not included in the project)
-- Pandas library (not included in the project)
-- Colorama library (not included in the project)
+- Pandas library (included in the project)
+- PyDriller library (included in the project)
+- Scikit-learn library (included in the project)
+- TQDM library (included in the project)
 
 # Installation
 
@@ -64,7 +65,7 @@ To install and set up the required environment for the script, follow these step
 
 1. Clone this repository to your local machine:
   ```shell
-    git clone https://github.com/BrenoFariasdaSilva/Scientific-Research
+  git clone https://github.com/BrenoFariasdaSilva/Scientific-Research
   ```
 
 2. Navigate to the `RefactoringMiner` directory:
@@ -86,21 +87,35 @@ To install and set up the required environment for the script, follow these step
     ```
     or 
     ```shell
-      make metrics_evolution_refactors_script
+    make metrics_evolution_refactors_script
     ```
 
 # Usage
 
-To use the script for repository analysis, follow these steps:
+## Repository Refactors
 
-1. Open a terminal.
+To use the script for repository refactor analysis, follow these steps:
 
-2. Navigate to the directory where the script is located.
+1. Open a terminal in the `RefactoringMiner` directory.
 
-3. Run the script using the following command:
+2. Run the script using the following command:
 
-   ```shell
-   python script.py
+  ```shell
+  make repositories_refactors_script
+  ```
+## Metrics Evolution Refactors
+
+In order to use the script for the analysis of the metrics evolution of a class or method, follow these steps:
+
+1. Make sure you have the PyDriller Metrics Evolution files that should be located as follows, otherwise it will not work:
+  ```shell
+  Scientific-Research/PyDriller/metrics_evolution
+  ```
+2. If you have the PyDriller Metrics Evolution files, simply open a terminal in the `RefactoringMiner` directory and run the script using the following command:
+
+  ```shell
+  make metrics_evolution_refactors_script
+  ```
 
 # Workflow
 
