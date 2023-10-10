@@ -135,6 +135,19 @@ Before running the script, be sure to modify the following variables to suit you
 4. Lastly, it will output the execution time of the script.
 
 ## Repository Refactors
+Before running the script, be sure to modify the following variables to suit your needs:  
+`DEFAULT_REPOSITORIES` - The repositories to be analyzed. Must be a dictionary with the name of the repository as the key and the URL of the repository as the value.
+`COMMITS_NUMBER` - The number of commits that the corresponding repository have. It is useful for calculing the estimated time of the script.
+`ITERATIONS_PER_SECOND` - The number of iterations per second that the script will do. It is useful for calculing the estimated time of the script. Usually, it is 4, but it can be more or less, depending on the machine that you are running the script and the size commits of the repository.
+
+1. The first thing this script does is verify  if the path contains whitespace, if so, it will not work, so it will ask the user to remove the whitespace from the path and then run the script again.
+2. Now it calls the `verify_refactorings()` to verify if the RefactoringMiner refactorings for the DEFAULT_REFACTORINGS were already generated. If not, it will generate them.
+3. will create the json output directory and the repository directory if they don't exist.
+4. Now it calls `process_repositories_concurrently(repositories)`, which will do the following steps:
+   1. This function will loop through each of the repositories in the `DEFAULT_REPOSITORIES` dictionary and create a thread for handling the analysis of each repository.
+   2. Inside the thread, it will clone or update the repository, depending on whether it already exists or not.
+   3. After that, the thread will generate the refactorings for each of the commits in the repository using the `-a` parameter of the `RefactoringMiner` tool and save the output in the `json_files` directory.
+5. Lastly, it will output the execution time of the script.
 
 # RefactoringMiner JSON Output
 
