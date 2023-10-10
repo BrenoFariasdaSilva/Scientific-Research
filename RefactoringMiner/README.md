@@ -22,7 +22,7 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
   - [Repository Refactors](#repository-refactors)
   - [Metrics Evolution Refactors](#metrics-evolution-refactors)
 - [Workflow](#workflow)
-- [Python Script](#python-script)
+- [Python Scripts](#python-scripts)
   - [Metrics Evolution Refactors](#metrics-evolution-refactors-1)
   - [Repository Refactors](#repository-refactors-1)
 - [RefactoringMiner JSON Output](#refactoringminer-json-output)
@@ -109,13 +109,13 @@ Here's a brief overview of how the script works:
 
 2. The script checks for prerequisites and directory structures.
 
-3. It clones or updates a specified GitHub repository using Git.
+3. It clones or updates a specified GitHub repository using Git or opens the generated files by PyDriller.
 
 4. For each class or method specified in `FILES_TO_ANALYZE`, it generates refactoring data for commits in the repository concurrently, using multiple threads.
 
 5. Refactoring data is stored in JSON files in the `json_files` directory.
 
-# Python Script
+# Python Scripts
 
 In this section, we provide explanations for each function in the provided Python script and introduce RefactoringMiner, an essential tool used by the script.
 
