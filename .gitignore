@@ -188,8 +188,6 @@ Jabref/.github/*
 !Jabref/variable.csv
 !Jabref/Makefile
 
-PyDriller/repositories
-
 # Ignore every file inside PyDriller specified folders
 /PyDriller/ck_metrics
 /PyDriller/compressed
@@ -199,6 +197,7 @@ PyDriller/repositories
 /PyDriller/metrics_predictions
 /PyDriller/metrics_statistics
 /PyDriller/progress
+PyDriller/repositories
 /PyDriller/junk
 /PyDriller/tmp
 
