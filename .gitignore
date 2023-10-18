@@ -192,6 +192,7 @@ Jabref/.github/*
 /PyDriller/ck_metrics
 /PyDriller/compressed
 /PyDriller/diffs
+/PyDriller/interesting_changes
 /PyDriller/junk
 /PyDriller/metrics_data
 /PyDriller/metrics_evolution
@@ -199,7 +200,7 @@ Jabref/.github/*
 /PyDriller/metrics_statistics
 /PyDriller/progress
 /PyDriller/tmp
-PyDriller/repositories
+/PyDriller/repositories
 
 # Ignore RefactoringMiner/RefactoringMiner folder
 /RefactoringMiner/RefactoringMiner
