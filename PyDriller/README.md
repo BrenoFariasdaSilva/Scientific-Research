@@ -23,6 +23,7 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
       - [Code\_Metrics](#code_metrics)
       - [Metrics\_Changes](#metrics_changes)
     - [Auxiliar Scripts:](#auxiliar-scripts)
+      - [Changes Files:](#changes-files)
       - [Empty Folders](#empty-folders)
       - [Extract Zip Files](#extract-zip-files)
       - [Generate Zip Files](#generate-zip-files)
@@ -110,6 +111,12 @@ make metrics_changes_script
 
 ### Auxiliar Scripts:
 There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
+
+#### Changes Files:
+This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant. To execute it, you must run the following command:
+```
+make changes_files_script
+```
 
 #### Empty Folders
 This script is used to verify if there are empty folders inside a specified directory. It is really usefull to make sure your files where processed or extracted correctly. To execute it, you must run the following command:
