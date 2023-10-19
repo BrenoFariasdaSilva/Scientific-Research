@@ -23,11 +23,11 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
       - [Code\_Metrics](#code_metrics)
       - [Metrics\_Changes](#metrics_changes)
     - [Auxiliar Scripts:](#auxiliar-scripts)
-      - [Changes Files:](#changes-files)
       - [Empty Folders](#empty-folders)
       - [Extract Zip Files](#extract-zip-files)
       - [Generate Zip Files](#generate-zip-files)
       - [Move Extracted Files](#move-extracted-files)
+      - [Track Files:](#track-files)
   - [Dependencies:](#dependencies)
   - [Contributing:](#contributing)
   - [License:](#license)
@@ -112,12 +112,6 @@ make metrics_changes_script
 ### Auxiliar Scripts:
 There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
 
-#### Changes Files:
-This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant and write the list of found files to a txt file in `/PyDriller/metrics_data/repository_name/changes_files_list.txt`. To execute it, you must run the following command:
-```
-make changes_files_script
-```
-
 #### Empty Folders
 This script is used to verify if there are empty folders inside a specified directory. It is really usefull to make sure your files where processed or extracted correctly. To execute it, you must run the following command:
 ```
@@ -140,6 +134,12 @@ make generate_zip_files_script
 This is a really simple script, which is used to run after you execute the `extractZipFiles.sh` script, as it will move the extracted files to the right directory, for example, the extracted `/kafka/ck_metrics` will be placed in `/ck_metrics/kafka`. To execute it, you must run the following command:
 ```
 make move_extracted_files_script
+```
+
+#### Track Files:
+This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant and write the list of found files to a txt file in `/PyDriller/metrics_data/repository_name/track_files_list.txt`. To execute it, you must run the following command:
+```
+make track_files_script
 ```
 
 ## Dependencies:
