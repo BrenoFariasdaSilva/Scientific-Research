@@ -113,7 +113,7 @@ make metrics_changes_script
 There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
 
 #### Changes Files:
-This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant. To execute it, you must run the following command:
+This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant and write the list of found files to a txt file in `/PyDriller/metrics_data/repository_name/changes_files_list.txt`. To execute it, you must run the following command:
 ```
 make changes_files_script
 ```
