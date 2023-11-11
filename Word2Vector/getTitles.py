@@ -3,7 +3,7 @@ from tqdm import tqdm # For the progress bar
 from colorama import Style # For coloring the terminal
 
 # Macros:
-class backgroundColors: # Colors for the terminal
+class BackgroundColors: # Colors for the terminal
 	CYAN = "\033[96m" # Cyan
 	GREEN = "\033[92m" # Green
 	YELLOW = "\033[93m" # Yellow
@@ -23,11 +23,11 @@ def getTitles(quantity, issues_filepath):
 	words = [] # Initialize the list of words
 
 	# For each issue in the json file
-	print(f"{backgroundColors.GREEN}Quantity: {backgroundColors.CYAN}{quantity}{Style.RESET_ALL}")
-	print(f"{backgroundColors.GREEN}Began Processing Titles{Style.RESET_ALL}")
+	print(f"{BackgroundColors.GREEN}Quantity: {BackgroundColors.CYAN}{quantity}{Style.RESET_ALL}")
+	print(f"{BackgroundColors.GREEN}Began Processing Titles{Style.RESET_ALL}")
 
 	# For each issue in the json file
-	for i in tqdm(range(len(data)), desc=f"{backgroundColors.GREEN}Processing Issues{Style.RESET_ALL}", unit="item"):
+	for i in tqdm(range(len(data)), desc=f"{BackgroundColors.GREEN}Processing Issues{Style.RESET_ALL}", unit="item"):
 		if i >= quantity: # If the quantity of issues to read has been reached
 			break # Stop reading issues
 		
@@ -39,6 +39,6 @@ def getTitles(quantity, issues_filepath):
 			currentIssue["title"] = currentIssue["title"].replace("/", " ").replace("\n", " ").strip().lower()
 			words.append(currentIssue["title"])
 
-	print(f"{backgroundColors.GREEN}Finished Processing Titles{Style.RESET_ALL}")
+	print(f"{BackgroundColors.GREEN}Finished Processing Titles{Style.RESET_ALL}")
 
 	return words # Return the list of words

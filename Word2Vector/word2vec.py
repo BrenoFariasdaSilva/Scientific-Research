@@ -10,7 +10,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize # Importing sent_tokenize
 from colorama import Style # For coloring the terminal
 
 # Macros:
-class backgroundColors: # Colors for the terminal
+class BackgroundColors: # Colors for the terminal
 	CYAN = "\033[96m" # Cyan
 	GREEN = "\033[92m" # Green
 	YELLOW = "\033[93m" # Yellow
@@ -61,12 +61,12 @@ def find_most_similar_titles(model, titles, num_similar_titles):
 
 # Print the most similar issue titles
 def show_similar_issues(issue_titles, similar_titles):
-	print(f"{backgroundColors.CYAN}Similar Issues:{Style.RESET_ALL}")
+	print(f"{BackgroundColors.CYAN}Similar Issues:{Style.RESET_ALL}")
 	for idx, issue in enumerate(issue_titles): # For each issue title
 		for similar_issue in similar_titles: # For each similar issue title
 			if similar_issue.__len__() == 0: # If the list is empty
 				continue # Continue to the next iteration
-			print(f'{backgroundColors.GREEN}Issue Nº{backgroundColors.CYAN}{idx}{backgroundColors.GREEN}: "{backgroundColors.CYAN}{issue}{backgroundColors.GREEN}" Similar to "{backgroundColors.CYAN}{similar_issue[0][1]}{backgroundColors.GREEN}" - similarity = {backgroundColors.CYAN}{similar_issue[0][0]}{Style.RESET_ALL}')
+			print(f'{BackgroundColors.GREEN}Issue Nº{BackgroundColors.CYAN}{idx}{BackgroundColors.GREEN}: "{BackgroundColors.CYAN}{issue}{BackgroundColors.GREEN}" Similar to "{BackgroundColors.CYAN}{similar_issue[0][1]}{BackgroundColors.GREEN}" - similarity = {BackgroundColors.CYAN}{similar_issue[0][0]}{Style.RESET_ALL}')
 		print(f"")
 
 # This is the main function
@@ -80,7 +80,7 @@ def main():
 	issues_filepath = "./jabref/issues.json" # Path to the issues json file
 
 	# Print the number of issues
-	print(f"{backgroundColors.GREEN}Number of Issues: {backgroundColors.CYAN}{getIssuesCounter(issues_filepath)}{Style.RESET_ALL}")
+	print(f"{BackgroundColors.GREEN}Number of Issues: {BackgroundColors.CYAN}{getIssuesCounter(issues_filepath)}{Style.RESET_ALL}")
 
 	# Load the issue titles
 	issue_titles = load_issue_titles(issues_titles_to_read, issues_filepath)
