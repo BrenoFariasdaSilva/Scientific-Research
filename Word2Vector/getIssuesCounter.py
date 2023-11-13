@@ -15,4 +15,4 @@ def getIssuesCounter(issues_filepath):
 		if currentIssue["title"]:
 			numberOfIssues += 1 # Increment the number of issues with a title
 	
-	return numberOfIssues  # Return the number of issues with a title
+	return numberOfIssues # Return the number of issues with a title
