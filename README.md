@@ -79,4 +79,5 @@ Our research project involves expertise in the following areas:
 Feel free to explore the code and data in this repository. If you have any questions or suggestions, please don't hesitate to reach out to me.
 
 ## License
-This project is licensed under the [Creative Commons Zero v1.0 Universal](LICENSE), which means you are free to use, modify, and distribute the code. See the [LICENSE](LICENSE) file for more details.
+
+This project is licensed under the [Creative Commons Zero v1.0 Universal](LICENSE), which means you are free to use, modify, and distribute the code, as long as you mention include the license and attribute you as the original author for the repository. See the [LICENSE](LICENSE) file for more details.
