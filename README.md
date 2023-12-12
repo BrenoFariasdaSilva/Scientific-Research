@@ -32,6 +32,7 @@ Welcome to my Scientific Research Repository! This repository contains code and 
 ## Table of Contents
 - [Scientific Research ](#scientific-research-)
   - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
   - [Goals](#goals)
   - [Skills](#skills)
   - [Directories](#directories)
@@ -39,28 +40,34 @@ Welcome to my Scientific Research Repository! This repository contains code and 
   - [Repositories](#repositories)
     - [Apache Commons-lang](#apache-commons-lang)
     - [JabRef](#jabref)
+  - [Methodology](#methodology)
+    - [Data Collection](#data-collection)
+    - [Code Analysis](#code-analysis)
+  - [Contributing](#contributing)
   - [License](#license)
+
+## Introduction
+
+Welcome to the documentation of my scientific research project! This repository serves as a central hub for the code, data, and findings related to our ongoing research endeavors. We aim to explore various aspects of software development, code evolution, and the application of artificial intelligence tools to enhance code solutions.
 
 ## Goals
 
 1. **Similarity Analysis:**
-   - We analyze different similarity algorithms, including Word2Vector, Yake, Sentence Bert, and TF-IDF (Term Frequency - Inverse Document Frequency) to evaluate the similarity between texts.
-   - We create two datasets based on these similarity calculations: one for storing solved (answered) questions and another for storing unsolved questions.
-   - Using these datasets, we determine the most similar solved questions for each unsolved question and auto-recommend changes based on the similarity of those questions.
+   - Explore different similarity algorithms, including Word2Vector, Yake, Sentence Bert, and TF-IDF, to evaluate the similarity between texts.
+   - Create datasets for storing solved and unsolved questions and recommend changes based on the similarity of these questions.
 
 2. **Enhancing Code Solutions:**
-   - We study the use of tools like ChatGPT and GitHub Copilot to improve students' code solutions when they are stuck.
-   - Currently, we utilize CK to generate Code Metrics for repositories like Apache Commons-lang and Jabref.
-   - We employ PyDriller to traverse the commit tree in the repository and run CK for every commit hash it is in.
-   - This allows us to gather code metrics such as CBO, CBOModified, WMC, RFC, and others to create graphics depicting the metrics evolution of specific classes or methods within the repository.
+   - Investigate the use of tools like ChatGPT and GitHub Copilot to improve students' code solutions when they are stuck.
+   - Utilize CK to generate Code Metrics for repositories like Apache Commons-lang and Jabref.
+   - Employ PyDriller to traverse the commit tree in the repository and run CK for every commit hash.
 
 3. **Analyzing Code Evolution:**
-   - With the collected data and code metrics, we analyze code that started with "bad" metrics and evolved over time.
-   - We aim to identify good code examples that indicate what makes code better and what changes are typically made to improve it.
+   - Analyze code that started with "bad" metrics and evolved over time.
+   - Identify good code examples that indicate what makes code better and what changes are typically made to improve it.
 
 4. **Providing Data to AI Tools:**
-   - We gather valuable data to provide to tools like ChatGPT and GitHub Copilot, showcasing what constitutes good code and why.
-   - We explore how contextual information, such as code samples, can assist these tools in suggesting better code improvements for students.
+   - Gather valuable data to provide to tools like ChatGPT and GitHub Copilot, showcasing what constitutes good code and why.
+   - Explore how contextual information, such as code samples, can assist these tools in suggesting better code improvements for students.
 
 ## Skills
 
@@ -89,6 +96,8 @@ Each directory in this repository has its own README.md file explaining its purp
 
 ## Tools
 
+Our research leverages various tools to accomplish the stated goals:
+
 - **CK (Code Klatt):** A tool used to collect and analyze code metrics from repositories. In this project, CK is employed to generate code metrics for repositories like Apache Commons-lang and Jabref.
 
 - **PyDriller:** A Python framework used for mining software repositories. It is utilized to traverse the commit tree in the repository and run CK for every commit hash it is in.
@@ -110,6 +119,30 @@ Each directory in this repository has its own README.md file explaining its purp
 - **Usage in Research:** We utilize JabRef to analyze code solutions, extract code metrics using CK, and understand the code evolution of a real-world application.
 
 Feel free to explore these repositories to gain insights into our research and methodologies.
+
+## Methodology
+
+Our research follows a systematic methodology to achieve its goals. This includes:
+
+### Data Collection
+
+- **Repositories Selection:** Identify and select repositories relevant to the research goals, such as Apache Commons-lang and JabRef.
+  
+- **CK Integration:** Integrate CK to perform code metric analysis on specific commits, classes, or methods within the repository.
+
+- **Mining Software Repositories:** Utilize PyDriller to traverse the commit tree in the repository and extract information relevant to code metrics and evolution.
+
+- **Metric Visualization:** Utilize Matplotlib to create visualizations depicting the evolution of code metrics over time.
+
+- **RefactoringMiner Integration:** Integrate RefactoringMiner to identify changes in the code that contribute to code evolution.
+
+### Code Analysis
+
+- **Code Analysis:** Analyze code that started with "bad" metrics and evolved over time. Identify good code examples that indicate what makes code better and what changes are typically made to improve it.
+
+## Contributing
+
+Contributions are very welcome! If you have ideas, improvements, or findings related to our research goals, feel free to submit a pull request or open an issue.
 
 ## License
 
