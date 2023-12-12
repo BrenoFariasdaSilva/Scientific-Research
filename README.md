@@ -30,12 +30,15 @@ Welcome to my Scientific Research Repository! This repository contains code and 
 </div>
 
 ## Table of Contents
-- [Scientific Research](#scientific-research)
+- [Scientific Research ](#scientific-research-)
   - [Table of Contents](#table-of-contents)
   - [Goals](#goals)
   - [Skills](#skills)
   - [Directories](#directories)
   - [Tools](#tools)
+  - [Repositories](#repositories)
+    - [Apache Commons-lang](#apache-commons-lang)
+    - [JabRef](#jabref)
   - [License](#license)
 
 ## Goals
@@ -93,6 +96,20 @@ Each directory in this repository has its own README.md file explaining its purp
 - **RefactoringMiner:** A tool used for mining refactorings in Git repositories. It helps identify changes in the code that contribute to code evolution.
 
 - **Word2Vector:** A technique used for natural language processing and understanding. In this project, Word2Vector is employed for similarity analysis between texts, such as code snippets and questions.
+
+## Repositories
+
+### [Apache Commons-lang](https://github.com/apache/commons-lang)
+
+- **Purpose:** Apache Commons Lang is a library with helper utilities for the java.lang API, notably String manipulation methods, basic numerical methods, object reflection, and more.
+- **Usage in Research:** We leverage this repository to study code evolution and gather code metrics using CK.
+
+### [JabRef](https://github.com/JabRef/jabref)
+
+- **Purpose:** JabRef is an open-source bibliography reference manager that uses BibTeX as its native format.
+- **Usage in Research:** We utilize JabRef to analyze code solutions, extract code metrics using CK, and understand the code evolution of a real-world application.
+
+Feel free to explore these repositories to gain insights into our research and methodologies.
 
 ## License
 
