@@ -61,13 +61,14 @@ Welcome to my Scientific Research Repository! This repository contains code and 
 
 Our research project involves expertise in the following areas:
 
+- CK
+- PyDriller
+- RefactoringMiner
+- Word2Vector
 - Pandas
 - NumPy
 - Matplotlib
 - Scikit-Learn
-- CK
-- PyDriller
-- Word2Vector
 - Statistical Data Analysis
 - Similarity measures
 - Apache Commons-lang
