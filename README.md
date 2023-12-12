@@ -30,11 +30,12 @@ Welcome to my Scientific Research Repository! This repository contains code and 
 </div>
 
 ## Table of Contents
-- [Scientific Research ](#scientific-research-)
+- [Scientific Research](#scientific-research)
   - [Table of Contents](#table-of-contents)
   - [Goals](#goals)
   - [Skills](#skills)
   - [Directories](#directories)
+  - [Tools](#tools)
   - [License](#license)
 
 ## Goals
@@ -82,6 +83,16 @@ Feel free to explore the code and data in this repository. If you have any quest
 ## Directories
 
 Each directory in this repository has its own README.md file explaining its purpose. Please refer to individual README files for more details.
+
+## Tools
+
+- **CK (Code Klatt):** A tool used to collect and analyze code metrics from repositories. In this project, CK is employed to generate code metrics for repositories like Apache Commons-lang and Jabref.
+
+- **PyDriller:** A Python framework used for mining software repositories. It is utilized to traverse the commit tree in the repository and run CK for every commit hash it is in.
+
+- **RefactoringMiner:** A tool used for mining refactorings in Git repositories. It helps identify changes in the code that contribute to code evolution.
+
+- **Word2Vector:** A technique used for natural language processing and understanding. In this project, Word2Vector is employed for similarity analysis between texts, such as code snippets and questions.
 
 ## License
 
