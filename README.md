@@ -98,7 +98,7 @@ Each directory in this repository has its own README.md file explaining its purp
 
 Our research leverages various tools to accomplish the stated goals:
 
-- **CK (Code Klatt):** A tool used to collect and analyze code metrics from repositories. In this project, CK is employed to generate code metrics for repositories like Apache Commons-lang and Jabref.
+- **CK (Chidamber & Kemerer):** A tool used to collect and analyze code metrics from repositories. In this project, CK is employed to generate code metrics for repositories like Apache Commons-lang and Jabref.
 
 - **PyDriller:** A Python framework used for mining software repositories. It is utilized to traverse the commit tree in the repository and run CK for every commit hash it is in.
 
