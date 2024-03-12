@@ -61,7 +61,15 @@ Feel free to explore our findings, use our data for your own research, or contri
 
 ## Introduction
 
-Welcome to the documentation of my scientific research project! This repository serves as a central hub for the code, data, and findings related to our ongoing research endeavors. We aim to explore various aspects of software development, code evolution, and the application of artificial intelligence tools to enhance code solutions.
+This repository stands as the cornerstone for the extensive code, data, and insights generated through our focused research into the similarity of texts in order to suggest similar solved issues to unsolved issues on platforms like Github. As our project has advanced, i've developed interest in understanding the nuances of software development and code evolution, particularly within the realm of distributed systems, which is now the main goal of my research.
+
+🌐 **Our Exploration Path:** Initially, our research embarked on a broad investigation into software development practices, code evolution across various systems, and the integration of AI tools like ChatGPT and GitHub Copilot to augment coding processes. However, our journey has led us to a specialized interest in distributed systems, where the evolution of code reveals complex patterns and insights into software engineering excellence.
+
+🔬 **Research Focus:** Our current endeavors are deeply rooted in analyzing distributed systems' code through static code metrics and methodologies. We aim to uncover the evolutionary trajectories of such systems, understanding how code improvements can lead to more robust, efficient, and scalable software architectures. This research is not just about tracking changes; it's about decoding the essence of what makes distributed systems thrive in an ever-changing technological landscape.
+
+🎯 **Objective and Contribution:** By meticulously examining the evolution of code in distributed systems, we strive to create the Worked Example Miner tool that generates data and metadatas about the software evolution and identify trends of how those repositories evolved over time. This work promises to enrich the field of software engineering with valuable insights and try to create worked examples that can improve coding practices, enhance software quality, and ultimately, drive the advancement of distributed systems technology.
+
+Within this repository, you'll find a wealth of resources, from detailed code analyses and data sets to insightful findings and theoretical advancements. Whether you're a researcher seeking to deepen your understanding of software evolution, a developer looking for proven practices in distributed systems, or an educator aiming to enrich your curriculum, this documentation offers valuable knowledge and tools to support your goals.
 
 ## Goals
 
