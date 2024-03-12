@@ -83,12 +83,9 @@ To clean your project directory from the virtual environment and Python cache fi
 make clean
 ```
 
-
 This command removes the `venv` directory and deletes all compiled Python files in the project directory, helping maintain a clean workspace.
 
 By following these instructions, you'll ensure that all project dependencies are correctly managed and isolated, leading to a more stable and consistent development environment.
-
-
 	
 ## How to use: 
 ### Main Scripts:
