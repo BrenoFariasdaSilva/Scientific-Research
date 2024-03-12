@@ -47,6 +47,11 @@ Welcome to my Scientific Research Repository! This repository contains code and 
   - [Methodology](#methodology)
     - [Data Collection](#data-collection)
     - [Code Analysis](#code-analysis)
+  - [Research Questions](#research-questions)
+  - [Proposed Approach](#proposed-approach)
+    - [Software Metrics](#software-metrics)
+    - [Tools Utilized](#tools-utilized)
+  - [Conclusion](#conclusion)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -152,23 +157,56 @@ Feel free to explore these repositories to gain insights into our research and m
 
 ## Methodology
 
-Our research follows a systematic methodology to achieve its goals. This includes:
+This research adopts a systematic approach to explore the evolution of Distributed Systems (DS) through code metric analysis. Our methodology encompasses data collection, code analysis, and the integration of several tools and metrics to examine how code evolves in terms of complexity, quality, efficiency and in many other aspects.
 
 ### Data Collection
 
-- **Repositories Selection:** Identify and select repositories relevant to the research goals, such as Apache Commons-lang and JabRef.
-  
-- **CK Integration:** Integrate CK to perform code metric analysis on specific commits, classes, or methods within the repository.
-
-- **Mining Software Repositories:** Utilize PyDriller to traverse the commit tree in the repository and extract information relevant to code metrics and evolution.
-
-- **Metric Visualization:** Utilize Matplotlib to create visualizations depicting the evolution of code metrics over time.
-
-- **RefactoringMiner Integration:** Integrate RefactoringMiner to identify changes in the code that contribute to code evolution.
+- **Repositories Selection:** We select relevant repositories that align with our research goals, focusing on projects like Apache Kafka and ZooKeeper.
+- **CK Integration:** CK tool is integrated for conducting code metric analysis on chosen commits, classes, or methods within the repositories.
+- **Mining Software Repositories:** PyDriller is utilized to navigate through the commit history, extracting essential data regarding code metrics and their evolution.
+- **Metric Evaluation:** We evaluate code metrics that generates the values of each selected metric for each state (commit) of the code. This allows us to identify trends, patterns, and changes in the code over time.
+- **Metric Visualization:** We employ Matplotlib for generating visual representations that illustrate the progression of code metrics over time.
+- **RefactoringMiner Integration:** RefactoringMiner is used to detect refactorings in the codebase that signal improvements or changes contributing to code evolution.
 
 ### Code Analysis
 
-- **Code Analysis:** Analyze code that started with "bad" metrics and evolved over time. Identify good code examples that indicate what makes code better and what changes are typically made to improve it.
+We analyze instances where code initially demonstrated suboptimal metrics but evolved positively over time. Identifying exemplary modifications sheds light on effective practices for code improvement, focusing on alterations that enhance metric scores.
+
+## Research Questions
+
+Our investigation is guided by four principal questions:
+
+1. How to identify relevant code quality metrics for analyzing DS evolution?
+2. What patterns and trends signify clear code improvement in DS?
+3. How do code improvements reflect on selected metrics and their correlation with non-functional characteristics?
+4. Which metrics and characteristics are crucial for selecting appropriate code examples for educational purposes in Software Engineering (SE)?
+
+## Proposed Approach
+
+The project aims to develop a heuristic for identifying code examples that represent quality improvements in DS. This heuristic will aid in selecting code segments for educational examples, illustrating the adaptation and evolution of DS code over time. The heuristic will focus on improvements detectable through selected metrics, using specific tools on carefully chosen open-source repositories.
+
+### Software Metrics
+
+We rely on a suite of metrics for object-oriented design as outlined in "A Metrics Suite for Object Oriented Design," focusing on:
+
+- **Coupling Between Object classes (CBO)**
+- **Depth of Inheritance Tree (DIT)**
+- **Lack of Cohesion in Methods (LCOM)**
+- **Number of Children (NOC)**
+- **Response for a Class (RFC)**
+- **Weighted Methods per Class (WMC)**
+
+These metrics provide insights into complexity, quality, and maintainability of the codebase.
+
+### Tools Utilized
+
+- **CK Tool:** For static code analysis in Java projects, assessing metrics related to complexity, coupling, and cohesion.
+- **RefactoringMiner:** Specializes in identifying and analyzing source code refactorings.
+- **PyDriller:** A Python library for mining software repositories, facilitating the extraction of changes, contributions, and evolution of code.
+
+## Conclusion
+
+This research methodology, underpinned by detailed code metric analysis and tool integration, aims to offer significant insights into the evolution of software quality in DS. By identifying and analyzing patterns of improvement, this work contributes to the broader field of Software Engineering, particularly in educational contexts where real-world examples of code evolution are invaluable.
 
 ## Contributing
 
