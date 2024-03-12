@@ -77,20 +77,25 @@ Welcome to the documentation of my scientific research project! This repository 
 
 Our research project involves expertise in the following areas:
 
-- CK
+- Python Language
+- Python Libraries (Pandas, Matplotlib, NumPy, Scikit-Learn)
+- CK (Chidamber & Kemerer) Metrics
 - PyDriller
-- RefactoringMiner
+- RefactoringMiner (Refactoring Detection)
 - Word2Vector
-- Pandas
-- NumPy
-- Matplotlib
-- Scikit-Learn
-- Statistical Data Analysis
-- Similarity measures
-- Apache Commons-lang
-- Jabref
-- Code metrics
-- Python (Programming Language)
+- Software Engineering
+- Distributed Systems
+- Worked Examples
+- Statistical Data Analysis and Visualization (Min, Max, Average, Third Quartile, Median, Linear Regression)
+- Similarity Measures (Word2Vec, Yake, Sentence Bert, TF-IDF)
+- Apache Commons-lang (Java Library)
+- Apache Kafka (Distributed Messaging System)
+- Apache ZooKeeper (Distributed Coordination Service)
+- Jabref (Bibliography Reference Manager)
+- GitHub Repositories
+- Data Collection and Analysis
+- Makefile
+- Virtual Environment
 
 Feel free to explore the code and data in this repository. If you have any questions or suggestions, please don't hesitate to reach out to me.
 
