@@ -10,9 +10,9 @@
 
 Welcome to my Scientific Research Repository!
 
-This repository contains code and data related to my scientific research project. This project is very large and complex, containing multiple tools and exploring different goals and research questions. With that in mind, each of the directories in this repository has its own README file explaining its purpose and how it contributes to the overall research project.
+This repository contains code and data related to my Scientific Research project. This project is massive and complex, containing multiple tools and exploring different goals and research questions. With that in mind, each of the directories in this repository has its own `README.md` file explaining it's purpose and how it contributes to the overall research project.
 
-Feel free to explore our findings, use our data for your own research, or contribute to this project. Together, we can push the boundaries and make a lasting impact on the field of software engineering and distributed systems.
+Feel free to explore our findings, use our data for your own research, or contribute to this project. Together, we can push the boundaries and make a lasting impact on the field of Software Engineering (SE) and Distributed Systems (DS).
 
 ---
 
@@ -61,7 +61,7 @@ Feel free to explore our findings, use our data for your own research, or contri
 
 ## Introduction
 
-This repository stands as the cornerstone for the extensive code, data, and insights generated through our focused research into the similarity of texts in order to suggest similar solved issues to unsolved issues on platforms like Github. As our project has advanced, i've developed interest in understanding the nuances of software development and code evolution, particularly within the realm of distributed systems, which is now the main goal of my research.
+This repository stands as the cornerstone for the extensive code, data, and insights generated through our focused research into the similarity of texts in order to suggest similar solved issues to unsolved issues on platforms like [Github](http://github.com). As our project has advanced, i've developed interest in understanding the nuances of software development and code evolution, particularly within the realm of Distributed Systems, which is now the main goal of my research.
 
 🌐 **Our Exploration Path:** Initially, our research embarked on a broad investigation into software development practices, code evolution across various systems, and the integration of AI tools like ChatGPT and GitHub Copilot to augment coding processes. However, our journey has led us to a specialized interest in distributed systems, where the evolution of code reveals complex patterns and insights into software engineering excellence.
 
