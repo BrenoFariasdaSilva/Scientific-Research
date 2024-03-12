@@ -8,8 +8,12 @@
   
 ---
 
-Welcome to my Scientific Research Repository! This repository contains code and data related to my ongoing scientific research project. Our team is focused on various goals, as described below.
-  
+Welcome to my Scientific Research Repository!
+
+This repository contains code and data related to my scientific research project. This project is very large and complex, containing multiple tools and exploring different goals and research questions. With that in mind, each of the directories in this repository has its own README file explaining its purpose and how it contributes to the overall research project.
+
+Feel free to explore our findings, use our data for your own research, or contribute to this project. Together, we can push the boundaries and make a lasting impact on the field of software engineering and distributed systems.
+
 ---
 
 </div>
