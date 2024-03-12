@@ -41,6 +41,8 @@ Welcome to my Scientific Research Repository! This repository contains code and 
     - [Word2Vec](#word2vec)
   - [Repositories](#repositories)
     - [Apache Commons-lang](#apache-commons-lang)
+    - [Apache Kafka](#apache-kafka)
+    - [Apache ZooKeeper](#apache-zookeeper)
     - [JabRef](#jabref)
   - [Methodology](#methodology)
     - [Data Collection](#data-collection)
@@ -119,17 +121,29 @@ As a technique rooted in natural language processing, Word2Vec is applied to per
 
 ## Repositories
 
+Our research encompasses a diverse set of open-source projects available on GitHub, chosen for their relevance and the rich insights they provide into various aspects of software development and maintenance. Below is a brief overview of each repository and its role in our study:
+
 ### [Apache Commons-lang](https://github.com/apache/commons-lang)
 
-- **Purpose:** Apache Commons Lang is a library with helper utilities for the java.lang API, notably String manipulation methods, basic numerical methods, object reflection, and more.
-- **Usage in Research:** We leverage this repository to study code evolution and gather code metrics using CK.
+- **Purpose:** Apache Commons Lang is a library with helper utilities for the java.lang API, notably String manipulation methods, basic numerical methods, object reflection, and concurrency, among others.
+- **Usage in Research:** We leverage this repository to study code evolution and gather code metrics using CK. It serves as a prime example of library development practices and evolution in the Java ecosystem.
+
+### [Apache Kafka](https://github.com/apache/kafka)
+
+- **Purpose:** Apache Kafka is a distributed messaging system based on the publish-subscribe model, widely used for building real-time data processing infrastructures. It is designed to handle large-scale data flows, enabling organizations to process, store, and transmit data efficiently.
+- **Usage in Research:** Kafka's architecture, real-world usage, and capability to handle massive volumes of real-time data make it an excellent candidate for our study. It provides insights into the design and maintenance of distributed systems and how they evolve to meet scalability, fault tolerance, and data distribution requirements.
+
+### [Apache ZooKeeper](https://github.com/apache/zookeeper)
+
+- **Purpose:** Apache ZooKeeper is a distributed coordination service widely used for large-scale internet systems. It offers a reliable and highly available environment for coordinating tasks across multiple nodes in a distributed cluster.
+- **Usage in Research:** ZooKeeper's role in providing a consensus service for distributed systems and its mechanisms for ensuring data consistency across nodes makes it invaluable for studying distributed service coordination, management, and the evolution of critical infrastructure components in distributed systems.
 
 ### [JabRef](https://github.com/JabRef/jabref)
 
-- **Purpose:** JabRef is an open-source bibliography reference manager that uses BibTeX as its native format.
-- **Usage in Research:** We utilize JabRef to analyze code solutions, extract code metrics using CK, and understand the code evolution of a real-world application.
+- **Purpose:** JabRef is an open-source bibliography reference manager. It uses BibTeX as its native format, facilitating the organization of references for researchers and academicians.
+- **Usage in Research:** This repository is utilized to analyze code solutions, extract code metrics using CK, and understand the code evolution of a real-world application, offering insights into application development and maintenance practices.
 
-Feel free to explore these repositories to gain insights into our research and methodologies.
+Feel free to explore these repositories to gain insights into our research and methodologies. Through the Worked Example Miner tool, we aim to aggregate the capabilities of CK, PyDriller, RefactoringMiner, and Word2Vec to analyze the Apache-Kafka and Apache-ZooKeeper repositories, as they are Distributed Systems (DS) that are used until today in many ways and are expected to represent firmly the state of art when talking about DS. 
 
 ## Methodology
 
