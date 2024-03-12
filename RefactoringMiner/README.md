@@ -18,9 +18,11 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 - [Refactoring Miner. ](#refactoring-miner-)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+    - [Requirements and Setup](#requirements-and-setup)
 - [Usage](#usage)
   - [Repository Refactors](#repository-refactors)
   - [Metrics Evolution Refactors](#metrics-evolution-refactors)
+    - [Cleaning Up](#cleaning-up)
 - [Workflow](#workflow)
 - [Python Scripts](#python-scripts)
   - [Metrics Evolution Refactors](#metrics-evolution-refactors-1)
@@ -47,32 +49,37 @@ Before using this script, ensure you have the following prerequisites installed:
 
 To install and set up the required environment for the script, follow these steps:
 
-1. Clone this repository to your local machine:
-  ```shell
-  git clone https://github.com/BrenoFariasdaSilva/Scientific-Research
-  ```
+1. **Clone this repository to your local machine:**
+   ```shell
+   git clone https://github.com/BrenoFariasdaSilva/Scientific-Research
+   ```
 
-2. Navigate to the `RefactoringMiner` directory:
-   
-  ```shell
-  cd Scientific-Research/RefactoringMiner
-  ```
+2. **Navigate to the `RefactoringMiner` directory:**
+   ```shell
+   cd Scientific-Research/RefactoringMiner
+   ```
 
-3. Install the necessary Python libraries using pip:
+3. **Install the necessary Python libraries using pip:**
 
-  ```shell
-  make dependencies
-  ```
+   This project uses a virtual environment for dependency management to avoid conflicts and ensure reproducibility. Here’s how to set it up:
 
-1. Run the desired scripts using the following command:
+   ### Requirements and Setup
 
-  ```shell
-  make repositories_refactors_script
-  ```
-  or 
-  ```shell
-  make metrics_evolution_refactors_script
-  ```
+   This project requires a virtual environment to ensure all dependencies are installed and managed in an isolated manner. A virtual environment is a self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages. Using a virtual environment helps avoid conflicts between project dependencies and system-wide Python packages.
+
+   To set up and use a virtual environment for this project, we leverage Python's built-in `venv` module. The `makefile` included with the project automates the process of creating a virtual environment, installing the necessary dependencies, and running scripts within this environment.
+
+   Follow these steps to prepare your environment:
+
+   - **Create and Activate the Virtual Environment:** The project uses a `makefile` to streamline the creation and activation of a virtual environment named `venv`. This environment is where all required packages, such as `colorama`, `pandas`, `pydriller`, `scikit-learn`, and `tqdm`, will be installed.
+
+   - **Install Dependencies:** Run the following command to set up the virtual environment and install all necessary dependencies:
+     ```shell
+     make dependencies
+     ```
+     This command performs the following actions:
+     - Initializes a new virtual environment by running `python3 -m venv venv`.
+     - Installs the project's dependencies within the virtual environment using `pip`.
 
 # Usage
 
@@ -87,6 +94,7 @@ To use the script for repository refactor analysis, follow these steps:
   ```shell
   make repositories_refactors_script
   ```
+
 ## Metrics Evolution Refactors
 
 In order to use the script for the analysis of the metrics evolution of a class or method, follow these steps:
@@ -100,6 +108,18 @@ In order to use the script for the analysis of the metrics evolution of a class 
   ```shell
   make metrics_evolution_refactors_script
   ```
+
+**Running Scripts:** The `makefile` handles for each of the python code to run with the virtual environment's Python interpreter. So, this ensures that the script runs using the Python interpreter and packages installed in the `venv` directory.
+
+## Cleaning Up
+
+To clean your project directory from the virtual environment and Python cache files, use the `clean` rule defined in the `makefile`:
+```shell
+make clean
+```
+This command removes the `venv` directory and deletes all compiled Python files in the project directory, helping maintain a clean workspace.
+
+By following these instructions, you'll ensure that all project dependencies are correctly managed and isolated, leading to a more stable and consistent development environment.
 
 # Workflow
 
