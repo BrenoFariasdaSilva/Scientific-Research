@@ -17,7 +17,8 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
 - [PyDriller.  ](#pydriller--)
     - [Important Notes:](#important-notes)
   - [Installation:](#installation)
-    - [Requirements:](#requirements)
+    - [Requirements and Setup](#requirements-and-setup)
+    - [Cleaning Up](#cleaning-up)
   - [How to use:](#how-to-use)
     - [Main Scripts:](#main-scripts)
       - [Code\_Metrics](#code_metrics)
@@ -46,11 +47,48 @@ sudo apt install python3-pip -y
 ```
 Great, you now have python3 and pip installed. Now, we need to install the project requirements/dependencies.
 
-### Requirements:
-Run the following command to install the requirements, like ```matplotlib```, ```numpy```, ```pandas```, ```pydriller``` and ```tqdm```:  
+### Requirements and Setup
+
+This project requires a virtual environment to ensure all dependencies are installed and managed in an isolated manner. A virtual environment is a self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages. Using a virtual environment helps avoid conflicts between project dependencies and system-wide Python packages. 
+
+To set up and use a virtual environment for this project, we leverage Python's built-in `venv` module. The `makefile` included with the project automates the process of creating a virtual environment, installing the necessary dependencies, and running scripts within this environment.
+
+Follow these steps to prepare your environment:
+
+1. **Create and Activate the Virtual Environment:** The project uses a `makefile` to streamline the creation and activation of a virtual environment named `venv`. This environment is where all required packages, such as `matplotlib`, `numpy`, `pandas`, `pydriller`, `scikit-learn` and `tqdm`, will be installed.
+
+2. **Install Dependencies:** Run the following command to set up the virtual environment and install all necessary dependencies:
+
+  ```
+  make dependencies
+  ```
+
+  This command performs the following actions:
+  - Initializes a new virtual environment by running `python3 -m venv venv`.
+  - Installs the project's dependencies within the virtual environment using `pip`.
+
+3. **Running Scripts:** The `makefile` also defines commands to run every script with the virtual environment's Python interpreter. For example, to run the `code_metrics_script`, use:
+
+  ```
+  make code_metrics_script
+  ```
+
+  This ensures that the script runs using the Python interpreter and packages installed in the `venv` directory.
+
+### Cleaning Up
+
+To clean your project directory from the virtual environment and Python cache files, use the `clean` rule defined in the `makefile`:
+
 ```
-make dependencies
+make clean
 ```
+
+
+This command removes the `venv` directory and deletes all compiled Python files in the project directory, helping maintain a clean workspace.
+
+By following these instructions, you'll ensure that all project dependencies are correctly managed and isolated, leading to a more stable and consistent development environment.
+
+
 	
 ## How to use: 
 ### Main Scripts:
