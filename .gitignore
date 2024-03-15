@@ -200,6 +200,7 @@ Jabref/.github/*
 /PyDriller/metrics_statistics
 /PyDriller/progress
 /PyDriller/tmp
+/PyDriller/refactorings
 /PyDriller/repositories
 
 # Ignore RefactoringMiner/RefactoringMiner folder
