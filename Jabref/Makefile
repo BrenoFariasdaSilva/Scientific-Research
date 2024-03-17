@@ -7,11 +7,9 @@ ck:
 	if [ -d src ]; then echo "Jabref Repository Already Cloned"; else make clone; fi
 	java -jar ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar src
 
-# This will clone the commons-lang project
+# This will clone the jabref project
 clone:
 	git clone https://github.com/JabRef/jabref
-	mv commons-lang/* .
-	rm -rf commons-lang
 
 # This will remove every file except the class.csv, field.csv, method.csv and variable.csv and the makefile
 # And remove every folder inside it

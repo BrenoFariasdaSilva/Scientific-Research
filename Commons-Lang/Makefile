@@ -9,8 +9,7 @@ ck:
 # This will clone the commons-lang project
 clone:
 	git clone https://github.com/apache/commons-lang
-	mv commons-lang/* .
-	rm -rf commons-lang
+
 
 # This will remove every file except the class.csv, field.csv, method.csv and variable.csv and the makefile
 # And remove every folder inside it
