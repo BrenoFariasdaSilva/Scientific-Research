@@ -16,6 +16,7 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 </div> 
 
 - [Refactoring Miner. ](#refactoring-miner-)
+    - [Important Notes:](#important-notes)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
     - [Requirements and Setup](#requirements-and-setup)
@@ -31,6 +32,11 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 - [Troubleshooting](#troubleshooting)
   - [Contributing:](#contributing)
   - [License:](#license)
+
+### Important Notes:
+- Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
+- All of the Scripts have a `VERBOSE` constant, which is set to `False` by default, so it will only print the progress bar of the script execution. If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`.
+- All of the Scripts have a `Makefile`that handles virtual environment creation, dependencies installation and script execution. You can run the scripts by using the `make` command, as shown in the `How to use` section.
 
 # Prerequisites
 
