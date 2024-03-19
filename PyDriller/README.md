@@ -57,8 +57,9 @@ To set up and use a virtual environment for this project, we leverage Python's b
 Follow these steps to prepare your environment:
 
 1. **Create and Activate the Virtual Environment:** The project uses a `makefile` to streamline the creation and activation of a virtual environment named `venv`. This environment is where all required packages, such as `matplotlib`, `numpy`, `pandas`, `pydriller`, `scikit-learn` and `tqdm`, will be installed.
+This will also be handled by the `Makefile` during the dependencies installation process, so no command must be executed in order to create the virtual environment.
 
-2. **Install Dependencies:** Run the following command to set up the virtual environment and install all necessary dependencies:
+2. **Install Dependencies:** Run the following command to set up the virtual environment and install all necessary dependencies on it:
 
   ```
   make dependencies
