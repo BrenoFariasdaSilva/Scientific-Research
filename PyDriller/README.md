@@ -170,6 +170,7 @@ There are also some auxiliar scripts, which are stored in the `Scripts/` folder,
 
 #### Empty Folders
 This script is used to verify if there are empty folders inside a specified directory. It is really usefull to make sure your files where processed or extracted correctly. 
+
 To run this code as you want, you must modify the following constants:
 1. `VERBOSE`: If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`. If not, then a more clean output will be shown, with only the progress bar of the script execution, which is the default value of the `VERBOSE` constant.
 
@@ -179,7 +180,12 @@ make empty_folders_script
 ```
 
 #### Extract Zip Files
- This script is used to extract the zip files of the repositories. It is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using the `generateZipFiles.sh`. To execute it, you must run the following command:
+This script is used to extract the zip files of the repositories. It is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using the `generateZipFiles.sh`. 
+In order to execute it, you must modify the following constants:
+1. `full_repositories`: This constant is used to specify the name of the repository that you want to extract the zip files.
+2. `short_repositories`: This constant is used to specify the name of the repository that you want to extract the zip files, but in a shorter way, as it only have the useful generated data, like the `diffs`, `metrics_data`, `metrics_evolution`, `metrics_predictions`, `metrics_statistics` and `repositories`. So, it ignores the ck csv files stored in the `ck_metrics` directory, as they occupy a lot of space and are not useful, as they are only used for generating the metrics evolution, metrics predictions and metrics statistics files.
+
+Now that you have set the constants, you can run the following command to execute the following command:
 ```
 make extract_zip_files_script
 ```
