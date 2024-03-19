@@ -57,6 +57,7 @@ Feel free to explore our findings, use our data for your own research, or contri
     - [Tools Utilized](#tools-utilized)
   - [Conclusion](#conclusion)
   - [Contributing](#contributing)
+  - [Collaborators](#collaborators)
   - [License](#license)
 
 ## Introduction
@@ -246,6 +247,31 @@ Please follow these guidelines to make your contributions smooth and effective:
 4. **Stay Engaged**: Respond to any feedback from the project maintainers and make necessary adjustments to your PR.
 
 5. **Celebrate**: Once your PR is merged, celebrate your contribution to the project!
+
+## Collaborators
+
+We thank the following people who contributed to this project:
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="#" title="Breno Farias da Silva">
+        <img src="https://github.com/BrenoFariasdaSilva/Scientific-Research/blob/main/.assets/Images/BrenoFarias.jpg" width="100px;" alt="My Profile Picture"/><br>
+        <sub>
+          <b>Breno Farias da Silva</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#" title="Marco Aurélio Graciotto Silva">
+        <img src="https://github.com/BrenoFariasdaSilva/Scientific-Research/blob/main/.assets/Images/Github.svg" width="100px;" alt="Profile Picture"/><br>
+        <sub>
+          <b>Marco Aurélio Graciotto Silva</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
 
 ## License
 
