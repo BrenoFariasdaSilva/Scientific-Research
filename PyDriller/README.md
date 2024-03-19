@@ -57,7 +57,6 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
         - [Configuration](#configuration-6)
         - [Run](#run-7)
         - [Workflow](#workflow-7)
-  - [Dependencies](#dependencies)
   - [Contributing](#contributing)
   - [License:](#license)
 
@@ -444,15 +443,6 @@ make track_files_script
 2. Then, it will loop through the `REPOSITORIES` list and call the `search_files` function for each repository name.
 3. The `search_files` function will get the `search_directory`, which is the `PyDriller/diffs/repository_name` directory, and the list inside the `TARGET_FILENAMES` dictionary for the current repository name. The `search_files` function will loop through the subfolders of the `search_directory` and search for the files in the `TARGET_FILENAMES` list. If it finds the file, it will append the file name to the `found_files` list and return the `found_files` list and the `found_file_counts` to the main function.
 4. Lastly, it will write the `found_files` list to the `PyDriller/metrics_data/repository_name/track_files_list.txt` file.
-
-## Dependencies
-This project depends on the following libraries:
-- [PyDriller](https://pydriller.readthedocs.io/en/latest/) -> PyDriller is the core of this project, as it is used to traverse the commits tree of the repositories and get many informations about it, like the commit hash, commit message, commit date and many other things.
-- [MatPlotLib](https://matplotlib.org/) -> MatPlotLib is used to generate the graphics of the metrics evolution and the linear prediction.
-- [NumPy](https://numpy.org/) -> NumPy is used to generate the linear prediction of the linear regression and to many operations in the list of the metrics.
-- [Pandas](https://pandas.pydata.org/) -> Pandas is used maintly to read and write the csv files.
-- [SciKit-Learn](https://scikit-learn.org/stable/) -> SciKit-Learn is used to generate the linear prediction of the linear regression.
-- [TQDM](https://tqdm.github.io/) -> TQDM is used to show the progress bar of the scripts.
 
 ## Contributing
 
