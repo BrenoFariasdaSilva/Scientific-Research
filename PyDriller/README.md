@@ -47,6 +47,9 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
         - [Run](#run-4)
         - [Workflow](#workflow-4)
       - [Generate Zip Files](#generate-zip-files)
+        - [Configuration](#configuration-5)
+        - [Run](#run-5)
+        - [Workflow](#workflow-5)
       - [Move Extracted Files](#move-extracted-files)
       - [Track Files](#track-files)
   - [Dependencies](#dependencies)
@@ -345,16 +348,40 @@ make generate_short_zip_files_script
 7. **Completion Message:** Finally, it prints a message indicating the successful extraction of the files.
 
 #### Generate Zip Files
+
 This script is used to generate the zip files of the repositories. As mentioned in the script above, tt is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using the `generateZipFiles.sh`.
 
+##### Configuration
+
 In order to execute it, you must modify the following constants:
+
 1. `repositories`: This constant is used to specify the names of the repositories that you want to generate the zip files.
 2. `subfolders`: This constant is used to specify the subfolders that you want to generate the zip files. For example, if you want to generate the zip files of the `diffs`, `metrics_data`, `metrics_evolution`, `metrics_predictions`, `metrics_statistics` and `repositories` subfolders, you must add them to the `subfolders` list.
+
+##### Run
 
 Now that you have set the constants, you can run the following command to execute the following command:
 ```
 make generate_zip_files_script
 ```
+
+##### Workflow
+
+1. **Directory Validation:** Initially, the script checks if it's being executed from the `/PyDriller` directory. If the script is not in the expected directory, it prompts the user to run it from `/PyDriller` and terminates.
+
+2. **Repository and Subfolder Definition:** It defines an array named `repositories` that lists the names of repositories to be compressed. Additionally, an array named `subfolders` lists relevant subdirectories within each repository that need to be included in the zip files.
+
+3. **Compression Directory Setup:** The script ensures a directory named `compressed` exists within the current working directory (`/PyDriller`). If this directory is absent, the script creates it to store the resulting zip files.
+
+4. **Zip File Generation:**
+   - The script iterates over each repository name in the `repositories` array.
+   - For each repository, it constructs a list of paths by combining each subfolder's name with the repository name, ensuring all specified subfolders for each repository are included.
+   - It also includes a CSV file (`repository_name-commits_list.csv`) located in the `ck_metrics` folder for each repository in the list of items to zip.
+   - A zip file for each repository is created in the `compressed` directory, containing all specified subfolders and the commits list CSV file.
+
+5. **Sound Notification:** Upon completion of the zip file creation process, the script attempts to play a notification sound from a specified path (`./../.assets/Sounds/NotificationSound.wav`). If the sound file cannot be found, it notifies the user.
+
+6. **Completion Message:** A success message is displayed, indicating that the zip files have been created successfully.
 
 #### Move Extracted Files
 This is a really simple script, which is used to run after you execute the `extractZipFiles.sh` script, as it will move the extracted files to the right directory, for example, the extracted `/kafka/ck_metrics` will be placed in `/ck_metrics/kafka`.
