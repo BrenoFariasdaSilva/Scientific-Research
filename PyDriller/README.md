@@ -30,6 +30,9 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
         - [Run](#run)
         - [Workflow](#workflow)
       - [Metrics\_Changes](#metrics_changes)
+        - [Configuration](#configuration-1)
+        - [Run](#run-1)
+        - [Workflow](#workflow-1)
     - [Auxiliar Scripts](#auxiliar-scripts)
       - [Empty Folders](#empty-folders)
       - [Extract Zip Files](#extract-zip-files)
@@ -181,7 +184,13 @@ make code_metrics_script
 11. After everything is done, the `code_metrics.py` script will be done and play a sound to notify you that the script has finished.
 
 #### Metrics_Changes
-To run this code as you want, you must modify the following constants:
+
+This script is used to generate the metrics evolution, and metrics statistics and linear regressions of the repositories specified in the `DEFAULT_REPOSITORIES` dictionary. It is really usefull to analyze the changes of the metrics of the classes and methods of the repositories over time in order to select the classes and methods that had a substantial changes. Those changes can be related to changes in the software design, which can be related to refactorings, bugs, performance improvements and many other things. This data and metadas can be used for selecting good candidates in order to generate a worked example for the classes of Software Engineering courses, as this is the main goals of this project.
+
+##### Configuration
+
+In order to run this code as you want, you must modify the following constants:
+
 1. `VERBOSE`: This is imported from the `code_metrics.py`file, in which you must specify if you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`. If not, then a more clean output will be shown, with only the progress bar of the script execution, which is the default value of the `VERBOSE` constant.
 2. `DEFAULT_REPOSITORIES`: This is imported from the `code_metrics.py`file, in which you must specify the repository name and the repository url.
 3. `MINIMUM_CHANGES`: This constant is used to specify the minimum number of changes that a class or method must have in order to be processed. If the class or method didn't have at least `MINIMUM_CHANGES` changes, it will not be processed.
@@ -194,10 +203,15 @@ To run this code as you want, you must modify the following constants:
 10. `DESIRED_REFACTORINGS_ONLY`: This constant is used to specify if you want to store only the substantial changes that are of any of the specified refactorings in the `DESIRED_REFACTORINGS` list. If you want to store all the substantial changes, you must set it to `False`.
 11. `DESIRED_REFACTORINGS`: This constant is used to specify the desired refactorings that you want to store in the `substantial_changes.csv` file. If you want to store all the substantial changes of any type, you must set the `DESIRED_REFACTORINGS_ONLY` constant to `False`.
 
+##### Run
+
 Considering that you now have the ck metrics calculated and the constants set, you are able to run the following command to execute the `metrics_changes.py` file:
 ```
 make metrics_changes_script
 ```
+
+##### Workflow
+
 1. The first thing it will do is ask you if you want to process classes or methods, if you want to process classes, type ```True```, if you want to process methods, type ```False```. Note that it is case sensitive, so make sure you type it correctly.
 2. The second thing it will do is verify if you don't have whitespaces in the path of the project by calling the `path_contains_whitespaces` function. If you have, it will not work.
 3. Next, it will call the `process_all_repositories()` function, which will loop through the `DEFAULT_REPOSITORIES` dictionary and call the `process_repository(repository_name)` function for each repository name.
