@@ -54,6 +54,9 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
         - [Run](#run-6)
         - [Workflow](#workflow-6)
       - [Track Files](#track-files)
+        - [Configuration](#configuration-6)
+        - [Run](#run-7)
+        - [Workflow](#workflow-7)
   - [Dependencies](#dependencies)
   - [Contributing](#contributing)
   - [License:](#license)
@@ -416,15 +419,31 @@ make move_extracted_files_script
 6. **Completion Message:** Finally, the script prints a success message indicating that the files have been moved and the source folders deleted, signaling the end of its operation.
 
 #### Track Files
+
 This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant and write the list of found files to a txt file in `/PyDriller/metrics_data/repository_name/track_files_list.txt`. 
 
+##### Configuration
+
 In order to execute it, you must modify the following constants:
+
 1. `VERBOSE`: If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`. If not, then a more clean output will be shown, with only the progress bar of the script execution, which is the default value of the `VERBOSE` constant.
 2. `TARGET_FILENAMES`: This dictionary is used to specify the names of the files that you want to track for each repository.
 3. `REPOSITORIES`: This list is used to specify the names of the repositories that you want to track the files.
+
+##### Run
+
+Now that you have set the constants, you can run the following command to execute the following command:
+
 ```
 make track_files_script
 ```
+
+##### Workflow
+
+1. This script will get the current directory and verify if it is the `PyDriller` directory.
+2. Then, it will loop through the `REPOSITORIES` list and call the `search_files` function for each repository name.
+3. The `search_files` function will get the `search_directory`, which is the `PyDriller/diffs/repository_name` directory, and the list inside the `TARGET_FILENAMES` dictionary for the current repository name. The `search_files` function will loop through the subfolders of the `search_directory` and search for the files in the `TARGET_FILENAMES` list. If it finds the file, it will append the file name to the `found_files` list and return the `found_files` list and the `found_file_counts` to the main function.
+4. Lastly, it will write the `found_files` list to the `PyDriller/metrics_data/repository_name/track_files_list.txt` file.
 
 ## Dependencies
 This project depends on the following libraries:
