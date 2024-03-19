@@ -222,7 +222,30 @@ This research methodology, underpinned by detailed code metric analysis and tool
 
 ## Contributing
 
-Contributions are very welcome! If you have ideas, improvements, or findings related to our research goals, feel free to submit a pull request or open an issue.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. If you have suggestions for improving the code, your insights will be highly welcome.
+In order to contribute to this project, please follow the guidelines below or read the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details on how to contribute to this project, as it contains information about the commit standards and the entire pull request process.
+Please follow these guidelines to make your contributions smooth and effective:
+
+1. **Set Up Your Environment**: Ensure you've followed the setup instructions in the [Setup](#setup) section to prepare your development environment.
+
+2. **Make Your Changes**:
+   - **Create a Branch**: `git checkout -b feature/YourFeatureName`
+   - **Implement Your Changes**: Make sure to test your changes thoroughly.
+   - **Commit Your Changes**: Use clear commit messages, for example:
+     - For new features: `git commit -m "FEAT: Add some AmazingFeature"`
+     - For bug fixes: `git commit -m "FIX: Resolve Issue #123"`
+     - For documentation: `git commit -m "DOCS: Update README with new instructions"`
+     - For refactors: `git commit -m "REFACTOR: Enhance component for better aspect"`
+     - For snapshots: `git commit -m "SNAPSHOT: Temporary commit to save the current state for later reference"`
+   - See more about crafting commit messages in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+3. **Submit Your Contribution**:
+   - **Push Your Changes**: `git push origin feature/YourFeatureName`
+   - **Open a Pull Request (PR)**: Navigate to the repository on GitHub and open a PR with a detailed description of your changes.
+
+4. **Stay Engaged**: Respond to any feedback from the project maintainers and make necessary adjustments to your PR.
+
+5. **Celebrate**: Once your PR is merged, celebrate your contribution to the project!
 
 ## License
 
