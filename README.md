@@ -255,10 +255,10 @@ We thank the following people who contributed to this project:
 <table>
   <tr>
     <td align="center">
-      <a href="#" title="Breno Farias da Silva">
+      <a href="https://github.com/BrenoFariasdaSilva" title="Breno Farias da Silva">
         <img src="https://github.com/BrenoFariasdaSilva/Scientific-Research/blob/main/.assets/Images/BrenoFarias.jpg" width="100px;" alt="My Profile Picture"/><br>
         <sub>
-          <b>Breno Farias da Silva</b>
+          <b><a href="https://github.com/BrenoFariasdaSilva">Breno Farias da Silva</a></b>
         </sub>
       </a>
     </td>
@@ -266,7 +266,7 @@ We thank the following people who contributed to this project:
       <a href="#" title="Marco Aurélio Graciotto Silva">
         <img src="https://github.com/BrenoFariasdaSilva/Scientific-Research/blob/main/.assets/Images/Github.svg" width="100px;" alt="Profile Picture"/><br>
         <sub>
-          <b>Marco Aurélio Graciotto Silva</b>
+          <b><a href="https://github.com/MAGSilva">Marco Aurélio Graciotto Silva</a></b>
         </sub>
       </a>
     </td>
