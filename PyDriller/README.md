@@ -26,6 +26,7 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
     - [Auxiliar Scripts:](#auxiliar-scripts)
       - [Empty Folders](#empty-folders)
       - [Extract Zip Files](#extract-zip-files)
+      - [Generate Short Zip Files](#generate-short-zip-files)
       - [Generate Zip Files](#generate-zip-files)
       - [Move Extracted Files](#move-extracted-files)
       - [Track Files:](#track-files)
@@ -188,6 +189,18 @@ In order to execute it, you must modify the following constants:
 Now that you have set the constants, you can run the following command to execute the following command:
 ```
 make extract_zip_files_script
+```
+
+#### Generate Short Zip Files
+This script is used to generate the short zip files of the repositories. It is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using the `generateShortZipFiles.sh`.
+
+In order to execute it, you must modify the following constants:
+1. `repositories`: This constant is used to specify the names of the repositories that you want to generate the short zip files.
+2. `subfolders`: This constant is used to specify the subfolders that you want to generate the short zip files. For example, if you want to generate the short zip files of the `diffs`, `metrics_data`, `metrics_evolution`, `metrics_predictions`, `metrics_statistics` and `repositories` subfolders, you must add them to the `subfolders` list.
+
+Now that you have set the constants, you can run the following command to execute the following command:
+```
+make generate_short_zip_files_script
 ```
 
 #### Generate Zip Files
