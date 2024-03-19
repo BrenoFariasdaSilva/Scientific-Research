@@ -225,7 +225,12 @@ make move_extracted_files_script
 ```
 
 #### Track Files:
-This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant and write the list of found files to a txt file in `/PyDriller/metrics_data/repository_name/track_files_list.txt`. To execute it, you must run the following command:
+This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant and write the list of found files to a txt file in `/PyDriller/metrics_data/repository_name/track_files_list.txt`. 
+
+In order to execute it, you must modify the following constants:
+1. `VERBOSE`: If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`. If not, then a more clean output will be shown, with only the progress bar of the script execution, which is the default value of the `VERBOSE` constant.
+2. `TARGET_FILENAMES`: This dictionary is used to specify the names of the files that you want to track for each repository.
+3. `REPOSITORIES`: This list is used to specify the names of the repositories that you want to track the files.
 ```
 make track_files_script
 ```
