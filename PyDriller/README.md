@@ -16,8 +16,12 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
 
 - [PyDriller.  ](#pydriller--)
   - [Important Notes](#important-notes)
-  - [Installation](#installation)
-    - [Requirements and Setup](#requirements-and-setup)
+  - [Setup](#setup)
+    - [Python and Pip](#python-and-pip)
+      - [Linux](#linux)
+      - [MacOS](#macos)
+      - [Windows](#windows)
+    - [Requirements](#requirements)
     - [Cleaning Up](#cleaning-up)
   - [How to use](#how-to-use)
     - [Main Scripts](#main-scripts)
@@ -35,23 +39,60 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
   - [License:](#license)
 
 ## Important Notes
+
 - Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
-- All of the Scripts have a `VERBOSE` constant, which is set to `False` by default, so it will only print the progress bar of the script execution. If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`.
 - All of the Scripts have a `Makefile`that handles virtual environment creation, dependencies installation and script execution. You can run the scripts by using the `make` command, as shown in the `How to use` section.
 - The execution of this scripts will take a long time and store a lot of data, so make sure you have enough space in your disk and be patient. Example: Running all the scrips only for `Apache Kafka` generates a total of 115 GB of data.
 - Why is `metrics_changes.py` not parallelized? Because, for example, for running for `Apache Kafka` it uses so much CPU and RAM that it crashed in my Ryzen 7 3800X with 32GB of RAM and there is also a lot of I/O to the disk. I tried creating a thread for process each repository, just like i did for `code_metrics.py`, but most of the times it just crashes after a minute running. Talking about the `code_metrics.py`, the most performance i could take from it was, as said, to create a thread to process each repository, therefore it isn't possible to parallelize inside the processing of the repository, as the result of the iteration number `x` depends on the result since the `first iteration until x-1`. If you want to parallelize something in order to improve performance, feel free to do it, i'll be glad aproving your pull request. Also, if the `code_metrics.py` crashes in the middle of the execution, you can just run it again, as it will verify if the ck metrics are already calculated and where it stopped, so it will continue from where it stopped.
 
-## Installation
-You need to install python3. If you are using Linux, you (must likely) can install it by just running the following commands:
+## Setup
+
+This section provides instructions for installing the Python Language and Pip Python package manager, as well as the project's dependencies. It also explains how to run the scripts using the provided `makefile`. The `makefile` automates the process of creating a virtual environment, installing dependencies, and running the scripts.
+
+### Python and Pip
+
+In order to run the scripts, you must have python3 and pip installed in your machine. If you don't have it installed, you can use the following commands to install it:
+
+#### Linux
+
+In order to install python3 and pip in Linux, you can use the following commands:
+
 ```
 sudo apt install python3 -y
 sudo apt install python3-pip -y
 ```
+
+#### MacOS
+
+In order to install python3 and pip in MacOS, you can use the following commands:
+
+```
+brew install python3
+```
+
+#### Windows
+
+In order to install python3 and pip in Windows, you can use the following commands in case you have `choco` installed:
+
+```
+choco install python3
+```
+
+Or just download the installer from the [official website](https://www.python.org/downloads/).
+
 Great, you now have python3 and pip installed. Now, we need to install the project requirements/dependencies.
 
-### Requirements and Setup
+### Requirements
 
-This project requires a virtual environment to ensure all dependencies are installed and managed in an isolated manner. A virtual environment is a self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages. Using a virtual environment helps avoid conflicts between project dependencies and system-wide Python packages. 
+This project depends on the following libraries:
+- [PyDriller](https://pydriller.readthedocs.io/en/latest/) -> PyDriller is the core of this project, as it is used to traverse the commits tree of the repositories and get many informations about it, like the commit hash, commit message, commit date and many other things.
+- [MatPlotLib](https://matplotlib.org/) -> MatPlotLib is used to generate the graphics of the metrics evolution and the linear prediction.
+- [NumPy](https://numpy.org/) -> NumPy is used to generate the linear prediction of the linear regression and to many operations in the list of the metrics.
+- [Pandas](https://pandas.pydata.org/) -> Pandas is used maintly to read and write the csv files.
+- [SciKit-Learn](https://scikit-learn.org/stable/) -> SciKit-Learn is used to generate the linear prediction of the linear regression.
+- [TQDM](https://tqdm.github.io/) -> TQDM is used to show the progress bar of the scripts.
+
+Futhermore, this project requires a virtual environment to ensure all dependencies are installed and managed in an isolated manner. A virtual environment is a self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages. Using a virtual environment helps avoid conflicts between project dependencies and system-wide Python packages. 
 
 To set up and use a virtual environment for this project, we leverage Python's built-in `venv` module. The `makefile` included with the project automates the process of creating a virtual environment, installing the necessary dependencies, and running scripts within this environment.
 
@@ -60,17 +101,17 @@ Follow these steps to prepare your environment:
 1. **Create and Activate the Virtual Environment:** The project uses a `makefile` to streamline the creation and activation of a virtual environment named `venv`. This environment is where all required packages, such as `matplotlib`, `numpy`, `pandas`, `pydriller`, `scikit-learn` and `tqdm`, will be installed.
 This will also be handled by the `Makefile` during the dependencies installation process, so no command must be executed in order to create the virtual environment.
 
-2. **Install Dependencies:** Run the following command to set up the virtual environment and install all necessary dependencies on it:
+1. **Install Dependencies:** Run the following command to set up the virtual environment and install all necessary dependencies on it:
 
-  ```
-  make dependencies
-  ```
+    ```
+    make dependencies
+    ```
 
   This command performs the following actions:
   - Initializes a new virtual environment by running `python3 -m venv venv`.
   - Installs the project's dependencies within the virtual environment using `pip` based on the `requirements.txt` file.
 
-3. **Running Scripts:** The `makefile` also defines commands to run every script with the virtual environment's Python interpreter. For example, to run the `code_metrics_script`, use:
+3. **Running Scripts:** The `makefile` also defines commands to run every script with the virtual environment's Python interpreter. For example, to run the `code_metrics.py` file, use:
 
   ```
   make code_metrics_script
