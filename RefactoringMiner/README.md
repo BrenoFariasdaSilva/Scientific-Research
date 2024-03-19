@@ -20,13 +20,13 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 - [Installation](#installation)
     - [Requirements and Setup](#requirements-and-setup)
 - [Usage](#usage)
-  - [Repository Refactors](#repository-refactors)
+  - [Repositories Refactors](#repositories-refactors)
   - [Metrics Evolution Refactors](#metrics-evolution-refactors)
-    - [Cleaning Up](#cleaning-up)
+  - [Cleaning Up](#cleaning-up)
 - [Workflow](#workflow)
 - [Python Scripts](#python-scripts)
   - [Metrics Evolution Refactors](#metrics-evolution-refactors-1)
-  - [Repository Refactors](#repository-refactors-1)
+  - [Repositories Refactors](#repositories-refactors-1)
 - [RefactoringMiner JSON Output](#refactoringminer-json-output)
 - [Troubleshooting](#troubleshooting)
   - [Contributing:](#contributing)
@@ -83,9 +83,9 @@ To install and set up the required environment for the script, follow these step
 
 # Usage
 
-## Repository Refactors
+## Repositories Refactors
 
-To use the script for repository refactor analysis, follow these steps:
+To use the script for repositories refactor analysis, follow these steps:
 
 1. Open a terminal in the `RefactoringMiner` directory.
 
@@ -154,7 +154,7 @@ Before running the script, be sure to modify the following variables to suit you
         2. Lastly, it calls the `filter_json_file(classname, json_filepath, json_filtered_filepath)` that will read the generated json file and filter the refactorings by the `DESIRED_REFACTORING_TYPES` variable and save the filtered refactorings in the `json_files` directory.
 4. Lastly, it will output the execution time of the script.
 
-## Repository Refactors
+## Repositories Refactors
 Before running the script, be sure to modify the following variables to suit your needs:  
 `DEFAULT_REPOSITORIES` - The repositories to be analyzed. Must be a dictionary with the name of the repository as the key and the URL of the repository as the value.  
 `COMMITS_NUMBER` - The number of commits that the corresponding repository have. It is useful for calculing the estimated time of the script.  
