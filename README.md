@@ -200,16 +200,26 @@ The project aims to develop a heuristic for identifying code examples that repre
 
 ### Software Metrics
 
-We rely on a suite of metrics for object-oriented design as outlined in "A Metrics Suite for Object Oriented Design," focusing on:
+Our analysis leverages a suite of metrics for object-oriented design as outlined in the seminal work by Chidamber and Kemerer. The study, titled "A Metrics Suite for Object Oriented Design," was published in the IEEE Transactions on Software Engineering (vol. 20, no. 6, pp. 476–493, 1994). It introduces key metrics that have become foundational in assessing and improving the design quality of object-oriented software systems. These metrics include:
 
-- **Coupling Between Object classes (CBO)**
-- **Depth of Inheritance Tree (DIT)**
-- **Lack of Cohesion in Methods (LCOM)**
-- **Number of Children (NOC)**
-- **Response for a Class (RFC)**
-- **Weighted Methods per Class (WMC)**
+- **Coupling Between Object classes (CBO):** Reflects the degree of coupling by measuring the number of classes directly associated with a given class through method calls. A higher CBO value suggests higher complexity and lower flexibility, potentially leading to increased maintenance challenges. Reducing CBO over time can indicate improvements in code quality, aiming for a more modular software design that minimizes the impact of changes across the system.
 
-These metrics provide insights into complexity, quality, and maintainability of the codebase.
+- **Response for a Class (RFC):** Represents the set of methods that can be executed in response to a message received by an instance of the class. A lower RFC value denotes fewer behaviors and potentially lower complexity, making the class more cohesive and easier to maintain and test.
+
+- **Weighted Methods per Class (WMC):** Calculates the sum of complexity measures of the class's methods. High WMC values may indicate complex classes with multiple responsibilities, affecting development and maintenance costs. Lower WMC values suggest a more focused and cohesive class, facilitating understanding and extension.
+
+Additionally, the CK tool offers insights into other metrics that help understand code evolution:
+
+- **Depth of Inheritance Tree (DIT):** Measures the number of ancestor classes, indicating the complexity level and the potential for side effects from changes in superclasses. A higher DIT value can imply more complex inheritance structures that may affect maintainability.
+
+- **Lack of Cohesion in Methods (LCOM):** Indicates the degree of method cohesion within a class, ranging from 0 (high cohesion) to 1 (low cohesion). Preferred low values suggest that methods within a class are closely related to each other, enhancing the class's cohesiveness.
+
+- **Number of Children (NOC):** Counts the direct subclasses of a class, with higher values hinting at greater reusability and significance within the codebase, as it implies a foundational role due to other classes' dependency on it.
+
+Collectively, these metrics provide a comprehensive view of the codebase's complexity, quality, and maintainability. They serve as essential tools for developers to refine software design and architecture effectively. It's important to note that these metrics are derived from static code analysis, which involves evaluating the source code without executing the program. This approach allows for an in-depth understanding of the code's structural and qualitative aspects, facilitating targeted improvements and ensuring a more robust, maintainable, and efficient software system.
+
+Dynamic code analysis complements our understanding by examining the code's behavior during execution. It sheds light on runtime characteristics, class communication, performance, and resource utilization, offering a holistic view of the software's operational efficiency. Despite the value of dynamic analysis, our research emphasizes static code analysis. This focus allows us to delve into the software quality's evolution within the domain of Distributed Systems (DS), providing insights into the code design changes and their impact on maintainability and reliability over time.
+
 
 ### Tools Utilized
 
