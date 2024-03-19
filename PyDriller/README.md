@@ -91,13 +91,19 @@ By following these instructions, you'll ensure that all project dependencies are
 	
 ## How to use: 
 ### Main Scripts:
-First, you must run the following command to execute the `code_metrics.py` file:
 #### Code_Metrics
+To run this code as you want, you must modify the following constants:
+1. `VERBOSE`: If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`. If not, then a more clean output will be shown, with only the progress bar of the script execution, which is the default value of the `VERBOSE` constant.
+2. `DEFAULT_REPOSITORIES` dictionary in the `code_metrics.py` file, in which you must specify the repository name and the repository url. 
+3. `ITERATIONS_DURATION` constant, which represents a simbolic time duration of the iterations of the `code_metrics.py` script for each repository. It is used to calculate the estimated time of the script execution. If you don't know, just kinda ignore it, but be aware that the bigger the repository is, the longer it will take to execute the script.
 ```
 make code_metrics_script
 ```
+
+Great now that you have set the constants, you can run the `code_metrics.py` file. The following steps will be executed by the `code_metrics.py` file:
+
 1. As for every file in this project, the first thing it will do is verify if you don't have whitespaces in the path of the project, if you have, it will not work.  
-2. Next, it will also verify if the `ck`file exists in the `FULL_CK_JAR_PATH` directory.
+2. Next, it will also verify if the `ck` file exists in the `FULL_CK_JAR_PATH` directory.
 3. Now, it calls `process_repositories_concurrently()` which will create a thread for each of the repositories inside the `DEFAULT_REPOSITORIES` dictionary and process it's ck metrics and save each commit file diff. Each thread has as it's target the `process_repository(repository_name, repository_url)` function.
 4. Now, the `verify_ck_metrics_folder(repository_name)` function  is called to verify if the ck metrics are already calculated. That verification is done by:
    1. Verifying if the repository commits list csv file exists inside the `CK_METRICS_DIRECTORY_PATH` directory, which should be named as `repository_name-commits_list.csv`, for example: `commons-lang-commits_list.csv`;
@@ -105,7 +111,7 @@ make code_metrics_script
    
    If any of those verifications are false, it stops executing, due to the fact that the ck metrics weren't calculated. If not, it will continue executing until the end and return true, meaning that the ck metrics are already calculated.
 5. Now, as the ck metrics are not calculated, it will call `create_directory(absolute path, relative_path)` twice, one for the `FULL_CK_METRICS_DIRECTORY_PATH` directory and another for the `FULL_REPOSITORY_DIRECTORY_PATH` directory.
-6. With all the subfolders created, we must call `clone_repository(repository_name, repository_url)` function, which will clone the repository to the `FULL_REPOSITORY_DIRECTORY_PATH` directory.
+6.  With all the subfolders created, we must call `clone_repository(repository_name, repository_url)` function, which will clone the repository to the `FULL_REPOSITORY_DIRECTORY_PATH` directory.
 7. In this step, we must calculate the number of commit in the current repository in order to be able to call the `traverse_repository(repository_name, repository_url, number_of_commits)` function.
 8. As now we have the repository cloned, we must call `traverse_repository` function, in which will loop through the repository commits tree with the use of `PyDriller.traverse_commits()` to go through all the commit hashes of the repository and do the following for each commit in the repository: 
    1. Get the tuple containing the `commit.hash`, `commit.msg` and `commit.author_date` and append those commit's data in the `commit_hashes` list, in order to, later on, store them inside the `CK_METRICS_DIRECTORY_PATH/repository_name-commit_hashes.csv` file;  
