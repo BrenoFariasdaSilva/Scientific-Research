@@ -22,7 +22,9 @@ The main tool is the Worked Example Miner, which is a comprehensive tool for Jav
 
 ![GitHub Code Size in Bytes](https://img.shields.io/github/languages/code-size/BrenoFariasdaSilva/Scientific-Research)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Scientific-Research)
-![GitHub](https://img.shields.io/github/license/BrenoFariasdaSilva/Scientific-Research)
+![GitHub Forks](https://img.shields.io/github/forks/BrenoFariasDaSilva/Scientific-Research)
+![GitHub Language Count](https://img.shields.io/github/languages/count/BrenoFariasDaSilva/Scientific-Research)
+![GitHub License](https://img.shields.io/github/license/BrenoFariasdaSilva/Scientific-Research)
 ![wakatime](https://wakatime.com/badge/github/BrenoFariasdaSilva/Scientific-Research.svg)
 
 </div>
