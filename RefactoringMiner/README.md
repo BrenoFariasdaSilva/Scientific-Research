@@ -79,7 +79,7 @@ To install and set up the required environment for the script, follow these step
      ```
      This command performs the following actions:
      - Initializes a new virtual environment by running `python3 -m venv venv`.
-     - Installs the project's dependencies within the virtual environment using `pip`.
+     - Installs the project's dependencies within the virtual environment using `pip` based on the `requirements.txt` file.
 
 # Usage
 

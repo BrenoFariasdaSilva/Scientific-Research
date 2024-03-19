@@ -66,7 +66,7 @@ Follow these steps to prepare your environment:
 
   This command performs the following actions:
   - Initializes a new virtual environment by running `python3 -m venv venv`.
-  - Installs the project's dependencies within the virtual environment using `pip`.
+  - Installs the project's dependencies within the virtual environment using `pip` based on the `requirements.txt` file.
 
 3. **Running Scripts:** The `makefile` also defines commands to run every script with the virtual environment's Python interpreter. For example, to run the `code_metrics_script`, use:
 
