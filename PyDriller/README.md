@@ -51,6 +51,8 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
         - [Run](#run-5)
         - [Workflow](#workflow-5)
       - [Move Extracted Files](#move-extracted-files)
+        - [Run](#run-6)
+        - [Workflow](#workflow-6)
       - [Track Files](#track-files)
   - [Dependencies](#dependencies)
   - [Contributing](#contributing)
@@ -384,13 +386,34 @@ make generate_zip_files_script
 6. **Completion Message:** A success message is displayed, indicating that the zip files have been created successfully.
 
 #### Move Extracted Files
+
 This is a really simple script, which is used to run after you execute the `extractZipFiles.sh` script, as it will move the extracted files to the right directory, for example, the extracted `/kafka/ck_metrics` will be placed in `/ck_metrics/kafka`.
+
+##### Run
 
 In order to execute it, you don't need to modify any constant, so you can just run the following command to execute the following command:
 
 ```
 make move_extracted_files_script
 ```
+
+##### Workflow
+
+1. **Initial Setup and Validation:** The script starts by determining the current working directory. If the script is not executed from within the `/PyDriller` directory, it prompts the user to run it from the correct location and terminates to prevent unintended operations.
+
+2. **Source Directory Specification:** It sets a variable `compressed_folder_path` to `"compressed"`, which is the directory containing the extracted folders that need to be organized.
+
+3. **Destination Folders Definition:** An array named `extracted_folders` lists the names of the destination folders. These folders represent the different categories into which the extracted files will be organized.
+
+4. **Moving Extracted Contents:**
+   - The script iterates over each name in the `extracted_folders` array.
+   - For each folder name, it first checks if the corresponding destination folder exists within the parent directory of the `compressed` folder. If a destination folder does not exist, the script creates it.
+   - Then, the script moves all items from each extracted folder inside the `compressed` directory to the respective destination folder.
+   - After successfully moving the files, it deletes the now-empty source folder within the `compressed` directory to clean up.
+
+5. **Sound Notification:** Upon successfully organizing and cleaning up the files, the script attempts to play a notification sound. If the specified sound file cannot be found, it alerts the user about the missing file.
+
+6. **Completion Message:** Finally, the script prints a success message indicating that the files have been moved and the source folders deleted, signaling the end of its operation.
 
 #### Track Files
 This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant and write the list of found files to a txt file in `/PyDriller/metrics_data/repository_name/track_files_list.txt`. 
