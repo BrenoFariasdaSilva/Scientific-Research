@@ -195,9 +195,8 @@ If you encounter any issues while using the script, consider the following:
   ```
 
 ## Contributing
-Feel free to contribute to this project, as it is open source and i'll be glad to accept your pull request.  
-If you encounter any unexpected errors or issues, feel free to open an issue in this repository.
-If you have any questions, feel free to contact me at any of my Social Networks in my [GitHub Profile](https://github.com/BrenoFariasdaSilva).
+
+If you want to contribute to this project, please read the Contributing section of the [Main README](../README.md) file, as well as the [CONTRIBUTING](../CONTRIBUTING.md) file in this repository.
 
 ## License
 
