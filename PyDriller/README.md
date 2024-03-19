@@ -33,9 +33,9 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
   - [Contributing:](#contributing)
   - [License:](#license)
 
-
 ### Important Notes:
 - Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
+- All of the Scripts have a `VERBOSE` constant, which is set to `False` by default, so it will only print the progress bar of the script execution. If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`.
 - The execution of this scripts will take a long time and store a lot of data, so make sure you have enough space in your disk and be patient. Example: Running all the scrips only for `Apache Kafka` generates a total of 115 GB of data.
 - Why is `metrics_changes.py` not parallelized? Because, for example, for running for `Apache Kafka` it uses so much CPU and RAM that it crashed in my Ryzen 7 3800X with 32GB of RAM and there is also a lot of I/O to the disk. I tried creating a thread for process each repository, just like i did for `code_metrics.py`, but most of the times it just crashes after a minute running. Talking about the `code_metrics.py`, the most performance i could take from it was, as said, to create a thread to process each repository, therefore it isn't possible to parallelize inside the processing of the repository, as the result of the iteration number `x` depends on the result since the `first iteration until x-1`. If you want to parallelize something in order to improve performance, feel free to do it, i'll be glad aproving your pull request. Also, if the `code_metrics.py` crashes in the middle of the execution, you can just run it again, as it will verify if the ck metrics are already calculated and where it stopped, so it will continue from where it stopped.
 
