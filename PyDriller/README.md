@@ -43,6 +43,9 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
         - [Run](#run-3)
         - [Workflow](#workflow-3)
       - [Generate Short Zip Files](#generate-short-zip-files)
+        - [Configuration](#configuration-4)
+        - [Run](#run-4)
+        - [Workflow](#workflow-4)
       - [Generate Zip Files](#generate-zip-files)
       - [Move Extracted Files](#move-extracted-files)
       - [Track Files](#track-files)
@@ -306,16 +309,40 @@ make extract_zip_files_script
 This script is intended to streamline the setup process for analyzing the specified repositories by ensuring all necessary data is extracted and ready for use.
 
 #### Generate Short Zip Files
+
 This script is used to generate the short zip files of the repositories. It is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using the `generateShortZipFiles.sh`.
 
+##### Configuration
+
 In order to execute it, you must modify the following constants:
+
 1. `repositories`: This constant is used to specify the names of the repositories that you want to generate the short zip files.
 2. `subfolders`: This constant is used to specify the subfolders that you want to generate the short zip files. For example, if you want to generate the short zip files of the `diffs`, `metrics_data`, `metrics_evolution`, `metrics_predictions`, `metrics_statistics` and `repositories` subfolders, you must add them to the `subfolders` list.
+
+##### Run
 
 Now that you have set the constants, you can run the following command to execute the following command:
 ```
 make generate_short_zip_files_script
 ```
+
+##### Workflow
+
+1. **Check the Execution Directory:** The script first verifies that it's being run from the `/PyDriller` directory. If not, it exits with a message instructing the user to run it from the correct location.
+
+2. **Directory Setup:** It ensures that a directory named `compressed` exists within the current working directory. If this directory does not exist, the script creates it.
+
+3. **Repository Definitions:** The script defines two arrays of repository names:
+   - `full_repositories`: Contains names for the full versions of the repositories.
+   - `short_repositories`: Contains names for shortened versions of the repositories.
+
+4. **Unzipping Full Repositories:** For each repository name in the `full_repositories` array, the script looks for a corresponding zip file in the `compressed` directory and extracts it there. If the zip file doesn't exist, it outputs an error message.
+
+5. **Unzipping Short Repositories:** Similarly, for each entry in the `short_repositories` array, it attempts to unzip the corresponding zip file into the `compressed` directory, with the same error handling for missing files.
+
+6. **Sound Notification:** Upon successful extraction, the script attempts to play a notification sound from a predefined location (`../.assets/Sounds/NotificationSound.wav`). If the sound file is not found, it outputs a message indicating so.
+
+7. **Completion Message:** Finally, it prints a message indicating the successful extraction of the files.
 
 #### Generate Zip Files
 This script is used to generate the zip files of the repositories. As mentioned in the script above, tt is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using the `generateZipFiles.sh`.
