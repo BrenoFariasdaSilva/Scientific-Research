@@ -26,6 +26,9 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
   - [How to use](#how-to-use)
     - [Main Scripts](#main-scripts)
       - [Code\_Metrics](#code_metrics)
+        - [Configuration](#configuration)
+        - [Run](#run)
+        - [Workflow](#workflow)
       - [Metrics\_Changes](#metrics_changes)
     - [Auxiliar Scripts](#auxiliar-scripts)
       - [Empty Folders](#empty-folders)
@@ -134,15 +137,25 @@ By following these instructions, you'll ensure that all project dependencies are
 ## How to use 
 ### Main Scripts
 #### Code_Metrics
-To run this code as you want, you must modify the following constants:
+
+This script is used to generate the ck metrics, commit diff files and commit hashes list of the repositories specified in the `DEFAULT_REPOSITORIES` dictionary. It is really usefull to generate the data that will be used in the `metrics_changes.py` script.
+
+##### Configuration
+
+In order to run this code as you want, you must modify the following constants:
+
 1. `VERBOSE`: If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`. If not, then a more clean output will be shown, with only the progress bar of the script execution, which is the default value of the `VERBOSE` constant.
 2. `DEFAULT_REPOSITORIES` dictionary in the `code_metrics.py` file, in which you must specify the repository name and the repository url. 
 3. `ITERATIONS_DURATION` constant, which represents a simbolic time duration of the iterations of the `code_metrics.py` script for each repository. It is used to calculate the estimated time of the script execution. If you don't know, just kinda ignore it, but be aware that the bigger the repository is, the longer it will take to execute the script.
+
+##### Run
+
+Now that you have set the constants, you can run the following command to execute the `code_metrics.py` file:
 ```
 make code_metrics_script
 ```
 
-Great now that you have set the constants, you can run the `code_metrics.py` file. The following steps will be executed by the `code_metrics.py` file:
+##### Workflow
 
 1. As for every file in this project, the first thing it will do is verify if you don't have whitespaces in the path of the project, if you have, it will not work.  
 2. Next, it will also verify if the `ck` file exists in the `FULL_CK_JAR_PATH` directory.
