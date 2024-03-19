@@ -16,29 +16,29 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 </div> 
 
 - [Refactoring Miner. ](#refactoring-miner-)
-    - [Important Notes:](#important-notes)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
+  - [Important Notes](#important-notes)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
     - [Requirements and Setup](#requirements-and-setup)
-- [Usage](#usage)
-  - [Repositories Refactors](#repositories-refactors)
-  - [Metrics Evolution Refactors](#metrics-evolution-refactors)
-  - [Cleaning Up](#cleaning-up)
-- [Workflow](#workflow)
-- [Python Scripts](#python-scripts)
-  - [Metrics Evolution Refactors](#metrics-evolution-refactors-1)
-  - [Repositories Refactors](#repositories-refactors-1)
-- [RefactoringMiner JSON Output](#refactoringminer-json-output)
-- [Troubleshooting](#troubleshooting)
-  - [Contributing:](#contributing)
-  - [License:](#license)
+  - [Usage](#usage)
+    - [Repositories Refactors](#repositories-refactors)
+    - [Metrics Evolution Refactors](#metrics-evolution-refactors)
+    - [Cleaning Up](#cleaning-up)
+  - [Workflow](#workflow)
+  - [Python Scripts](#python-scripts)
+    - [Metrics Evolution Refactors](#metrics-evolution-refactors-1)
+    - [Repositories Refactors](#repositories-refactors-1)
+    - [RefactoringMiner JSON Output](#refactoringminer-json-output)
+  - [Troubleshooting](#troubleshooting)
+  - [Contributing](#contributing)
+  - [License](#license)
 
-### Important Notes:
+## Important Notes
 - Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 - All of the Scripts have a `VERBOSE` constant, which is set to `False` by default, so it will only print the progress bar of the script execution. If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`.
 - All of the Scripts have a `Makefile`that handles virtual environment creation, dependencies installation and script execution. You can run the scripts by using the `make` command, as shown in the `How to use` section.
 
-# Prerequisites
+## Prerequisites
 
 Before using this script, ensure you have the following prerequisites installed:
 - Python 3.x
@@ -51,7 +51,7 @@ Before using this script, ensure you have the following prerequisites installed:
 - Scikit-learn library (included in the project)
 - TQDM library (included in the project)
 
-# Installation
+## Installation
 
 To install and set up the required environment for the script, follow these steps:
 
@@ -87,9 +87,9 @@ To install and set up the required environment for the script, follow these step
      - Initializes a new virtual environment by running `python3 -m venv venv`.
      - Installs the project's dependencies within the virtual environment using `pip` based on the `requirements.txt` file.
 
-# Usage
+## Usage
 
-## Repositories Refactors
+### Repositories Refactors
 
 To use the script for repositories refactor analysis, follow these steps:
 
@@ -101,7 +101,7 @@ To use the script for repositories refactor analysis, follow these steps:
   make repositories_refactors_script
   ```
 
-## Metrics Evolution Refactors
+### Metrics Evolution Refactors
 
 In order to use the script for the analysis of the metrics evolution of a class or method, follow these steps:
 
@@ -117,7 +117,7 @@ In order to use the script for the analysis of the metrics evolution of a class 
 
 **Running Scripts:** The `makefile` handles for each of the python code to run with the virtual environment's Python interpreter. So, this ensures that the script runs using the Python interpreter and packages installed in the `venv` directory.
 
-## Cleaning Up
+### Cleaning Up
 
 To clean your project directory from the virtual environment and Python cache files, use the `clean` rule defined in the `makefile`:
 ```shell
@@ -127,7 +127,7 @@ This command removes the `venv` directory and deletes all compiled Python files 
 
 By following these instructions, you'll ensure that all project dependencies are correctly managed and isolated, leading to a more stable and consistent development environment.
 
-# Workflow
+## Workflow
 
 Here's a brief overview of how the script works:
 
@@ -141,11 +141,11 @@ Here's a brief overview of how the script works:
 
 5. Refactoring data is stored in JSON files in the `json_files` directory.
 
-# Python Scripts
+## Python Scripts
 
 In this section, we provide explanations for each function in the provided Python script and introduce RefactoringMiner, an essential tool used by the script.
 
-## Metrics Evolution Refactors
+### Metrics Evolution Refactors
 Before running the script, be sure to modify the following variables to suit your needs:  
 `DESIRED_REFACTORING_TYPES` - The refactoring types to be analyzed. Must names of the refactorings detected by RefactoringMiner. See more [here](https://github.com/tsantalis/RefactoringMiner#general-info).  
 `DEFAULT_REPOSITORY` - The default repository to clone or update. Must be a value that is in the DEFAULT_REPOSITORIES dictionary.  
@@ -160,7 +160,7 @@ Before running the script, be sure to modify the following variables to suit you
         2. Lastly, it calls the `filter_json_file(classname, json_filepath, json_filtered_filepath)` that will read the generated json file and filter the refactorings by the `DESIRED_REFACTORING_TYPES` variable and save the filtered refactorings in the `json_files` directory.
 4. Lastly, it will output the execution time of the script.
 
-## Repositories Refactors
+### Repositories Refactors
 Before running the script, be sure to modify the following variables to suit your needs:  
 `DEFAULT_REPOSITORIES` - The repositories to be analyzed. Must be a dictionary with the name of the repository as the key and the URL of the repository as the value.  
 `COMMITS_NUMBER` - The number of commits that the corresponding repository have. It is useful for calculing the estimated time of the script.  
@@ -175,11 +175,11 @@ Before running the script, be sure to modify the following variables to suit you
    3. After that, the thread will generate the refactorings for each of the commits in the repository using the `-a` parameter of the `RefactoringMiner` tool and save the output in the `json_files` directory.
 5. Lastly, it will output the execution time of the script.
 
-# RefactoringMiner JSON Output
+### RefactoringMiner JSON Output
 
 The script generates JSON files containing refactoring data for commits in the specified classes or methods of the repository. These files are organized in the `json_files` directory, following the repository's structure.
 
-# Troubleshooting
+## Troubleshooting
 
 If you encounter any issues while using the script, consider the following:
 
@@ -194,11 +194,11 @@ If you encounter any issues while using the script, consider the following:
   Scientific-Research/PyDriller/metrics_evolution
   ```
 
-## Contributing:
+## Contributing
 Feel free to contribute to this project, as it is open source and i'll be glad to accept your pull request.  
 If you encounter any unexpected errors or issues, feel free to open an issue in this repository.
 If you have any questions, feel free to contact me at any of my Social Networks in my [GitHub Profile](https://github.com/BrenoFariasdaSilva).
 
-## License:
+## License
 
 This project is licensed under the [Apache License 2.0](../LICENSE). This license permits use, modification, distribution, and sublicense of the code for both private and commercial purposes, provided that the original copyright notice and a disclaimer of warranty are included in all copies or substantial portions of the software. It also requires a clear attribution back to the original author(s) of the repository. For more details, see the [LICENSE](../LICENSE) file in this repository.

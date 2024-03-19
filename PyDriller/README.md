@@ -15,33 +15,33 @@ Welcome to the PyDriller folder, in which you will find the scripts used to gene
 </div>
 
 - [PyDriller.  ](#pydriller--)
-    - [Important Notes:](#important-notes)
-  - [Installation:](#installation)
+  - [Important Notes](#important-notes)
+  - [Installation](#installation)
     - [Requirements and Setup](#requirements-and-setup)
     - [Cleaning Up](#cleaning-up)
-  - [How to use:](#how-to-use)
-    - [Main Scripts:](#main-scripts)
+  - [How to use](#how-to-use)
+    - [Main Scripts](#main-scripts)
       - [Code\_Metrics](#code_metrics)
       - [Metrics\_Changes](#metrics_changes)
-    - [Auxiliar Scripts:](#auxiliar-scripts)
+    - [Auxiliar Scripts](#auxiliar-scripts)
       - [Empty Folders](#empty-folders)
       - [Extract Zip Files](#extract-zip-files)
       - [Generate Short Zip Files](#generate-short-zip-files)
       - [Generate Zip Files](#generate-zip-files)
       - [Move Extracted Files](#move-extracted-files)
-      - [Track Files:](#track-files)
-  - [Dependencies:](#dependencies)
-  - [Contributing:](#contributing)
+      - [Track Files](#track-files)
+  - [Dependencies](#dependencies)
+  - [Contributing](#contributing)
   - [License:](#license)
 
-### Important Notes:
+## Important Notes
 - Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 - All of the Scripts have a `VERBOSE` constant, which is set to `False` by default, so it will only print the progress bar of the script execution. If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`.
 - All of the Scripts have a `Makefile`that handles virtual environment creation, dependencies installation and script execution. You can run the scripts by using the `make` command, as shown in the `How to use` section.
 - The execution of this scripts will take a long time and store a lot of data, so make sure you have enough space in your disk and be patient. Example: Running all the scrips only for `Apache Kafka` generates a total of 115 GB of data.
 - Why is `metrics_changes.py` not parallelized? Because, for example, for running for `Apache Kafka` it uses so much CPU and RAM that it crashed in my Ryzen 7 3800X with 32GB of RAM and there is also a lot of I/O to the disk. I tried creating a thread for process each repository, just like i did for `code_metrics.py`, but most of the times it just crashes after a minute running. Talking about the `code_metrics.py`, the most performance i could take from it was, as said, to create a thread to process each repository, therefore it isn't possible to parallelize inside the processing of the repository, as the result of the iteration number `x` depends on the result since the `first iteration until x-1`. If you want to parallelize something in order to improve performance, feel free to do it, i'll be glad aproving your pull request. Also, if the `code_metrics.py` crashes in the middle of the execution, you can just run it again, as it will verify if the ck metrics are already calculated and where it stopped, so it will continue from where it stopped.
 
-## Installation:
+## Installation
 You need to install python3. If you are using Linux, you (must likely) can install it by just running the following commands:
 ```
 sudo apt install python3 -y
@@ -90,8 +90,8 @@ This command removes the `venv` directory and deletes all compiled Python files 
 
 By following these instructions, you'll ensure that all project dependencies are correctly managed and isolated, leading to a more stable and consistent development environment.
 	
-## How to use: 
-### Main Scripts:
+## How to use 
+### Main Scripts
 #### Code_Metrics
 To run this code as you want, you must modify the following constants:
 1. `VERBOSE`: If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`. If not, then a more clean output will be shown, with only the progress bar of the script execution, which is the default value of the `VERBOSE` constant.
@@ -166,7 +166,7 @@ make metrics_changes_script
 11. Finally, the main function will call the `sort_csv_by_percentual_variation(repository_name)` function to sort the substantial changes csv file named as `{FULL_METRICS_STATISTICS_DIRECTORY_PATH}/{repository_name}/{SUBSTANTIAL_CHANGES_FILENAME}` by the `Percentual Variation` column, which is the percentual variation of the metrics values.  
 12. After all the processing is done, the `metrics_changes.py` script will output the elapsed execution time and play a sound to notify you that the script has finished.
 
-### Auxiliar Scripts:
+### Auxiliar Scripts
 There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
 
 #### Empty Folders
@@ -224,7 +224,7 @@ In order to execute it, you don't need to modify any constant, so you can just r
 make move_extracted_files_script
 ```
 
-#### Track Files:
+#### Track Files
 This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant and write the list of found files to a txt file in `/PyDriller/metrics_data/repository_name/track_files_list.txt`. 
 
 In order to execute it, you must modify the following constants:
@@ -235,7 +235,7 @@ In order to execute it, you must modify the following constants:
 make track_files_script
 ```
 
-## Dependencies:
+## Dependencies
 This project depends on the following libraries:
 - [PyDriller](https://pydriller.readthedocs.io/en/latest/) -> PyDriller is the core of this project, as it is used to traverse the commits tree of the repositories and get many informations about it, like the commit hash, commit message, commit date and many other things.
 - [MatPlotLib](https://matplotlib.org/) -> MatPlotLib is used to generate the graphics of the metrics evolution and the linear prediction.
@@ -244,7 +244,7 @@ This project depends on the following libraries:
 - [SciKit-Learn](https://scikit-learn.org/stable/) -> SciKit-Learn is used to generate the linear prediction of the linear regression.
 - [TQDM](https://tqdm.github.io/) -> TQDM is used to show the progress bar of the scripts.
 
-## Contributing:
+## Contributing
 Feel free to contribute to this project, as it is open source and i'll be glad to accept your pull request.  
 If you have any questions, feel free to contact me at any of my Social Networks in my [GitHub Profile](https://github.com/BrenoFariasdaSilva).
 
