@@ -169,7 +169,11 @@ make metrics_changes_script
 There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
 
 #### Empty Folders
-This script is used to verify if there are empty folders inside a specified directory. It is really usefull to make sure your files where processed or extracted correctly. To execute it, you must run the following command:
+This script is used to verify if there are empty folders inside a specified directory. It is really usefull to make sure your files where processed or extracted correctly. 
+To run this code as you want, you must modify the following constants:
+1. `VERBOSE`: If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`. If not, then a more clean output will be shown, with only the progress bar of the script execution, which is the default value of the `VERBOSE` constant.
+
+Now that you have set the constants, you can run the following command to execute the following command:
 ```
 make empty_folders_script
 ```
