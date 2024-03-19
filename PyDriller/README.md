@@ -204,7 +204,13 @@ make generate_short_zip_files_script
 ```
 
 #### Generate Zip Files
-This script is used to generate the zip files of the repositories. As mentioned in the script above, tt is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using this script. To execute it, you must run the following command:
+This script is used to generate the zip files of the repositories. As mentioned in the script above, tt is really usefull as i didn't want to reprocess the files, so i just packed them in zip files using the `generateZipFiles.sh`.
+
+In order to execute it, you must modify the following constants:
+1. `repositories`: This constant is used to specify the names of the repositories that you want to generate the zip files.
+2. `subfolders`: This constant is used to specify the subfolders that you want to generate the zip files. For example, if you want to generate the zip files of the `diffs`, `metrics_data`, `metrics_evolution`, `metrics_predictions`, `metrics_statistics` and `repositories` subfolders, you must add them to the `subfolders` list.
+
+Now that you have set the constants, you can run the following command to execute the following command:
 ```
 make generate_zip_files_script
 ```
