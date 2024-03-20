@@ -17,13 +17,12 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 
 - [Refactoring Miner. ](#refactoring-miner-)
   - [Important Notes](#important-notes)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-    - [Requirements and Setup](#requirements-and-setup)
+    - [Requirements](#requirements)
+    - [Cleaning Up](#cleaning-up)
   - [Usage](#usage)
     - [Repositories Refactors](#repositories-refactors)
     - [Metrics Evolution Refactors](#metrics-evolution-refactors)
-    - [Cleaning Up](#cleaning-up)
+    - [Cleaning Up](#cleaning-up-1)
   - [Workflow](#workflow)
   - [Python Scripts](#python-scripts)
     - [Metrics Evolution Refactors](#metrics-evolution-refactors-1)
@@ -38,54 +37,58 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 - All of the Scripts have a `VERBOSE` constant, which is set to `False` by default, so it will only print the progress bar of the script execution. If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`.
 - All of the Scripts have a `Makefile`that handles virtual environment creation, dependencies installation and script execution. You can run the scripts by using the `make` command, as shown in the `How to use` section.
 
-## Prerequisites
+### Requirements
 
-Before using this script, ensure you have the following prerequisites installed:
-- Python 3.x
-- Git
-- AtExit library (included in the project)
-- Colorama library (included in the project)
-- RefactoringMiner tool (included in the project)
-- Pandas library (included in the project)
-- PyDriller library (included in the project)
-- Scikit-learn library (included in the project)
-- TQDM library (included in the project)
+This project depends on the following libraries:
 
-## Installation
+- [NumPy](https://numpy.org/) -> NumPy is used to generate the linear prediction of the linear regression and to many operations in the list of the metrics.
+- [Pandas](https://pandas.pydata.org/) -> Pandas is used maintly to read and write the csv files.
+- [TQDM](https://tqdm.github.io/) -> TQDM is used to show the progress bar of the scripts.
 
-To install and set up the required environment for the script, follow these steps:
+Futhermore, this project requires a virtual environment to ensure all dependencies are installed and managed in an isolated manner. A virtual environment is a self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages. Using a virtual environment helps avoid conflicts between project dependencies and system-wide Python packages. 
 
-1. **Clone this repository to your local machine:**
-   ```shell
-   git clone https://github.com/BrenoFariasdaSilva/Scientific-Research
-   ```
+To set up and use a virtual environment for this project, we leverage Python's built-in `venv` module. The `makefile` included with the project automates the process of creating a virtual environment, installing the necessary dependencies, and running scripts within this environment.
 
-2. **Navigate to the `RefactoringMiner` directory:**
-   ```shell
-   cd Scientific-Research/RefactoringMiner
-   ```
+Follow these steps to prepare your environment:
 
-3. **Install the necessary Python libraries using pip:**
+1. **Create and Activate the Virtual Environment:** 
+   
+   The project uses a `makefile` to streamline the creation and activation of a virtual environment named `venv`. This environment is where all required packages, such as `numpy`, `pandas` and `tqdm`, will be installed.
+This will also be handled by the `Makefile` during the dependencies installation process, so no command must be executed in order to create the virtual environment.
 
-   This project uses a virtual environment for dependency management to avoid conflicts and ensure reproducibility. Here’s how to set it up:
+1. **Install Dependencies:** 
+   
+   Run the following command to set up the virtual environment and install all necessary dependencies on it:
 
-   ### Requirements and Setup
+      ```
+      make dependencies
+      ```
 
-   This project requires a virtual environment to ensure all dependencies are installed and managed in an isolated manner. A virtual environment is a self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages. Using a virtual environment helps avoid conflicts between project dependencies and system-wide Python packages.
+   This command performs the following actions:
+   - Initializes a new virtual environment by running `python3 -m venv venv`.
+   - Installs the project's dependencies within the virtual environment using `pip` based on the `requirements.txt` file. The `requirements.txt` file contains a list of all required packages and their versions. This is the recommended way to manage dependencies in Python projects, as it allows for consistent and reproducible installations across different environments.
 
-   To set up and use a virtual environment for this project, we leverage Python's built-in `venv` module. The `makefile` included with the project automates the process of creating a virtual environment, installing the necessary dependencies, and running scripts within this environment.
+3. **Running Scripts:**
+   
+   The `makefile` also defines commands to run every script with the virtual environment's Python interpreter. For example, to run the `repositories_refactors.py` file, use:
 
-   Follow these steps to prepare your environment:
+  ```
+  make repositories_refactors_script
+  ```
 
-   - **Create and Activate the Virtual Environment:** The project uses a `makefile` to streamline the creation and activation of a virtual environment named `venv`. This environment is where all required packages, such as `colorama`, `pandas`, `pydriller`, `scikit-learn`, and `tqdm`, will be installed.
+  This ensures that the script runs using the Python interpreter and packages installed in the `venv` directory.
 
-   - **Install Dependencies:** Run the following command to set up the virtual environment and install all necessary dependencies:
-     ```shell
-     make dependencies
-     ```
-     This command performs the following actions:
-     - Initializes a new virtual environment by running `python3 -m venv venv`.
-     - Installs the project's dependencies within the virtual environment using `pip` based on the `requirements.txt` file.
+### Cleaning Up
+
+To clean your project directory from the virtual environment and Python cache files, use the `clean` rule defined in the `makefile`:
+
+```
+make clean
+```
+
+This command removes the `venv` directory and deletes all compiled Python files in the project directory, helping maintain a clean workspace.
+
+By following these instructions, you'll ensure that all project dependencies are correctly managed and isolated, leading to a more stable and consistent development environment.
 
 ## Usage
 
