@@ -108,6 +108,7 @@ Great, you now have python3 and pip installed. Now, we need to install the proje
 ### Requirements
 
 This project depends on the following libraries:
+
 - [PyDriller](https://pydriller.readthedocs.io/en/latest/) -> PyDriller is the core of this project, as it is used to traverse the commits tree of the repositories and get many informations about it, like the commit hash, commit message, commit date and many other things.
 - [MatPlotLib](https://matplotlib.org/) -> MatPlotLib is used to generate the graphics of the metrics evolution and the linear prediction.
 - [NumPy](https://numpy.org/) -> NumPy is used to generate the linear prediction of the linear regression and to many operations in the list of the metrics.
@@ -121,10 +122,14 @@ To set up and use a virtual environment for this project, we leverage Python's b
 
 Follow these steps to prepare your environment:
 
-1. **Create and Activate the Virtual Environment:** The project uses a `makefile` to streamline the creation and activation of a virtual environment named `venv`. This environment is where all required packages, such as `matplotlib`, `numpy`, `pandas`, `pydriller`, `scikit-learn` and `tqdm`, will be installed.
+1. **Create and Activate the Virtual Environment:** 
+   
+   The project uses a `makefile` to streamline the creation and activation of a virtual environment named `venv`. This environment is where all required packages, such as `matplotlib`, `numpy`, `pandas`, `pydriller`, `scikit-learn` and `tqdm`, will be installed.
 This will also be handled by the `Makefile` during the dependencies installation process, so no command must be executed in order to create the virtual environment.
 
-1. **Install Dependencies:** Run the following command to set up the virtual environment and install all necessary dependencies on it:
+1. **Install Dependencies:** 
+   
+   Run the following command to set up the virtual environment and install all necessary dependencies on it:
 
     ```
     make dependencies
@@ -134,7 +139,9 @@ This will also be handled by the `Makefile` during the dependencies installation
   - Initializes a new virtual environment by running `python3 -m venv venv`.
   - Installs the project's dependencies within the virtual environment using `pip` based on the `requirements.txt` file.
 
-3. **Running Scripts:** The `makefile` also defines commands to run every script with the virtual environment's Python interpreter. For example, to run the `code_metrics.py` file, use:
+1. **Running Scripts:**
+   
+   The `makefile` also defines commands to run every script with the virtual environment's Python interpreter. For example, to run the `code_metrics.py` file, use:
 
   ```
   make code_metrics_script
@@ -171,6 +178,7 @@ In order to run this code as you want, you must modify the following constants:
 ##### Run
 
 Now that you have set the constants, you can run the following command to execute the `code_metrics.py` file:
+
 ```
 make code_metrics_script
 ```
@@ -181,15 +189,18 @@ make code_metrics_script
 2. Next, it will also verify if the `ck` jar file exists in the `FULL_CK_JAR_PATH` directory.
 3. Now, it calls `process_repositories_in_parallel()` which will create a thread for each of the repositories inside the `DEFAULT_REPOSITORIES` dictionary and process it's ck metrics and save each commit file diff. Each thread has as it's target the `process_repository(repository_name, repository_url)` function.
 4. Inside the `process_repository(repository_name, repository_url)` function, the `verify_ck_metrics_folder(repository_name)` function is called to verify if the ck metrics are already calculated. That verification is done by:
+   
    1. Verifying if the repository commits list csv file exists inside the `CK_METRICS_DIRECTORY_PATH` directory, which should be named as `repository_name-commits_list.csv`, for example: `commons-lang-commits_list.csv`;
    2. If the csv file exists, it will, for every commit hash in the csv file, verify if there is a subdirectory inside the `CK_METRICS_DIRECTORY_PATH/repository_name` directory, which should be named as `commit_hash` and contains all the ck metrics generated files, which are defined in the `CK_METRICS_FILES` constant;  
    
    If any of those verifications are false, it stops executing, due to the fact that the ck metrics weren't calculated. If not, it will continue executing until the end and return true, meaning that the ck metrics are already calculated.
+
 5. Now, as the ck metrics are not calculated, it will call `create_directory(absolute path, relative_path)` three times: for the `FULL_CK_METRICS_DIRECTORY_PATH`, `FULL_PROGRESS_DIRECTORY_PATH`, and `FULL_REPOSITORIES_DIRECTORY_PATH`, respectively. This function is used to create the output directories for the ck metrics, progress and repositories.
 6.  With all the subfolders created, we must call `clone_repository(repository_name, repository_url)` function, which will clone the repository to the `FULL_REPOSITORY_DIRECTORY_PATH` directory.
 7. In this step, we must calculate the number of commit in the current repository in order to be able to call the `traverse_repository(repository_name, repository_url, number_of_commits)` function.
 8. As now we have the repository cloned, we must call `traverse_repository` function. In this function, we call the `get_last_execution_progress(repository_name, saved_progress_file, number_of_commits)` function, as it will read the progress file and return the commits_info and last commit hash that was processed. With that information, the loop for traversing the repository commit tree, we can jump to where the last execution stopped and resume the execution.
-9. With that in mind, we use the `PyDriller` library to traverse the repository commits tree with the use of `PyDriller.traverse_commits()` to go through all the commit hashes of the repository and do the following for each commit in the repository: 
+9.  With that in mind, we use the `PyDriller` library to traverse the repository commits tree with the use of `PyDriller.traverse_commits()` to go through all the commit hashes of the repository and do the following for each commit in the repository: 
+    
    1. Get the tuple containing the `commit.hash`, `commit.msg` and `commit.committer_date` and append those commit's data in the `commits_info` list, in order to, later on, store them inside the `CK_METRICS_DIRECTORY_PATH/repository_name-commit_hashes.csv` file;  
    2. Call `generate_diffs(repository_name, commit, commit_number)`, which will fo through all the modified files of the current commit and store the diffs of the files in the `{START_PATH}{RELATIVE_DIFFS_DIRECTORY_PATH}/{repository_name}/{commit_number}-{commit.hash}/` directory;
    3. Now it must change the working directory to the `{FULL_REPOSITORIES_DIRECTORY_PATH}/{repository_name}` directory.
@@ -197,6 +208,7 @@ make code_metrics_script
    5. Create a subfolder inside the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name` named as `commit_number-commit.hash`;  
    6. Now it changes the working directory again to the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit_number-commit.hash` directory, which is the output for the execution of the `ck` command for the current `commit.hash`;
    7. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_CK_METRICS_DIRECTORY_PATH/repository_name/commit_number-commit.hash` directory;
+    
 10. Now that we have the list of tuples containing the commit hashes, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commits_list.csv` file by calling the `write_commits_information_to_csv` function.
 11. And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
 12. After everything is done, the `code_metrics.py` script will be done and play a sound to notify you that the script has finished.
@@ -224,6 +236,7 @@ In order to run this code as you want, you must modify the following constants:
 ##### Run
 
 Considering that you now have the ck metrics calculated and the constants set, you are able to run the following command to execute the `metrics_changes.py` file:
+
 ```
 make metrics_changes_script
 ```
@@ -256,6 +269,7 @@ make metrics_changes_script
 8. In this step, we must sort the `metrics_track_record` dictionary by the `commit_number`, which indicates the order of the commits. This is done by calling the `sort_commit_hashes_by_commit_number` function. 
 9. Now its time to write those `sorted_metrics_track_record` to the `metrics_data` directory with the call of the `write_metrics_track_record_to_txt` function.  This function will basically write the values of the `sorted_metrics_track_record` dictionary to the `{FULL_METRICS_DATA_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class_name}__track_record.txt` file. This file ain't much useful, but it tries to write the values of the `sorted_metrics_track_record` dictionary in a more human readable way, so it can be used to better understand the complex structure of the `sorted_metrics_track_record` dictionary.
 10. In this step, we must call the `write_metrics_evolution_to_csv` function. This function will, for each class or method in the repository, write it's values inside the `sorted_metrics_track_record` dictionary to the `{FULL_METRICS_EVOLUTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class_name}/{variable_attribute}{CSV_FILE_EXTENSION}` csv file and, at the end of each iteration, call the `linear_regression_graphics(metrics, class_name, variable_attribute, repository_name)` function to generate the linear regression graphics for that same class or method. The `linear_regression_graphics` function does the following:
+    
     1.  It verifies if the metrics list ain't empty, if it is, it will not generate the linear regression graphics.
     2.  Then, it verifies if the values inside the metrics list are valid, that is, if they aren't `NaN` or `Infinity`. If they are, it will not generate the linear regression graphics.
     3.  Now, it loops through the `metrics` list and, for each metric, it will generate the linear regression graphics and store it in the `{FULL_METRICS_EVOLUTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class_name}/{variable_attribute}{CSV_FILE_EXTENSION}` csv file. In this step, many other important things are done, such as:
@@ -289,6 +303,7 @@ In order to run this code as you want, you must modify the following constants:
 ##### Run
 
 Now that you have set the constants, you can run the following command to execute the following command:
+
 ```
 make empty_folders_script
 ```
@@ -351,6 +366,7 @@ In order to execute it, you must modify the following constants:
 ##### Run
 
 Now that you have set the constants, you can run the following command to execute the following command:
+
 ```
 make generate_short_zip_files_script
 ```
@@ -387,6 +403,7 @@ In order to execute it, you must modify the following constants:
 ##### Run
 
 Now that you have set the constants, you can run the following command to execute the following command:
+
 ```
 make generate_zip_files_script
 ```
@@ -470,21 +487,29 @@ make track_files_script
 
 The outputs of the scripts are stored in the `PyDriller/` directory, which are the following:
 
-1. `ck_metrics`: This directory contains the ck metrics for each commit of the repositories, which are stored in the `./ck_metrics/repository_name/commit_number-commit_hash` directory. Each `commit_number-commit_hash` directory contains the `class.csv` and `method.csv` files, which contains the ck metrics of the classes and methods of the repository for the specified commit hash. The `ck_metrics` directory also contains the `repository_name-commits_list.csv` file, which contains the list of the commit hashes, commit messages and commit dates of the repository.
+1. **ck_metrics**:  
+   This directory contains the ck metrics for each commit of the repositories, which are stored in the `./ck_metrics/repository_name/commit_number-commit_hash` directory. Each `commit_number-commit_hash` directory contains the `class.csv` and `method.csv` files, which contains the ck metrics of the classes and methods of the repository for the specified commit hash. The `ck_metrics` directory also contains the `repository_name-commits_list.csv` file, which contains the list of the commit hashes, commit messages and commit dates of the repository.
 
-2. `diffs`: This directory contains the diffs of the repositories, which are stored in the `./diffs/repository_name/commit_number-commit_hash` directory. The `commit_number-commit_hash` directory contains the diffs of the files of the repository for the specified commit hash.
+2. **diffs**:  
+   This directory contains the diffs of the repositories, which are stored in the `./diffs/repository_name/commit_number-commit_hash` directory. The `commit_number-commit_hash` directory contains the diffs of the files of the repository for the specified commit hash.
 
-3. `metrics_data`: This directory contains the metrics data of the repositories, which are stored in the `metrics_data/repository_name` directory. The `repository_name` directory contains the `classes_track_record.txt` and/or `methods_track_record` files, which contains the data structure of the `metrics_track_record` dictionary, which contains the metrics evolution of the classes and methods of the repository.
+3. **metrics_data**:  
+   This directory contains the metrics data of the repositories, which are stored in the `metrics_data/repository_name` directory. The `repository_name` directory contains the `classes_track_record.txt` and/or `methods_track_record` files, which contains the data structure of the `metrics_track_record` dictionary, which contains the metrics evolution of the classes and methods of the repository.
 
-4. `metrics_evolution`: This directory contains the metrics evolution of the repositories, which are stored in the `metrics_evolution/repository_name` directory. The `repository_name` directory contains the `classes` and `methods` directories, which contains the metrics evolution of each classes and methods of the repository. In the csv file of each class or method, it contains the metrics values for each state (commit) of the repository.
+4. **metrics_evolution**:  
+   This directory contains the metrics evolution of the repositories, which are stored in the `metrics_evolution/repository_name` directory. The `repository_name` directory contains the `classes` and `methods` directories, which contains the metrics evolution of each classes and methods of the repository. In the csv file of each class or method, it contains the metrics values for each state (commit) of the repository.
 
-5. `metrics_predictions`: This directory contains the metrics predictions of the repositories, which are stored in the `metrics_predictions/repository_name` directory. The `repository_name` directory contains the `classes` and `methods` directories, which contains photos in the png file format for each of the selected metrics of the classes and methods of the repository. The photos contains the linear regression graphics of the metrics values of the classes and methods of the repository.
+5. **metrics_predictions**:  
+   This directory contains the metrics predictions of the repositories, which are stored in the `metrics_predictions/repository_name` directory. The `repository_name` directory contains the `classes` and `methods` directories, which contains photos in the png file format for each of the selected metrics of the classes and methods of the repository. The photos contains the linear regression graphics of the metrics values of the classes and methods of the repository.
 
-6. `metrics_statistics`: This directory contains the metrics statistics of the repositories, which are stored in the `metrics_statistics/repository_name` directory. The `repository_name` directory contains the `classes` and `methods` directories, which contains the metrics statistics of the classes and methods of the repository.
+6. **metrics_statistics**:  
+   This directory contains the metrics statistics of the repositories, which are stored in the `metrics_statistics/repository_name` directory. The `repository_name` directory contains the `classes` and `methods` directories, which contains the metrics statistics of the classes and methods of the repository.
 
-7. `progress`: This directory contains the progress of the files generated by the `code_metrics.py` script, which are stored in the `progress/repository_name-progress.csv` file. This file is very useful for in case of the script execution stops in the middle of the execution, as it will store the progress of the script execution, so you can continue the execution from the last commit hash that was processed.
+7. **progress**:  
+   This directory contains the progress of the files generated by the `code_metrics.py` script, which are stored in the `progress/repository_name-progress.csv` file. This file is very useful for in case of the script execution stops in the middle of the execution, as it will store the progress of the script execution, so you can continue the execution from the last commit hash that was processed.
 
-8. `repositories`: This directory contains the repositories of the repositories, which are stored in the `repositories/repository_name` directory. The `repository_name` directory contains the repository files.
+8.  **repositories**:  
+   This directory contains the repositories of the repositories, which are stored in the `repositories/repository_name` directory. The `repository_name` directory contains the repository files.
 
 ## Contributing
 
