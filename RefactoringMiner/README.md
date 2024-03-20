@@ -8,10 +8,11 @@
   
 ---
 
-Welcome to the Refactoring Miner directory, in which you will find the scripts that generates the refactoring script of an specific commit of a class or method of a repository and the script that generates the refactorings for an entire repository. . The scripts that are located in this directory are part of the Worked Example Miner (WEM) Tool.
+Welcome to the Refactoring Miner directory, in which you will find the scripts that generates the refactoring script of an specific commit of a class or method of a repository and the script that generates the refactorings for an entire repository. The scripts that are located in this directory are part of the Worked Example Miner (WEM) Tool.
 
-RefactoringMiner is a valuable tool for software maintenance and evolution analysis, helping developers and researchers understand how code evolves over time through refactorings.
-The refactorings detected by RefactoringMiner are stored in JSON files, which are then used to analyze the codebase and identify patterns and trends in the evolution of the software. This information are useful for understanding the impact of refactorings on the codebase and how they affect the software's quality and maintainability. With that in mind, in our goal of creating a worked example for the Software Engineering classes using Distributed Systems as an object of study, the Refactoring Miner refactorings helps us to identify candidate classes and methods for refactoring for the creation of the worked example.
+RefactoringMiner stands out as an instrument for the analysis of software maintenance and evolution, empowering both developers and researchers with deep insights into the dynamics of code evolution via refactorings. The tool captures refactorings, cataloging them in JSON files. These files serve as a codebase analyses, enabling the identification of significant refactoring patterns and trends that mark the software's evolutionary journey. Such insights are crucial for comprehensively understanding the ramifications of refactorings on the codebase, shedding light on their influence on the software's quality and maintainability.
+
+With our objective to craft a compelling worked example for Software Engineering classes, particularly focusing on Distributed Systems Open-Source Softwares, RefactoringMiner's capabilities become even more pronounced. It aids in pinpointing potential classes and methods ripe for refactoring, setting the stage for the development of a meticulously designed example. This not only demonstrates the practical application of refactorings but also enhances the learning experience by providing a real-world context to the theoretical concepts discussed in class.
   
 ---
 
