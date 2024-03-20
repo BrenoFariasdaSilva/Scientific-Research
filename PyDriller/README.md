@@ -8,7 +8,7 @@
   
 ---
 
-Welcome to the PyDriller folder, in which you will find the scripts used to generate the ck metrics, commit diff files, commit hashes list, metrics changes, metrics evolution, metrics statistics and linear regressions of the repositories of interest.
+Welcome to the PyDriller direcotyr, in which you will find the scripts used to generate the ck metrics, commit diff files, commit hashes list, metrics changes, metrics evolution, metrics statistics and linear regressions of the Java Open-Source Repositories of interest.
 
 ---
 
