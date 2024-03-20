@@ -178,27 +178,28 @@ make code_metrics_script
 ##### Workflow
 
 1. As for every file in this project, the first thing it will do is verify if you don't have whitespaces in the path of the project, if you have, it will not work.  
-2. Next, it will also verify if the `ck` file exists in the `FULL_CK_JAR_PATH` directory.
-3. Now, it calls `process_repositories_concurrently()` which will create a thread for each of the repositories inside the `DEFAULT_REPOSITORIES` dictionary and process it's ck metrics and save each commit file diff. Each thread has as it's target the `process_repository(repository_name, repository_url)` function.
-4. Now, the `verify_ck_metrics_folder(repository_name)` function  is called to verify if the ck metrics are already calculated. That verification is done by:
+2. Next, it will also verify if the `ck` jar file exists in the `FULL_CK_JAR_PATH` directory.
+3. Now, it calls `process_repositories_in_parallel()` which will create a thread for each of the repositories inside the `DEFAULT_REPOSITORIES` dictionary and process it's ck metrics and save each commit file diff. Each thread has as it's target the `process_repository(repository_name, repository_url)` function.
+4. Inside the `process_repository(repository_name, repository_url)` function, the `verify_ck_metrics_folder(repository_name)` function is called to verify if the ck metrics are already calculated. That verification is done by:
    1. Verifying if the repository commits list csv file exists inside the `CK_METRICS_DIRECTORY_PATH` directory, which should be named as `repository_name-commits_list.csv`, for example: `commons-lang-commits_list.csv`;
    2. If the csv file exists, it will, for every commit hash in the csv file, verify if there is a subdirectory inside the `CK_METRICS_DIRECTORY_PATH/repository_name` directory, which should be named as `commit_hash` and contains all the ck metrics generated files, which are defined in the `CK_METRICS_FILES` constant;  
    
    If any of those verifications are false, it stops executing, due to the fact that the ck metrics weren't calculated. If not, it will continue executing until the end and return true, meaning that the ck metrics are already calculated.
-5. Now, as the ck metrics are not calculated, it will call `create_directory(absolute path, relative_path)` twice, one for the `FULL_CK_METRICS_DIRECTORY_PATH` directory and another for the `FULL_REPOSITORY_DIRECTORY_PATH` directory.
+5. Now, as the ck metrics are not calculated, it will call `create_directory(absolute path, relative_path)` three times: for the `FULL_CK_METRICS_DIRECTORY_PATH`, `FULL_PROGRESS_DIRECTORY_PATH`, and `FULL_REPOSITORIES_DIRECTORY_PATH`, respectively. This function is used to create the output directories for the ck metrics, progress and repositories.
 6.  With all the subfolders created, we must call `clone_repository(repository_name, repository_url)` function, which will clone the repository to the `FULL_REPOSITORY_DIRECTORY_PATH` directory.
 7. In this step, we must calculate the number of commit in the current repository in order to be able to call the `traverse_repository(repository_name, repository_url, number_of_commits)` function.
-8. As now we have the repository cloned, we must call `traverse_repository` function, in which will loop through the repository commits tree with the use of `PyDriller.traverse_commits()` to go through all the commit hashes of the repository and do the following for each commit in the repository: 
-   1. Get the tuple containing the `commit.hash`, `commit.msg` and `commit.author_date` and append those commit's data in the `commit_hashes` list, in order to, later on, store them inside the `CK_METRICS_DIRECTORY_PATH/repository_name-commit_hashes.csv` file;  
-   2. Call `generate_diffs(repository_name, commit_hash, commit_number)`, which will fo through all the modified files of the current commit and store the diffs of the files in the `{cwd}{DEFAULT_DIFFS_DIRECTORY}/{repository_name}/{commit_number}-{commit_hash}/{modified_file.filename}{DIFF_FILE_EXTENSION}` folder;
+8. As now we have the repository cloned, we must call `traverse_repository` function. In this function, we call the `get_last_execution_progress(repository_name, saved_progress_file, number_of_commits)` function, as it will read the progress file and return the commits_info and last commit hash that was processed. With that information, the loop for traversing the repository commit tree, we can jump to where the last execution stopped and resume the execution.
+9. With that in mind, we use the `PyDriller` library to traverse the repository commits tree with the use of `PyDriller.traverse_commits()` to go through all the commit hashes of the repository and do the following for each commit in the repository: 
+   1. Get the tuple containing the `commit.hash`, `commit.msg` and `commit.committer_date` and append those commit's data in the `commits_info` list, in order to, later on, store them inside the `CK_METRICS_DIRECTORY_PATH/repository_name-commit_hashes.csv` file;  
+   2. Call `generate_diffs(repository_name, commit, commit_number)`, which will fo through all the modified files of the current commit and store the diffs of the files in the `{START_PATH}{RELATIVE_DIFFS_DIRECTORY_PATH}/{repository_name}/{commit_number}-{commit.hash}/` directory;
    3. Now it must change the working directory to the `{FULL_REPOSITORIES_DIRECTORY_PATH}/{repository_name}` directory.
    4. Checkout to the `commit.hash` branch;  
    5. Create a subfolder inside the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name` named as `commit_number-commit.hash`;  
-   6. Now it changes the working directory again to the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit_number-commit.hash` directory, which is the output for the execution of the `ck` command for the current commit.hash;
-   7. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit.hash` folder;  
-9. Now that we have the list of tuples containing the commit hashes, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commits_list.csv` file, with the call of `write_commit_hashes_to_csv` function.
-10. And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
-11. After everything is done, the `code_metrics.py` script will be done and play a sound to notify you that the script has finished.
+   6. Now it changes the working directory again to the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit_number-commit.hash` directory, which is the output for the execution of the `ck` command for the current `commit.hash`;
+   7. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit.hash` folder;
+10. Now that we have the list of tuples containing the commit hashes, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commits_list.csv` file, with the call of `write_commit_hashes_to_csv` function.
+11. And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
+12. After everything is done, the `code_metrics.py` script will be done and play a sound to notify you that the script has finished.
 
 #### Metrics_Changes
 
