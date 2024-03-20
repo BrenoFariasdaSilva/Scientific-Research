@@ -127,7 +127,7 @@ Follow these steps to prepare your environment:
    The project uses a `makefile` to streamline the creation and activation of a virtual environment named `venv`. This environment is where all required packages, such as `matplotlib`, `numpy`, `pandas`, `pydriller`, `scikit-learn` and `tqdm`, will be installed.
 This will also be handled by the `Makefile` during the dependencies installation process, so no command must be executed in order to create the virtual environment.
 
-1. **Install Dependencies:** 
+2. **Install Dependencies:** 
    
    Run the following command to set up the virtual environment and install all necessary dependencies on it:
 
@@ -137,9 +137,9 @@ This will also be handled by the `Makefile` during the dependencies installation
 
   This command performs the following actions:
   - Initializes a new virtual environment by running `python3 -m venv venv`.
-  - Installs the project's dependencies within the virtual environment using `pip` based on the `requirements.txt` file.
+  - Installs the project's dependencies within the virtual environment using `pip` based on the `requirements.txt` file. The `requirements.txt` file contains a list of all required packages and their versions. This is the recommended way to manage dependencies in Python projects, as it allows for consistent and reproducible installations across different environments.
 
-1. **Running Scripts:**
+3. **Running Scripts:**
    
    The `makefile` also defines commands to run every script with the virtual environment's Python interpreter. For example, to run the `code_metrics.py` file, use:
 
