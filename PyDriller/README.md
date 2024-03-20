@@ -197,7 +197,7 @@ make code_metrics_script
    5. Create a subfolder inside the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name` named as `commit_number-commit.hash`;  
    6. Now it changes the working directory again to the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit_number-commit.hash` directory, which is the output for the execution of the `ck` command for the current `commit.hash`;
    7. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_CK_METRICS_DIRECTORY_PATH/repository_name/commit_number-commit.hash` directory;
-10. Now that we have the list of tuples containing the commit hashes, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commits_list.csv` file by calling the `write_commits_information_to_csv function.
+10. Now that we have the list of tuples containing the commit hashes, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commits_list.csv` file by calling the `write_commits_information_to_csv` function.
 11. And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
 12. After everything is done, the `code_metrics.py` script will be done and play a sound to notify you that the script has finished.
 
