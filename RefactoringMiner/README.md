@@ -17,6 +17,11 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 
 - [Refactoring Miner. ](#refactoring-miner-)
   - [Important Notes](#important-notes)
+  - [Setup](#setup)
+    - [Python and Pip](#python-and-pip)
+      - [Linux](#linux)
+      - [MacOS](#macos)
+      - [Windows](#windows)
     - [Requirements](#requirements)
     - [Cleaning Up](#cleaning-up)
   - [Usage](#usage)
@@ -36,6 +41,43 @@ RefactoringMiner is a valuable tool for software maintenance and evolution analy
 - Make sure you don't have whitespaces in the path of the project, otherwise it will not work.
 - All of the Scripts have a `VERBOSE` constant, which is set to `False` by default, so it will only print the progress bar of the script execution. If you want to see the progress bar and the print statements, you must set the `VERBOSE` constant to `True`.
 - All of the Scripts have a `Makefile`that handles virtual environment creation, dependencies installation and script execution. You can run the scripts by using the `make` command, as shown in the `How to use` section.
+
+## Setup
+
+This section provides instructions for installing the Python Language and Pip Python package manager, as well as the project's dependencies. It also explains how to run the scripts using the provided `makefile`. The `makefile` automates the process of creating a virtual environment, installing dependencies, and running the scripts.
+
+### Python and Pip
+
+In order to run the scripts, you must have python3 and pip installed in your machine. If you don't have it installed, you can use the following commands to install it:
+
+#### Linux
+
+In order to install python3 and pip in Linux, you can use the following commands:
+
+```
+sudo apt install python3 -y
+sudo apt install python3-pip -y
+```
+
+#### MacOS
+
+In order to install python3 and pip in MacOS, you can use the following commands:
+
+```
+brew install python3
+```
+
+#### Windows
+
+In order to install python3 and pip in Windows, you can use the following commands in case you have `choco` installed:
+
+```
+choco install python3
+```
+
+Or just download the installer from the [official website](https://www.python.org/downloads/).
+
+Great, you now have python3 and pip installed. Now, we need to install the project requirements/dependencies.
 
 ### Requirements
 
