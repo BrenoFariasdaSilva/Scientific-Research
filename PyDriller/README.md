@@ -196,8 +196,8 @@ make code_metrics_script
    4. Checkout to the `commit.hash` branch;  
    5. Create a subfolder inside the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name` named as `commit_number-commit.hash`;  
    6. Now it changes the working directory again to the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit_number-commit.hash` directory, which is the output for the execution of the `ck` command for the current `commit.hash`;
-   7. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_REPOSITORY_DIRECTORY_PATH/repository_name/commit.hash` folder;
-10. Now that we have the list of tuples containing the commit hashes, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commits_list.csv` file, with the call of `write_commit_hashes_to_csv` function.
+   7. Lastly, with the call of the `run_ck_metrics_generator(cmd)` to execute the `cmd` command, which is a command defined to run ck for the current commit.hash and store the files that it generates in the `FULL_CK_METRICS_DIRECTORY_PATH/repository_name/commit_number-commit.hash` directory;
+10. Now that we have the list of tuples containing the commit hashes, commit message and commit date for each commit, we must store those values in the `CK_METRICS_DIRECTORY_PATH/repository_name-commits_list.csv` file by calling the `write_commits_information_to_csv function.
 11. And lastly, we must call `checkout_branch` function passing the `main` branch as parameter, in order to return to the main branch of the repository.
 12. After everything is done, the `code_metrics.py` script will be done and play a sound to notify you that the script has finished.
 
@@ -245,7 +245,7 @@ make metrics_changes_script
    3. Now it gets the metrics values list in the identifier position of the dictionary and verify if the current metrics combination aren't inside that metrics values list. If it ain't, it means that those metrics combination haven't appeared yet, so we can add it to the list and increment the value of times that this class or method changed. If they are in, we won't add them to the list, as those values would be repeated;  
      
    Now that the `metrics_track_record` dictionary is filled with the metrics evolution of every class or method, the `traverse_directory` function will return the `metrics_track_record` dictionary, in order for the metrics be processed to generate statistics.
-7. Now its time to write those `metrics_track_record` to the `metrics_evolution` folder with the call of the `write_metrics_track_record_to_csv` function. This function will, for each class or method in the repository, write it's values inside the `metrics_track_record` dictionary to the `{FULL_METRICS_EVOLUTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class_name}/{variable_attribute}{CSV_FILE_EXTENSION}` csv file and call the `linear_regression_graphics(metrics, class_name, variable_attribute, repository_name)` function to generate the linear regression graphics that same class or method. Inside the `linear_regression_graphics` function, it calls the `verify_substantial_metric_decrease` function for the specified metric name in the `SUBSTANTIAL_CHANGE_METRIC` constant, which will verify if the current metrics values of the current class or method had a substantial decrease, defined in the `DESIRED_DECREASED` constant. There are restrictions, for example, keywords that might be found in the class name or variable attributeIf it had any decrease equal or higher than the `DESIRED_DECREASED`, it will add the `class_name`, `variable_attribute`, `metric[i - 1]`, `metric[i]`, `percentual_variation`, `commit number` and `commit hash` to a csv file stored in the `{FULL_METRICS_STATISTICS_DIRECTORY_PATH}/{repository_name}/{SUBSTANTIAL_CHANGES_FILENAME}` file.  
+7. Now its time to write those `metrics_track_record` to the `metrics_evolution` directory with the call of the `write_metrics_track_record_to_csv` function. This function will, for each class or method in the repository, write it's values inside the `metrics_track_record` dictionary to the `{FULL_METRICS_EVOLUTION_DIRECTORY_PATH}/{repository_name}/{CLASSES_OR_METHODS}/{class_name}/{variable_attribute}{CSV_FILE_EXTENSION}` csv file and call the `linear_regression_graphics(metrics, class_name, variable_attribute, repository_name)` function to generate the linear regression graphics that same class or method. Inside the `linear_regression_graphics` function, it calls the `verify_substantial_metric_decrease` function for the specified metric name in the `SUBSTANTIAL_CHANGE_METRIC` constant, which will verify if the current metrics values of the current class or method had a substantial decrease, defined in the `DESIRED_DECREASED` constant. There are restrictions, for example, keywords that might be found in the class name or variable attributeIf it had any decrease equal or higher than the `DESIRED_DECREASED`, it will add the `class_name`, `variable_attribute`, `metric[i - 1]`, `metric[i]`, `percentual_variation`, `commit number` and `commit hash` to a csv file stored in the `{FULL_METRICS_STATISTICS_DIRECTORY_PATH}/{repository_name}/{SUBSTANTIAL_CHANGES_FILENAME}` file.  
 8. Now that we have the record of the times the metrics changed and it's values for every class or method, the main function calls the `generate_metrics_track_record_statistics(repository_name, metrics_track_record)`, which will generate the metrics statistics (`Minimum`, `Maximum`, `Average` and `Third Quartile`) for every metric (`cbo`, `wmc` and `rfc`), which allow us to have a better understanding of the metrics behavior over time. Those statistics will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` file.
 9. In this step, with those statistics generated and stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + CHANGED_METHODS_CSV_FILENAME` csv file, the main funcion call the `sort_csv_by_changes(repository_name)` function that is going to sort the lines of the metrics statistics csv file by the `Changed` column, which is the number of times the metrics changed. The top changes will be stored in the `METRICS_STATISTICS_DIRECTORY_PATH + "/" + repository_name + "-" + SORTED_CHANGED_METHODS_CSV_FILENAME` csv file.  
 10. Now, that we have the sorted csv file, the main function will call the `os.remove` to delete the old, unsorted csv file.
@@ -254,7 +254,7 @@ make metrics_changes_script
 
 ### Auxiliar Scripts
 
-There are also some auxiliar scripts, which are stored in the `Scripts/` folder, which are this ones:
+There are also some auxiliar scripts, which are stored in the `Scripts/` directory, which are this ones:
 
 #### Empty Folders
 
@@ -382,7 +382,7 @@ make generate_zip_files_script
 4. **Zip File Generation:**
    - The script iterates over each repository name in the `repositories` array.
    - For each repository, it constructs a list of paths by combining each subfolder's name with the repository name, ensuring all specified subfolders for each repository are included.
-   - It also includes a CSV file (`repository_name-commits_list.csv`) located in the `ck_metrics` folder for each repository in the list of items to zip.
+   - It also includes a CSV file (`repository_name-commits_list.csv`) located in the `ck_metrics` directory for each repository in the list of items to zip.
    - A zip file for each repository is created in the `compressed` directory, containing all specified subfolders and the commits list CSV file.
 
 5. **Sound Notification:** Upon completion of the zip file creation process, the script attempts to play a notification sound from a specified path (`./../.assets/Sounds/NotificationSound.wav`). If the sound file cannot be found, it notifies the user.
@@ -411,9 +411,9 @@ make move_extracted_files_script
 
 4. **Moving Extracted Contents:**
    - The script iterates over each name in the `extracted_folders` array.
-   - For each folder name, it first checks if the corresponding destination folder exists within the parent directory of the `compressed` folder. If a destination folder does not exist, the script creates it.
-   - Then, the script moves all items from each extracted folder inside the `compressed` directory to the respective destination folder.
-   - After successfully moving the files, it deletes the now-empty source folder within the `compressed` directory to clean up.
+   - For each directory name, it first checks if the corresponding destination directory exists within the parent directory of the `compressed` directory. If a destination directory does not exist, the script creates it.
+   - Then, the script moves all items from each extracted directory inside the `compressed` directory to the respective destination directory.
+   - After successfully moving the files, it deletes the now-empty source directory within the `compressed` directory to clean up.
 
 5. **Sound Notification:** Upon successfully organizing and cleaning up the files, the script attempts to play a notification sound. If the specified sound file cannot be found, it alerts the user about the missing file.
 
@@ -421,7 +421,7 @@ make move_extracted_files_script
 
 #### Track Files
 
-This script searches for files in the `PyDriller/diffs/` folder for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant and write the list of found files to a txt file in `/PyDriller/metrics_data/repository_name/track_files_list.txt`. 
+This script searches for files in the `PyDriller/diffs/` directory for any file defined in `TARGET_FILENAMES` constant for the repositories specified in the `REPOSITORIES` constant and write the list of found files to a txt file in `/PyDriller/metrics_data/repository_name/track_files_list.txt`. 
 
 ##### Configuration
 
