@@ -1,0 +1,3 @@
+[submodule "Worked-Example-Miner"]
+	path = Worked-Example-Miner
+	url = https://github.com/BrenoFariasdaSilva/Worked-Example-Miner.git
