@@ -12,23 +12,23 @@ jobs:
       runs-on: ubuntu-latest
 
       steps:
-      - name: Checkout repository
-         uses: actions/checkout@v3
-         with:
-            # Fetches all history for all tags and branches, including submodules
-            fetch-depth: 0
-            submodules: 'recursive'
+         - name: Checkout repository
+           uses: actions/checkout@v3
+           with:
+              # Fetches all history for all tags and branches, including submodules
+              fetch-depth: 0
+              submodules: 'recursive'
 
-      - name: Update Worked-Example-Miner submodule
-         run: |
-            cd Worked-Example-Miner
-            git pull origin main
+         - name: Update Worked-Example-Miner submodule
+           run: |
+              cd Worked-Example-Miner
+              git pull origin main
 
-      - name: Commit and push if changes are detected
-         run: |
-            git config --global user.email "breno.vicio78@gmail.com"
-            git config --global user.name "Breno Farias da Silva"
-            git add Worked-Example-Miner
-            # Exit successfully if no changes are detected
-            git commit -m "UPDATE: Automatically Updating the Worked-Example-Miner SubModule to Latest Version." || exit 0
-            git push
+         - name: Commit and push if changes are detected
+           run: |
+              git config --global user.email "breno.vicio78@gmail.com"
+              git config --global user.name "Breno Farias da Silva"
+              git add Worked-Example-Miner
+              # Exit successfully if no changes are detected
+              git commit -m "UPDATE: Automatically Updating the Worked-Example-Miner SubModule to Latest Version." || exit 0
+              git push
