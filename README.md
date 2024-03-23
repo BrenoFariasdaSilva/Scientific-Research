@@ -12,7 +12,7 @@ Welcome to my Scientific Research Repository!
 
 This repository contains code and data related to my Scientific Research project. This project is massive and complex, containing multiple tools and exploring different goals and research questions. With that in mind, each of the directories in this repository has its own `README.md` file explaining it's purpose and how it contributes to the overall research project. 
 
-The main tool is the Worked Example Miner, which is a comprehensive tool for Java repository analysis. This tool integrates CK, PyDriller, and RefactoringMiner to analyze Java repositories and generate data and metadata about the software evolution. This tool has really grown and evolved over time, and it's now a powerful tool for analyzing Java repositories, so it is now a submodule of this repository. With that in mind, you can find the Worked Example Miner repository by just opening the `Worked-Example-Miner` directory in this repository or [here](https://github.com/BrenoFariasdaSilva/Worked-Example-Miner). A Github Workflow is also available to update the submodule automatically every hour, so you don't need to worry about updating it manually, just be aware that, in order to clone this repository with the submodule, you need to use the `--recurse-submodules` flag, as explained in the [Clone](#clone) section.
+The main tool is the Worked Example Miner, which is a comprehensive tool for Java repository analysis. This tool integrates CK, PyDriller, and RefactoringMiner to analyze Java repositories and generate data and metadata about the software evolution. This tool has really grown and evolved over time, and it's now a powerful tool for analyzing Java repositories, so it is now a submodule of this repository. With that in mind, you can find the Worked Example Miner repository by just opening the `Worked-Example-Miner` directory in this repository or [here](https://github.com/BrenoFariasdaSilva/Worked-Example-Miner). A Github Workflow is also available to update the submodule automatically every hour, so you don't need to worry about updating it manually, just be aware that, in order to clone this repository with the submodule, you need to use the `--recurse-submodules` flag, as explained in the [Clone with Submodule](#clone-with-submodule) or [Clone Submodule](#clone-submodule) sections.
 The Word2Vec tool is also used to perform similarity analysis between various texts, such as code snippets and questions. This analysis aids in identifying patterns and relationships that may not be immediately evident.
 
 ---
@@ -44,7 +44,9 @@ The Word2Vec tool is also used to perform similarity analysis between various te
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Setup](#setup)
-    - [Clone](#clone)
+    - [Clone without Submodule](#clone-without-submodule)
+    - [Clone with Submodule](#clone-with-submodule)
+    - [Clone Submodule](#clone-submodule)
   - [Goals](#goals)
   - [Skills](#skills)
   - [Directories](#directories)
@@ -81,19 +83,23 @@ This repository stands as the cornerstone for the extensive code, data, and insi
 Within this repository, you'll find a wealth of resources, from detailed code analyses and data sets to insightful findings and theoretical advancements. Whether you're a researcher seeking to deepen your understanding of software evolution, a developer looking for proven practices in distributed systems, or an educator aiming to enrich your curriculum, this documentation offers valuable knowledge and tools to support your goals.
 
 ## Setup
-### Clone
+### Clone without Submodule
 
-In order to clone this repository, you can use the following command:
+In order to clone this repository without the submodule (Worked-Example-Miner), you can use the following command:
 
 ```bash
 git clone https://github.com/BrenoFariasdaSilva/Scientific-Research
 ```
 
-But keep in mind that this repository has a submodule, which is the [Worked-Example-Miner](https://github.com/BrenoFariasdaSilva/Worked-Example-Miner) repository. To clone this repository with its submodule, you can use the following command:
+### Clone with Submodule
+
+In order to clone this repository with the submodule (Worked-Example-Miner), you can use the following command:
 
 ```bash
 git clone --recurse-submodules https://github.com/BrenoFariasdaSilva/Scientific-Research.git
 ```
+
+### Clone Submodule
 
 In case you have already cloned the repository and forgot to clone the submodule, you can use the following command to clone the submodule:
 
