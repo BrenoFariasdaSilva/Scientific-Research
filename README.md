@@ -39,6 +39,8 @@ The main tool is the Worked Example Miner, which is a comprehensive tool for Jav
 - [Scientific Research ](#scientific-research-)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
+  - [Setup](#setup)
+    - [Clone](#clone)
   - [Goals](#goals)
   - [Skills](#skills)
   - [Directories](#directories)
@@ -73,6 +75,28 @@ This repository stands as the cornerstone for the extensive code, data, and insi
 🎯 **Objective and Contribution:** By meticulously examining the evolution of code in distributed systems, we strive to create the Worked Example Miner tool that generates data and metadatas about the software evolution and identify trends of how those repositories evolved over time. This work promises to enrich the field of software engineering with valuable insights and try to create worked examples that can improve coding practices, enhance software quality, and ultimately, drive the advancement of distributed systems technology.
 
 Within this repository, you'll find a wealth of resources, from detailed code analyses and data sets to insightful findings and theoretical advancements. Whether you're a researcher seeking to deepen your understanding of software evolution, a developer looking for proven practices in distributed systems, or an educator aiming to enrich your curriculum, this documentation offers valuable knowledge and tools to support your goals.
+
+## Setup
+### Clone
+
+In order to clone this repository, you can use the following command:
+
+```bash
+git clone https://github.com/BrenoFariasdaSilva/Scientific-Research
+```
+
+But keep in mind that this repository has a submodule, which is the [Worked-Example-Miner](https://github.com/BrenoFariasdaSilva/Worked-Example-Miner) repository. To clone this repository with its submodule, you can use the following command:
+
+```bash
+git clone --recurse-submodules https://github.com/BrenoFariasdaSilva/Scientific-Research.git
+```
+
+In case you have already cloned the repository and forgot to clone the submodule, you can use the following command to clone the submodule:
+
+```bash
+git submodule init
+git submodule update
+```
 
 ## Goals
 
