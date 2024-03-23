@@ -20,6 +20,7 @@ The main tool is the Worked Example Miner, which is a comprehensive tool for Jav
 
 <div align="center">
 
+![GitHub Build/WorkFlow](https://img.shields.io/github/actions/workflow/status/BrenoFariasDaSilva/Scientific-Research/update-submodule.yml)
 ![GitHub Code Size in Bytes](https://img.shields.io/github/languages/code-size/BrenoFariasdaSilva/Scientific-Research)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Scientific-Research)
 ![GitHub Forks](https://img.shields.io/github/forks/BrenoFariasDaSilva/Scientific-Research)
