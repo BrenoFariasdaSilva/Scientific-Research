@@ -308,14 +308,6 @@ We thank the following people who contributed to this project:
         </sub>
       </a>
     </td>
-    <td align="center">
-      <a href="#" title="Marco Aurélio Graciotto Silva">
-        <img src="https://github.com/BrenoFariasdaSilva/Scientific-Research/blob/main/.assets/Images/Github.svg" width="100px;" alt="Profile Picture"/><br>
-        <sub>
-          <b><a href="https://github.com/MAGSilva">Marco Aurélio Graciotto Silva</a></b>
-        </sub>
-      </a>
-    </td>
   </tr>
 </table>
 
