@@ -21,17 +21,17 @@ jobs:
           fetch-depth: 0
           submodules: 'recursive'
 
-      - name: Configure git to handle divergences
+      - name: Configure git settings
         run: |
           git config --global pull.rebase false
           git config --global user.email "breno.vicio78@gmail.com"
           git config --global user.name "Breno Farias da Silva"
 
-      - name: Update Worked-Example-Miner submodule
+      - name: Forcefully update Worked-Example-Miner submodule to latest
         run: |
-         cd Worked-Example-Miner
-         set -o pipefail # Ensures that the exit code is non-zero if the pull fails
-         git pull origin main || (echo "Merge conflict detected, aborting the update process." && exit 1)
+          cd Worked-Example-Miner
+          git fetch origin main
+          git reset --hard origin/main
 
       - name: Commit and push if changes are detected
         run: |
