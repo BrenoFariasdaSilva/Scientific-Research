@@ -56,14 +56,7 @@ The Word2Vec tool is also used to perform similarity analysis between various te
   - [Repositories](#repositories)
     - [Apache Commons-lang](#apache-commons-lang)
     - [JabRef](#jabref)
-  - [Methodology](#methodology)
-    - [Data Collection](#data-collection)
-    - [Code Analysis](#code-analysis)
-  - [Research Questions](#research-questions)
-  - [Proposed Approach](#proposed-approach)
-    - [Software Metrics](#software-metrics)
     - [Tools Utilized](#tools-utilized)
-  - [Conclusion](#conclusion)
   - [Contributing](#contributing)
   - [Collaborators](#collaborators)
   - [License](#license)
@@ -145,7 +138,6 @@ As a technique rooted in natural language processing, Word2Vec is applied to per
 
 As mentioned earlier, the Worked Example Miner is a comprehensive tool for Java repository analysis. This tool integrates CK, PyDriller, and RefactoringMiner to analyze Java repositories and generate data and metadata about the software evolution. This tool has really grown and evolved over time, and it's now a powerful tool for analyzing Java repositories, so it is now a submodule of this repository. With that in mind, you can find the Worked Example Miner directory documentation  [here](https://github.com/BrenoFariasdaSilva/Worked-Example-Miner?tab=readme-ov-file#directories)
 
-
 ## Repositories
 
 Our research encompasses a diverse set of open-source projects available on GitHub, chosen for their relevance and the rich insights they provide into various aspects of software development and maintenance. Below is a brief overview of each repository and its role in our study:
@@ -162,68 +154,14 @@ Our research encompasses a diverse set of open-source projects available on GitH
 
 The [Worked Example Miner](https://github.com/BrenoFariasdaSilva/Worked-Example-Miner) tool analyzes different repositories, which are the Apache Kafka and Apache ZooKeeper repositories. They are used to represent the state of the art in Distributed Systems (DS) and are expected to provide valuable insights into code evolution and quality. In order to read more about the Worked Example Miner repositories, read [here](https://github.com/BrenoFariasdaSilva/Worked-Example-Miner?tab=readme-ov-file#repositories).
 
-## Methodology
-
-This research adopts a systematic approach to explore the evolution of Distributed Systems (DS) through code metric analysis. Our methodology encompasses data collection, code analysis, and the integration of several tools and metrics to examine how code evolves in terms of complexity, quality, efficiency and in many other aspects.
-
-### Data Collection
-
-- **Repositories Selection:** We select relevant repositories that align with our research goals, focusing on projects like Apache Kafka and ZooKeeper.
-- **CK Integration:** CK tool is integrated for conducting code metric analysis on chosen commits, classes, or methods within the repositories.
-- **Mining Software Repositories:** PyDriller is utilized to navigate through the commit history, extracting essential data regarding code metrics and their evolution.
-- **Metric Evaluation:** We evaluate code metrics that generates the values of each selected metric for each state (commit) of the code. This allows us to identify trends, patterns, and changes in the code over time.
-- **Metric Visualization:** We employ Matplotlib for generating visual representations that illustrate the progression of code metrics over time.
-- **RefactoringMiner Integration:** RefactoringMiner is used to detect refactorings in the codebase that signal improvements or changes contributing to code evolution.
-
-### Code Analysis
-
-We analyze instances where code initially demonstrated suboptimal metrics but evolved positively over time. Identifying exemplary modifications sheds light on effective practices for code improvement, focusing on alterations that enhance metric scores.
-
-## Research Questions
-
-Our investigation is guided by four principal questions:
-
-1. How to identify relevant code quality metrics for analyzing DS evolution?
-2. What patterns and trends signify clear code improvement in DS?
-3. How do code improvements reflect on selected metrics and their correlation with non-functional characteristics?
-4. Which metrics and characteristics are crucial for selecting appropriate code examples for educational purposes in Software Engineering (SE)?
-
-## Proposed Approach
-
-The project aims to develop a heuristic for identifying code examples that represent quality improvements in DS. This heuristic will aid in selecting code segments for educational examples, illustrating the adaptation and evolution of DS code over time. The heuristic will focus on improvements detectable through selected metrics, using specific tools on carefully chosen open-source repositories.
-
-### Software Metrics
-
-Our analysis leverages a suite of metrics for object-oriented design as outlined in the seminal work by Chidamber and Kemerer. The study, titled "A Metrics Suite for Object Oriented Design," was published in the IEEE Transactions on Software Engineering (vol. 20, no. 6, pp. 476–493, 1994). It introduces key metrics that have become foundational in assessing and improving the design quality of object-oriented software systems. These metrics include:
-
-- **Coupling Between Object classes (CBO):** Reflects the degree of coupling by measuring the number of classes directly associated with a given class through method calls. A higher CBO value suggests higher complexity and lower flexibility, potentially leading to increased maintenance challenges. Reducing CBO over time can indicate improvements in code quality, aiming for a more modular software design that minimizes the impact of changes across the system.
-
-- **Response for a Class (RFC):** Represents the set of methods that can be executed in response to a message received by an instance of the class. A lower RFC value denotes fewer behaviors and potentially lower complexity, making the class more cohesive and easier to maintain and test.
-
-- **Weighted Methods per Class (WMC):** Calculates the sum of complexity measures of the class's methods. High WMC values may indicate complex classes with multiple responsibilities, affecting development and maintenance costs. Lower WMC values suggest a more focused and cohesive class, facilitating understanding and extension.
-
-Additionally, the CK tool offers insights into other metrics that help understand code evolution:
-
-- **Depth of Inheritance Tree (DIT):** Measures the number of ancestor classes, indicating the complexity level and the potential for side effects from changes in superclasses. A higher DIT value can imply more complex inheritance structures that may affect maintainability.
-
-- **Lack of Cohesion in Methods (LCOM):** Indicates the degree of method cohesion within a class, ranging from 0 (high cohesion) to 1 (low cohesion). Preferred low values suggest that methods within a class are closely related to each other, enhancing the class's cohesiveness.
-
-- **Number of Children (NOC):** Counts the direct subclasses of a class, with higher values hinting at greater reusability and significance within the codebase, as it implies a foundational role due to other classes' dependency on it.
-
-Collectively, these metrics provide a comprehensive view of the codebase's complexity, quality, and maintainability. They serve as essential tools for developers to refine software design and architecture effectively. It's important to note that these metrics are derived from static code analysis, which involves evaluating the source code without executing the program. This approach allows for an in-depth understanding of the code's structural and qualitative aspects, facilitating targeted improvements and ensuring a more robust, maintainable, and efficient software system.
-
-Dynamic code analysis complements our understanding by examining the code's behavior during execution. It sheds light on runtime characteristics, class communication, performance, and resource utilization, offering a holistic view of the software's operational efficiency. Despite the value of dynamic analysis, our research emphasizes static code analysis. This focus allows us to delve into the software quality's evolution within the domain of Distributed Systems (DS), providing insights into the code design changes and their impact on maintainability and reliability over time.
-
-
 ### Tools Utilized
 
-- **CK Tool:** For static code analysis in Java projects, assessing metrics related to complexity, coupling, and cohesion.
-- **RefactoringMiner:** Specializes in identifying and analyzing source code refactorings.
-- **PyDriller:** A Python library for mining software repositories, facilitating the extraction of changes, contributions, and evolution of code.
+- **Setence Bert:** Sentence-BERT is an adaptation of the BERT (Bidirectional Encoder Representations from Transformers) model, specifically optimized for sentence-level embeddings. Unlike traditional BERT that requires comparing all possible sentence pairs to find the most similar sentences, SBERT generates embeddings that are directly comparable in vector space. This means it can efficiently perform similarity analysis between sentences, making it highly effective for tasks such as semantic search, sentiment analysis, and duplicate question detection. Its ability to understand the nuanced meanings of sentences makes it a powerful tool for any application requiring deep semantic understanding.
+- **TF-IDF (Term Frequency-Inverse Document Frequency):** TF-IDF is a statistical measure used to evaluate the importance of a word within a document in relation to a collection of documents, known as a corpus. This technique is grounded in the idea that the significance of a word increases proportionally to the number of times it appears in the document but is offset by its frequency in the corpus. TF-IDF is instrumental in performing similarity analysis between texts by identifying which words are most distinguishing between them. It's widely used in document classification, search engine optimization (SEO), and information retrieval systems to rank the relevance of documents and texts.
+- **Yake (Yet Another Keyword Extractor):** YAKE is an unsupervised, lightweight, and efficient algorithm designed for automatic keyword extraction from individual documents. Unlike other keyword extraction methods that rely on large corpora or deep linguistic knowledge, YAKE focuses on statistical features from the text itself, such as word frequency, position, and co-occurrence information. This makes YAKE particularly useful for extracting relevant and meaningful keywords from texts, aiding in summarization, indexing, and categorization tasks without the need for extensive computational resources.
+- **Word2Vec:** Word2Vec is a groundbreaking neural network-based technique developed to convert text into numerical form, allowing machines to understand human language. It maps words into a high-dimensional vector space, where semantically similar words are positioned closely together. Word2Vec is versatile in performing similarity analysis not only between words but also between larger text structures like sentences, paragraphs, and documents by averaging the word vectors. Its application extends beyond similarity analysis to include language modeling, translation, and even exploring syntactic and semantic word relationships. Word2Vec's ability to capture the context of words within documents makes it invaluable for a wide range of natural language processing (NLP) applications.
 
-## Conclusion
-
-This research methodology, underpinned by detailed code metric analysis and tool integration, aims to offer significant insights into the evolution of software quality in DS. By identifying and analyzing patterns of improvement, this work contributes to the broader field of Software Engineering, particularly in educational contexts where real-world examples of code evolution are invaluable.
+In order to read about the tools utilized in the Worked Example Miner, read [here](https://github.com/BrenoFariasdaSilva/Worked-Example-Miner?tab=readme-ov-file#tools-utilized).
 
 ## Contributing
 
