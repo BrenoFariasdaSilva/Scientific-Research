@@ -122,25 +122,14 @@ git submodule update
 
 Our research project involves expertise in the following areas:
 
-- Python Language
-- Python Libraries (Pandas, Matplotlib, NumPy, Scikit-Learn)
-- CK (Chidamber & Kemerer) Metrics
-- PyDriller
-- RefactoringMiner (Refactoring Detection)
-- Word2Vector
-- Software Engineering
-- Distributed Systems
-- Worked Examples
-- Statistical Data Analysis and Visualization (Min, Max, Average, Third Quartile, Median, Linear Regression)
-- Similarity Measures (Word2Vec, Yake, Sentence Bert, TF-IDF)
-- Apache Commons-lang (Java Library)
-- Apache Kafka (Distributed Messaging System)
-- Apache ZooKeeper (Distributed Coordination Service)
-- Jabref (Bibliography Reference Manager)
-- GitHub Repositories
-- Data Collection and Analysis
-- Makefile
-- Virtual Environment
+- Python Language.
+- Similarity Measures (Word2Vec, Yake, Sentence Bert, TF-IDF).
+- Apache Commons-lang (Java Library).
+- Jabref (Bibliography Reference Manager).
+- GitHub Repositories.
+- Data Collection and Analysis.
+
+Other skills are required but are related to the [Worked Example Miner](https://github.com/BrenoFariasdaSilva/Worked-Example-Miner) and are well explained in its repository.
 
 Feel free to explore the code and data in this repository. If you have any questions or suggestions, please don't hesitate to reach out to me.
 
