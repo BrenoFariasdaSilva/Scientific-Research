@@ -29,8 +29,9 @@ jobs:
 
       - name: Update Worked-Example-Miner submodule
         run: |
-          cd Worked-Example-Miner
-          git pull origin main
+         cd Worked-Example-Miner
+         set -o pipefail # Ensures that the exit code is non-zero if the pull fails
+         git pull origin main || (echo "Merge conflict detected, aborting the update process." && exit 1)
 
       - name: Commit and push if changes are detected
         run: |
