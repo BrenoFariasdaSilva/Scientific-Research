@@ -102,13 +102,12 @@ git submodule update
 
 ## Goals
 
-1. **Analyzing Code Evolution:**
-   - Analyze code that started with "bad" metrics and evolved over time.
-   - Identify good code examples that indicate what makes code better and what changes are typically made to improve it.
-
-2. **Similarity Analysis:**
+1. **Similarity Analysis:**
    - Explore different similarity algorithms, including Word2Vector, Yake, Sentence Bert, and TF-IDF, to evaluate the similarity between texts.
    - Create datasets for storing solved and unsolved questions and recommend changes based on the similarity of these questions.
+
+2. **Enhancing the given data:**
+   - Analyze the results of the usage of the similarity algorithms to suggest similar solved issues to unsolved issues using different aspects, like a code snippet, a question, or a title or a mix of them.
 
 3. **Enhancing Code Solutions:**
    - Investigate the use of tools like ChatGPT and GitHub Copilot to improve students' code solutions when they are stuck.
