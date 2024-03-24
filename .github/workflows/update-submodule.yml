@@ -16,7 +16,7 @@ jobs:
 
       steps:
          - name: Checkout repository
-           uses: actions/checkout@v3
+           uses: actions/checkout@v2
            with:
               # Fetches all history for all tags and branches, including submodules
               fetch-depth: 0
