@@ -21,7 +21,7 @@ The Word2Vec tool is also used to perform similarity analysis between various te
 
 <div align="center">
 
-![GitHub Build/WorkFlow](https://img.shields.io/github/actions/workflow/status/BrenoFariasDaSilva/Scientific-Research/update-submodule.yml)
+![GitHub Build/WorkFlow](https://img.shields.io/github/actions/workflow/status/BrenoFariasDaSilva/Scientific-Research/update-worked-example-miner-submodule.yml)
 ![GitHub Code Size in Bytes](https://img.shields.io/github/languages/code-size/BrenoFariasdaSilva/Scientific-Research)
 ![GitHub Commits](https://img.shields.io/github/commit-activity/t/BrenoFariasDaSilva/Scientific-Research/main)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/BrenoFariasdaSilva/Scientific-Research)
